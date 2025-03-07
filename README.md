@@ -7,19 +7,20 @@
 `3º semestre/2025`
 
 Escreva um ou dois parágrafos resumindo o objetivo do seu projeto.
+*Assim que oficializarmos a ideia e concepção do projeto em documento, detalhar o bjetivo de forma concreta aqui - PRAZO(12/03/2025)*
 
 ## Integrantes
 
+* Felipe Rodrigues Roque
+* Gabriella Martins da Silva Paz
 * Lucas Borges de Freitas
 * Mateus Botelho de Souza
-* Gabriella Martins da Silva Paz
-* Nome completo do aluno 4
-* Nome completo do aluno 5
-* Nome completo do aluno 6
+* Rogério Gabriel Lima Dias
+* Victor Alves Alcântara
 
 ## Professor
 
-* Nome completo do(a) professor(a)
+* Amália Soares Vieira de Vasconcelos
 
 ## Instruções de utilização
 
