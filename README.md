@@ -12,7 +12,7 @@ Escreva um ou dois parágrafos resumindo o objetivo do seu projeto.
 
 * Lucas Borges de Freitas
 * Mateus Botelho de Souza
-* Nome completo do aluno 3
+* Gabriella Martins da Silva Paz
 * Nome completo do aluno 4
 * Nome completo do aluno 5
 * Nome completo do aluno 6
