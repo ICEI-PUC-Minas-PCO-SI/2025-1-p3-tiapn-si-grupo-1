@@ -6,8 +6,7 @@
 
 `3º semestre/2025`
 
-Escreva um ou dois parágrafos resumindo o objetivo do seu projeto.
-*Assim que oficializarmos a ideia e concepção do projeto em documento, detalhar o bjetivo de forma concreta aqui - PRAZO(12/03/2025)*
+Dentro do mundo corporativo é comum lidarmos com atividades que fogem do nosso cotidiano, mas a dependência de alguma documentação ou colaborador disponível para elucidar o processo por trás de uma atividade pode gerar ineficiência e diminuir o desempenho da operação. O projeto KnowFlow Process visa desenvolver uma plataforma acessível e dinâmica para facilitar o gerenciamento de atividades, melhorando a produtividade das equipes e autonomia dos colaboradores.
 
 ## Integrantes
 
