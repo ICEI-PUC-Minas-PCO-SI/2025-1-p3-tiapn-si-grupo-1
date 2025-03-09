@@ -17,3 +17,7 @@ Exemplo:
 > **Links úteis**:
 > - [Padrão PUC Minas de normalização ABNT](http://portal.pucminas.br/biblioteca/documentos/GUIA-COMPLETO-ABNT-Elaborar-formatar-trabalho-cientificoNOVO.pdf)
 > - [Formato ABNT](https://www.normastecnicas.com/abnt/)
+
+Referências reais:
+- COMO ESCREVER BOAS HISTÓRIAS DE USUÁRIOS NO MÉTODO AGILE, MIRO. DISPONÍVEL EM: https://miro.com/pt/agile/o-que-e-historia-do-usuario/ acesso em 08 mar. 2025.
+- WIEGERS, KARL; BEATTY, JOY. SOFTWARE REQUIREMENTS. 3. ED. REDMOND: MICROSOFT PRESS, 2013.
