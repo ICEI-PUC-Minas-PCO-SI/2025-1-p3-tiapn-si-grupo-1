@@ -52,12 +52,12 @@ Com base na análise das personas, foram identificadas as seguintes histórias d
 
 |ID    | Descrição do Requisito  | Prioridade |
 |------|-----------------------------------------|----|
-|RF-001|O sistema deve permitir que o usuário realize o cadastro informando nome, e-mail  e senha| ALTA | 
-|RF-002|O sistema deve permitir que o usuário faça login utilizando e-mail e senha cadastrados| ALTA |
-|RF-003|O sistema deve permitir que o usuário redefina sua senha via e-mail caso a esqueça| MÉDIA | 
-|RF-004|O sistema deve garantir que usuário seja capaz de criar seu guia para um processo após identificado na plataforma| ALTA |
-|RF-005|O sistema deve garantir que usuário seja capaz de realizar o upload dos seus "treinamentos"dentro da plataforma| ALTA | 
-|RF-006|O sistema deve assegurar de que os usuários logados na plataforma sejam capazes de visualizar os processos disponíveis| ALTA |
+|RF-001|O sistema deve permitir que o usuário realize o cadastro informando nome, e-mail  e senha| Alta | 
+|RF-002|O sistema deve permitir que o usuário faça login utilizando e-mail e senha cadastrados| Alta |
+|RF-003|O sistema deve permitir que o usuário redefina sua senha via e-mail caso a esqueça| Média | 
+|RF-004|O sistema deve garantir que usuário seja capaz de criar seu guia para um processo após identificado na plataforma| Alta |
+|RF-005|O sistema deve garantir que usuário seja capaz de realizar o upload dos seus "treinamentos"dentro da plataforma| Alta | 
+|RF-006|O sistema deve assegurar de que os usuários logados na plataforma sejam capazes de visualizar os processos disponíveis| Alta |
 
 ### Requisitos não funcionais
 
