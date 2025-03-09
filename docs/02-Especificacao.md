@@ -7,10 +7,11 @@ Definição do problema e ideia de solução a partir da perspectiva do usuário
 Apresente uma visão geral do que será abordado nesta parte do documento, enumerando as técnicas e/ou ferramentas utilizadas para realizar a especificações do projeto.
 
 ## Personas
+_**Persona 1**: Asaphe Silva tem 35 anos, é Líder de Distribuição e busca garantir a autonomia de seus assistentes. No entanto, sua pouca disponibilidade para treiná-los e acompanhá-los o frustra._
 
-Exemplo: _Pedro Paulo tem 26 anos, é arquiteto recém-formado e autônomo. Pensa em se desenvolver profissionalmente por meio de um mestrado fora do país, pois adora viajar, é solteiro e sempre quis fazer um intercâmbio. Está buscando uma agência que o ajude a encontrar universidades na Europa que aceitem alunos estrangeiros._
+_**Persona 2**: Roberta Borges tem 38 anos, é Supervisora de Distribuição e quer aumentar a sincronia da equipe, além de diminuir a polarização de processos. Porém, enfrenta dificuldades na adaptação de processos e percebe uma perda de autonomia dentro do time._
 
-Enumere e detalhe as personas da sua solução. Para tanto, baseie-se tanto nos documentos disponibilizados na disciplina e/ou nos seguintes links:
+_**Persona 3**: Vinicios Santiago tem 24 anos, é Assistente Administrativo de Distribuição e deseja conquistar maior independência e espaço dentro da operação. No entanto, sente-se frustrado por depender de colegas e líderes para compreender novas atividades._
 
 > **Links úteis**:
 > - [Rock content](https://rockcontent.com/blog/personas/)
@@ -28,10 +29,15 @@ Com base na análise das personas, foram identificadas as seguintes histórias d
 
 |EU COMO... `PERSONA`| QUERO/PRECISO ... `FUNCIONALIDADE` |PARA ... `MOTIVO/VALOR`                 |
 |--------------------|------------------------------------|----------------------------------------|
-|Usuário do sistema  | Registrar minhas tarefas           | Não esquecer de fazê-las               |
-|Administrador       | Alterar permissões                 | Permitir que possam administrar contas |
-
-Apresente aqui as histórias de usuários que são relevantes para o projeto da sua solução. As histórias de usuários consistem em uma ferramenta poderosa para a compreensão e elicitação dos requisitos funcionais e não funcionais da sua aplicação. Se possível, agrupe as histórias de usuários por contexto, para facilitar consultas recorrentes a esta parte do documento.
+|Líder do meu time  (Administrador)| validar os processos enviados pela equipe           | garantir que os processos criados sigam os padrões estipulados pela equipe de controladoria             |
+|Analista de processos (Administrador)| certificar de que as atividades possam ter algum nível de segurança                  | limite o acesso de colaboradores ou equipe não autorizada |
+|Funcionário novo (Usuário)| buscar as atividades criadas por colegas da minha equipe | sanar eventuais dúvidas que eu possa ter|
+|Supervisora (Administrador)| acompanhar o engajamento da minha equipe com a plataforma | reconhecer o desempenho de todos|
+|Funcionário (Usuário)| indicar minha satisfação com o processo que me ajudou |trazer reconhecimento pra ele|
+|Funcionário (Usuário)| ter diferentes opções de registrar a minha atividade na plataforma | acompanhar as particularidades de algumas atividades|
+|Funcionário (Usuário)|ter o contato com o dono da publicação|tirar minha dúvida sobre um determinado momento do processo|
+|Autor de uma publicação (Usuário)|editar e até mesmo excluir processos incorretos|garantir a conformidade do processo|
+|funcionário (Usuário)|salvar o estado atual do meu processo enquanto faço|que eu possa finalizá-lo depois|
 
 > **Links úteis**:
 > - [Histórias de usuários com exemplos e template](https://www.atlassian.com/br/agile/project-management/user-stories)
@@ -42,21 +48,34 @@ Apresente aqui as histórias de usuários que são relevantes para o projeto da 
 
 ## Requisitos
 
-As tabelas a seguir apresentam os requisitos funcionais e não funcionais que detalham o escopo do projeto. Para determinar a prioridade dos requisitos, aplique uma técnica de priorização e detalhe como essa técnica foi aplicada.
-
 ### Requisitos funcionais
 
 |ID    | Descrição do Requisito  | Prioridade |
 |------|-----------------------------------------|----|
-|RF-001| Permitir que o usuário cadastre tarefas | ALTA | 
-|RF-002| Emitir um relatório de tarefas no mês   | MÉDIA |
+|RF-001|O sistema deve permitir que o usuário realize o cadastro informando nome, e-mail  e senha| ALTA | 
+|RF-002|O sistema deve permitir que o usuário faça login utilizando e-mail e senha cadastrados| ALTA |
+|RF-003|O sistema deve permitir que o usuário redefina sua senha via e-mail caso a esqueça| MÉDIA | 
+|RF-004|O sistema deve garantir que usuário seja capaz de criar seu guia para um processo após identificado na plataforma| ALTA |
+|RF-005|O sistema deve garantir que usuário seja capaz de realizar o upload dos seus "treinamentos"dentro da plataforma| ALTA | 
+|RF-006|O sistema deve assegurar de que os usuários logados na plataforma sejam capazes de visualizar os processos disponíveis| ALTA |
 
 ### Requisitos não funcionais
 
-|ID     | Descrição do Requisito  |Prioridade |
-|-------|-------------------------|----|
-|RNF-001| O sistema deve ser responsivo para rodar em dispositivos móveis | MÉDIA | 
-|RNF-002| Deve processar as requisições do usuário em no máximo 3 segundos |  BAIXA | 
+| ID       | Tipo                        | Descrição do Requisito                                                                 | Prioridade |
+|----------|-----------------------------|----------------------------------------------------------------------------------------|------------|
+| RNF-001  | Segurança| O sistema deve ser capaz de operar para diferentes empresas| Alta|
+| RNF-002  | Segurança| O sistema deve garantir o acesso à plataforma apenas para usuários identificados pelo email corporativo | Alta       |
+| RNF-003  | Segurança| O sistema deve garantir restrições para processos que possuem limitações de acesso| Alta       |
+| RNF-004  | Regulamentação e Normas| Atender à LGPD e PCI-DSS| Média|
+| RNF-005  | Usabilidade| O sistema deve ser capaz de registrar e armazenar todas as interações do usuário na plataforma| Média      |
+| RNF-006  | Usabilidade| O sistema deve ser capaz de atualizar os elementos da pesquisa de acordo com os filtros estabelecidos| Média      |
+| RNF-007  | Usabilidade| O sistema deve informar ao usuário o resultado de toda operação realizada por ele, seja ela um sucesso ou uma falha do processo| Baixa      |
+| RNF-008  | Confiabilidade e Disponibilidade| É necessário que o sistema sempre informe qual o motivo de um eventual erro e então quais passos seguir| Baixa      |
+| RNF-009  | Regulamentação e Normas| O sistema deve ser capaz de garantir que os processos registrados sigam as regras de negócio existentes da empresa| Baixa      |
+| RNF-010  | Usabilidade| O sistema deve fornecer maneiras de interação entre usuários| Média      |
+| RNF-011  | Usabilidade| O sistema deve permitir a criação e manutenção de estruturas de equipes dentro da companhia, garantindo a organização hierárquica e a atribuição de funções| Média      |
+| RNF-012  | Interoperabilidade| O sistema deverá ter integração com APIs que facilitem a criação dos processos dentro da plataforma| Alta       |
+
 
 Com base nas histórias de usuários, enumere os requisitos da sua solução. Classifique esses requisitos em dois grupos:
 
