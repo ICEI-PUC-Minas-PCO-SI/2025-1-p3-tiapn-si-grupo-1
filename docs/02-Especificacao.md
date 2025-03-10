@@ -112,18 +112,18 @@ O diagrama de casos de uso é o próximo passo após a elicitação de requisito
 
 ## Participantes do Processo de Negócio
 
-## Usuários Finais
+### Usuários Finais
 
-### Funcionários Operacionais
+#### Funcionários Operacionais
 Colaboradores que criam, acessam e utilizam tutoriais e documentação para executar suas atividades diárias. Eles buscam maior autonomia e eficiência, utilizando a plataforma para minimizar erros e otimizar processos.
 
-### Gestores
+#### Gestores
 Supervisores responsáveis por monitorar o engajamento da equipe e a eficácia dos tutoriais. Eles revisam e aprovam os conteúdos criados pelos funcionários operacionais, assegurando que as informações atendam às necessidades operacionais. Além disso, são responsáveis pela análise dos processos e pela validação da conformidade dos tutoriais com as diretrizes organizacionais.
 
-## Equipe de Desenvolvimento e Suporte
+### Equipe de Desenvolvimento e Suporte
 Técnicos encarregados de garantir a funcionalidade da plataforma. Eles implementam novas características, corrigem falhas e oferecem suporte técnico aos usuários, assegurando que a experiência na plataforma seja satisfatória e eficiente.
 
-## Administração e Diretoria
+### Administração e Diretoria
 Gestores que supervisionam a implementação e o desempenho do KnowFlow. Eles avaliam o impacto da plataforma nas operações da empresa, apoiando melhorias estratégicas e promovendo uma cultura de compartilhamento de conhecimento entre os colaboradores.
 
 
