@@ -19,5 +19,6 @@ Exemplo:
 > - [Formato ABNT](https://www.normastecnicas.com/abnt/)
 
 Referências reais:
-- COMO ESCREVER BOAS HISTÓRIAS DE USUÁRIOS NO MÉTODO AGILE, MIRO. DISPONÍVEL EM: https://miro.com/pt/agile/o-que-e-historia-do-usuario/ acesso em 08 mar. 2025.
-- WIEGERS, KARL; BEATTY, JOY. SOFTWARE REQUIREMENTS. 3. ED. REDMOND: MICROSOFT PRESS, 2013.
+- **MIRO.** Como escrever boas histórias de usuários no método Agile. Disponível em: [https://miro.com/pt/agile/o-que-e-historia-do-usuario/](https://miro.com/pt/agile/o-que-e-historia-do-usuario/). Acesso em: 8 mar. 2025.
+- **WIEGERS, Karl; BEATTY, Joy.** Software Requirements. 3. ed. Redmond: Microsoft Press, 2013.
+- **KAYSER, Marcos.** O que são stakeholders? Definição, principais tipos e importância. Scopi, 9 dez. 2022. Disponível em: [https://scopi.com.br/blog/stakeholders/](https://scopi.com.br/blog/stakeholders/). Acesso em: 9 mar. 2025.
