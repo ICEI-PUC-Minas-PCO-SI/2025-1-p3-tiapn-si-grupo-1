@@ -1,6 +1,11 @@
-![participantes-knowflow](https://github.com/user-attachments/assets/f21d1a7e-9e26-4833-a95b-35d7d4c2e258)# Introdução
+## Introdução
 
-Texto descritivo com a visão geral do projeto abordado. Inclui o contexto, o problema, os objetivos, a justificativa e o público-alvo do projeto. Visando contextualizar melhor o projeto e destacar sua importância para a disciplina, que é **extensionista**, acrescente todas as informações relevantes que julgar necessárias.
+No ambiente corporativo, a gestão do conhecimento é um dos desafios mais significativos, especialmente para empresas que utilizam sistemas complexos e possuem processos operacionais detalhados. Muitas organizações enfrentam dificuldades na execução de tarefas, na documentação de boas práticas e na disseminação de informações sobre projetos. A falta de um ambiente estruturado para compartilhamento de conhecimento pode levar à perda de informações importantes, à dependência excessiva de colaboradores experientes e ao retrabalho dentro das equipes.
+
+Para resolver essa questão, estamos desenvolvendo um Hub de Conhecimento voltado para o compartilhamento e organização do aprendizado corporativo. O objetivo é criar uma plataforma colaborativa e dinâmica onde os funcionários possam adicionar tutoriais detalhados, documentar processos e compartilhar explicações sobre projetos. Além disso, o sistema fornecerá aos gestores uma visão analítica sobre o aprendizado da equipe, permitindo identificar os pontos de retenção e disseminação do conhecimento dentro das equipes e otimizar treinamentos.
+
+Este projeto busca aprimorar a gestão do conhecimento dentro das organizações, melhorando a eficiência operacional, reduzindo erros e diminuindo custos com treinamentos e especializações. Empresas de médio e grande porte, especialmente aquelas com equipes distribuídas e setores técnicos, podem se beneficiar diretamente dessa solução
+
 
 ## Cliente 
 Nesta seção, devem ser apresentadas informações essenciais sobre o cliente (parceiro) para garantir um entendimento mais preciso do projeto como uma iniciativa extensionista.  
@@ -38,6 +43,8 @@ O grupo de trabalho pode fazer uso de questionários, entrevistas e dados estat�
 > - [Como montar a justificativa](https://guiadamonografia.com.br/como-montar-justificativa-do-tcc/)
 
 ## Público-alvo
+
+![participantes-knowflow](https://github.com/user-attachments/assets/f21d1a7e-9e26-4833-a95b-35d7d4c2e258) 
 
 ![Uploading participantes-knowflo<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
   <!-- Título -->
