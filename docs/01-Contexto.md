@@ -8,9 +8,10 @@ Este projeto busca aprimorar a gestão do conhecimento dentro das organizações
 
 
 ## Cliente 
-Nesta seção, devem ser apresentadas informações essenciais sobre o cliente (parceiro) para garantir um entendimento mais preciso do projeto como uma iniciativa extensionista.  
+A Philip Morris International - Brasil é a segunda maior empresa de tabaco do país, com mais de 45 anos de atuação no mercado. Seu portfólio inclui marcas renomadas, como Marlboro, L&M e Chesterfield. Com uma equipe de aproximadamente 2.000 colaboradores, a empresa também se destaca como a maior compradora de tabaco no Brasil.
 
-Recomenda-se incluir dados como missão, visão e valores da organização, além de seu ramo de atuação, porte, nicho de mercado e principais desafios enfrentados. Também é relevante fornecer informações sobre sua localização, histórico, impacto social e possíveis demandas específicas. Quanto mais detalhadas forem essas informações, mais embasada será a análise do contexto, permitindo uma abordagem estratégica e alinhada às necessidades do cliente.
+Comprometida com a inovação, a Philip Morris tem como missão construir um futuro sem fumaça por meio do desenvolvimento de alternativas ao cigarro tradicional, como o tabaco aquecido. A empresa lidera a transformação do setor ao oferecer produtos de risco reduzido, proporcionando aos fumantes adultos novas opções para substituir o cigarro convencional.
+
 
 ## Problema
 Um dos principais desafios enfrentados por muitas empresas é a falta de uma plataforma centralizada para gerenciar e compartilhar informações essenciais sobre projetos e processos. Esse cenário acaba gerando diversos problemas como: 
