@@ -57,99 +57,15 @@ Diante desse cenário, a adoção de um sistema eficiente de gerenciamento e com
 
 ## Público-alvo
 
-![participantes-knowflow](https://github.com/user-attachments/assets/f21d1a7e-9e26-4833-a95b-35d7d4c2e258) 
-
-![Uploading participantes-knowflo<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500">
-  <!-- Título -->
-  <text x="450" y="35" font-family="Arial" font-size="24" font-weight="bold" text-anchor="middle" fill="#333">Participantes do Processo de Negócio KnowFlow</text>
-  
-  <!-- Nível 1: Caixa Principal -->
-  <rect x="300" y="60" width="300" height="60" rx="10" ry="10" fill="#4472C4" stroke="#2F528F" stroke-width="3"/>
-  <text x="450" y="95" font-family="Arial" font-size="18" font-weight="bold" text-anchor="middle" fill="white">KnowFlow</text>
-  
-  <!-- Conectores do nível 1 para nível 2 -->
-  <line x1="450" y1="120" x2="450" y2="140" stroke="#666" stroke-width="2"/>
-  <line x1="450" y1="140" x2="160" y2="140" stroke="#666" stroke-width="2"/>
-  <line x1="450" y1="140" x2="740" y2="140" stroke="#666" stroke-width="2"/>
-  <line x1="160" y1="140" x2="160" y2="160" stroke="#666" stroke-width="2"/>
-  <line x1="450" y1="140" x2="450" y2="160" stroke="#666" stroke-width="2"/>
-  <line x1="740" y1="140" x2="740" y2="160" stroke="#666" stroke-width="2"/>
-  
-  <!-- Nível 2: Categorias Principais -->
-  <!-- Usuários Finais -->
-  <rect x="30" y="160" width="260" height="50" rx="8" ry="8" fill="#5B9BD5" stroke="#41719C" stroke-width="3"/>
-  <text x="160" y="190" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Usuários Finais</text>
-  
-  <!-- Equipe de Desenvolvimento -->
-  <rect x="320" y="160" width="280" height="50" rx="8" ry="8" fill="#5B9BD5" stroke="#41719C" stroke-width="3"/>
-  <text x="460" y="190" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Equipe de Desenvolvimento e Suporte</text>
-  
-  <!-- Administração -->
-  <rect x="610" y="160" width="260" height="50" rx="8" ry="8" fill="#5B9BD5" stroke="#41719C" stroke-width="3"/>
-  <text x="740" y="190" font-family="Arial" font-size="16" font-weight="bold" text-anchor="middle" fill="white">Administração e Diretoria</text>
-  
-  <!-- Conectores do nível 2 para nível 3 (Usuários Finais) -->
-  <line x1="160" y1="210" x2="160" y2="230" stroke="#666" stroke-width="2"/>
-  <line x1="160" y1="230" x2="90" y2="230" stroke="#666" stroke-width="2"/>
-  <line x1="160" y1="230" x2="230" y2="230" stroke="#666" stroke-width="2"/>
-  <line x1="90" y1="230" x2="90" y2="250" stroke="#666" stroke-width="2"/>
-  <line x1="230" y1="230" x2="230" y2="250" stroke="#666" stroke-width="2"/>
-  
-  <!-- Conectores do nível 2 para nível 3 (Desenvolvimento) -->
-  <line x1="460" y1="210" x2="460" y2="250" stroke="#666" stroke-width="2"/>
-  
-  <!-- Conectores do nível 2 para nível 3 (Administração) -->
-  <line x1="740" y1="210" x2="740" y2="250" stroke="#666" stroke-width="2"/>
-  
-  <!-- Nível 3: Detalhamento -->
-  <!-- Funcionários Operacionais -->
-  <rect x="10" y="250" width="180" height="150" rx="8" ry="8" fill="#70AD47" stroke="#507E32" stroke-width="3"/>
-  <text x="100" y="275" font-family="Arial" font-size="13" font-weight="bold" text-anchor="middle" fill="white">Funcionários Operacionais</text>
-  <foreignObject x="15" y="285" width="170" height="105">
-    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial; font-size: 12px; color: white; text-align: center; padding: 0 5px;">
-      Criam e utilizam tutoriais para executar atividades diárias, buscando autonomia e eficiência para minimizar erros
-    </div>
-  </foreignObject>
-  
-  <!-- Gestores -->
-  <rect x="230" y="250" width="180" height="150" rx="8" ry="8" fill="#70AD47" stroke="#507E32" stroke-width="3"/>
-  <text x="320" y="275" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Gestores</text>
-  <foreignObject x="240" y="285" width="160" height="105">
-    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial; font-size: 12px; color: white; text-align: center; padding: 0 5px;">
-      Monitoram engajamento, revisam e aprovam conteúdos, validam conformidade com diretrizes organizacionais
-    </div>
-  </foreignObject>
-  
-  <!-- Técnicos -->
-  <rect x="450" y="250" width="180" height="150" rx="8" ry="8" fill="#ED7D31" stroke="#AE5A21" stroke-width="3"/>
-  <text x="540" y="275" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Técnicos</text>
-  <foreignObject x="460" y="285" width="160" height="105">
-    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial; font-size: 12px; color: white; text-align: center; padding: 0 5px;">
-      Garantem funcionalidade, implementam novas características, corrigem falhas e oferecem suporte técnico
-    </div>
-  </foreignObject>
-  
-  <!-- Administração Superior -->
-  <rect x="650" y="250" width="180" height="150" rx="8" ry="8" fill="#FFC000" stroke="#BF9000" stroke-width="3"/>
-  <text x="740" y="275" font-family="Arial" font-size="14" font-weight="bold" text-anchor="middle" fill="white">Administração Superior</text>
-  <foreignObject x="660" y="285" width="160" height="105">
-    <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial; font-size: 12px; color: white; text-align: center; padding: 0 5px;">
-      Supervisionam implementação e desempenho, avaliam impacto nas operações e promovem cultura de compartilhamento
-    </div>
-  </foreignObject>
-  
-  <!-- Fluxo de Interação Circular -->
-  <path d="M100,420 C 300,470 600,470 800,420" stroke="#666" stroke-width="2" fill="none" stroke-dasharray="5,3"/>
-  <polygon points="800,420 790,415 790,425" fill="#666"/>
-  <text x="450" y="465" font-family="Arial" font-size="14" font-style="italic" text-anchor="middle" fill="#333">Fluxo de Interação e Colaboração</text>
-</svg>
-w.svg…]()
-
-
 Descreva quem serão as pessoas que usarão a sua aplicação indicando os diferentes perfis. O objetivo aqui não é definir quem serão os clientes ou quais serão os papéis dos usuários na aplicação. A ideia é, dentro do possível, conhecer um pouco mais sobre o perfil dos usuários: conhecimentos prévios, relação com a tecnologia, relações
 hierárquicas, etc.
 
 Adicione informações sobre o público-alvo por meio de uma descrição textual, diagramas de personas e mapa de stakeholders.
+
+![participantes-knowflow](https://github.com/user-attachments/assets/f21d1a7e-9e26-4833-a95b-35d7d4c2e258) 
+
+
+
 
 
 > **Links úteis**:
