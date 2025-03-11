@@ -52,29 +52,29 @@ Com base na análise das personas, foram identificadas as seguintes histórias d
 
 |ID    | Descrição do Requisito  | Prioridade |
 |------|-----------------------------------------|----|
-|RF-001|O sistema deve permitir que o usuário realize o cadastro informando nome, e-mail  e senha| Alta | 
-|RF-002|O sistema deve permitir que o usuário faça login utilizando e-mail e senha cadastrados| Alta |
-|RF-003|O sistema deve permitir que o usuário redefina sua senha via e-mail caso a esqueça| Média | 
-|RF-004|O sistema deve garantir que usuário seja capaz de criar seu guia para um processo após identificado na plataforma| Alta |
-|RF-005|O sistema deve garantir que usuário seja capaz de realizar o upload dos seus "treinamentos"dentro da plataforma| Alta | 
-|RF-006|O sistema deve assegurar de que os usuários logados na plataforma sejam capazes de visualizar os processos disponíveis| Alta |
+|RF-001|O sistema deve permitir que o usuário realize o cadastro informando nome, e-mail  e senha| 🔴 Alta | 
+|RF-002|O sistema deve permitir que o usuário faça login utilizando e-mail e senha cadastrados| 🔴 Alta |
+|RF-003|O sistema deve permitir que o usuário redefina sua senha via e-mail caso a esqueça| 🟡 Média | 
+|RF-004|O sistema deve garantir que usuário seja capaz de criar seu guia para um processo após identificado na plataforma| 🔴 Alta |
+|RF-005|O sistema deve garantir que usuário seja capaz de realizar o upload dos seus "treinamentos"dentro da plataforma| 🔴 Alta | 
+|RF-006|O sistema deve assegurar de que os usuários logados na plataforma sejam capazes de visualizar os processos disponíveis| 🔴 Alta |
 
 ### Requisitos não funcionais
 
 | ID       | Tipo                        | Descrição do Requisito                                                                 | Prioridade |
 |----------|-----------------------------|----------------------------------------------------------------------------------------|------------|
-| RNF-001  | Segurança| O sistema deve ser capaz de operar para diferentes empresas| Alta|
-| RNF-002  | Segurança| O sistema deve garantir o acesso à plataforma apenas para usuários identificados pelo email corporativo | Alta       |
-| RNF-003  | Segurança| O sistema deve garantir restrições para processos que possuem limitações de acesso| Alta       |
-| RNF-004  | Regulamentação e Normas| Atender à LGPD e PCI-DSS| Média|
-| RNF-005  | Usabilidade| O sistema deve ser capaz de registrar e armazenar todas as interações do usuário na plataforma| Média      |
-| RNF-006  | Usabilidade| O sistema deve ser capaz de atualizar os elementos da pesquisa de acordo com os filtros estabelecidos| Média      |
-| RNF-007  | Usabilidade| O sistema deve informar ao usuário o resultado de toda operação realizada por ele, seja ela um sucesso ou uma falha do processo| Baixa      |
-| RNF-008  | Confiabilidade e Disponibilidade| É necessário que o sistema sempre informe qual o motivo de um eventual erro e então quais passos seguir| Baixa      |
-| RNF-009  | Regulamentação e Normas| O sistema deve ser capaz de garantir que os processos registrados sigam as regras de negócio existentes da empresa| Baixa      |
-| RNF-010  | Usabilidade| O sistema deve fornecer maneiras de interação entre usuários| Média      |
-| RNF-011  | Usabilidade| O sistema deve permitir a criação e manutenção de estruturas de equipes dentro da companhia, garantindo a organização hierárquica e a atribuição de funções| Média      |
-| RNF-012  | Interoperabilidade| O sistema deverá ter integração com APIs que facilitem a criação dos processos dentro da plataforma| Alta       |
+| RNF-001  | Segurança| O sistema deve ser capaz de operar para diferentes empresas| 🔴 Alta|
+| RNF-002  | Segurança| O sistema deve garantir o acesso à plataforma apenas para usuários identificados pelo email corporativo | 🔴 Alta       |
+| RNF-003  | Segurança| O sistema deve garantir restrições para processos que possuem limitações de acesso| 🔴 Alta       |
+| RNF-004  | Regulamentação e Normas| Atender à LGPD e PCI-DSS| 🟡 Média|
+| RNF-005  | Usabilidade| O sistema deve ser capaz de registrar e armazenar todas as interações do usuário na plataforma| 🟡 Média      |
+| RNF-006  | Usabilidade| O sistema deve ser capaz de atualizar os elementos da pesquisa de acordo com os filtros estabelecidos| 🟡 Média      |
+| RNF-007  | Usabilidade| O sistema deve informar ao usuário o resultado de toda operação realizada por ele, seja ela um sucesso ou uma falha do processo| 🟢 Baixa      |
+| RNF-008  | Confiabilidade e Disponibilidade| É necessário que o sistema sempre informe qual o motivo de um eventual erro e então quais passos seguir| 🟢 Baixa      |
+| RNF-009  | Regulamentação e Normas| O sistema deve ser capaz de garantir que os processos registrados sigam as regras de negócio existentes da empresa| 🟢 Baixa      |
+| RNF-010  | Usabilidade| O sistema deve fornecer maneiras de interação entre usuários| 🟡 Média      |
+| RNF-011  | Usabilidade| O sistema deve permitir a criação e manutenção de estruturas de equipes dentro da companhia, garantindo a organização hierárquica e a atribuição de funções| 🟡 Média      |
+| RNF-012  | Interoperabilidade| O sistema deverá ter integração com APIs que facilitem a criação dos processos dentro da plataforma| 🔴 Alta       |
 
 
 Com base nas histórias de usuários, enumere os requisitos da sua solução. Classifique esses requisitos em dois grupos:
