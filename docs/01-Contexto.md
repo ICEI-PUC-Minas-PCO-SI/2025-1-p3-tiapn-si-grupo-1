@@ -57,10 +57,15 @@ Diante desse cenário, a adoção de um sistema eficiente de gerenciamento e com
 
 ## Público-alvo
 
-Descreva quem serão as pessoas que usarão a sua aplicação indicando os diferentes perfis. O objetivo aqui não é definir quem serão os clientes ou quais serão os papéis dos usuários na aplicação. A ideia é, dentro do possível, conhecer um pouco mais sobre o perfil dos usuários: conhecimentos prévios, relação com a tecnologia, relações
-hierárquicas, etc.
+O público-alvo da KnowFlow Process são: 
 
-Adicione informações sobre o público-alvo por meio de uma descrição textual, diagramas de personas e mapa de stakeholders.
+- **Empresas que utilizam de sistemas operacionais complexos:** Empresas que já possuem processos estruturados e fazem uso de processos integrados para gestão organizacional.
+  
+- **Colaboradores que precisam de orientação rápida sobre processos específicos:** Funcionários de diferentes áreas que precisam acessar rapidamente informações. Esse público pode variar em nível de experiência, incluindo novos colaboradores que precisam se adaptar aos fluxos da empresa, até profissionais experientes.
+  
+- **Gestores que desejam monitorar processos:** Supervisores, coordenadores e diretores que têm interesse em acompanhar o nível de participação, aprendizado e adesão dos colaboradores ao conhecimento interno da empresa. Esse público busca relatórios e métricas que auxiliem na tomada de decisões estratégicas.
+
+  
 
 ![participantes-knowflow](https://github.com/user-attachments/assets/f21d1a7e-9e26-4833-a95b-35d7d4c2e258) 
 
