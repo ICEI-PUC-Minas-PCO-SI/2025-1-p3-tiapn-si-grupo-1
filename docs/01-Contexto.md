@@ -42,9 +42,15 @@ Desenvolver um sistema de Hub dinâmico de conhecimento empresarial que otimize 
 
 ## Justificativa
 
-Descreva a importância ou a motivação para trabalhar com esta aplicação que você escolheu. Indique as razões pelas quais você escolheu seus objetivos específicos ou as razões para aprofundar em certos aspectos do software.
+A implementação de uma plataforma de gestão do conhecimento é essencial para preservar e disseminar informações estratégicas dentro das empresas, evitando a perda de conhecimento e otimizando a eficiência operacional. A falta de um sistema estruturado pode levar à duplicação de informações, erros recorrentes e dificuldades na continuidade dos processos.
 
-O grupo de trabalho pode fazer uso de questionários, entrevistas e dados estatísticos, que podem ser apresentados, com o objetivo de esclarecer detalhes do problema que será abordado pelo grupo.
+Diante disso, o KnowFlow Process surge como uma solução para centralizar dados e facilitar o acesso ao conhecimento organizacional, garantindo maior agilidade e confiabilidade na tomada de decisões. Estudos indicam que empresas com acesso estruturado a informações internas tomam decisões 25% mais rápidas, enquanto a saída de colaboradores pode representar a perda de até 70% do conhecimento organizacional.
+
+Diante desse cenário, a adoção de um sistema eficiente de gerenciamento e compartilhamento de conhecimento torna-se indispensável para reduzir custos com treinamentos, aumentar a produtividade e garantir a continuidade dos negócios de forma estratégica. 
+
+> **Referências:**
+> - [O impacto das práticas de Gestão do Conhecimento Organizacional](https://www.scielo.br/j/pci/a/J7PF4bwYsxRx6phDQ6YJS4F/)
+> - [Importância da Centralização das Informações Empresariais](<https://www.concur.com.br/blog/article/qual-importancia-da-centralizacao-de-informacoes-e-como-garanti-la>)
 
 > **Links úteis**:
 > - [Como montar a justificativa](https://guiadamonografia.com.br/como-montar-justificativa-do-tcc/)
