@@ -49,9 +49,6 @@ Diante disso, o KnowFlow Process surge como uma solução para centralizar dados
 
 Diante desse cenário, a adoção de um sistema eficiente de gerenciamento e compartilhamento de conhecimento torna-se indispensável para reduzir custos com treinamentos, aumentar a produtividade e garantir a continuidade dos negócios de forma estratégica. 
 
-> **Referências:**
-> - [O impacto das práticas de Gestão do Conhecimento Organizacional](https://www.scielo.br/j/pci/a/J7PF4bwYsxRx6phDQ6YJS4F/)
-> - [Importância da Centralização das Informações Empresariais](<https://www.concur.com.br/blog/article/qual-importancia-da-centralizacao-de-informacoes-e-como-garanti-la>)
 
 > **Links úteis**:
 > - [Como montar a justificativa](https://guiadamonografia.com.br/como-montar-justificativa-do-tcc/)
