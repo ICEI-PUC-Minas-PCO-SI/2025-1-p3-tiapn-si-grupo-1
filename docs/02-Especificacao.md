@@ -103,8 +103,11 @@ O projeto está restrito aos itens apresentados na tabela a seguir.
 
 |ID| Restrição                                             |
 |--|-------------------------------------------------------|
-|001| O projeto deverá ser entregue até o final do semestre |
-|002| O custo total do projeto não deve exceder o orçamento definido       |
+|001| A plataforma será acessível apenas para funcionários cadastrados |
+|002| Empresas poderão moderar conteúdos para manter a qualidade das informações |
+|003| Restrições de desempenho podem surgir devido a limitações na infraestrutura utilizada |
+|004| Apenas usuários autorizados podem acessar determinados conteúdos|
+|005| A proteção de dados pessoais, como senha e e-mails dos usuários devem seguir boas praticas de segurança|
 
 ## Diagrama de casos de uso
 
