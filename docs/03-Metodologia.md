@@ -62,7 +62,7 @@ Atualizado em: 09/03/2025
 | Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
 | :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
 | Felipe Roque        | Participantes do processo de negócio | 07/03/2025     | 12/03/2025 | ⌛    |       |
-| Gabriella Paz        | Introdução    | 07/03/2025     | 12/03/2025 | ⌛    |                 |
+| Gabriella Paz        | Introdução    | 07/03/2025     | 12/03/2025 | ✔️   |   11/03/2025              |
 | Lucas Borges        | Especificações do projeto | 07/03/2025     | 12/03/2025 | ⌛     |                 |
 | Mateus Botelho        | Slides  |    07/03/2025        | 12/03/2025 | ⌛    |       |
 | Rogério Gabriel     | Participantes do processo de negócio  |    07/03/2025        | 12/03/2025 | ⌛    |       |
