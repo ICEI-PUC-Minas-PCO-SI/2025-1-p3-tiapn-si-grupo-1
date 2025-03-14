@@ -64,7 +64,7 @@ Atualizado em: 13/03/2025
 | Felipe Roque        | Participantes do processo de negócio | 07/03/2025     | 12/03/2025 | ⌛    |       |
 | Gabriella Paz        | Introdução    | 07/03/2025     | 12/03/2025 | ✔️   |   11/03/2025              |
 | Lucas Borges        | Especificações do projeto | 07/03/2025     | 12/03/2025 | ✔️     |    12/03/2025             |
-| Mateus Botelho        | Slides  |    07/03/2025        | 12/03/2025 | ⌛    |       |
+| Mateus Botelho        | Slides  |    07/03/2025        | 12/03/2025 | ✔️    |       | 12/03/2025
 | Rogério Gabriel     | Participantes do processo de negócio  |    07/03/2025        | 12/03/2025 | ⌛    |       |
 | Victor Alves       | Especificações do projeto  |    07/03/2025        | 12/03/2025 | ✔️    |   07/03/2025    |
 
