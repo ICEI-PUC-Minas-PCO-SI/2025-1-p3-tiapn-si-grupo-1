@@ -7,7 +7,7 @@
 
 Coloque aqui o conjunto de slides.
 
-[Visualizar o PDF](KnowFlow Process Slides.pdf)
+[Visualizar o PDF](KnowFlow-Slides.pdf)
 
 > O arquivo deve estar no formato PDF e conter a apresentação completa do projeto, abordando todos os itens trabalhados nos demais artefatos. 
 
