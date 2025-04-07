@@ -71,13 +71,15 @@ Atualizado em: 13/03/2025
 
 #### Sprint 2
 
-Atualizado em: 06/04/2025
+Atualizado em: 07/04/2025
 
 | Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
 | :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
-| AlunaX        | Página inicial   | 01/02/2024     | 07/03/2024 | ✔️    | 05/02/2024      |
-| AlunaZ        | CSS unificado    | 03/02/2024     | 10/03/2024 | 📝    |                 |
-| AlunoY        | Página de login  | 01/02/2024     | 07/03/2024 | ⌛     |                 |
+| Felipe Roque      | Página inicial   | 01/02/2024     | 10/04/2025 | ✔️    | 05/02/2024      |
+| Gabriella Paz     |  Diferencial e Monetização  | 04/04/2025     | 10/04/2025 | 📝    |                 |
+| Lucas Borges      | Página de login  | 01/02/2024     | 10/04/2025 | ⌛     |                 |
+| Mateus Botelho      | Página de login  | 01/02/2024     | 10/04/2025 | ⌛     |                 |
+| Rogério Gabriel     | Página de login  | 01/02/2024     | 10/04/2025 | 📝     |                 |
 | Victor Alves      | Modelagem BPMN  |  04/04/2025    | 10/04/2025 | ✔️   |  06/04/2025      |
 
 
