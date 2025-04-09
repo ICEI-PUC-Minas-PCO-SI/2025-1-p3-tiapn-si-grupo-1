@@ -47,7 +47,7 @@ Discuta como a configuração do projeto foi feita na ferramenta de versionament
 
 #### Sprint 2
 - _Scrum master_: Felipe Roque
-- Apresentação e _Design_: Lucas Borges e Mateus Botelho
+- Apresentação e Design: Lucas Borges e Mateus Botelho
 - Planejamento comercial: Gabriella Paz e Rogério Gabriel
 - Analista de Sistemas: Victor Alves
 
@@ -75,11 +75,11 @@ Atualizado em: 07/04/2025
 
 | Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
 | :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
-| Felipe Roque      | Página inicial   | 01/02/2024     | 10/04/2025 | ✔️    | 05/02/2024      |
+| Felipe Roque      | Modelagem BPMN  | 01/02/2024     | 10/04/2025 | ✔️    | 05/02/2024      |
 | Gabriella Paz     |  Diferencial e Monetização  | 04/04/2025     | 10/04/2025 | 📝    |                 |
-| Lucas Borges      | Página de login  | 01/02/2024     | 10/04/2025 | ⌛     |                 |
-| Mateus Botelho      | Página de login  | 01/02/2024     | 10/04/2025 | ⌛     |                 |
-| Rogério Gabriel     | Página de login  | 01/02/2024     | 10/04/2025 | 📝     |                 |
+| Lucas Borges      | Apresentação e Roteiro  | 07/04/2024     | 10/04/2025 | ⌛     |                 |
+| Mateus Botelho      | Apresentação e Roteiro  | 07/04/2024     | 10/04/2025 | ⌛     |                 |
+| Rogério Gabriel     | Diferencial e Monetização  | 01/02/2024     | 10/04/2025 | 📝     |                 |
 | Victor Alves      | Modelagem BPMN  |  04/04/2025    | 10/04/2025 | ✔️   |  06/04/2025      |
 
 
