@@ -1,30 +1,92 @@
 # Modelagem dos processos de negócio
 
-<span style="color:red">Pré-requisitos: <a href="02-Especificacao.md"> Especificação do projeto</a></span>
-
-> **Links úteis**:
-> - [Modelagem de processos AS-IS x TO-BE](https://dheka.com.br/modelagem-as-is-to-be/)
-> - [20 dicas práticas de modelagem de processos](https://dheka.com.br/20-dicas-praticas-de-modelagem-de-processos/)
-
 ## Modelagem da situação atual (Modelagem AS IS)
 
-Apresente uma descrição textual de como os sistemas atuais resolvem o problema que seu projeto se propõe a resolver. Caso sua proposta seja inovadora e não existam processos claramente definidos, apresente como as tarefas que seu sistema pretende implementar são executadas atualmente, mesmo que não se utilize tecnologia computacional.
+### 1. Consultar Processos (AS-IS)
 
-Com o tema do projeto definido, escolham alguns processos no contexto de negócios. Para ilustrar os potenciais ganhos com a automatização, imaginem processos manuais, ineficientes e/ou com muitas idas e vindas, gerando, assim, retrabalho. Colem aqui os modelos dos processos atuais (modelo AS-IS), elaborados com o apoio da ferramenta baseada em BPMN utilizada na disciplina.
+Atualmente, o processo de consulta a um processo interno na Philip Morris é executado de maneira manual e descentralizada. Quando um colaborador precisa consultar o status ou informação de um processo, ele inicia o contato com o setor responsável (normalmente via e-mail ou ligação telefônica). Esse setor, por sua vez, verifica manualmente os documentos físicos, documentos em pastas pessoais, em pastas compartilhadas em rede ou no SharePoint da empresa.
+
+Frequentemente há necessidade de verificar diferentes sistemas ou solicitar apoio de outros departamentos, o que acarreta múltiplas idas e vindas. A resposta ao colaborador nem sempre é imediata, e há riscos de perda de informação, desencontro de dados e atraso nas decisões. Esse fluxo fragmentado gera retrabalho, principalmente quando as informações não estão atualizadas ou não são localizáveis facilmente.
+
+**Principais Gargalos:**
+
+- Alta dependência de comunicação interpessoal;
+- Falta de centralização das informações;
+- Ausência de histórico automatizado;
+- Demora na resposta;
+- Retrabalho por perda de dados.
+
+### 2. Documentar Processos (AS-IS)
+
+O processo de documentação de processos internos também ocorre de forma manual. Quando uma área precisa registrar um processo, geralmente é feito via documentos do Word, planilhas ou até mesmo e-mails. Os arquivos são salvos localmente ou em pastas compartilhadas sem padrão de nomenclatura ou controle de versão.
+
+Além disso, não existe um fluxo de validação bem definido. O responsável por documentar precisa entrar em contato com diversas áreas para levantar as informações, muitas vezes com base em lembranças ou registros informais. Após a criação da documentação, ela nem sempre passa por revisão ou é armazenada em local de fácil acesso.
+
+**Principais Gargalos:**
+
+- Falta de padronização;
+- Dificuldade para encontrar processos documentados anteriormente;
+- Ausência de validação formal;
+- Registro redundante ou inconsistente;
+- Ausência de controle de versão e centralização.
 
 ## Descrição geral da proposta (Modelagem TO BE)
 
-Tendo identificado os gargalos dos modelos AS-IS, apresentem uma descrição da proposta de solução, buscando maior eficiência com a introdução da tecnologia. Abordem também os limites dessa solução e seu alinhamento com as estratégias e objetivos do contexto de negócio escolhido.
+### 1. Consultar Processos (TO-BE)
 
-Cole aqui os modelos da solução proposta (modelo TO-BE), elaborados com o apoio da ferramenta baseada em BPMN utilizada na disciplina. Cada processo identificado deve ter seu modelo TO-BE específico. Descrevam as oportunidades de melhoria de cada processo da solução proposta.
+A proposta de solução envolve a automação do processo de consulta via uma plataforma integrada de gestão de processos. O colaborador acessará um sistema web centralizado, onde poderá consultar o status de um processo específico através de um código ou palavra-chave.
 
-Apresente aqui uma descrição da sua proposta, abordando seus limites e suas ligações com as estratégias e objetivos do negócio. Apresente também as oportunidades de melhoria.
+O sistema será alimentado automaticamente a partir dos fluxos de entrada dos processos registrados. O setor responsável apenas alimentará uma vez o sistema e todas as áreas poderão consultar sem necessidade de intervenção direta. Haverá controle de permissões, rastreabilidade de consultas e histórico de atualizações.
+
+**Oportunidades de melhoria:**
+
+- Redução do tempo de resposta;
+- Eliminação do retrabalho por falha de comunicação;
+- Maior autonomia para os usuários;
+- Dados atualizados em tempo real;
+- Registro automático de histórico.
+
+**Limites da solução:**
+
+- Necessidade de adesão das áreas envolvidas;
+- Curva de aprendizado inicial com a nova ferramenta;
+- Investimento em treinamento e migração dos dados.
+
+**Alinhamento com o negócio:**
+
+- Melhora a eficiência operacional;
+- Reduz riscos de perda de informações;
+- Apoia a transparência e agilidade nas decisões.
+
+### 2. Documentar Processos (TO-BE)
+
+A nova proposta inclui a utilização de um sistema de gestão de processos baseado em BPMN, onde os responsáveis poderão criar, revisar e aprovar documentações dentro de um fluxo automatizado.
+
+A documentação será feita dentro do próprio sistema, com campos padronizados, validação por etapas e armazenamento em repositório central com controle de versão. Os usuários poderão anexar arquivos, comentar e aprovar etapas com assinatura digital.
+
+**Oportunidades de melhoria:**
+
+- Eliminação de documentos soltos e não padronizados;
+- Maior confiabilidade e acesso rápido à informação;
+- Redução do retrabalho na manutenção de versões;
+- Histórico de alterações e validações centralizado.
+
+**Limites da solução:**
+
+- Dependência da adoção do sistema por todos os envolvidos;
+- Tempo de configuração e parametrização inicial.
+
+**Alinhamento com o negócio:**
+
+- Melhoria da governança de processos;
+- Facilita auditorias e controles internos;
+- Suporte ao crescimento e à escalabilidade do negócio.
 
 ## Modelagem dos processos
 
-[PROCESSO 1 - Nome do processo](./processes/processo-1-nome-do-processo.md "Detalhamento do processo 1.")
+- [PROCESSO 1 - Nome do processo](./processes/processo-1-nome-do-processo.md "Detalhamento do processo 1.")
 
-[PROCESSO 2 - Nome do processo](./processes/processo-2-nome-do-processo.md "Detalhamento do processo 2.")
+- [PROCESSO 2 - Nome do processo](./processes/processo-2-nome-do-processo.md "Detalhamento do processo 2.")
 
 
 ## Indicadores de desempenho
