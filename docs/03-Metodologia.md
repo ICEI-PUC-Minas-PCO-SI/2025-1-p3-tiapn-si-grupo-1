@@ -76,7 +76,7 @@ Atualizado em: 07/04/2025
 | Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
 | :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
 | Felipe Roque      | Modelagem BPMN  | 01/02/2024     | 10/04/2025 | ✔️    | 05/02/2024      |
-| Gabriella Paz     |  Diferencial e Monetização  | 04/04/2025     | 10/04/2025 | 📝    |                 |
+| Gabriella Paz     |  Diferencial e Monetização  | 04/04/2025     | 10/04/2025 | ✔️    |  10/04/2025              |
 | Lucas Borges      | Apresentação e Roteiro  | 07/04/2024     | 10/04/2025 | 📝     |                 |
 | Mateus Botelho      | Apresentação e Roteiro  | 07/04/2024     | 10/04/2025 | ✔️     | 10/04/2025 |
 | Rogério Gabriel     | Diferencial e Monetização  | 01/02/2024     | 10/04/2025 | 📝     |                 |
