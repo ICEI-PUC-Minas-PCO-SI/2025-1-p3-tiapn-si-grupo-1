@@ -52,12 +52,19 @@ Com base na análise das personas, foram identificadas as seguintes histórias d
 
 |ID    | Descrição do Requisito  | Prioridade |
 |------|-----------------------------------------|----|
-|RF-001|O sistema deve permitir que o usuário realize o cadastro informando nome, e-mail  e senha| 🔴 Alta | 
-|RF-002|O sistema deve permitir que o usuário faça login utilizando e-mail e senha cadastrados| 🔴 Alta |
-|RF-003|O sistema deve permitir que o usuário redefina sua senha via e-mail caso a esqueça| 🟡 Média | 
-|RF-004|O sistema deve garantir que usuário seja capaz de criar seu guia para um processo após identificado na plataforma| 🔴 Alta |
-|RF-005|O sistema deve garantir que usuário seja capaz de realizar o upload dos seus "treinamentos"dentro da plataforma| 🔴 Alta | 
-|RF-006|O sistema deve assegurar de que os usuários logados na plataforma sejam capazes de visualizar os processos disponíveis| 🔴 Alta |
+| RF-001   | O sistema deve permitir que o usuário realize o cadastro informando nome, e-mail e senha | 🔴 Alta    |
+| RF-002   | O sistema deve permitir que o usuário faça login utilizando e-mail e senha cadastrados   | 🔴 Alta    |
+| RF-003   | O sistema deve permitir que o usuário redefina sua senha via e-mail caso a esqueça       | 🟡 Média   |
+| RF-004   | O sistema deve garantir que o usuário seja capaz de criar seu guia de processo           | 🔴 Alta    |
+| RF-005   | O sistema deve permitir o upload de documentos e tutoriais                               | 🔴 Alta    |
+| RF-006   | O sistema deve permitir que usuários logados visualizem tutoriais disponíveis            | 🔴 Alta    |
+| RF-007   | O sistema deve permitir comentar, curtir e salvar tutoriais                              | 🔴 Alta    |
+| RF-008   | O sistema deve permitir a organização dos conteúdos em pastas                            | 🟡 Média   |
+| RF-009   | O sistema deve permitir validação de tutoriais por usuários autorizados (validadores)    | 🔴 Alta    |
+| RF-010   | O sistema deve permitir busca avançada com palavras-chave e filtros                      | 🔴 Alta    |
+| RF-011   | O sistema deve restringir visualizações com base nos grupos aos quais o usuário pertence | 🔴 Alta    |
+| RF-012   | O sistema deve permitir vincular tutoriais a múltiplos grupos                            | 🔴 Alta    |
+| RF-013   | O sistema deve registrar o histórico de versões de tutoriais                             | 🟡 Média   |
 
 ### Requisitos não funcionais
 
