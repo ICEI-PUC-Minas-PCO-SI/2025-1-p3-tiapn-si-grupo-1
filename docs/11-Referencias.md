@@ -28,10 +28,10 @@ Inclua todas as referências (livros, artigos, sites, etc.) utilizadas no desenv
 
 - **DIGITAL PIXEL**. *UX Design 2023: o guia definitivo de boas práticas para a melhor experiência do usuário.* Disponível em: <https://digitalpixel.com.br/ux-design-2023-o-guia-definitivo-de-boas-praticas-para-a-melhor-experiencia-do-usuario-em-2023/>. Acesso em: 10 abr. 2025.
 
+- **NOWACKI, R.; BACHNIK, K**. Innovations within knowledge management. Journal of Business Research, v. 69, n. 5, p. 1577–1581, maio 2016. Disponível em: <https://www.sciencedirect.com/science/article/abs/pii/S0148296315004439‌>. Acesso em: 10 abr. 2025.
 
-> **Links úteis**:
-> - [Padrão PUC Minas de normalização ABNT](http://portal.pucminas.br/biblioteca/documentos/GUIA-COMPLETO-ABNT-Elaborar-formatar-trabalho-cientificoNOVO.pdf)
-> - [Formato ABNT](https://www.normastecnicas.com/abnt/)
+- **ALSQOUR, M.; OWOC, M. L.** The Role of Data Warehouse as a Source of Knowledge Acquisition in Decision-Making. An Empirical Study. IFIP Advances in Information and Communication Technology, p. 21–42, 2015. Disponível em: ‌<https://link.springer.com/chapter/10.1007/978-3-319-28868-0_2>. Acesso em: 10 abr. 2025.
+
 
 
 
