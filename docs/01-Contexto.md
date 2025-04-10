@@ -37,12 +37,11 @@ Desenvolver um sistema de Hub dinâmico de conhecimento empresarial que otimize 
  
 ## Justificativa
 
-A implementação de uma plataforma de gestão do conhecimento é essencial para preservar e disseminar informações estratégicas dentro das empresas, evitando a perda de conhecimento e otimizando a eficiência operacional. A falta de um sistema estruturado pode levar à duplicação de informações, erros recorrentes e dificuldades na continuidade dos processos.
+A gestão do conhecimento é um desafio central nas organizações, pois a falta de um sistema estruturado compromete a continuidade dos processos, gera retrabalho e reduz a eficiência operacional (CERCHIONE; ESPOSITO, 2015). Para enfrentar essas dificuldades, propõe-se o desenvolvimento do KnowFlow Process, uma plataforma centralizada para organização e disseminação do conhecimento institucional.
 
-Nesse contexto, o KnowFlow Process surge como uma solução para centralizar dados e facilitar o acesso ao conhecimento organizacional, garantindo maior agilidade e confiabilidade na tomada de decisões. Estudos indicam que empresas com acesso estruturado a informações internas tomam decisões 25% mais rápidas, enquanto a saída de colaboradores pode representar a perda de até 70% do conhecimento organizacional.
+O sistema tem como objetivo facilitar o acesso a tutoriais, documentação de processos e explicações sobre projetos, promovendo um ambiente colaborativo e dinâmico. Segundo pesquisas, organizações que utilizam sistemas de gestão do conhecimento conseguem tomar decisões até 25% mais rapidamente. Além disso, estima-se que até 70% do conhecimento organizacional pode ser perdido com a saída de colaboradores-chave, o que reforça a importância da preservação desse capital intelectual (RODRIGUES; SANTOS, 2023).
 
-Diante desse cenário, a adoção de um sistema eficiente de gerenciamento e compartilhamento de conhecimento torna-se indispensável para reduzir custos com treinamentos, aumentar a produtividade e garantir a continuidade dos negócios de forma estratégica. 
-
+Dessa forma, o KnowFlow Process contribui para reduzir perdas, evitar duplicidade de tarefas, minimizar custos com treinamentos e aumentar a autonomia e eficiência das equipes.
 
 
 ## Público-alvo
