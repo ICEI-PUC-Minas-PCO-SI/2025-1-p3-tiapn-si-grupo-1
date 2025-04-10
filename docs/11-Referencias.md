@@ -18,7 +18,7 @@ Inclua todas as referências (livros, artigos, sites, etc.) utilizadas no desenv
 
 - **IBM**. *Knowledge Management: An evolutionary view.* IBM Corporation, 2020. Disponível em: <https://www.ibm.com>. Acesso em: 10 abr. 2025.
 
- - **CONCUR** Qual a importância da centralização de informações e como garanti-la? Disponível em: <https://www.concur.com.br/blog/article/qual-importancia-da-centralizacao-de-informacoes-e-como-garanti-la>. Acesso em: 10 mar. 2025.
+ - **CONCUR**. Qual a importância da centralização de informações e como garanti-la? Disponível em: <https://www.concur.com.br/blog/article/qual-importancia-da-centralizacao-de-informacoes-e-como-garanti-la>. Acesso em: 10 mar. 2025.
 
 
 > **Links úteis**:
