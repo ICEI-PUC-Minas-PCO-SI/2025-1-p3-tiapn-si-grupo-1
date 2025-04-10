@@ -118,10 +118,9 @@ Exemplo: os artefatos do projeto são desenvolvidos a partir de diversas platafo
 
 | Ambiente                            | Plataforma                         | Link de acesso                         |
 |-------------------------------------|------------------------------------|----------------------------------------|
-| Repositório de código fonte         | GitHub                             | https://github.com/ICEI-PUC-Minas-PCO-SI/2025-1-p3-tiapn-si-grupo-1 |
-| Documentos do projeto               | GitHub                             | http://....                            |
+| Repositório de código fonte         | GitHub                             | <https://github.com/ICEI-PUC-Minas-PCO-SI/2025-1-p3-tiapn-si-grupo-1> |
+| Documentos do projeto               | GitHub                             | <https://github.com/ICEI-PUC-Minas-PCO-SI/2025-1-p3-tiapn-si-grupo-1/edit/main/docs/> |
 | Projeto de interface                | Figma                              | http://....                            |
-| Gerenciamento do projeto            | GitHub Projects                    | http://....                            |
+| Gerenciamento do projeto            | GitHub Projects                    | <https://github.com/orgs/ICEI-PUC-Minas-PCO-SI/projects/124> |
 | Hospedagem                          | Vercel                             | http://....                            |
-| Apresentação                          | Canva                             | http://....                            |
-| ID Visual                          | Canva                             | http://....                            |
+| Apresentação                          | Canva                             | <https://www.canva.com/design/DAGhXcOBOm0/xqkdWNETaCVIJVsFPOb_RQ/view?utm_content=DAGhXcOBOm0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfd7f4740ee> |
