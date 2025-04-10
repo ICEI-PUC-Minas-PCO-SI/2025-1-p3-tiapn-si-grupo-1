@@ -35,9 +35,12 @@ Use o seguinte modelo:
 
 | **Indicador** | **Objetivos** | **Descrição** | **Fonte de dados** | **Fórmula de cálculo** |
 | ---           | ---           | ---           | ---             | ---             |
-| Percentual de reclamações | Avaliar quantitativamente as reclamações | Percentual de reclamações em relação ao total de atendimentos | Tabela Reclamações | número total de reclamações / número total de atendimentos |
-| Taxa de requisições atendidas | Melhorar a prestação de serviços medindo a porcentagem de requisições atendidas| Mede a % de requisições atendidas na semana | Tabela Solicitações | (número de requisições atendidas / número total de requisições) * 100 |
-| Taxa de entrega de material | Manter controle sobre os materiais que estão sendo entregues | Mede % de material entregue dentro do mês | Tabela Pedidos | (número de pedidos entregues / número total de pedidos) * 100 |
+| Engajamento de usuários ativos| Medir a participação dos colaboradores na plataforma           | Percentual de usuários que visualizaram, curtiram ou comentaram tutoriais nos últimos 30 dias| Tabela Usuários, Ações     | (nº usuários ativos no mês / nº total de usuários da empresa) * 100            |
+| Índice de tutoriais validados | Monitorar a qualidade e formalização do conteúdo               | Proporção de tutoriais validados por usuários autorizados                                   | Tabela Tutoriais           | (nº de tutoriais validados / nº total de tutoriais criados) * 100              |
+| Taxa de criação de conteúdos  | Avaliar a produção de conhecimento interno                     | Média de tutoriais criados por usuário dentro de um período                                 | Tabela Tutoriais           | nº total de tutoriais no mês / nº total de usuários                            |
+| Taxa de acesso ao conteúdo    | Verificar a utilidade prática da base de conhecimento          | Média de visualizações por tutorial disponível                                               | Tabela Tutoriais, Acessos  | nº total de visualizações / nº total de tutoriais                              |
+| Retorno sobre buscas realizadas| Medir a efetividade da barra de busca                         | Percentual de buscas que resultam em clique em algum conteúdo relevante                      | Tabela Pesquisas, Cliques  | (nº de buscas com clique / nº total de buscas realizadas) * 100                |
+| Média de tempo para validação | Avaliar agilidade no fluxo de formalização dos conteúdos       | Tempo médio entre a criação e a validação de um tutorial                                     | Tabela Tutoriais           | Média(data validação - data criação)                                            |
 
 
 Obs.: todas as informações necessárias para gerar os indicadores devem estar no diagrama de classe a ser apresentado posteriormente.
