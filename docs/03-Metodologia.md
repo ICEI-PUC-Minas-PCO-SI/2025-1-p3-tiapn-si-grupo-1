@@ -49,7 +49,7 @@ Discuta como a configuração do projeto foi feita na ferramenta de versionament
 - _Scrum master_: Felipe Roque
 - Apresentação e Design: Lucas Borges e Mateus Botelho
 - Planejamento comercial: Gabriella Paz e Rogério Gabriel
-- Analista de Sistemas: Victor Alves
+- Modelagem de Processos de Negócios: Victor Alves e Felipe Roque
 
 ###  Quadro de tarefas
 
