@@ -78,7 +78,7 @@ Atualizado em: 07/04/2025
 | Felipe Roque      | Modelagem BPMN  | 01/02/2024     | 10/04/2025 | ✔️    | 05/02/2024      |
 | Gabriella Paz     |  Diferencial e Monetização  | 04/04/2025     | 10/04/2025 | 📝    |                 |
 | Lucas Borges      | Apresentação e Roteiro  | 07/04/2024     | 10/04/2025 | 📝     |                 |
-| Mateus Botelho      | Apresentação e Roteiro  | 07/04/2024     | 10/04/2025 | 📝     |                 |
+| Mateus Botelho      | Apresentação e Roteiro  | 07/04/2024     | 10/04/2025 | ✔️     | 10/04/2025 |
 | Rogério Gabriel     | Diferencial e Monetização  | 01/02/2024     | 10/04/2025 | 📝     |                 |
 | Victor Alves      | Modelagem BPMN  |  04/04/2025    | 10/04/2025 | ✔️   |  06/04/2025      |
 
@@ -118,8 +118,10 @@ Exemplo: os artefatos do projeto são desenvolvidos a partir de diversas platafo
 
 | Ambiente                            | Plataforma                         | Link de acesso                         |
 |-------------------------------------|------------------------------------|----------------------------------------|
-| Repositório de código fonte         | GitHub                             | http://....                            |
+| Repositório de código fonte         | GitHub                             | https://github.com/ICEI-PUC-Minas-PCO-SI/2025-1-p3-tiapn-si-grupo-1 |
 | Documentos do projeto               | GitHub                             | http://....                            |
 | Projeto de interface                | Figma                              | http://....                            |
 | Gerenciamento do projeto            | GitHub Projects                    | http://....                            |
 | Hospedagem                          | Vercel                             | http://....                            |
+| Apresentação                          | Canva                             | http://....                            |
+| ID Visual                          | Canva                             | http://....                            |
