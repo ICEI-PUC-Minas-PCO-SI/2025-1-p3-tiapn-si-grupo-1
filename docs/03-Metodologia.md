@@ -117,3 +117,4 @@ Exemplo: os artefatos do projeto são desenvolvidos a partir de diversas platafo
 | Gerenciamento do projeto            | GitHub Projects                    | <https://github.com/orgs/ICEI-PUC-Minas-PCO-SI/projects/124> |
 | Hospedagem                          | Vercel                             | http://....                            |
 | Apresentação                          | Canva                             | <https://www.canva.com/design/DAGhXcOBOm0/xqkdWNETaCVIJVsFPOb_RQ/view?utm_content=DAGhXcOBOm0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfd7f4740ee> |
+| Orquestração de processos (BPM)     | Camunda Platform                   | https://camunda.com/download/modeler/                       |
