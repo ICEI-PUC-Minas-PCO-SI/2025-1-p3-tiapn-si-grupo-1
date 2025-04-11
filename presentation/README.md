@@ -8,7 +8,7 @@
 Coloque aqui o conjunto de slides.
 
 - [KnowFlow-Slides-Sprint-1.pdf](https://github.com/user-attachments/files/19693825/KnowFlow-Slides.pdf)
-- [KnowFlow-Slides-Sprint-2.pdf](https://github.com/user-attachments/files/19694589/KnowFlow-Slides-Sprint-2.pdf)
+- [KnowFlow-Slides-Sprint-2.pdf](https://github.com/user-attachments/files/19697941/KnowFlow-Slides-Sprint-2.pdf)
 
 > O arquivo deve estar no formato PDF e conter a apresentação completa do projeto, abordando todos os itens trabalhados nos demais artefatos. 
 
