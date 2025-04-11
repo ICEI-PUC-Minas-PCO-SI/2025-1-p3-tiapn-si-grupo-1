@@ -29,8 +29,6 @@ Discuta como a configuração do projeto foi feita na ferramenta de versionament
 
 ###  Divisão de papéis
 
-> Apresente a divisão de papéis entre os membros do grupo em cada Sprint. O desejável é que, em cada Sprint, o aluno assuma papéis diferentes na equipe. Siga o modelo do exemplo abaixo:
-
 #### Sprint 1
 - _Scrum master_: Victor Alves
 - Apresentação e ID Visual: Mateus Botelho
@@ -45,8 +43,6 @@ Discuta como a configuração do projeto foi feita na ferramenta de versionament
 - Modelagem de Processos de Negócios: Victor Alves e Felipe Roque
 
 ###  Quadro de tarefas
-
-> Apresente a divisão de tarefas entre os membros do grupo e o acompanhamento da execução, conforme o exemplo abaixo.
 
 #### Sprint 1
 
