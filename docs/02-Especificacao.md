@@ -13,15 +13,7 @@ _**Persona 2**: Roberta Borges tem 38 anos, é Supervisora de Distribuição e q
 
 _**Persona 3**: Vinicios Santiago tem 24 anos, é Assistente Administrativo de Distribuição e deseja conquistar maior independência e espaço dentro da operação. No entanto, sente-se frustrado por depender de colegas e líderes para compreender novas atividades._
 
-> **Links úteis**:
-> - [Rock content](https://rockcontent.com/blog/personas/)
-> - [Hotmart](https://blog.hotmart.com/pt-br/como-criar-persona-negocio/)
-> - [O que é persona?](https://resultadosdigitais.com.br/blog/persona-o-que-e/)
-> - [Persona x público-alvo](https://flammo.com.br/blog/persona-e-publico-alvo-qual-a-diferenca/)
-> - [Mapa de empatia](https://resultadosdigitais.com.br/blog/mapa-da-empatia/)
-> - [Mapa de stalkeholders](https://www.racecomunicacao.com.br/blog/como-fazer-o-mapeamento-de-stakeholders/)
->
-Lembre-se que você deve ser enumerar e descrever precisamente e personalizada todos os clientes ideais que sua solução almeja.
+
 
 ## Histórias de usuários
 
@@ -39,12 +31,6 @@ Com base na análise das personas, foram identificadas as seguintes histórias d
 |Autor de uma publicação (Usuário)|editar e até mesmo excluir processos incorretos|garantir a conformidade do processo|
 |funcionário (Usuário)|salvar o estado atual do meu processo enquanto faço|que eu possa finalizá-lo depois|
 
-> **Links úteis**:
-> - [Histórias de usuários com exemplos e template](https://www.atlassian.com/br/agile/project-management/user-stories)
-> - [Como escrever boas histórias de usuário (user stories)](https://medium.com/vertice/como-escrever-boas-users-stories-hist%C3%B3rias-de-usu%C3%A1rios-b29c75043fac)
-> - [User stories: requisitos que humanos entendem](https://www.luiztools.com.br/post/user-stories-descricao-de-requisitos-que-humanos-entendem/)
-> - [Histórias de usuários: mais exemplos](https://www.reqview.com/doc/user-stories-example.html)
-> - [9 common user story mistakes](https://airfocus.com/blog/user-story-mistakes/)
 
 ## Requisitos
 
@@ -98,9 +84,6 @@ Com base nas histórias de usuários, enumere os requisitos da sua solução. Cl
 
 Lembre-se de que cada requisito deve corresponder a uma e somente uma característica-alvo da sua solução. Além disso, certifique-se de que todos os aspectos capturados nas histórias de usuários foram cobertos.
 
-> **Links úteis**:
-> - [O que são requisitos funcionais e requisitos não funcionais?](https://codificar.com.br/requisitos-funcionais-nao-funcionais/)
-> - [Entenda o que são requisitos de software, a diferença entre requisito funcional e não funcional, e como identificar e documentar cada um deles](https://analisederequisitos.com.br/requisitos-funcionais-e-requisitos-nao-funcionais-o-que-sao/)
 
 ## Restrições
 
@@ -140,11 +123,4 @@ Técnicos encarregados de garantir a funcionalidade da plataforma. Eles implemen
 Gestores que supervisionam a implementação e o desempenho do KnowFlow. Eles avaliam o impacto da plataforma nas operações da empresa, apoiando melhorias estratégicas e promovendo uma cultura de compartilhamento de conhecimento entre os colaboradores.
 
 
-As referências abaixo irão auxiliá-lo na geração do artefato “diagrama de casos de uso”.
 
-> **Links úteis**:
-> - [Criando casos de uso](https://www.ibm.com/docs/pt-br/engineering-lifecycle-management-suite/design-rhapsody/10.0?topic=cases-creating-use)
-> - [Como criar diagrama de caso de uso: tutorial passo a passo](https://gitmind.com/pt/fazer-diagrama-de-caso-uso.html/)
-> - [Lucidchart](https://www.lucidchart.com/)
-> - [Astah](https://astah.net/)
-> - [Diagrams](https://app.diagrams.net/)
