@@ -4,7 +4,7 @@ O processo de Consultar Processos tem como principal objetivo centralizar e faci
 
 Ao ser modelado no padrão BPMN, o processo passa a ser automatizado e acessível por uma interface web amigável, com rastreabilidade, controle de permissões e registro histórico.
 
-### Modelo BPMN do PROCESSO 1
+### Modelo BPMN de DOCUMENTAR PROCESSOS
 
 ![Modelo BPMN - Consultar Processos](/docs/images/bpmn_to_be_consultar_processo.png)
 
