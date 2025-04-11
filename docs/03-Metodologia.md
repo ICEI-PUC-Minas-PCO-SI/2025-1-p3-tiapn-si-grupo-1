@@ -101,3 +101,5 @@ Exemplo: os artefatos do projeto são desenvolvidos a partir de diversas platafo
 | Hospedagem                          | Vercel                             | http://....                            |
 | Apresentação                          | Canva                             | <https://www.canva.com/design/DAGhXcOBOm0/xqkdWNETaCVIJVsFPOb_RQ/view?utm_content=DAGhXcOBOm0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfd7f4740ee> |
 | Orquestração de processos (BPM)     | Camunda Platform                   | https://camunda.com/download/modeler/                       |
+| Modelagem do diagrama de casos de uso     | Lucidchart                   | https://www.lucidchart.com/                       |
+| Edição de vídeos     | Adobe Premiere Pro                   | https://....                       |
