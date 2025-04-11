@@ -1,67 +1,62 @@
-### 3.3.1 Processo 1 – NOME DO PROCESSO
+## 3.3.1 Processo 1 – Consultar Processos
 
-_Apresente aqui o nome e as oportunidades de melhoria para o processo 1. 
-Em seguida, apresente o modelo do processo 1, descrito no padrão BPMN._
- 
-![Exemplo de um Modelo BPMN do PROCESSO 1](../images/process.png "Modelo BPMN do Processo 1.")
+O processo de Consultar Processos tem como principal objetivo centralizar e facilitar o acesso a informações sobre processos internos da organização. A proposta de melhoria visa eliminar a dependência de comunicação interpessoal, reduzir o tempo de resposta, evitar perda de dados e aumentar a autonomia dos colaboradores.
 
-#### Detalhamento das atividades
+Ao ser modelado no padrão BPMN, o processo passa a ser automatizado e acessível por uma interface web amigável, com rastreabilidade, controle de permissões e registro histórico.
 
-_Descreva aqui cada uma das propriedades das atividades do processo 1. 
-Devem estar relacionadas com o modelo de processo apresentado anteriormente._
+### Modelo BPMN do PROCESSO 1
 
-_Os tipos de dados a serem utilizados são:_
-
-_* **Área de texto** - campo texto de múltiplas linhas_
-
-_* **Caixa de texto** - campo texto de uma linha_
-
-_* **Número** - campo numérico_
-
-_* **Data** - campo do tipo data (dd-mm-aaaa)_
-
-_* **Hora** - campo do tipo hora (hh:mm:ss)_
-
-_* **Data e Hora** - campo do tipo data e hora (dd-mm-aaaa, hh:mm:ss)_
-
-_* **Imagem** - campo contendo uma imagem_
-
-_* **Seleção única** - campo com várias opções de valores que são mutuamente exclusivas (tradicional radio button ou combobox)_
-
-_* **Seleção múltipla** - campo com várias opções que podem ser selecionadas mutuamente (tradicional checkbox ou listbox)_
-
-_* **Arquivo** - campo de upload de documento_
-
-_* **Link** - campo que armazena uma URL_
-
-_* **Tabela** - campo formado por uma matriz de valores_
+![Modelo BPMN - Consultar Processos](docs/images/bpmn_to_be_consultar_processo.png)
 
 
-**Nome da atividade 1**
+---
 
-| **Campo**       | **Tipo**         | **Restrições** | **Valor default** |
-| ---             | ---              | ---            | ---               |
-| [Nome do campo] | [tipo de dados]  |                |                   |
-| ***Exemplo:***  |                  |                |                   |
-| login           | Caixa de Texto   | formato de e-mail |                |
-| senha           | Caixa de Texto   | mínimo de 8 caracteres |           |
+### Detalhamento das atividades
 
-| **Comandos**         |  **Destino**                   | **Tipo** |
-| ---                  | ---                            | ---               |
-| [Nome do botão/link] | Atividade/processo de destino  | (default/cancel/  ) |
-| ***Exemplo:***       |                                |                   |
-| entrar               | Fim do Processo 1              | default           |
-| cadastrar            | Início do proceso de cadastro  |                   |
+Abaixo estão descritas as atividades envolvidas no processo de Consultar Processos, juntamente com seus campos, tipos de dados, restrições e valores padrão.
 
+---
 
-**Nome da atividade 2**
+#### Nome da atividade 1: Iniciar Consulta
 
-| **Campo**       | **Tipo**         | **Restrições** | **Valor default** |
-| ---             | ---              | ---            | ---               |
-| [Nome do campo] | [tipo de dados]  |                |                   |
-|                 |                  |                |                   |
+| Campo        | Tipo          | Restrições                  | Valor default |
+|--------------|---------------|------------------------------|---------------|
+| código do processo | Caixa de Texto  | obrigatório, alfanumérico       |               |
+| palavra-chave      | Caixa de Texto  | opcional                         |               |
 
-| **Comandos**         |  **Destino**                   | **Tipo**          |
-| ---                  | ---                            | ---               |
-| [Nome do botão/link] | Atividade/processo de destino  | (default/cancel/  ) |
-|                      |                                |                   |
+**Comandos**
+
+| Nome do botão/link | Atividade/processo de destino | Tipo     |
+|--------------------|-------------------------------|----------|
+| buscar             | Exibir Resultados             | default  |
+| cancelar           | Fim do Processo 1             | cancel   |
+
+---
+
+#### Nome da atividade 2: Exibir Resultados
+
+| Campo              | Tipo           | Restrições                      | Valor default |
+|--------------------|----------------|----------------------------------|---------------|
+| nome do processo   | Caixa de Texto | somente leitura                  |               |
+| status atual       | Seleção única  | somente leitura                  |               |
+| área responsável   | Caixa de Texto | somente leitura                  |               |
+| última atualização | Data e Hora    | somente leitura                  |               |
+| histórico completo | Tabela         | somente leitura                  |               |
+| documento anexo    | Arquivo        | somente leitura                  |               |
+
+**Comandos**
+
+| Nome do botão/link | Atividade/processo de destino | Tipo     |
+|--------------------|-------------------------------|----------|
+| voltar             | Iniciar Consulta              | cancel   |
+| finalizar          | Fim do Processo 1             | default  |
+
+---
+
+#### Nome da atividade 3: Fim do Processo 1
+
+Atividade de encerramento automático do processo, sem necessidade de interação do usuário.
+
+---
+
+Caso precise que eu gere também a imagem BPMN fictícia para exemplificar esse processo, posso criar uma para você com base nesse fluxo. Deseja isso?
