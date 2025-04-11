@@ -1,67 +1,65 @@
-### 3.3.2 Processo 2 – NOME DO PROCESSO
- 
-_Apresente aqui o nome e as oportunidades de melhoria para o processo 2. 
-Em seguida, apresente o modelo do processo 2, descrito no padrão BPMN._
+### 3.3.2 Processo 2 – Documentar Processos
 
-![Exemplo de um Modelo BPMN do PROCESSO 2](../images/process.png "Modelo BPMN do Processo 2.")
+O processo de **Documentar Processos** tem como objetivo garantir o correto registro e formalização dos processos executados dentro da organização, promovendo padronização, rastreabilidade e fácil consulta.  
 
+**Oportunidades de melhoria identificadas:**
+- Estruturação padronizada da documentação.
+- Centralização das informações em ferramenta de fácil acesso.
+- Redução de retrabalho e falhas por documentação incompleta.
+- Automatização da validação e publicação dos documentos.
 
-#### Detalhamento das atividades
+#### Modelo BPMN do DOCUMENTAR PROCESSOS
 
-_Descreva aqui cada uma das propriedades das atividades do processo 2. 
-Devem estar relacionadas com o modelo de processo apresentado anteriormente._
+![Modelo BPMN - Documentar Processos](/docs/images/bpmn_to_be_documentar_processo.png)
 
-_Os tipos de dados a serem utilizados são:_
+---
 
-_* **Área de texto** - campo texto de múltiplas linhas_
+### Detalhamento das atividades
 
-_* **Caixa de texto** - campo texto de uma linha_
+#### Nome da atividade: Iniciar documentação de processo
 
-_* **Número** - campo numérico_
+| Campo          | Tipo         | Restrições              | Valor default |
+|----------------|--------------|--------------------------|---------------|
+| títuloProcesso | Caixa de texto | obrigatório               |               |
+| áreaResponsável| Seleção única | lista de áreas da empresa|               |
+| dataInicio     | Data         | obrigatório               | data atual    |
+| descrição      | Área de texto | mínimo 100 caracteres     |               |
 
-_* **Data** - campo do tipo data (dd-mm-aaaa)_
+**Comandos**
 
-_* **Hora** - campo do tipo hora (hh:mm:ss)_
+| Nome do botão     | Atividade/processo de destino | Tipo     |
+|-------------------|-------------------------------|----------|
+| salvarRascunho    | Iniciar documentação de processo | default |
+| avançarParaRevisão| Revisar documentação           |          |
 
-_* **Data e Hora** - campo do tipo data e hora (dd-mm-aaaa, hh:mm:ss)_
+---
 
-_* **Imagem** - campo contendo uma imagem_
+#### Nome da atividade: Revisar documentação
 
-_* **Seleção única** - campo com várias opções de valores que são mutuamente exclusivas (tradicional radio button ou combobox)_
+| Campo              | Tipo          | Restrições                   | Valor default |
+|--------------------|---------------|-------------------------------|---------------|
+| comentáriosRevisor | Área de texto | mínimo 20 caracteres          |               |
+| statusRevisão      | Seleção única | Aprovado, Correções necessárias |               |
+| anexoRevisado      | Arquivo       | obrigatório se Correções      |               |
 
-_* **Seleção múltipla** - campo com várias opções que podem ser selecionadas mutuamente (tradicional checkbox ou listbox)_
+**Comandos**
 
-_* **Arquivo** - campo de upload de documento_
+| Nome do botão   | Atividade/processo de destino | Tipo     |
+|-----------------|-------------------------------|----------|
+| solicitarCorreção | Iniciar documentação de processo | cancel |
+| aprovarDocumento  | Publicar documentação         | default |
 
-_* **Link** - campo que armazena uma URL_
+---
 
-_* **Tabela** - campo formado por uma matriz de valores_
+#### Nome da atividade: Publicar documentação
 
-**Nome da atividade 1**
+| Campo           | Tipo     | Restrições        | Valor default |
+|-----------------|----------|-------------------|---------------|
+| dataPublicação  | Data     | obrigatório       | data atual    |
+| linkDocumento   | Link     | válido (URL)      |               |
 
-| **Campo**       | **Tipo**         | **Restrições** | **Valor default** |
-| ---             | ---              | ---            | ---               |
-| [Nome do campo] | [tipo de dados]  |                |                   |
-| ***Exemplo:***  |                  |                |                   |
-| login           | Caixa de Texto   | formato de e-mail |                |
-| senha           | Caixa de Texto   | mínimo de 8 caracteres |           |
+**Comandos**
 
-| **Comandos**         |  **Destino**                   | **Tipo** |
-| ---                  | ---                            | ---               |
-| [Nome do botão/link] | Atividade/processo de destino  | (default/cancel/  ) |
-| ***Exemplo:***       |                                |                   |
-| entrar               | Fim do Processo 1              | default           |
-| cadastrar            | Início do proceso de cadastro  |                   |
-
-
-**Nome da atividade 2**
-
-| **Campo**       | **Tipo**         | **Restrições** | **Valor default** |
-| ---             | ---              | ---            | ---               |
-| [Nome do campo] | [tipo de dados]  |                |                   |
-|                 |                  |                |                   |
-
-| **Comandos**         |  **Destino**                   | **Tipo**          |
-| ---                  | ---                            | ---               |
-| [Nome do botão/link] | Atividade/processo de destino  | (default/cancel/  ) |
-|                      |                                |                   |
+| Nome do botão | Atividade/processo de destino | Tipo   |
+|---------------|-------------------------------|--------|
+| finalizar     | Fim do Processo               | default |
