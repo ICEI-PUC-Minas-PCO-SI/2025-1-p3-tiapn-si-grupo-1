@@ -84,9 +84,9 @@ A documentação será feita dentro do próprio sistema, com campos padronizados
 
 ## Modelagem dos processos
 
-- [PROCESSO 1 - Consultar Processos](./processes/processo-1-nome-do-processo.md "Detalhamento do processo 1.")
+- [PROCESSO 1 - Consultar Processos](./processes/processo-to-be-consultar-processos.md "Detalhamento do processo de Consulta.")
 
-- [PROCESSO 2 - Documentar Processos](./processes/processo-2-nome-do-processo.md "Detalhamento do processo 2.")
+- [PROCESSO 2 - Documentar Processos](./processes/processo-to-be-documentar-processos.md "Detalhamento do processo de Documentar.")
 
 
 ## Indicadores de desempenho
