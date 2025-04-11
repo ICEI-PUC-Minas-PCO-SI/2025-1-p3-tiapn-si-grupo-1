@@ -6,8 +6,7 @@ Ao ser modelado no padrão BPMN, o processo passa a ser automatizado e acessíve
 
 ### Modelo BPMN do PROCESSO 1
 
-![Modelo BPMN - Consultar Processos](docs/images/bpmn_to_be_consultar_processo.png)
-
+![Modelo BPMN - Consultar Processos](/docs/images/bpmn_to_be_consultar_processo.png)
 
 ---
 
@@ -56,7 +55,3 @@ Abaixo estão descritas as atividades envolvidas no processo de Consultar Proces
 #### Nome da atividade 3: Fim do Processo 1
 
 Atividade de encerramento automático do processo, sem necessidade de interação do usuário.
-
----
-
-Caso precise que eu gere também a imagem BPMN fictícia para exemplificar esse processo, posso criar uma para você com base nesse fluxo. Deseja isso?
