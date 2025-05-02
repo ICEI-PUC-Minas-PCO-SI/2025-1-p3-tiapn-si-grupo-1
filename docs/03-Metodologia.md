@@ -42,6 +42,12 @@ Discuta como a configuração do projeto foi feita na ferramenta de versionament
 - Planejamento comercial: Gabriella Paz e Rogério Gabriel
 - Modelagem de Processos de Negócios: Victor Alves e Felipe Roque
 
+#### Sprint 3
+- _Scrum master_: Mateus Botelho 
+- Apresentação e Design: Lucas Borges e Mateus Botelho
+- Diagrama, modelos e Scripts do Banco de dados: Felipe Roque, Gabriella Paz e Rogério Gabriel 
+- Modelagem de Processos de Negócios: Victor Alves e Felipe Roque
+
 ###  Quadro de tarefas
 
 #### Sprint 1
@@ -70,6 +76,20 @@ Atualizado em: 07/04/2025
 | Mateus Botelho      | Apresentação e Roteiro  | 07/04/2025     | 10/04/2025 | ✔️     | 10/04/2025 |
 | Rogério Gabriel     | Diferencial e Monetização  | 04/04/2025     | 10/04/2025 | ✔️    | 10/04/2025 |
 | Victor Alves      | Modelagem BPMN  |  04/04/2025    | 10/04/2025 | ✔️   |  06/04/2025      |
+
+
+#### Sprint 3
+
+Atualizado em: 02/05/2025
+
+| Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
+| :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
+| Felipe Roque      | Modelo Lógico e Scripts do Banco de dados | 04/04/2025     | 10/04/2025 | 📝  | 10/04/2025      |
+| Gabriella Paz     |  Diagrama de classes e Scripts do Banco de dados | 25/04/2025     | 10/04/2025 | 📝    |  10/04/2025     |
+| Lucas Borges      | Apresentação e Roteiro  | 07/04/2025     | 10/04/2025 | 📝     | 10/04/2025    |
+| Mateus Botelho    | Apresentação e Roteiro  | 07/04/2025     | 10/04/2025 | 📝     | 10/04/2025 |
+| Rogério Gabriel   |Modelo Conceitual e Scripts do Banco de dados | 04/04/2025     | 10/04/2025 | 📝    | 10/04/2025 |
+| Victor Alves      | Modelagem BPMN  |  04/04/2025    | 10/04/2025 | 📝   |  06/04/2025      |
 
 
 Legenda:
