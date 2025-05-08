@@ -21,24 +21,13 @@ O diagrama de classes ilustra graficamente a estrutura do software e como cada u
 
 O Modelo Entidade-Relacionamento (MER) do KnowFlow Process apresenta uma representação conceitual da estrutura de dados do sistema. Ele define as entidades principais, bem como seus respectivos atributos e relacionamentos. O MER abstrai detalhes técnicos e foca na lógica do negócio, sendo fundamental para garantir uma base sólida e coerente na construção do banco de dados, promovendo uma visão clara e estruturada das informações que o sistema irá manipular.
 
-![Modelo Entidade-Relacionamento](images/MER_KnowFlow.png)
+![Modelo Entidade-Relacionamento](images/MERKnowFlow.png)
 
-### Diagrama Entidade-Relacionamento (DER)
+### Esquema relacional - Diagrama Entidade-Relacionamento (DER)
 
 O Diagrama Entidade-Relacionamento (DER) do KnowFlow Process traduz o modelo conceitual em uma estrutura lógica que será aplicada ao banco de dados. Utilizando a notação "pé de galinha", o DER detalha as entidades, seus atributos, chaves primárias e estrangeiras, bem como os tipos de relacionamentos entre elas. Através dele, é possível visualizar como os dados serão organizados, interligados e armazenados no sistema, garantindo a integridade referencial e a eficiência nas operações do banco de dados.
 
 ![Diagrama Entidade-Relacionamento](images/DER_KnowFlow.png)
-
-### Esquema relacional
-
-O Esquema Relacional corresponde à representação dos dados em tabelas juntamente com as restrições de integridade e chave primária.
- 
-
-![Exemplo de um modelo relacional](images/modelo_relacional.png "Exemplo de modelo relacional.")
----
-
-> **Links úteis**:
-> - [Criando um modelo relacional - documentação da IBM](https://www.ibm.com/docs/pt-br/cognos-analytics/12.0.0?topic=designer-creating-relational-model)
 
 ### Modelo físico
 
