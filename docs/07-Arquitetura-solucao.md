@@ -17,18 +17,17 @@ O diagrama de classes ilustra graficamente a estrutura do software e como cada u
 
 ##  Modelo de dados
 
-O desenvolvimento da solução proposta requer a existência de bases de dados que permitam realizar o cadastro de dados e os controles associados aos processos identificados, assim como suas recuperações.
+### Modelo Entidade-Relacionamento (MER)
 
-Utilizando a notação do DER (Diagrama Entidade-Relacionamento), elabore um modelo, usando alguma ferramenta, que contemple todas as entidades e atributos associados às atividades dos processos identificados. Deve ser gerado um único DER que suporte todos os processos escolhidos, visando, assim, uma base de dados integrada. O modelo deve contemplar também o controle de acesso dos usuários (partes interessadas nos processos) de acordo com os papéis definidos nos modelos do processo de negócio.
+O Modelo Entidade-Relacionamento (MER) do KnowFlow Process apresenta uma representação conceitual da estrutura de dados do sistema. Ele define as entidades principais, bem como seus respectivos atributos e relacionamentos. O MER abstrai detalhes técnicos e foca na lógica do negócio, sendo fundamental para garantir uma base sólida e coerente na construção do banco de dados, promovendo uma visão clara e estruturada das informações que o sistema irá manipular.
 
-Apresente o modelo de dados por meio de um modelo relacional que contemple todos os conceitos e atributos apresentados na modelagem dos processos.
+![Modelo Entidade-Relacionamento](images/MER_KnowFlow.png)
 
-### Modelo ER
+### Diagrama Entidade-Relacionamento (DER)
 
-O Modelo ER representa, por meio de um diagrama, como as entidades (coisas, objetos) se relacionam entre si na aplicação interativa.
+O Diagrama Entidade-Relacionamento (DER) do KnowFlow Process traduz o modelo conceitual em uma estrutura lógica que será aplicada ao banco de dados. Utilizando a notação "pé de galinha", o DER detalha as entidades, seus atributos, chaves primárias e estrangeiras, bem como os tipos de relacionamentos entre elas. Através dele, é possível visualizar como os dados serão organizados, interligados e armazenados no sistema, garantindo a integridade referencial e a eficiência nas operações do banco de dados.
 
-> **Links úteis**:
-> - [Como fazer um diagrama entidade relacionamento](https://www.lucidchart.com/pages/pt/como-fazer-um-diagrama-entidade-relacionamento)
+![Diagrama Entidade-Relacionamento](images/DER_KnowFlow.png)
 
 ### Esquema relacional
 
