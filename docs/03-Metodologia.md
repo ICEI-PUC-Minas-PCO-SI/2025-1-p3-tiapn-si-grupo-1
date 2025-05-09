@@ -86,7 +86,7 @@ Atualizado em: 02/05/2025
 | :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
 | Felipe Roque      | Modelo Lógico e Scripts do Banco de dados | 04/04/2025     | 08/05/2025 | 📝  | 10/04/2025      |
 | Gabriella Paz     |  Diagrama de classes e Scripts do Banco de dados | 25/04/2025     | 08/05/2025 | ✔️    |  05/05/2025     |
-| Lucas Borges      | Apresentação e Roteiro  | 07/04/2025     | 08/05/2025 | 📝     | 10/04/2025    |
+| Lucas Borges      | Apresentação e Roteiro  | 07/04/2025     | 08/05/2025 | ✔️     | 08/05/2025    |
 | Mateus Botelho    | Apresentação e Roteiro  | 07/04/2025     | 08/05/2025 | 📝     | 10/04/2025 |
 | Rogério Gabriel   |Modelo Conceitual e Scripts do Banco de dados | 04/04/2025     | 08/05/2025 | 📝    | 10/04/2025 |
 | Victor Alves      | Modelagem BPMN  |  04/04/2025    | 08/05/2025 | 📝   |  06/04/2025      |
