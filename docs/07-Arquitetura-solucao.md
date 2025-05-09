@@ -89,21 +89,21 @@ CREATE TABLE comentario_postagem (
 
 ## Tecnologias
 
-A camada de front-end será desenvolvida utilizando **React** em conjunto com **Vite**, visando a criação de uma SPA (Single Page Application) com carregamento otimizado e boa performance. A interface do usuário será construída com componentes reutilizáveis estilizados por meio de **Styled Components**, aplicando a abordagem CSS-in-JS para isolar escopos de estilo. A biblioteca **Material UI Icons (MUI)** será utilizada para garantir consistência visual e acessibilidade. Para a construção visual de fluxogramas e estruturas interativas, será utilizado o **React Flow**, enquanto a edição de conteúdo rich text dentro dos nós será feita com o **Editor.js**. Todo o desenvolvimento do front será realizado na IDE **Visual Studio Code**.
+A camada de front-end será desenvolvida utilizando React em conjunto com Vite, visando a criação de uma SPA (Single Page Application) com carregamento otimizado e boa performance. A interface do usuário será construída com componentes reutilizáveis estilizados por meio de Styled Components, aplicando a abordagem CSS-in-JS para isolar escopos de estilo. A biblioteca Material UI Icons (MUI) será utilizada para garantir consistência visual e acessibilidade. Para a construção visual de fluxogramas e estruturas interativas, será utilizado o React Flow, enquanto a edição de conteúdo rich text dentro dos nós será feita com o Editor.js. Todo o desenvolvimento do front será realizado na IDE Visual Studio Code.
 
-A camada de back-end será baseada no **Node.js**, utilizando o **Express** como framework principal para criação de uma API RESTful modular e escalável. Os dados serão persistidos em um banco **PostgreSQL**, com o uso do ORM **Sequelize** para facilitar o mapeamento objeto-relacional. Também serão utilizados campos do tipo **JSONB** no banco, possibilitando o armazenamento de dados semiestruturados com flexibilidade. A autenticação será gerenciada com **Firebase Auth**, permitindo a integração direta com o front-end. Em ambientes alternativos, poderá ser adotado o padrão **JWT (JSON Web Token)** para controle de sessões.
+A camada de back-end será baseada no Node.js, utilizando o Express como framework principal para criação de uma API RESTful modular e escalável. Os dados serão persistidos em um banco PostgreSQL, com o uso do ORM Sequelize para facilitar o mapeamento objeto-relacional. Também serão utilizados campos do tipo JSONB no banco, possibilitando o armazenamento de dados semiestruturados com flexibilidade. A autenticação será gerenciada com Firebase Auth, permitindo a integração direta com o front-end. Em ambientes alternativos, poderá ser adotado o padrão JWT (JSON Web Token) para controle de sessões.
 
-Ferramentas como **Postman** e **Insomnia** serão utilizadas para testes de endpoints, autenticação e verificação de payloads da API, garantindo a confiabilidade das rotas durante o processo de desenvolvimento. O versionamento de código será controlado via **Git**, com repositórios hospedados no **GitHub**, permitindo colaboração, histórico de alterações e integração contínua com outras ferramentas.
+Ferramentas como Postman e Insomnia serão utilizadas para testes de endpoints, autenticação e verificação de payloads da API, garantindo a confiabilidade das rotas durante o processo de desenvolvimento. O versionamento de código será controlado via Git, com repositórios hospedados no GitHub, permitindo colaboração, histórico de alterações e integração contínua com outras ferramentas.
 
-| **Dimensão**   | **Tecnologia**                                                                 |
-|----------------|----------------------------------------------------------------------------------|
-| Front-end      | React + Vite + Styled Components + React Flow + Editor.js + MUI Icons          |
-| Back-end       | Node.js + Express                                                              |
-| SGBD           | PostgreSQL + Sequelize + JSONB                                                 |
-| Autenticação   | Firebase Auth + JWT (opcional)                                                 |
-| Testes de API  | Postman + Insomnia                                                             |
-| Versionamento  | Git + GitHub                                                                   |
-| IDE            | Visual Studio Code                                                             |
+| Dimensão       | Tecnologia                                                                    |
+|----------------|--------------------------------------------------------------------------------|
+| Front-end      | React + Vite + Styled Components + React Flow + Editor.js + MUI Icons         |
+| Back-end       | Node.js + Express                                                             |
+| SGBD           | PostgreSQL + Sequelize + JSONB                                                |
+| Autenticação   | Firebase Auth + JWT (opcional)                                                |
+| Testes de API  | Postman + Insomnia                                                            |
+| Versionamento  | Git + GitHub                                                                  |
+| IDE            | Visual Studio Code                                                            |
 
 
 ## Hospedagem
