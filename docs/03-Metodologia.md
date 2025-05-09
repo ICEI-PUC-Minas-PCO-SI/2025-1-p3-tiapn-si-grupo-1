@@ -88,7 +88,7 @@ Atualizado em: 02/05/2025
 | Lucas Borges      | Diagramas e apresentação | 07/04/2025     | 08/05/2025 | ✔️     | 08/05/2025    |
 | Mateus Botelho    | Apresentação e Wireframes | 25/04/2025     | 08/05/2025 | ✔️     | 08/05/2025 |
 | Rogério Gabriel   |Modelo Conceitual e Scripts do Banco de dados | 04/04/2025     | 08/05/2025 | ✔️    | 04/05/2025 |
-| Victor Alves      | Modelagem BPMN  |  04/04/2025    | 08/05/2025 | ✔️   |  08/05/2025      |
+| Victor Alves      | Fluxo de usuário e Jornada de usuário  |  04/04/2025    | 08/05/2025 | ✔️   |  08/05/2025      |
 
 
 Legenda:
