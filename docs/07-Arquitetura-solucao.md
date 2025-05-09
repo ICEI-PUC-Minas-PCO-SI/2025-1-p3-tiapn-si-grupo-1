@@ -98,7 +98,7 @@ Apresente também uma figura explicando como as tecnologias estão relacionadas 
 | ---            | ---             |
 | Front-end      | HTML + CSS + JS + React |
 | Back-end       | Node.js         |
-| SGBD           | MySQL           |
+| SGBD           | Postgres Pgadmin4           |
 | Deploy         | Vercel          |
 
 
