@@ -9,11 +9,10 @@ Visão geral da interação do usuário pelas telas do sistema e protótipo inte
 
  ## User flow
 
-**⚠️ PERGUNTAR A AMALIA SEXTA-FEIRA SOBRE COMO PODEMOS APRESENTAR O USERFLOW NA DOCUMENTAÇÃO ⚠️**
-
 _LINK DO BOARD DE FLUXO DE USUÁRIO: [User flow | Knowflow Process](https://miro.com/app/board/uXjVI82qtag=/?share_link_id=687504854472)_ 
 
-![Exemplo de user flow](images/user_flow.jpg)
+![Exemplo de user flow](https://github.com/user-attachments/assets/119e4a80-1972-4424-bb6b-babf75eba080)
+
 
 > **Links úteis**:
 > - [User flow: o quê é e como fazer?](https://medium.com/7bits/fluxo-de-usu%C3%A1rio-user-flow-o-que-%C3%A9-como-fazer-79d965872534)
