@@ -6,7 +6,7 @@ A arquitetura da solução do KnowFlow é baseada em uma abordagem modular e esc
 
 https://raw.githubusercontent.com/ICEI-PUC-Minas-PCO-SI/2025-1-p3-tiapn-si-grupo-1/refs/heads/main/docs/images/Arquitetura_Solucao.png
 
-![Arquitetura da Solução](images/arquitetura2.png)
+![Arquitetura da Solução](images/Arquitetura_Solucao.png)
 
 
 ## Diagrama de classes
