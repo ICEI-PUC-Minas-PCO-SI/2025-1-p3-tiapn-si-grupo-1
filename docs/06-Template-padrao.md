@@ -4,6 +4,8 @@
 
 Layout padrão da aplicação que será utilizado em todas as páginas com a definição de identidade visual, aspectos de responsividade e iconografia.
 
+![Image](https://github.com/user-attachments/assets/fe0965c5-35a4-4c0f-b874-0c4ad24f5be3)
+
 > **Links úteis**:
 >
 > - [CSS website layout (W3Schools)](https://www.w3schools.com/css/css_website_layout.asp)
