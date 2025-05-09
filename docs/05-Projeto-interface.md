@@ -44,7 +44,11 @@ Visão geral da interação do usuário por meio das telas do sistema. Apresente
 
 ### Tela principal do sistema
 
-Descrição da tela principal do sistema.
+A tela principal do KnowFlow é o hub central de conhecimento da plataforma, onde os usuários têm acesso ao feed de documentações interativas — chamadas de flows. Cada card representa um flow criado por um membro da comunidade, exibindo título, autor, categorias e uma prévia do conteúdo.
+
+Ao clicar em um card, o usuário é direcionado para a visualização completa do flow, com seus nós conectados via React Flow e conteúdos editáveis no Editor.js (caso seja o autor). A tela também permite interações como curtir, comentar e salvar, promovendo engajamento e compartilhamento de conhecimento.
+
+![Wireframe 1](images/Wireframe-1.png)
 
 > Insira aqui a tela principal do sistema
 
