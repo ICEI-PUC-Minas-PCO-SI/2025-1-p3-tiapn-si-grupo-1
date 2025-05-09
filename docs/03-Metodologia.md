@@ -121,4 +121,6 @@ Exemplo: os artefatos do projeto são desenvolvidos a partir de diversas platafo
 | Apresentação                          | Canva                             | <https://www.canva.com/design/DAGhXcOBOm0/xqkdWNETaCVIJVsFPOb_RQ/view?utm_content=DAGhXcOBOm0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfd7f4740ee> |
 | Orquestração de processos (BPM)     | Camunda Platform                   | https://camunda.com/download/modeler/                       |
 | Modelagem do diagrama de casos de uso     | Lucidchart                   | https://www.lucidchart.com/                       |
+| Fluxo de usuário    | Miro                   |     <https://miro.com/app/board/uXjVI82qtag=/?moveToWidget=3458764627525460534&cot=14>   | 
+| Jornada de usuário  | Miro                   |   <https://miro.com/app/board/uXjVI6sPMjo=/?moveToWidget=3458764627590193750&cot=14>     | 
 | Edição de vídeos     | Adobe Premiere Pro                   | https://....                       |
