@@ -31,51 +31,61 @@ O Diagrama Entidade-Relacionamento (DER) do KnowFlow Process traduz o modelo con
 
 ### Modelo físico
 
-Insira aqui o script de criação das tabelas do banco de dados.
-
-Veja um exemplo:
-
 ```sql
--- Criação da tabela Medico
-CREATE TABLE Medico (
-    MedCodigo INTEGER PRIMARY KEY,
-    MedNome VARCHAR(100)
+CREATE TABLE usuario (
+  id UUID PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  senha_hash TEXT NOT NULL,
+  criado_em TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Criação da tabela Paciente
-CREATE TABLE Paciente (
-    PacCodigo INTEGER PRIMARY KEY,
-    PacNome VARCHAR(100)
-);
+CREATE TYPE status_flow AS ENUM ('rascunho');
 
--- Criação da tabela Consulta
-CREATE TABLE Consulta (
-    ConCodigo INTEGER PRIMARY KEY,
-    MedCodigo INTEGER,
-    PacCodigo INTEGER,
-    Data DATE,
-    FOREIGN KEY (MedCodigo) REFERENCES Medico(MedCodigo),
-    FOREIGN KEY (PacCodigo) REFERENCES Paciente(PacCodigo)
+CREATE TABLE flow (
+  id UUID PRIMARY KEY,
+  titulo VARCHAR(150) NOT NULL,
+  descricao TEXT,
+  conteudo_nos JSONB NOT NULL,
+  conteudo_conexoes JSONB NOT NULL,
+  criado_por UUID REFERENCES usuario(id),
+  tags TEXT[] DEFAULT '{}',
+  categoria VARCHAR(100),
+  status status_flow NOT NULL DEFAULT 'rascunho',
+  criado_em TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
-
--- Criação da tabela Medicamento
-CREATE TABLE Medicamento (
-    MdcCodigo INTEGER PRIMARY KEY,
-    MdcNome VARCHAR(100)
+CREATE TABLE comentario (
+  id UUID PRIMARY KEY,
+  usuario_id UUID REFERENCES usuario(id),
+  flow_id UUID REFERENCES flow(id),
+  mensagem TEXT NOT NULL,
+  criado_em TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
-
--- Criação da tabela Prescricao
-CREATE TABLE Prescricao (
-    ConCodigo INTEGER,
-    MdcCodigo INTEGER,
-    Posologia VARCHAR(200),
-    PRIMARY KEY (ConCodigo, MdcCodigo),
-    FOREIGN KEY (ConCodigo) REFERENCES Consulta(ConCodigo),
-    FOREIGN KEY (MdcCodigo) REFERENCES Medicamento(MdcCodigo)
+CREATE TABLE curtida (
+  usuario_id UUID REFERENCES usuario(id),
+  flow_id UUID REFERENCES flow(id),
+  PRIMARY KEY (usuario_id, flow_id)
+);
+CREATE TABLE flow_salvo (
+  usuario_id UUID REFERENCES usuario(id),
+  flow_id UUID REFERENCES flow(id),
+  PRIMARY KEY (usuario_id, flow_id)
+);
+CREATE TABLE postagem_comunidade (
+  id UUID PRIMARY KEY,
+  titulo VARCHAR(150) NOT NULL,
+  conteudo TEXT NOT NULL,
+  criado_por UUID REFERENCES usuario(id),
+  criado_em TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+CREATE TABLE comentario_postagem (
+  id UUID PRIMARY KEY,
+  postagem_id UUID REFERENCES postagem_comunidade(id),
+  usuario_id UUID REFERENCES usuario(id),
+  mensagem TEXT NOT NULL,
+  criado_em TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 ```
-Esse script deverá ser incluído em um arquivo .sql na pasta [de scripts SQL](../src/db).
-
 
 ## Tecnologias
 
