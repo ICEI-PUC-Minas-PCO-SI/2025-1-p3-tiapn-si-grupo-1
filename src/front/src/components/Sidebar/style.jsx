@@ -1,68 +1,60 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
-export const SidebarContainer = styled.div`
-  width: 80px;
-  height: 100vh;
-  background: #fff;
-  border-right: 1px solid #eaeaea;
+export const SidebarContainer = styled.aside`
+  width: 60px;
+  background-color: ${props => props.theme.colors.sidebar};
+  border-right: 1px solid ${props => props.theme.colors.border};
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 0;
-  justify-content: space-between;
-  position: fixed;
+  padding: ${props => props.theme.spacing.md} 0;
 `;
 
-export const Logo = styled.img`
-  width: 36px;
-  margin-bottom: 10px;
-`;
-
-export const Nav = styled.div`
+export const Logo = styled.div`
+  width: 30px;
+  height: 30px;
+  margin-bottom: ${props => props.theme.spacing.lg};
   display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 100%;
-`;
-
-export const NavItem = styled.button`
-  background: none;
-  border: none;
-  width: 100%;
-  font-size: 12px;
-  color: #111;
-  padding: 10px 0;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 4px;
-  cursor: pointer;
-  transition: all 0.2s;
-
-  &.active {
-    color: #233dff;
-    
-    svg {
-      fill: #233dff;
-    }
+  justify-content: center;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
+`;
 
+export const NavItem = styled(Link)`
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${props => props.active ? props.theme.colors.primary : props.theme.colors.textLight};
+  margin-bottom: ${props => props.theme.spacing.xl};
+  border-radius: ${props => props.theme.borderRadius.medium};
+  text-decoration: none;
+  background-color: ${props => props.active ? props.theme.colors.backgroundblue : 'transparent'};
+  
+  
   &:hover {
-    color: #233dff;
-  }
-
-  svg {
-    transition: 0.2s ease;
-  }
-
-  span {
-    font-size: 10px;
+    background-color: ${props => props.theme.colors.background};
   }
 `;
 
-export const Avatar = styled.img`
+export const UserAvatar = styled.div`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  margin: 16px 0;
+  background-color: #ddd;
+  overflow: hidden;
+  margin-top: auto;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;

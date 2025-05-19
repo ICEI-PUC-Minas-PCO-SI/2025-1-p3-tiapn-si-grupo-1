@@ -2,23 +2,34 @@ import { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
   * {
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     font-family: 'Inter', sans-serif;
   }
 
   body {
-    background-color: #f5f6f7;
-    color: #111;
+    background-color: #f5f5f5;
+    color: #333;
   }
 
-  a {
-    text-decoration: none;
-    color: inherit;
+  .app-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .content-area {
+    flex: 1;
+    overflow: auto;
   }
 
   button {
     cursor: pointer;
+  }
+
+  input, textarea {
+    font-family: 'Inter', sans-serif;
   }
 `;
 
