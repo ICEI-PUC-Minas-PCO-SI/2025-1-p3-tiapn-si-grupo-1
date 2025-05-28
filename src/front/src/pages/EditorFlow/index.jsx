@@ -13,7 +13,7 @@ import "reactflow/dist/style.css";
 
 import FlowNode from "../../components/FlowNode";
 import EditorModal from "../../components/EditorModal";
-import Header from "../../components/Header";
+import Header from "../../components/HeaderNodeEditor";
 import RightSidebar from "../../components/RightSidebar";
 import DecisionModal from "../../components/DecisionModal";
 import MediaModal from "../../components/MediaModal";
