@@ -1,18 +1,15 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
-// import Login from '../pages/Login';
-// import Cadastro from '../pages/Cadastro';
-// import RecuperarSenha from '../pages/RecuperarSenha';
+import { Route } from 'react-router-dom';
+import Login from '../pages/Auth/Login';
+import Cadastro from '../pages/Auth/Register';
+import RecuperarSenha from '../pages/Auth/RecuperarSenha';
 
-const AuthRoutes = () => {
-  return (
-    <Routes>
-      {/* Rotas de autenticação */}
-      <Route path="/login" element={<div>Página de Login</div>} />
-      <Route path="/cadastro" element={<div>Página de Cadastro</div>} />
-      <Route path="/recuperar-senha" element={<div>Recuperar Senha</div>} />
-    </Routes>
-  );
-};
+const AuthRoutes = () => (
+  <>
+    <Route path="/login" element={<Login />} />
+    <Route path="/cadastro" element={<Cadastro />} />
+    <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+  </>
+);
 
 export default AuthRoutes;
