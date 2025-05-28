@@ -5,7 +5,7 @@ export const Container = styled.div`
   form {
     display: flex;
     flex-direction: column;
-    max-width: 700px;
+    max-width: 800px;
     padding: ${props => props.theme.spacing.xl};
   }
 `;
@@ -14,7 +14,7 @@ export const Header = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: ${props => props.theme.spacing.xl};
+  padding: ${props => props.theme.spacing.md};
   border-bottom: 1px solid ${props => props.theme.colors.border};
   background-color: ${props => props.theme.colors.white};
 `;

@@ -31,6 +31,13 @@ const GlobalStyle = createGlobalStyle`
   input, textarea {
     font-family: 'Inter', sans-serif;
   }
+
+  .react-flow__node {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
 `;
 
 export default GlobalStyle;
