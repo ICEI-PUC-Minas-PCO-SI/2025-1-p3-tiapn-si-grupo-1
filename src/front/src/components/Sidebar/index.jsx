@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { ArrowDownUp, Plus, Users, User } from 'lucide-react';
 import { SidebarContainer, Logo, NavItem, UserAvatar } from './style';
-import logoImage from '../../../public/assets/kf-logo.png'; // Ajuste o caminho conforme necessário
+import logoImage from '../../../assets/kf-logo.png';
 
 const Sidebar = () => {
   const location = useLocation();

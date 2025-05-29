@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import Landing from '../pages/Auth/Landing';
-import AppRoutes from './AppRoutes';
+import FlowRoutes from './FlowRoutes';
 import AuthRoutes from './AuthRoutes';
 import CommunityRoutes from './CommunityRoutes';
 
@@ -15,7 +15,7 @@ const MainRoutes = () => (
     {AuthRoutes()}
 
     {/* Rotas autenticadas */}
-    {AppRoutes()}
+    {FlowRoutes()}
     {CommunityRoutes()}
   </Routes>
 );
