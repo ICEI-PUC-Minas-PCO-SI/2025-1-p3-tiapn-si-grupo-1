@@ -21,6 +21,7 @@
     "@editorjs/table": "^2.4.5",
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.9.0",
+    "gsap": "^3.13.0",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
