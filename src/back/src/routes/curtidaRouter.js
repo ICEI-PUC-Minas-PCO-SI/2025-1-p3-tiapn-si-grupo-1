@@ -8,6 +8,6 @@ router.use(autenticarToken);
 router.post('/', curtidaController.criar);
 router.get('/', curtidaController.listar);
 router.get('/:id', curtidaController.obter);
-router.delete('/:id', curtidaController.deletar);
+router.delete('/:id', curtidaController.remover);
 
 module.exports = router;
