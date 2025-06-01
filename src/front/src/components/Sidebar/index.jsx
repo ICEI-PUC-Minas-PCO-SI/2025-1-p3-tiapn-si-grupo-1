@@ -1,42 +1,34 @@
-import React from "react";
-import { SidebarContainer, Logo, Nav, NavItem, Avatar } from "./style";
-import { Plus, Workflow, Users, User, LogOut } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import { ArrowDownUp, Plus, Users, User } from 'lucide-react';
+import { SidebarContainer, Logo, NavItem, UserAvatar } from './style';
+import logoImage from '../../../assets/kf-logo.png';
 
 const Sidebar = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    const isActive = (path) => location.pathname === path;
-
-    return (
-        <SidebarContainer>
-            <Logo src="../../assets/kf-logo.png" alt="KnowFlow" />
-
-            <Nav>
-                <NavItem onClick={() => navigate("/criar-flow")} className={isActive("/criar-flow") ? "active" : ""}>
-                    <Plus size={20} />
-                </NavItem>
-                <NavItem onClick={() => navigate("/")} className={isActive("/") ? "active" : ""}>
-                    <Workflow size={20} />
-                </NavItem>
-                <NavItem onClick={() => navigate("/comunidade")} className={isActive("/comunidade") ? "active" : ""}>
-                    <Users size={20} />
-                </NavItem>
-                <NavItem onClick={() => navigate("/perfil")} className={isActive("/perfil") ? "active" : ""}>
-                    <User size={20} />
-                </NavItem>
-            </Nav>
-
-            <div className="bottom">
-                <NavItem>
-                    <LogOut size={20} />
-                    <span>Sair</span>
-                </NavItem>
-                <Avatar src="https://i.pravatar.cc/40" alt="avatar" />
-            </div>
-        </SidebarContainer>
-    );
+  const location = useLocation();
+  
+  return (
+    <SidebarContainer>
+      <Logo>
+        <img src={logoImage || "/placeholder.svg"} alt="KnowFlow Logo" />
+      </Logo>
+      <NavItem to="/criar-flow" active={location.pathname === '/criar-flow' ? 1 : 0}>
+        <Plus size={20} />
+      </NavItem>
+      <NavItem to="/compartilhados" active={location.pathname === '/compartilhados' ? 1 : 0}>
+        <ArrowDownUp size={20} />
+      </NavItem>
+      <NavItem to="/compartilhados" active={location.pathname === '/compartilhados' ? 1 : 0}>
+        <Users size={20} />
+      </NavItem>
+      <NavItem to="/compartilhados" active={location.pathname === '/compartilhados' ? 1 : 0}>
+        <User size={20} />
+      </NavItem>
+      <UserAvatar>
+        <img src="/placeholder-user.jpg" alt="Avatar do usuário" />
+      </UserAvatar>
+    </SidebarContainer>
+  );
 };
 
 export default Sidebar;

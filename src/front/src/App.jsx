@@ -1,21 +1,34 @@
-import { Routes, Route } from 'react-router-dom';
-// import Home from './pages/Home';
-// import Login from './pages/Login';
-// import Cadastro from './pages/Cadastro';
-import CreateFlow from './pages/CreateFlow/index';
-// import VerFlow from './pages/VerFlow';
-// import Comunidade from './pages/Comunidade';
+import { BrowserRouter as Router, useLocation } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './styles/GlobalStyle';
+import { theme } from './styles/theme';
+import Sidebar from './components/Sidebar';
+import MainRoutes from './routes';
+
+function LayoutWrapper() {
+  const location = useLocation();
+  const hideSidebarOn = ['/', '/login', '/cadastro', '/recuperar-senha'];
+
+  const hideSidebar = hideSidebarOn.includes(location.pathname);
+
+  return (
+    <div className="app-container">
+      {!hideSidebar && <Sidebar />}
+      <main className="content-area">
+        <MainRoutes />
+      </main>
+    </div>
+  );
+}
 
 function App() {
   return (
-    <Routes>
-      {/* <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/cadastro" element={<Cadastro />} /> */}
-      <Route path="/criar-flow" element={<CreateFlow />} />
-      {/* <Route path="/flow/:id" element={<VerFlow />} />
-      <Route path="/comunidade" element={<Comunidade />} /> */}
-    </Routes>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <Router>
+        <LayoutWrapper />
+      </Router>
+    </ThemeProvider>
   );
 }
 
