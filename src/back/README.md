@@ -20,12 +20,12 @@ Este repositório contém arquivos necessarios para usar as rotas do projeto kno
 1 - Crie uma pasta no seu computador chamada Knowflow 
 
 ```
-![Pasta Criada](\docs\images\pasta_criada.png)
+![Pasta Criada](images/pasta_criada.png)
 
 
 1. **Clone o repositório**
 2 - Abra seu Editor de Código nesta pasta vazia.
-    ![Mudar de Pasta](\docs\images\mude_pasta.png)
+    ![Mudar de Pasta](images/mude_pasta.png)
 
 3 - Faça o clone com o comando: 
     git clone https://github.com/ICEI-PUC-Minas-PCO-SI/2025-1-p3-tiapn-si-grupo-1.git .
