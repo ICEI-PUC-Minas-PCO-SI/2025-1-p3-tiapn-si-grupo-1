@@ -18,8 +18,12 @@ Este repositório contém arquivos necessarios para usar as rotas do projeto kno
 
 ```bash
 1 - Crie uma pasta no seu computador chamada Knowflow 
-    ![Pasta Criada](\docs\images\pasta_criada.png)
 
+```
+![Pasta Criada](\docs\images\pasta_criada.png)
+
+
+1. **Clone o repositório**
 2 - Abra seu Editor de Código nesta pasta vazia.
     ![Mudar de Pasta](\docs\images\mude_pasta.png)
 
