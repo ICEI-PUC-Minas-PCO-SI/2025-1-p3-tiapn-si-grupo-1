@@ -4,9 +4,8 @@
 
 A arquitetura da solução do KnowFlow é baseada em uma abordagem modular e escalável, dividida em três camadas principais: frontend, backend e banco de dados, além de um ambiente de hospedagem em nuvem para garantir acessibilidade e performance.
 
-https://raw.githubusercontent.com/ICEI-PUC-Minas-PCO-SI/2025-1-p3-tiapn-si-grupo-1/refs/heads/main/docs/images/Arquitetura_Solucao.png
 
-![Arquitetura da Solução](images/Arquitetura_Solucao.png)
+![Arquitetura da Solução](images/arquitetura_solucao.png)
 
 
 ## Diagrama de classes
