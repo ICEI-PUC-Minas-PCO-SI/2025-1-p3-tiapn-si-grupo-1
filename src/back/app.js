@@ -4,6 +4,8 @@ const { sequelize } = require('./src/models');
 const usuarioRoutes = require('./src/routes/usuarioRoutes');
 const flowRoutes = require('./src/routes/flowRoutes');
 const comentarioRoutes = require('./src/routes/comentarioRoutes');
+const flowSalvoRoutes = require('./routes/flowSalvoRoutes');
+const curtidaRoutes = require('./routes/curtidaRoutes');
 
 const app = express();
 
@@ -13,6 +15,8 @@ app.use(express.json());
 app.use('/api/usuario', usuarioRoutes);
 app.use('/api/flow', flowRoutes);
 app.use('/api/comentario', comentarioRoutes)
+app.use('/flowsalvos', flowSalvoRoutes);
+app.use('/curtidas', curtidaRoutes);
 
 app.get('/', (req, res) => {
   res.send('A API do KnowFlow está rodando 🤩!');
