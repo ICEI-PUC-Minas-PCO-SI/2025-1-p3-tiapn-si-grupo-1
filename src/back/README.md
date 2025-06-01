@@ -5,8 +5,6 @@ Este repositório contém arquivos necessarios para usar as rotas do projeto kno
 
 ## 🚀 Instalação e Execução
 
-1. **Clone o repositório**
-
 ```bash
 1 - Crie uma pasta no seu computador chamada Knowflow 
 
@@ -14,7 +12,10 @@ Este repositório contém arquivos necessarios para usar as rotas do projeto kno
 ![Pasta Criada](../../docs/images/pasta_criada.png)
 
 
-2. **Abra seu Editor de Código nesta pasta vazia**
+```bash
+2. Abra seu Editor de Código nesta pasta vazia
+
+```
 
 ![Mudar de Pasta](../../docs/images/mude_pasta.png)
 
