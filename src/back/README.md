@@ -21,8 +21,19 @@ Este repositório contém arquivos necessarios para usar as rotas do projeto kno
 
 
 
-3 - Faça o clone com o comando: 
+```bash
+2. Faça o clone com o comando: 
+    
+```
+
+```bash
     git clone https://github.com/ICEI-PUC-Minas-PCO-SI/2025-1-p3-tiapn-si-grupo-1.git .
+```
+
+
+
+3 - Faça o clone com o comando: 
+    
     * Lembre-se caso nao use o . no final do comando, use o cd para dentro da pasta criada.
 
 4 - Certifique-se no seu terminal que você possui NodeJs instalado com o comando:
