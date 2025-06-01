@@ -93,3 +93,5 @@ const curtidaController = {
     }
   },
 };
+
+module.exports = curtidaController;
