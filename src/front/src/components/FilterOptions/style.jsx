@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Shapes, Hash, UserPen } from "lucide-react";
 
 export const FilterWrapper = styled.div`
-  //border: 1px solid #46a72e;
   display: flex;
   flex-direction: column;
   gap: 12px;
