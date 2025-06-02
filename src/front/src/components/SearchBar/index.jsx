@@ -10,8 +10,12 @@ import { Form, Input, IconWrapper, InputWrapper } from "./style";
 export default function SearchBar() {
   const [description, setDescription] = useState("");
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <Form onSubmit={(e) => setDescription(e.target.value)}>
+    <Form onSubmit={handleSubmit}>
       <InputWrapper>
         <IconWrapper>
           <Search size={20} />

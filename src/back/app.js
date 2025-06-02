@@ -35,8 +35,8 @@ app.use('/api/curtidas', curtidaRoutes);
 app.use('/api/comentariopostagem', comentarioPostagemRoutes);
 app.use('/api/postagem', postagemComunidadeRoutes);
 
-app.get('/', (req, res) => {
-  res.send('A API do KnowFlow está rodando 🤩!');
+app.get("/", (req, res) => {
+  res.send("A API do KnowFlow está rodando 🤩!");
 });
 
 sequelize.sync({ alter: true })
@@ -48,5 +48,5 @@ sequelize.sync({ alter: true })
     });
   })
   .catch((err) => {
-    console.error('Erro ao sincronizar o banco:', err);
+    console.error("Erro ao sincronizar o banco:", err);
   });
