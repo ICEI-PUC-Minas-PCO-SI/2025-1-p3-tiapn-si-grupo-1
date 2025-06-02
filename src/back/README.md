@@ -1,7 +1,9 @@
 
-# 🧪 KnowFlow Process - Teste do Backend
+# 🧪  KnowFlow Backend - Ambiente de Teste e Execução
 
-Este repositório contém arquivos necessarios para usar as rotas do projeto knowflow
+
+Este repositório contém os arquivos necessários para rodar o backend do projeto **KnowFlow**, incluindo configuração do ambiente, dependências e coleção Postman para testar as rotas da API.
+
 
 ## 🚀 Instalação e Execução
 
@@ -66,10 +68,16 @@ JWT_SECRET={FRASE_SEGURA}
 
 1 - Instale na sua maquina o Postman ou algum Client Http e importe o arquivo de Collection abaixo:
 
-Postman : (https://www.postman.com/downloads/)
-Insomnia : (https://insomnia.rest/download)
+- Postman : (https://www.postman.com/downloads/)
+- Insomnia : (https://insomnia.rest/download)
 
 
 ## 📬 Importar coleção Postman
 
-➡️ [Clique aqui para baixar a coleção Postman](./postman/minha-colecao.postman_collection.json)
+➡️ [Clique aqui para baixar a coleção Postman](./postman/knowflow_collection.json)
+
+Essa coleção contém exemplos de requisições prontas para testar todas as rotas do projeto.  
+
+
+
+## 👽 
