@@ -22,6 +22,10 @@ export const LogoContainer = styled.div`
     width: auto;
     margin-left: 5px
   }
+
+  &:hover {
+    transform: scale(1.02); 
+  }
 `
 
 export const Nav = styled.nav`
@@ -36,6 +40,7 @@ export const NavItem = styled.a`
   color: #565656;
   transition: color 0.2s;
   font-family: 'Inter', sans-serif;
+  text-decoration: none;
 
 
 
@@ -59,6 +64,7 @@ export const LoginButton = styled.a`
   font-weight: 600;
   color: #565656;
   transition: color 0.2s;
+  text-decoration: none;
 
 
     &:hover {
@@ -77,6 +83,7 @@ export const SignUpButton = styled.a`
   font-weight: 500;
   background-color: #233DFF;
   font-size: 15px;
+  text-decoration: none;
 
   &:hover {
     transform: scale(1.05); 

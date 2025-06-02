@@ -38,6 +38,7 @@ export const SignUpButton = styled.a`
   font-size: 15px;
   font-family: 'Inter', sans-serif;
   margin-bottom: 2rem;
+  text-decoration: none;
 
     &:hover {
     transform: scale(1.05); 

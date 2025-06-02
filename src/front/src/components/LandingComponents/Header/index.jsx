@@ -5,7 +5,9 @@ const Header = () => {
   return (
     <HeaderContainer>
       <LogoContainer>
-        <img src="/KnowFlow-Logo.png" alt="KnowFlow Logo" />
+        <a href="/">
+          <img src="/KnowFlow-Logo.png" alt="KnowFlow Logo" />
+        </a>
       </LogoContainer>
       <Nav>
         <NavItem href="#">Features</NavItem>
