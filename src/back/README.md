@@ -74,7 +74,10 @@ JWT_SECRET={FRASE_SEGURA}
 
 ## 📬 Importar coleção Postman
 
-➡️ [Clique aqui para baixar a coleção Postman](./postman/knowflow_collection.json)
+➡️ [Clique aqui para visualizar a coleção Postman](./postman/knowflow_collection.json)
+
+📥 [Clique aqui para baixar a coleção Postman](https://raw.githubusercontent.com/ICEI-PUC-Minas-PCO-SI/2025-1-p3-tiapn-si-grupo-1/developer/src/back/postman/knowflow_collection.json)
+
 
 Essa coleção contém exemplos de requisições prontas para testar todas as rotas do projeto.  
 
