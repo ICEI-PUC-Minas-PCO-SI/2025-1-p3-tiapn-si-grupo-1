@@ -65,12 +65,11 @@ JWT_SECRET={FRASE_SEGURA}
 ## 📖 Testes
 
 1 - Instale na sua maquina o Postman ou algum Client Http e importe o arquivo de Collection abaixo:
-    (https://www.postman.com/downloads/)
-    (https://insomnia.rest/download)
+
+Postman : (https://www.postman.com/downloads/)
+Insomnia : (https://insomnia.rest/download)
 
 
 ## 📬 Importar coleção Postman
-
-Você pode importar essa coleção no [Postman](https://www.postman.com/) ou outro cliente HTTP compatível.
 
 ➡️ [Clique aqui para baixar a coleção Postman](./postman/minha-colecao.postman_collection.json)
