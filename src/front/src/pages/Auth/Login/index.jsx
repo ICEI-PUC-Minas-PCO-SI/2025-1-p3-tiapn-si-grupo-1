@@ -1,15 +1,13 @@
-import { Container, Form, Input, Button, Title } from "./style";
+import HeaderLogin from "../../../components/LoginComponents/HeaderLogin";
+import MainLogin from "../../../components/LoginComponents/MainLogin";
+
 
 const Login = () => {
-  return (
-    <Container>
-      <Form>
-        <Title>Entrar</Title>
-        <Input type="email" placeholder="Email" />
-        <Input type="password" placeholder="Senha" />
-        <Button>Login</Button>
-      </Form>
-    </Container>
+  return (  
+   <>
+    <HeaderLogin/>
+    <MainLogin/>
+   </>
   );
 };
 
