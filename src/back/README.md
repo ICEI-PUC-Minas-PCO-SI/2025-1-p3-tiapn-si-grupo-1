@@ -40,7 +40,7 @@ https://nodejs.org/dist/v22.16.0/node-v22.16.0-x64.msi
 cd src/back
 ```
 
-7 - Apos isso instale as dependencias do projeto:
+7 - Apos isso instale as dependências do projeto:
 
 ```
 npm install
@@ -48,7 +48,7 @@ npm install
 
 7 - Crie um Arquivo .env na raiz da pasta back:
 
-![Criando o Env](\docs\images\create_env.png)
+![Criando o Env](../../docs/images/create_env.png)
 
 8 - Coloque o conteudo no arquivo .env ou dados do seu Postgres:
 ```bash
