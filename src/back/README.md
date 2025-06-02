@@ -42,7 +42,7 @@ https://nodejs.org/dist/v22.16.0/node-v22.16.0-x64.msi
 cd src/back
 ```
 
-7 - Apos isso instale as dependências do projeto:
+7 - Apos isso instale as dependências do projeto: :package:
 
 ```
 npm install
@@ -81,8 +81,7 @@ JWT_SECRET={FRASE_SEGURA}
 </a>
 
 
-
-Essa coleção contém exemplos de requisições prontas para testar todas as rotas do projeto.  
+- Essa coleção contém exemplos de requisições prontas para testar todas as rotas do projeto.  
 
 
 
