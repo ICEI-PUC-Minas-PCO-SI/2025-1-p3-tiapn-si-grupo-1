@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors'); // 👈 importar o cors
 const { sequelize } = require('./src/models');
 const cors = require("cors");
 
