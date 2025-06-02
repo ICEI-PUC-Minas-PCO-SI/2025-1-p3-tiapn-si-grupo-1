@@ -14,7 +14,6 @@ Este repositório contém arquivos necessarios para usar as rotas do projeto kno
 
 ![Mudar de Pasta](../../docs/images/mude_pasta.png)
 
-
 3 - Faça o clone do repositorio com o comando: 
 
 ```bash
@@ -22,38 +21,44 @@ git clone https://github.com/ICEI-PUC-Minas-PCO-SI/2025-1-p3-tiapn-si-grupo-1.gi
 ```
 
 4 - Certifique-se no seu terminal que você possui NodeJs instalado com o comando:
+
 ```bash
 node -v
-```    
+```
+
 ![Versão node](../../docs/images/node_version.png)
 
-
 5 - Caso não possua realize a instalação pelo link:
+
 ```bash
 https://nodejs.org/dist/v22.16.0/node-v22.16.0-x64.msi
 ``` 
 
 6 - Ainda no diretório Knowflow nave até pasta do back:
+
 ```bash
-    cd src/back
+cd src/back
 ```
-   
+
 7 - Apos isso instale as dependencias do projeto:
+
 ```
-    npm install
+npm install
 ```
 
 7 - Crie um Arquivo .env na raiz da pasta back:
-    ![Criando o Env](\docs\images\create_env.png)
-    
-8 - Coloque o conteudo no arquivo .env:
+
+![Criando o Env](\docs\images\create_env.png)
+
+8 - Coloque o conteudo no arquivo .env ou dados do seu Postgres:
 ```bash
-DATABASE_NAME=knowflow-db
-DATABASE_USER=postgres
-DATABASE_PASSWORD=senha_txt_do_zip
-DATABASE_HOST=
 DATABASE_DIALECT=postgres
-JWT_SECRET=knowflow_super_seguro_123
+PGHOST={HOST}
+PGUSER={USER}
+PGPORT={PORT}
+PGDATABASE={DATABASE_NAME}
+PGPASSWORD={DATABASE_PASSWORD}
+JWT_SECRET={FRASE_SEGURA}
 ```
 
 
