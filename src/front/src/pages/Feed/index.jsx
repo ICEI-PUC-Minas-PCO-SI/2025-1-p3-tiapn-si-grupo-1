@@ -11,20 +11,24 @@ import {
   FilterIcon,
   FilterTitle,
 } from "./style";
-import axios from "axios";
+import axios from "axios"; //responsável pela comunicação com as APIs
 
 export default function Feed() {
+  //STATE que armazena todos os filtros disponíveis
   const [filtros, setFiltros] = useState({
     categorias: [],
     tags: [],
     autores: [],
   });
 
+  //STATE que mantém os flows a serem exibidos no feed
   const [flows, setFlows] = useState([]);
 
   useEffect(() => {
-    async function fetchFiltros() {
-      console.log("Desgraça");
+    //Codígo que será executado após a renderização
+
+    async function fetchFiltros() { 
+      //CONSULTAR API DE FILTROS
       try {
         const response = await axios.get("http://localhost:3000/api/filtros");
         setFiltros(response.data);
@@ -33,6 +37,7 @@ export default function Feed() {
       }
     }
 
+    //CONSULTAR API DE FLOWS
     async function fetchFlows() {
       try {
         const response = await axios.get("http://localhost:3000/api/flow");
@@ -54,6 +59,7 @@ export default function Feed() {
         <ScrollFeed>
           {flows.length > 0 ? (
             flows.map((flow) => (
+              //Placeholder de flow cards
               <div
                 key={flow.id}
                 style={{ padding: "20px", border: "1px solid #ccc" }}
@@ -74,7 +80,7 @@ export default function Feed() {
         </ScrollFeed>
       </FlowFeed>
 
-      <FeedFilters>
+      <FeedFilters> 
         <FilterHeader>
           <FilterTitle>
             <FilterIcon />

@@ -8,9 +8,13 @@ import {
   FilterList,
 } from "./style";
 import { useState } from "react";
+
+//Botão para acionar os filtros 
 import Filter from "../Filter";
 
+
 export default function FilterMenu({ filterType, filtros }) {
+  //Define qual o tipo de filtro está sendo disposto na tela
   const type =
     filterType === "Categorias"
       ? "categorias"
@@ -18,8 +22,10 @@ export default function FilterMenu({ filterType, filtros }) {
       ? "tags"
       : "autores";
 
+  //STATE que gerenncia os filtros que estão ativos na tela
   const [filtrosAtivos, setFiltrosAtivos] = useState([]);
 
+  //Alterna o valor dos filtros ativos
   const toggleFiltro = (valor) => {
     setFiltrosAtivos((prev) =>
       prev.includes(valor)
@@ -57,7 +63,7 @@ export default function FilterMenu({ filterType, filtros }) {
             );
           })
         ) : (
-          <p style={{ padding: "8px", color: "#999" }}>Nenhum resultado.</p>
+          <p style={{ padding: "8px", color: "#565656" }}>Nenhum resultado</p>
         )}
       </FilterList>
     </FilterWrapper>
