@@ -4,7 +4,7 @@ import { Funnel } from "lucide-react";
 //elemento que mantém a estrutura da página de feed, divide a página entre flows/filtos
 export const FeedContainer = styled.div`
   width: 100%;
-  //border: 2px solid #233dff;
+  height: calc(100vh - 35px); /* altura total da viewport */
   display: flex;
   padding: 30px;
   justify-content: space-between;
@@ -15,7 +15,7 @@ export const FeedContainer = styled.div`
 //Organiza e distribui os flows publicados
 export const FlowFeed = styled.div`
   width: 60%;
-  //border: 2px solid #23b9ff;
+  height: calc(100vh - 35px);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -23,7 +23,8 @@ export const FlowFeed = styled.div`
 `;
 
 export const ScrollFeed = styled.section`
-  border: 2px solid #233dff;
+  flex: 1;
+  overflow-y: auto; /* Permite rolagem vertical */
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -33,7 +34,6 @@ export const ScrollFeed = styled.section`
 //Aside que organiza os elementos disponíveis para filtro
 export const FeedFilters = styled.aside`
   width: 40%;
-  //border: 2px solid #ffc423;
   padding: 20px;
   display: flex;
   flex-direction: column;
