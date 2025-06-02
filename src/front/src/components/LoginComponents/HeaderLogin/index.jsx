@@ -1,9 +1,9 @@
-import { HeaderContainer, LogoContainer, Nav, NavItem, ButtonContainer, LoginButton, SignUpButton } from "./styles"
+import { HeaderContainer, LogoContainer, ButtonContainer, SignUpButton } from "./style"
 import { ChevronRight } from "lucide-react"
 import { Link } from 'react-router-dom';
 
 
-const Header = () => {
+const HeaderLogin = () => {
   return (
     <HeaderContainer>
       <LogoContainer>
@@ -11,15 +11,8 @@ const Header = () => {
           <img src="/KnowFlow-Logo.png" alt="KnowFlow Logo" />
         </a>
       </LogoContainer>
-      <Nav>
-        <NavItem href="#">Features</NavItem>
-        <NavItem href="#">Planos</NavItem>
-        <NavItem href="#">FAQ</NavItem>
-      </Nav>
+ 
       <ButtonContainer>
-        <Link to="/Login"> 
-          <LoginButton>Login</LoginButton>
-        </Link>  
         <Link to="/cadastro"> 
           <SignUpButton>Cadastrar<ChevronRight strokeWidth={3} size={25} /> </SignUpButton>
         </Link> 
@@ -28,4 +21,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default HeaderLogin
