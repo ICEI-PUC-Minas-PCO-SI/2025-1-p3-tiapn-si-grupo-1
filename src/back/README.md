@@ -34,7 +34,7 @@ node -v
 https://nodejs.org/dist/v22.16.0/node-v22.16.0-x64.msi
 ``` 
 
-6 - Ainda no diretório Knowflow nave até pasta do back:
+6 - Ainda no diretório Knowflow navegue até pasta do back:
 
 ```bash
 cd src/back
@@ -46,11 +46,11 @@ cd src/back
 npm install
 ```
 
-7 - Crie um Arquivo .env na raiz da pasta back:
+8 - Crie um Arquivo .env na raiz da pasta back:
 
 ![Criando o Env](../../docs/images/create_env.png)
 
-8 - Coloque o conteudo no arquivo .env ou dados do seu Postgres:
+9 - Coloque o conteudo no arquivo .env ou dados do seu Postgres:
 ```bash
 DATABASE_DIALECT=postgres
 PGHOST={HOST}
@@ -64,7 +64,13 @@ JWT_SECRET={FRASE_SEGURA}
 
 ## 📖 Testes
 
+1 - Instale na sua maquina o Postman ou algum Client Http e importe o arquivo de Collection abaixo:
+    (https://www.postman.com/downloads/)
+    (https://insomnia.rest/download)
 
 
+## 📬 Importar coleção Postman
 
+Você pode importar essa coleção no [Postman](https://www.postman.com/) ou outro cliente HTTP compatível.
 
+➡️ [Clique aqui para baixar a coleção Postman](./postman/minha-colecao.postman_collection.json)
