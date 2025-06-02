@@ -11,11 +11,11 @@ const HeaderRegister = () => {
           <img src="/KnowFlow-Logo.png" alt="KnowFlow Logo" />
         </a>
       </LogoContainer>
- 
+
       <ButtonContainer>
-        <Link to="/cadastro"> 
+        <Link to="/cadastro">
           <SignUpButton>Login<ChevronRight strokeWidth={3} size={25} /> </SignUpButton>
-        </Link> 
+        </Link>
       </ButtonContainer>
     </HeaderContainer>
   )

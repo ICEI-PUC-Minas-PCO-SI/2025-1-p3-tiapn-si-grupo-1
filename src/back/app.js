@@ -1,10 +1,17 @@
 const express = require('express');
+const cors = require('cors'); // 👈 importar o cors
 const { sequelize } = require('./src/models');
 
 const usuarioRoutes = require('./src/routes/usuarioRoutes');
 const flowRoutes = require('./src/routes/flowRoutes');
 
 const app = express();
+
+// Habilitar CORS
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 
 app.use(express.json());
 
