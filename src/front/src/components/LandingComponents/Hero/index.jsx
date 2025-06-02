@@ -12,7 +12,7 @@ const Hero = () => {
                 <Heading>
                 vamos <strong>transformar</strong> o jeito como sua<br />
                 empresa acessa o próprio<br />
-                conhecimento?
+                conhecimento ?
                 </Heading>
                 <Link to="/cadastro"> 
                     <SignUpButton >Cadastrar <ChevronRight strokeWidth={3} size={25} /></SignUpButton>

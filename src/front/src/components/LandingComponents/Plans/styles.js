@@ -28,13 +28,14 @@ export const ThreeColumnContainerPlan = styled.div`
     padding: 2rem;
     z-index: 2;
     margin-top: 119rem;
+    width: 90%;
 `
 
 export const CardPlans = styled.div`
   background-color: #fff;
   border-radius: 12px;
   padding: 2rem;
-  width: 400px;
+  width: 28rem;
   height: 520px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   text-align: left;

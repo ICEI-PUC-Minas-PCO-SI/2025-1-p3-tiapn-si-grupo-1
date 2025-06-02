@@ -1,5 +1,5 @@
 import styled from "styled-components"
-
+import { Link } from 'react-router-dom';
 
 export const HeaderContainer = styled.header`
   display: flex;
@@ -11,12 +11,19 @@ export const HeaderContainer = styled.header`
   margin: 0 auto;
   height: 100px;
 
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
+  }
 `
 
 export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
-  
+
   img {
     height: 55px; 
     width: auto;
@@ -32,6 +39,10 @@ export const Nav = styled.nav`
   display: flex;
   gap: 5rem;
 
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
 `
 
 export const NavItem = styled.a`
@@ -42,9 +53,7 @@ export const NavItem = styled.a`
   font-family: 'Inter', sans-serif;
   text-decoration: none;
 
-
-
-    &:hover {
+  &:hover {
     transform: scale(1.10); 
   }
 `
@@ -54,7 +63,18 @@ export const ButtonContainer = styled.div`
   align-items: center;
   gap: 2.5rem;
   font-weight: 600;
-  
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.8rem;
+  }
 `
 
 export const LoginButton = styled.a`
@@ -66,16 +86,29 @@ export const LoginButton = styled.a`
   transition: color 0.2s;
   text-decoration: none;
 
-
-    &:hover {
+  &:hover {
     transform: scale(1.10); 
   }
 
+  @media (max-width: 480px) {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem 1rem;
+  }
 `
+
+export const StyledLink = styled(Link)`
+  text-decoration: none;
+
+  &:hover {
+    transform: scale(1.05); 
+  }
+`;
 
 export const SignUpButton = styled.a`
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   padding: 0.8rem 1.5rem;
   color: white;
   border-radius: 20px;
@@ -89,4 +122,8 @@ export const SignUpButton = styled.a`
     transform: scale(1.05); 
   }
 
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 0.8rem 1rem;
+  }
 `

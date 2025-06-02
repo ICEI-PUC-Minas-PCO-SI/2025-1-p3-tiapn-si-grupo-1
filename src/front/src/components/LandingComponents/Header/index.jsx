@@ -1,4 +1,4 @@
-import { HeaderContainer, LogoContainer, Nav, NavItem, ButtonContainer, LoginButton, SignUpButton } from "./styles"
+import { HeaderContainer, LogoContainer, Nav, NavItem, ButtonContainer, LoginButton, SignUpButton, StyledLink} from "./styles"
 import { ChevronRight } from "lucide-react"
 import { Link } from 'react-router-dom';
 
@@ -17,11 +17,11 @@ const Header = () => {
         <NavItem href="#">FAQ</NavItem>
       </Nav>
       <ButtonContainer>
-        <Link to="/Login"> 
+        <StyledLink to="/Login">
           <LoginButton>Login</LoginButton>
-        </Link>  
+        </StyledLink> 
         <Link to="/cadastro"> 
-          <SignUpButton>Cadastrar<ChevronRight strokeWidth={3} size={25} /> </SignUpButton>
+          <SignUpButton>Cadastrar  <ChevronRight strokeWidth={3} size={25} /> </SignUpButton>
         </Link> 
       </ButtonContainer>
     </HeaderContainer>
