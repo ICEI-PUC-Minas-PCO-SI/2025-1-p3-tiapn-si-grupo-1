@@ -33,13 +33,33 @@ node -v
 https://nodejs.org/dist/v22.16.0/node-v22.16.0-x64.msi
 ``` 
 
-
-6 - Ainda no diretório Knowflow faça o comando:
+6 - Ainda no diretório Knowflow nave até pasta do back:
+```bash
+    cd src/back
+```
+   
+7 - Apos isso instale as dependencias do projeto:
+```
     npm install
+```
 
 7 - Crie um Arquivo .env na raiz da pasta back:
     ![Criando o Env](\docs\images\create_env.png)
     
+8 - Coloque o conteudo no arquivo .env:
+```bash
+DATABASE_NAME=knowflow-db
+DATABASE_USER=postgres
+DATABASE_PASSWORD=senha_txt_do_zip
+DATABASE_HOST=
+DATABASE_DIALECT=postgres
+JWT_SECRET=knowflow_super_seguro_123
+```
 
 
 ## 📖 Testes
+
+
+
+
+

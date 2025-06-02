@@ -1,10 +1,17 @@
+require('dotenv').config();
 module.exports = {
     development: {
-      username: 'postgres',
-      password: 'root',
-      database: 'knowflow-db',
-      host: '127.0.0.1',
-      dialect: 'postgres'
+      username: process.env.PGUSER,
+      password: process.env.PGPASSWORD,
+      database: process.env.PGDATABASE,
+      host: process.env.PGHOST,
+      port: process.env.PGPORT,
+      dialect: process.env.DATABASE_DIALECT,
+      dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
     }
   };
-  
