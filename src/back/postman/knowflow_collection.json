@@ -76,7 +76,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNhOWI2NGY4LWRjNjQtNGFjZC1hMjRjLTUwZTE2NmZlYzc2OSIsIm5vbWUiOiJVc3VhcmlvIFRlc3RlciIsImlhdCI6MTc0ODgyNTU0MywiZXhwIjoxNzQ5NDMwMzQzfQ.q4DmFKLqkmyF3nOMKLA4TZlXIgTqgtgP17AbUa1xvjU",
+						"value": "Bearer <Seu_Token_Aqui>",
 						"description": "Bearer {auth}",
 						"type": "text"
 					}
