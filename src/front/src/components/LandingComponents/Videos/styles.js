@@ -17,7 +17,6 @@ export const VideoContainer = styled.div`
     video {
     width: 100%;
     border-radius: 12px;
-    outline: none;
   }
 
 `
