@@ -56,7 +56,7 @@ export default function Feed() {
             flows.map((flow) => (
               <div
                 key={flow.id}
-                style={{ padding: "8px", borderBottom: "1px solid #ccc" }}
+                style={{ padding: "20px", border: "1px solid #ccc" }}
               >
                 <h4>{flow.titulo}</h4>
                 <p>{flow.descricao}</p>
