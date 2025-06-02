@@ -59,6 +59,7 @@ export const ThreeColumnContainer = styled.div`
     padding: 2rem;
     z-index: 2;
     margin-top: 72rem;
+    width: 90%;
 `
 
 export const Card = styled.div`
@@ -87,8 +88,8 @@ export const Card = styled.div`
 
 export const DescriptionF = styled.div`
   position: absolute;
-  top: 230vh;
-  right: 100px;
+  top: 103rem;
+  right: 10rem;
   font-size: 16px;
   font-weight: 500;
   max-width: 450px;
