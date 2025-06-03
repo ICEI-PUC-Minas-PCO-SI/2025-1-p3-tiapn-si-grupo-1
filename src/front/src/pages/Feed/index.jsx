@@ -1,7 +1,11 @@
+//componentes externos
 import { useEffect, useState } from "react";
 import ComponentDivider from "../../components/ComponentDivider/Index";
 import SearchBar from "../../components/SearchBar";
 import FilterMenu from "../../components/FilterOptions";
+import FlowCard from "../../components/FlowCard";
+
+//componentes internos
 import {
   FeedContainer,
   FlowFeed,
@@ -27,7 +31,7 @@ export default function Feed() {
   useEffect(() => {
     //Codígo que será executado após a renderização
 
-    async function fetchFiltros() { 
+    async function fetchFiltros() {
       //CONSULTAR API DE FILTROS
       try {
         const response = await axios.get("http://localhost:3000/api/filtros");
@@ -59,20 +63,9 @@ export default function Feed() {
         <ScrollFeed>
           {flows.length > 0 ? (
             flows.map((flow) => (
+              <FlowCard flow={flow} />
+              //Substituir por FlowCard quando estiver pronto
               //Placeholder de flow cards
-              <div
-                key={flow.id}
-                style={{ padding: "20px", border: "1px solid #ccc" }}
-              >
-                <h4>{flow.titulo}</h4>
-                <p>{flow.descricao}</p>
-                <p>
-                  <strong>Categoria:</strong> {flow.categoria}
-                </p>
-                <p>
-                  <strong>Autor:</strong> {flow.usuario?.nome || "Desconhecido"}
-                </p>
-              </div>
             ))
           ) : (
             <p>Carregando flows...</p>
@@ -80,7 +73,7 @@ export default function Feed() {
         </ScrollFeed>
       </FlowFeed>
 
-      <FeedFilters> 
+      <FeedFilters>
         <FilterHeader>
           <FilterTitle>
             <FilterIcon />
