@@ -6,7 +6,7 @@ export const CardLogin = styled.div`
   border-radius: 16px;
   box-shadow: 0 0 10px rgba(0,0,0,0.08);
   max-width: 480px;
-  height: 550px;
+  height: 560px;
   width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -90,12 +90,7 @@ export const Divider = styled.div`
 `;
 
 export const GoogleButton = styled.button`
-  background: #233DFF;
-  color: white;
+  background: transparent;
   border: none;
-  border-radius: 100px;
-  width: 40px;
-  height: 40px;
-  font-size: 20px;
   cursor: pointer;
 `;
