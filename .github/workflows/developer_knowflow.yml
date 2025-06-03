@@ -30,7 +30,7 @@ jobs:
       - name: Zip artifact for deployment
         run: |
           cd src/back
-          zip -r ../../release.zip .
+          zip release.zip ./* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
