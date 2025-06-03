@@ -19,14 +19,17 @@
     "@editorjs/marker": "^1.4.0",
     "@editorjs/quote": "^2.7.6",
     "@editorjs/table": "^2.4.5",
+    "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.9.0",
     "lucide-react": "^0.511.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.0",
     "react-tooltip": "^5.28.1",
     "reactflow": "^11.11.4",
-    "styled-components": "^6.1.18"
+    "styled-components": "^6.1.18",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

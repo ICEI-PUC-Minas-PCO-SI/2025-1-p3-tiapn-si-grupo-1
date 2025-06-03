@@ -1,4 +1,4 @@
-import { Heart, Bookmark, MessageCircle, Ellipsis } from "lucide-react";
+import { Heart, Bookmark, MessageCircle } from "lucide-react";
 import {
   FlowWrapper,
   FlowHat,
@@ -8,6 +8,8 @@ import {
   FlowCategory,
   DaysPublished,
   ActionButton,
+  ActionIcon,
+  FlowPreviewWrapper,
 } from "./style";
 
 export default function FlowCard({ flow }) {
@@ -57,9 +59,14 @@ export default function FlowCard({ flow }) {
         />
         <DaysPublished>{getDaysAgo(flow.criado_em)}</DaysPublished>
         <ActionButton>
-          <Ellipsis />
+          <ActionIcon />
         </ActionButton>
       </FlowHeader>
+
+      <FlowPreviewWrapper>
+        <h2>{flow.titulo}</h2>
+        <p>{flow.descricao ? flow.descricao : "teste"}</p>
+      </FlowPreviewWrapper>
     </FlowWrapper>
   );
 }
