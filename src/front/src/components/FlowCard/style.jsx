@@ -1,5 +1,5 @@
-import React from "react";
 import styled from "styled-components";
+import { Ellipsis } from "lucide-react";
 
 //Flow Wrapper - Envolve o contéudo do FlowCard
 export const FlowWrapper = styled.div`
@@ -34,7 +34,6 @@ export const FlowHeader = styled.header`
   display: flex;
   align-items: center;
   margin-bottom: 10px;
-  border: 1px solid #233dff;
   gap: 4px;
 `;
 
@@ -60,6 +59,7 @@ export const DaysPublished = styled.span`
 `;
 
 //ActionButton - Botão de ação do FlowCard
+//06/03 - O botão ainda não tem funcionalidades definidas, falta desevolver o que ele deve fazer
 export const ActionButton = styled.button`
   width: 24px;
   height: 24px;
@@ -69,24 +69,49 @@ export const ActionButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease-in;
   margin-left: auto; // empurra para o final do flex container
+
+  &:hover {
+    background-color: #d9d9d9;
+  }
 `;
 
-// FlowTitle - Título do FlowCard
+//ActionIcon - Ícone de ação do FlowCard
+export const ActionIcon = styled(Ellipsis)`
+  width: 16px;
+  height: 16px;
+  background-image: url("path/to/ellipsis-icon.svg"); // Substitua pelo caminho do seu ícone
+  background-size: cover;
+`;
 
 //AVATAR - placeholder para a foto de perfil do usuário
 export const Avatar = styled.div`
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background-color: #fff;
-  border: 1px solid #233dff;
-  color: #233dff;
+  background-color: #d9d9d9;
+  color: #fff;
   font-weight: 400;
   font-size: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+//FlowPreviewWapper - Envolve o preview do FlowCard
+export const FlowPreviewWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+`;
+
+//FlowFooter - Rodapé do FlowCard
+export const FlowFooter = styled.footer`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 `;
 
 //
