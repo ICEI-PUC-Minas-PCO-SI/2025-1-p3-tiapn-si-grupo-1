@@ -77,7 +77,13 @@ const MainLogin = () => {
 
       <Divider>Ou continue com</Divider>
 
-      <GoogleButton type="button">G</GoogleButton>
+      <GoogleButton type="button">
+              <img
+                src="https://www.svgrepo.com/show/355037/google.svg"
+                alt="Google"
+                width="24"
+              />
+            </GoogleButton>
     </CardLogin>
   );
 };
