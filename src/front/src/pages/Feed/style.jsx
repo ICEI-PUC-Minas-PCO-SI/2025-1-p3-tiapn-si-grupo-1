@@ -27,7 +27,8 @@ export const ScrollFeed = styled.section`
   overflow-y: auto; /* Permite rolagem vertical */
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 50px;
+  padding-right: 20px;
 `;
 
 // <--- FILTROS - FIXO --->
