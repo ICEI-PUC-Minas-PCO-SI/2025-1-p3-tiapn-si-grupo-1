@@ -31,7 +31,8 @@ jobs:
         run: |
           cd src/back
           zip release.zip ./* -r
-
+          mv release.zip ../../release.zip
+          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
