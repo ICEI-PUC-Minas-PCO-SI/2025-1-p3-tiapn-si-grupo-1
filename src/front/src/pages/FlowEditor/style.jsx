@@ -187,13 +187,13 @@ export const Card = styled.div`
   max-width: 672px;
   width: 100%;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 25px;
   background: #fff;
 `
 
 // Estilização do cabeçalho do cartão
 export const CardHeader = styled.div`
-  padding: 16px;
+  padding: 30px 30px 0px 30px;
 `
 
 // Estilização do título do cartão
@@ -214,10 +214,10 @@ export const CardDescription = styled.p`
 
 // Estilização do conteúdo do cartão
 export const CardContent = styled.div`
-  padding: 16px;
+  padding: 30px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 10px;
 `
 
 // Estilização do grupo de formulário
@@ -244,9 +244,9 @@ export const Label = styled.label`
 // Estilização do input
 export const Input = styled.input`
   height: 36px;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #E2E8F0;
-  border-radius: 4px;
+  border-radius: 10px;
   font-size: 14px;
   &:focus {
     outline: none;
@@ -256,9 +256,9 @@ export const Input = styled.input`
 
 // Estilização do textarea
 export const Textarea = styled.textarea`
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #E2E8F0;
-  border-radius: 4px;
+  border-radius: 10px;
   font-size: 14px;
   resize: none;
   &:focus {
@@ -270,9 +270,9 @@ export const Textarea = styled.textarea`
 // Estilização do select
 export const Select = styled.select`
   height: 40px;
-  padding: 8px;
+  padding: 10px;
   border: 1px solid #E2E8F0;
-  border-radius: 4px;
+  border-radius: 10px;
   font-size: 14px;
   &:focus {
     outline: none;
@@ -292,11 +292,11 @@ export const NextButton = styled.button`
   display: flex;
   align-items: center;
   gap: 4px;
-  padding: 8px 12px;
+  padding: 10px 12px;
   background: #233DFF;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 10px;
   font-size: 14px;
   cursor: pointer;
   &:hover {

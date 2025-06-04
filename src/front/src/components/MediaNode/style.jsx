@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 
-// Estilização do contêiner principal do nó
 export const NodeContainer = styled.div`
   padding: 16px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background: #fff;
   border: 2px solid ${({ selected }) => (selected ? '#8B5CF6' : '#E2E8F0')};
-  min-width: 240px;
-  max-width: 280px;
+  min-width: 200px;
+  max-width: 240px;
   cursor: pointer;
   transition: all 0.2s ease;
   transform: ${({ selected }) => (selected ? 'scale(1.05)' : 'scale(1)')};
@@ -18,10 +17,6 @@ export const NodeContainer = styled.div`
   }
 `;
 
-// Estilização do handle (conector do ReactFlow)
-export const handleStyles = 'width: 12px; height: 12px; background: #8B5CF6; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);';
-
-// Estilização do cabeçalho do nó
 export const Header = styled.div`
   display: flex;
   align-items: center;
@@ -29,7 +24,6 @@ export const Header = styled.div`
   margin-bottom: 8px;
 `;
 
-// Estilização do ícone
 export const IconWrapper = styled.div`
   width: 24px;
   height: 24px;
@@ -40,34 +34,37 @@ export const IconWrapper = styled.div`
   justify-content: center;
 `;
 
-// Estilização do rótulo
 export const Label = styled.span`
   font-size: 12px;
   font-weight: 500;
   color: #4B5563;
 `;
 
-// Estilização do conteúdo
 export const Content = styled.div`
-  font-size: 12px;
-  color: #6B7280;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
-// Estilização do título
 export const Title = styled.div`
   font-weight: 600;
   color: #1E293B;
-  margin-bottom: 4px;
   font-size: 14px;
+  margin-bottom: 8px;
+  text-align: center;
 `;
 
-// Estilização do tipo de mídia
-export const MediaType = styled.div`
-  color: #7C3AED;
-  margin-bottom: 4px;
+export const Image = styled.img`
+  max-width: 100%;
+  max-height: 150px;
+  border-radius: 4px;
 `;
 
-// Estilização do nome do arquivo
-export const FileName = styled.div`
-  color: #9CA3AF;
+export const Placeholder = styled.div`
+  color: #64748B;
+  font-size: 12px;
+  text-align: center;
+  padding: 16px;
+  border: 1px dashed #CBD5E1;
+  border-radius: 4px;
 `;

@@ -18,19 +18,13 @@ const Sidebar = () => {
       >
         <Plus size={20} />
       </NavItem>
-      <NavItem to="/feed" active={location.pathname === "/feed" ? 1 : 0}>
+      <NavItem to="/feed" active={location.pathname === '/feed' ? 1 : 0}>
         <ArrowDownUp size={20} />
       </NavItem>
-      <NavItem
-        to="/compartilhados"
-        active={location.pathname === "/compartilhados" ? 1 : 0}
-      >
+      <NavItem to="/comunidade" active={location.pathname === '/comunidade' ? 1 : 0}>
         <Users size={20} />
       </NavItem>
-      <NavItem
-        to="/compartilhados"
-        active={location.pathname === "/compartilhados" ? 1 : 0}
-      >
+      <NavItem to="/perfil" active={location.pathname === '/perfil' ? 1 : 0}>
         <User size={20} />
       </NavItem>
       <UserAvatar>

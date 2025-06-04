@@ -26,6 +26,7 @@ import {
   Target,
   CheckCircle,
 } from 'lucide-react';
+import axios from 'axios';
 import TextNode from '../../components/TextNode';
 import DecisionNode from '../../components/DecisionNode';
 import MediaNode from '../../components/MediaNode';
@@ -57,18 +58,16 @@ const FlowEditor = () => {
     description: '',
     category: '',
     tags: '',
-    difficulty: '',
-    estimatedTime: '',
   });
   const [nodeData, setNodeData] = useState({
     title: '',
     content: '',
     question: '',
     options: ['Opção 1', 'Opção 2'],
-    mediaType: '',
     mediaFile: null,
     mediaUrl: '',
   });
+  const [isPublic, setIsPublic] = useState(true);
   const reactFlowWrapper = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -106,7 +105,7 @@ const FlowEditor = () => {
           content: type === 'textNode' ? '' : undefined,
           question: type === 'decisionNode' ? '' : undefined,
           options: type === 'decisionNode' ? ['Opção 1', 'Opção 2'] : undefined,
-          type: type === 'mediaNode' ? '' : undefined,
+          mediaUrl: type === 'mediaNode' ? '' : undefined,
         },
       };
       setNodes((nds) => nds.concat(newNode));
@@ -121,24 +120,57 @@ const FlowEditor = () => {
       content: node.data.content || '',
       question: node.data.question || '',
       options: node.data.options && node.data.options.length ? node.data.options : ['Opção 1', 'Opção 2'],
-      mediaType: node.data.type || '',
       mediaFile: null,
-      mediaUrl: node.data.url || '',
+      mediaUrl: node.data.mediaUrl || '',
     });
     setIsNodeModalOpen(true);
   }, []);
 
   const handleFileUpload = (event) => {
     const file = event.target.files?.[0];
-    if (file) {
-      setNodeData((prev) => ({ ...prev, mediaFile: file }));
-      const fakeUrl = URL.createObjectURL(file);
-      setNodeData((prev) => ({ ...prev, mediaUrl: fakeUrl }));
+
+    if (!file) return;
+
+    const isImage = file.type.startsWith('image/');
+    const isValidSize = file.size <= 10 * 1024 * 1024;
+
+    if (!isImage) {
+      alert('Por favor, selecione um arquivo de imagem válido (PNG, JPG, SVG).');
+      return;
     }
+
+    if (!isValidSize) {
+      alert('A imagem deve ter no máximo 10MB.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const result = e.target.result;
+      if (typeof result === 'string') {
+        setNodeData((prev) => ({
+          ...prev,
+          mediaFile: file,
+          mediaUrl: result,
+        }));
+      } else {
+        alert('Erro ao processar a imagem.');
+      }
+    };
+    reader.onerror = () => {
+      alert('Falha ao carregar a imagem. Tente novamente.');
+    };
+    reader.readAsDataURL(file);
   };
 
   const saveNodeData = () => {
     if (!selectedNode) return;
+
+    console.log('📤 Salvando nó com mediaUrl:', nodeData.mediaUrl);
+    console.log('🧠 Tipo de mediaUrl:', typeof nodeData.mediaUrl);
+    console.log('📦 nodeData completo:', nodeData);
+
+
     setNodes((nds) =>
       nds.map((node) =>
         node.id === selectedNode.id
@@ -148,10 +180,8 @@ const FlowEditor = () => {
               title: nodeData.title,
               content: nodeData.content || undefined,
               question: nodeData.question || undefined,
-              options: nodeData.options.filter((opt) => opt.trim()).slice(0, 3) || ['Opção 1', 'Opção 2'],
-              type: nodeData.mediaType || undefined,
-              filename: nodeData.mediaFile?.name,
-              url: nodeData.mediaUrl,
+              options: nodeData.options?.filter((opt) => opt.trim()).slice(0, 3) || ['Opção 1', 'Opção 2'],
+              mediaUrl: nodeData.mediaUrl || undefined,
             },
           }
           : node
@@ -167,6 +197,55 @@ const FlowEditor = () => {
       eds.filter((edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.id)
     );
     setIsNodeModalOpen(false);
+  };
+
+  const publishFlow = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Você precisa estar autenticado para publicar um flow.');
+        return;
+      }
+
+      if (!flowData.title || !flowData.description || !flowData.category) {
+        alert('Título, descrição e categoria são obrigatórios.');
+        return;
+      }
+
+      const tagsArray = flowData.tags
+        .split(',')
+        .map((tag) => tag.trim())
+        .filter((tag) => tag);
+
+      const response = await axios.post(
+        'http://localhost:3000/api/flow',
+        {
+          titulo: flowData.title,
+          descricao: flowData.description,
+          conteudo_nos: nodes,
+          conteudo_conexoes: edges,
+          categoria: flowData.category,
+          tags: tagsArray,
+          status: isPublic ? 'publicado' : 'rascunho',
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      alert('Flow publicado com sucesso!');
+      console.log('Flow criado:', response.data);
+      setFlowData({ title: '', description: '', category: '', tags: '' });
+      setNodes([]);
+      setEdges([]);
+      setCurrentStep(1);
+    } catch (error) {
+      console.error('Erro ao publicar flow:', error);
+      const errorMessage = error.response?.data?.erro || 'Erro ao publicar flow. Tente novamente.';
+      alert(errorMessage);
+    }
   };
 
   const nextStep = () => {
@@ -265,29 +344,6 @@ const FlowEditor = () => {
                     </S.Select>
                   </S.FormGroup>
                   <S.FormGroup>
-                    <S.Label>Dificuldade</S.Label>
-                    <S.Select
-                      value={flowData.difficulty}
-                      onChange={(e) => setFlowData({ ...flowData, difficulty: e.target.value })}
-                    >
-                      <option value="">Selecione</option>
-                      <option value="iniciante">Iniciante</option>
-                      <option value="intermediario">Intermediário</option>
-                      <option value="avancado">Avançado</option>
-                      <option value="expert">Expert</option>
-                    </S.Select>
-                  </S.FormGroup>
-                </S.FormRow>
-                <S.FormRow>
-                  <S.FormGroup>
-                    <S.Label>Tempo Estimado</S.Label>
-                    <S.Input
-                      value={flowData.estimatedTime}
-                      onChange={(e) => setFlowData({ ...flowData, estimatedTime: e.target.value })}
-                      placeholder="Ex: 45 minutos"
-                    />
-                  </S.FormGroup>
-                  <S.FormGroup>
                     <S.Label>Tags</S.Label>
                     <S.Input
                       value={flowData.tags}
@@ -321,7 +377,7 @@ const FlowEditor = () => {
                   </S.NodeIcon>
                   <div>
                     <S.NodeTitle>Conteúdo</S.NodeTitle>
-                    <S.NodeDescription>Texto e imagens</S.NodeDescription>
+                    <S.NodeDescription>Texto</S.NodeDescription>
                   </div>
                 </S.NodeButton>
                 <S.NodeButton onClick={() => addNode('decisionNode')}>
@@ -338,8 +394,8 @@ const FlowEditor = () => {
                     <ImageIcon size={16} color="#fff" />
                   </S.NodeIcon>
                   <div>
-                    <S.NodeTitle>Mídia</S.NodeTitle>
-                    <S.NodeDescription>Arquivos</S.NodeDescription>
+                    <S.NodeTitle>Imagem</S.NodeTitle>
+                    <S.NodeDescription>Imagens PNG/JPG/SVG</S.NodeDescription>
                   </div>
                 </S.NodeButton>
               </S.SidebarSection>
@@ -414,7 +470,11 @@ const FlowEditor = () => {
                 <S.PublishOptions>
                   <S.PublishTitle>Configurações de Publicação</S.PublishTitle>
                   <S.CheckboxLabel>
-                    <input type="checkbox" defaultChecked />
+                    <input
+                      type="checkbox"
+                      checked={isPublic}
+                      onChange={(e) => setIsPublic(e.target.checked)}
+                    />
                     <div>
                       <S.CheckboxTitle>Tornar público</S.CheckboxTitle>
                       <S.CheckboxDescription>Visível para toda a comunidade</S.CheckboxDescription>
@@ -435,7 +495,7 @@ const FlowEditor = () => {
                   </S.PrevButton>
                   <S.ButtonGroup>
                     <S.DraftButton>Salvar Rascunho</S.DraftButton>
-                    <S.PublishButton>
+                    <S.PublishButton onClick={publishFlow}>
                       <Play size={16} />
                       Publicar Flow
                     </S.PublishButton>
@@ -473,9 +533,9 @@ const FlowEditor = () => {
                   ? 'Nó de Conteúdo'
                   : selectedNode?.type === 'decisionNode'
                     ? 'Nó de Decisão'
-                    : 'Nó de Mídia'}
+                    : 'Nó de Imagem'}
               </S.ModalTitle>
-              <S.ModalDescription>Configure o conteúdo e comportamento deste nó</S.ModalDescription>
+              <S.ModalDescription>Configure o conteúdo e comportamento do nó</S.ModalDescription>
             </S.ModalHeader>
             <S.ModalBody>
               {selectedNode?.type === 'textNode' && (
@@ -497,7 +557,7 @@ const FlowEditor = () => {
                       placeholder="Digite o conteúdo que será exibido neste nó..."
                       rows={8}
                     />
-                    <S.FormHint>Suporte para markdown básico: **negrito**, *itálico*, `código`</S.FormHint>
+                    <S.FormHint>Suporte a markdown básico: **negrito**, *itálico*, `código`</S.FormHint>
                   </S.FormGroup>
                 </>
               )}
@@ -508,9 +568,9 @@ const FlowEditor = () => {
                     <S.Input
                       value={nodeData.question}
                       onChange={(e) => setNodeData({ ...nodeData, question: e.target.value })}
-                      placeholder="Ex: Qual é seu nível de experiência com React?"
+                      placeholder="Ex: Qual é seu nível de experiência com DS?"
                     />
-                    <S.FormHint>Formule uma pergunta clara que levará a diferentes caminhos no flow</S.FormHint>
+                    <S.FormHint>Formule uma pergunta clara que levará a diferentes caminhos</S.FormHint>
                   </S.FormGroup>
                   <S.FormGroup>
                     <S.Label>Opções de Resposta (máximo 3)</S.Label>
@@ -546,117 +606,78 @@ const FlowEditor = () => {
                         Adicionar Nova Opção
                       </S.AddOptionButton>
                     )}
-                    <S.FormHint>Cada opção criará um caminho diferente no flow. Mínimo de 1, máximo de 3 opções.</S.FormHint>
+                    <S.FormHint>Cada opção criará um caminho diferente. Mínimo 1, máximo 3.</S.FormHint>
                   </S.FormGroup>
                 </>
               )}
               {selectedNode?.type === 'mediaNode' && (
                 <>
                   <S.FormGroup>
-                    <S.Label>Título do Recurso</S.Label>
+                    <S.Label>Título da Imagem</S.Label>
                     <S.Input
                       value={nodeData.title}
                       onChange={(e) => setNodeData({ ...nodeData, title: e.target.value })}
-                      placeholder="Ex: Template Figma - Design System"
+                      placeholder="Ex: Diagrama do Sistema"
                     />
-                    <S.FormHint>Nome descritivo para o arquivo ou recurso</S.FormHint>
+                    <S.FormHint>Nome descritivo para a imagem</S.FormHint>
                   </S.FormGroup>
                   <S.FormGroup>
-                    <S.Label>Tipo de Mídia</S.Label>
-                    <S.Select
-                      value={nodeData.mediaType}
-                      onChange={(e) => setNodeData({ ...nodeData, mediaType: e.target.value })}
-                    >
-                      <option value="">Selecione o tipo de mídia</option>
-                      <option value="image">Imagem (PNG, JPG, SVG)</option>
-                      <option value="video">Vídeo (MP4, MOV)</option>
-                      <option value="document">Documento (PDF, DOC)</option>
-                      <option value="file">Arquivo Geral</option>
-                      <option value="link">Link Externo</option>
-                    </S.Select>
-                  </S.FormGroup>
-                  {nodeData.mediaType === 'link' ? (
-                    <S.FormGroup>
-                      <S.Label>URL do Link</S.Label>
-                      <S.Input
-                        value={nodeData.mediaUrl}
-                        onChange={(e) => setNodeData({ ...nodeData, mediaUrl: e.target.value })}
-                        placeholder="https://exemplo.com/recurso"
+                    <S.Label>Upload de Imagem</S.Label>
+                    <S.UploadArea>
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        style={{ display: 'none' }}
+                        onChange={handleFileUpload}
+                        accept="image/*"
                       />
-                      <S.FormHint>URL completa do recurso externo</S.FormHint>
-                    </S.FormGroup>
-                  ) : (
-                    <S.FormGroup>
-                      <S.Label>Upload de Arquivo</S.Label>
-                      <S.UploadArea>
-                        <input
-                          ref={fileInputRef}
-                          type="file"
-                          style={{ display: 'none' }}
-                          onChange={handleFileUpload}
-                          accept={
-                            nodeData.mediaType === 'image'
-                              ? 'image/*'
-                              : nodeData.mediaType === 'video'
-                                ? 'video/*'
-                                : 'video'
-                                  ? nodeData.mediaType === 'document'
-                                    ? '.pdf,.doc,.docx'
-                                    : '' : '*'
-                          }
-                        />
-                        {nodeData.mediaFile ? (
+                      {nodeData.mediaUrl ? (
+                        <S.UploadContent>
+                          <S.FileIcon>
+                            <img
+                              src={nodeData.mediaUrl}
+                              alt="Preview"
+                              style={{ maxWidth: '100px', maxHeight: '100px' }}
+                            />
+                          </S.FileIcon>
                           <div>
-                            <S.FileIcon>
-                              <File size={24} color="#fff" />
-                            </S.FileIcon>
-                            <div>
-                              <S.FileName>{nodeData.mediaFile.name}</S.FileName>
+                            <S.FileName>{nodeData.mediaFile?.name || 'Imagem selecionada'}</S.FileName>
+                            {nodeData.mediaFile && (
                               <S.FileSize>
-                                {(nodeData.mediaFile.size / (1024 * 1024)).toFixed(2)} MB
+                                {(nodeData.mediaFile.size / 1024 / 1024).toFixed(2)} MB
                               </S.FileSize>
-                            </div>
-                            <S.UploadButtons>
-                              <S.UploadButton onClick={() => fileInputRef.current?.click()}>
-                                <Upload size={12} />
-                                Trocar Arquivo
-                              </S.UploadButton>
-                              <S.RemoveUploadButton
-                                onClick={() => setNodeData({ ...nodeData, mediaFile: null, mediaUrl: "" })}
-                              >
-                                <X size={12} />
-                                Remover
-                              </S.RemoveUploadButton>
-                            </S.UploadButtons>
+                            )}
                           </div>
-                        ) : (
-                          <S.UploadContent>
-                            <S.UploadIcon>
-                              <Upload size={24} color="#64748B" />
-                            </S.UploadIcon>
-                            <div>
-                              <S.UploadText>
-                                Click to upload or drag and drop your file here
-                              </S.UploadText>
-                              <S.UploadHint>
-                                {nodeData.mediaType === 'image' && 'Support for PNG, JPG, SVG up to 30MB'}
-                                {nodeData.mediaType === 'video' && 'Support for MP4, MOV up to 300MB'}
-                                {nodeData.mediaType === 'document' && 'Support for PDF, DOC, DOCX up to 75MB'}
-                                {!nodeData.mediaType && 'Select the media type first'}
-                              </S.UploadHint>
-                            </div>
-                            <S.UploadButton
-                              onClick={() => fileInputRef.current?.click()}
-                              disabled={!nodeData.mediaType}
-                            >
-                              <Upload size={12} />
-                              Select File
+                          <S.UploadButtons>
+                            <S.UploadButton onClick={() => fileInputRef.current?.click()}>
+                              <Upload size={16} />
+                              Trocar Imagem
                             </S.UploadButton>
-                          </S.UploadContent>
-                        )}
-                      </S.UploadArea>
-                    </S.FormGroup>
-                  )}
+                            <S.RemoveButton
+                              onClick={() => setNodeData({ ...nodeData, mediaFile: null, mediaUrl: '' })}
+                            >
+                              <X size={16} />
+                              Remover
+                            </S.RemoveButton>
+                          </S.UploadButtons>
+                        </S.UploadContent>
+                      ) : (
+                        <S.UploadContent>
+                          <S.UploadIcon>
+                            <Upload size={24} color="#64748B" />
+                          </S.UploadIcon>
+                          <div>
+                            <S.UploadText>Clique para fazer upload ou arraste a imagem aqui</S.UploadText>
+                            <S.UploadHint>Suporte para PNG, JPG, SVG até 10MB</S.UploadHint>
+                          </div>
+                          <S.UploadButton onClick={() => fileInputRef.current?.click()}>
+                            <Upload size={16} />
+                            Selecionar Imagem
+                          </S.UploadButton>
+                        </S.UploadContent>
+                      )}
+                    </S.UploadArea>
+                  </S.FormGroup>
                 </>
               )}
             </S.ModalBody>
@@ -666,11 +687,11 @@ const FlowEditor = () => {
                 Excluir Nó
               </S.DeleteButton>
               <S.ButtonGroup>
-                <S.CancelButton onClick={() => setIsNodeModalOpen(false)}>Cancel</S.CancelButton>
-                <S.ModalSaveButton onClick={saveNodeData}>
+                <S.CancelButton onClick={() => setIsNodeModalOpen(false)}>Cancelar</S.CancelButton>
+                <S.SaveButton onClick={saveNodeData}>
                   <CheckCircle size={16} />
-                  Save Changes
-                </S.ModalSaveButton>
+                  Salvar Alterações
+                </S.SaveButton>
               </S.ButtonGroup>
             </S.ModalFooter>
           </S.ModalContent>
