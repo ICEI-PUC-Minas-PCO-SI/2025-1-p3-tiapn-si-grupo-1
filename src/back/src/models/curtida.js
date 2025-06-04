@@ -1,9 +1,26 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../db');
 
-const Curtida = sequelize.define('curtida', {}, {
-  timestamps: false,
+const Curtida = sequelize.define('curtida', {
+  usuario_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    references: { model: 'usuario', key: 'id' }
+  },
+  flow_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    references: { model: 'flow', key: 'id' }
+  },
+  criado_em: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  }
+}, {
   tableName: 'curtida',
+  timestamps: false
 });
 
 Curtida.associate = (models) => {
