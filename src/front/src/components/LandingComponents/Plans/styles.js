@@ -105,3 +105,16 @@ export const CardBlueBox = styled.div`
         font-weight: 600;
     }
 `
+
+export const HorizontalLine3 = styled.div`
+  position: absolute;
+  top: 2200px;
+  right: 20rem;
+  height: 4px;
+  width: 900px; /* largura final fixa */
+  background-color: blue;
+  z-index: 0;
+  transform: scaleX(0); /* começa invisível */
+  transform-origin: right; /* cresce da direita para a esquerda */
+  transition: transform 0.1s ease-out;
+`;
