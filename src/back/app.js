@@ -32,7 +32,7 @@ app.use('/api/flow', flowRoutes);
 app.use('/api/comentario', comentarioRoutes)
 app.use('/api/flowsalvos', flowSalvoRoutes);
 app.use('/api/curtidas', curtidaRoutes);
-app.use('/api/comentario/postagem', comentarioPostagemRoutes);
+app.use('/api/comentariopostagem', comentarioPostagemRoutes);
 app.use('/api/postagem', postagemComunidadeRoutes);
 
 app.get('/', (req, res) => {
