@@ -20,14 +20,14 @@ app.use('/api/flow', flowRoutes);
 app.use('/api/comentario', comentarioRoutes)
 app.use('/api/flowsalvos', flowSalvoRoutes);
 app.use('/api/curtidas', curtidaRoutes);
-app.use('/api/comentario', comentarioPostagemRoutes);
+app.use('/api/comentario/postagem', comentarioPostagemRoutes);
 app.use('/api/postagem', postagemComunidadeRoutes);
 
 app.get('/', (req, res) => {
   res.send('A API do KnowFlow está rodando 🤩!');
 });
 
-sequelize.sync({ alter: true })  // mantém sincronizado com as models
+sequelize.sync({ alter: true })
   .then(() => {
     console.log('Banco sincronizado com Sequelize');
     const port = process.env.PORT || 3000;
