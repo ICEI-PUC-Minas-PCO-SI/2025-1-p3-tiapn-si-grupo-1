@@ -9,6 +9,7 @@ export const FlowWrapper = styled.div`
   padding: 20px;
   position: relative;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  gap: 10px;
 
   /* Border radius customizado */
   border-top-left-radius: 0;
@@ -71,9 +72,10 @@ export const ActionButton = styled.button`
   justify-content: center;
   transition: all 0.3s ease-in;
   margin-left: auto; // empurra para o final do flex container
+  background-color: #ffffff;
 
   &:hover {
-    background-color: #d9d9d9;
+    background-color: #ededed;
   }
 `;
 
@@ -81,7 +83,6 @@ export const ActionButton = styled.button`
 export const ActionIcon = styled(Ellipsis)`
   width: 16px;
   height: 16px;
-  background-image: url("path/to/ellipsis-icon.svg"); // Substitua pelo caminho do seu ícone
   background-size: cover;
 `;
 
@@ -97,6 +98,7 @@ export const Avatar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: url("path/to/ellipsis-icon.svg"); // Substitua pelo caminho do seu ícone
 `;
 
 //FlowPreviewWapper - Envolve o preview do FlowCard
@@ -111,7 +113,8 @@ export const FlowPreviewWrapper = styled.div`
 export const FlowFooter = styled.footer`
   display: flex;
   align-items: center;
-  margin-top: 10px;
+  gap: 10px;
+  margin-top: 20px;
 `;
 
 //
