@@ -28,7 +28,7 @@ export const HorizontalLine = styled.div`
   top: 450px;
   right: 57.5rem;
   height: 4px;
-  width: 500px; /* largura final fixa */
+  width: 32.8%; /* largura final fixa */
   background-color: blue;
   z-index: 0;
   transform: scaleX(0); /* começa invisível */
