@@ -845,3 +845,10 @@ export const ModalSaveButton = styled.button`
     background: #1E34CC;
   }
 `
+export const ToastOverride = styled.div`
+  .Toastify__toast--success {
+    color: #233DFF;
+    font-family: 'Inter', sans-serif;
+    border-radius: 10px;
+  }
+`;
