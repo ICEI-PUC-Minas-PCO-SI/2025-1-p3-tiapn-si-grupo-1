@@ -53,29 +53,16 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      # 🧪 Etapa de Debug para verificar os secrets
-      - name: Check if secrets are loaded (debug)
-        run: |
-          if [ -z "${{ secrets.AZURE_CLIENT_ID }}" ]; then
-            echo "❌ AZURE_CLIENT_ID está vazio ou não foi definido."
-            exit 1
-          fi
-          if [ -z "${{ secrets.AZURE_TENANT_ID }}" ]; then
-            echo "❌ AZURE_TENANT_ID está vazio ou não foi definido."
-            exit 1
-          fi
-          if [ -z "${{ secrets.AZURE_SUBSCRIPTION_ID }}" ]; then
-            echo "❌ AZURE_SUBSCRIPTION_ID está vazio ou não foi definido."
-            exit 1
-          fi
-          echo "✅ Todos os secrets foram carregados corretamente."
-
       - name: Login to Azure
-        uses: azure/login@v2
+        uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          creds: |
+            {
+              "clientId": "${{ secrets.AZURE_CLIENT_ID }}",
+              "clientSecret": "${{ secrets.AZURE_CLIENT_SECRET }}",
+              "tenantId": "${{ secrets.AZURE_TENANT_ID }}",
+              "subscriptionId": "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+            }
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
