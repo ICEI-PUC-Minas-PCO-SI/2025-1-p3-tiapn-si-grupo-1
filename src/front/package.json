@@ -26,6 +26,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.0",
+    "react-toastify": "^11.0.5",
     "react-tooltip": "^5.28.1",
     "reactflow": "^11.11.4",
     "styled-components": "^6.1.18"

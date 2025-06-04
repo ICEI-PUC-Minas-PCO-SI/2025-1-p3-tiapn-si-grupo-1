@@ -8,6 +8,8 @@ import ReactFlow, {
   useEdgesState,
 } from 'reactflow';
 import 'reactflow/dist/style.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   Save,
   ArrowLeft,
@@ -137,12 +139,12 @@ const FlowEditor = () => {
     const isValidSize = file.size <= 10 * 1024 * 1024;
 
     if (!isImage) {
-      alert('Por favor, selecione um arquivo de imagem válido (PNG, JPG, SVG).');
+      toast.error('Por favor, selecione um arquivo de imagem válido (PNG, JPG, SVG).');
       return;
     }
 
     if (!isValidSize) {
-      alert('A imagem deve ter no máximo 10MB.');
+      toast.error('A imagem deve ter no máximo 10MB.');
       return;
     }
 
@@ -156,11 +158,11 @@ const FlowEditor = () => {
           mediaUrl: result,
         }));
       } else {
-        alert('Erro ao processar a imagem.');
+        toast.error('Erro ao processar a imagem.');
       }
     };
     reader.onerror = () => {
-      alert('Falha ao carregar a imagem. Tente novamente.');
+      toast.error('Falha ao carregar a imagem. Tente novamente.');
     };
     reader.readAsDataURL(file);
   };
@@ -171,7 +173,6 @@ const FlowEditor = () => {
     console.log('📤 Salvando nó com mediaUrl:', nodeData.mediaUrl);
     console.log('🧠 Tipo de mediaUrl:', typeof nodeData.mediaUrl);
     console.log('📦 nodeData completo:', nodeData);
-
 
     setNodes((nds) =>
       nds.map((node) =>
@@ -190,6 +191,7 @@ const FlowEditor = () => {
       )
     );
     setIsNodeModalOpen(false);
+    toast.success('Alterações no nó salvas com sucesso!');
   };
 
   const deleteNode = () => {
@@ -199,18 +201,19 @@ const FlowEditor = () => {
       eds.filter((edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.id)
     );
     setIsNodeModalOpen(false);
+    toast.success('Nó excluído com sucesso!');
   };
 
   const publishFlow = async () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        alert('Você precisa estar autenticado para publicar um flow.');
+        toast.error('Você precisa estar autenticado para publicar um flow.');
         return;
       }
 
       if (!flowData.title || !flowData.description || !flowData.category) {
-        alert('Título, descrição e categoria são obrigatórios.');
+        toast.error('Título, descrição e categoria são obrigatórios.');
         return;
       }
 
@@ -237,7 +240,7 @@ const FlowEditor = () => {
         }
       );
 
-      alert('Flow publicado com sucesso!');
+      toast.success('Flow publicado com sucesso!');
       console.log('Flow criado:', response.data);
       setFlowData({ title: '', description: '', category: '', tags: '' });
       setNodes([]);
@@ -246,7 +249,7 @@ const FlowEditor = () => {
     } catch (error) {
       console.error('Erro ao publicar flow:', error);
       const errorMessage = error.response?.data?.erro || 'Erro ao publicar flow. Tente novamente.';
-      alert(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
@@ -261,6 +264,19 @@ const FlowEditor = () => {
 
   return (
     <S.Container>
+      <S.ToastOverride>
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={true}
+          style={{ top: '75px' }}
+          newestOnTop={false}
+          closeOnClick
+          priority={false}
+          pauseOnHover
+          theme="light"
+        />
+      </S.ToastOverride>
       <S.Header>
         <S.HeaderContent>
           <S.LeftSection>
