@@ -70,7 +70,26 @@ const usuarioController = {
     } catch (error) {
       return res.status(500).json({ mensagem: 'Erro ao buscar usuários.' });
     }
+  },
+
+  async obterUsuarioLogado(req, res){
+    try{
+      const usuario = await Usuario.findByPk(req.usuarioId,{
+        attributes: ['id', 'nome', 'email', 'criado_em']
+      });
+      
+      if(!usuario){
+        return res.status(404).json({ erro: 'Usuário não encontrado.' });
+      }
+
+      return res.status(200).json(usuario);
+
+    } catch(error) {
+      console.error('Erro ao buscar usuário logado: ', error);
+      return res.status(500).json({ erro: 'Erro ao buscar dados do usuário.'});
+    }
   }
 };
+
 
 module.exports = usuarioController;
