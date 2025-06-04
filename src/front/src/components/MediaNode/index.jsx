@@ -3,6 +3,8 @@ import { Handle, Position } from 'reactflow';
 import { ImageIcon } from 'lucide-react';
 import * as S from './style';
 
+console.log('🧪 Componentes de estilo carregados:', Object.keys(S));
+
 const MediaNode = ({ data = {}, selected }) => {
     if (!data) {
         console.warn('🚨 MediaNode recebeu data undefined. Cancelando render.');
@@ -34,13 +36,16 @@ const MediaNode = ({ data = {}, selected }) => {
             </S.Header>
             <S.Content>
                 <S.Title>{data.title || 'Imagem Sem Título'}</S.Title>
+
+                {/* Verificação defensiva contra mediaUrl inválido */}
                 {isValidImageUrl ? (
                     <S.Image
                         src={data.mediaUrl}
                         alt={data.title || 'Imagem'}
                         onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = '/fallback-image.png';
+                            e.target.src = '/fallback-image.png'; // imagem fallback
+                            console.warn('⚠️ Falha ao carregar imagem. Substituindo por fallback.');
                         }}
                     />
                 ) : (

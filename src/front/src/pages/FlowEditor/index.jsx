@@ -32,6 +32,8 @@ import DecisionNode from '../../components/DecisionNode';
 import MediaNode from '../../components/MediaNode';
 import * as S from './style';
 
+console.log('🧪 Componentes de estilo carregados:', Object.keys(S));
+
 const nodeTypes = {
   textNode: TextNode,
   decisionNode: DecisionNode,
@@ -653,12 +655,12 @@ const FlowEditor = () => {
                               <Upload size={16} />
                               Trocar Imagem
                             </S.UploadButton>
-                            <S.RemoveButton
+                            <S.RemoveFileButton
                               onClick={() => setNodeData({ ...nodeData, mediaFile: null, mediaUrl: '' })}
                             >
                               <X size={16} />
                               Remover
-                            </S.RemoveButton>
+                            </S.RemoveFileButton>
                           </S.UploadButtons>
                         </S.UploadContent>
                       ) : (
