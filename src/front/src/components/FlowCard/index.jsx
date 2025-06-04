@@ -1,4 +1,7 @@
 import { Heart, Bookmark, MessageCircle } from "lucide-react";
+import LikeButton from "./Actions/LikeButton";
+import CommentButton from "./Actions/CommentButton";
+import SaveButton from "./Actions/SaveButton";
 import {
   FlowWrapper,
   FlowHat,
@@ -10,6 +13,7 @@ import {
   ActionButton,
   ActionIcon,
   FlowPreviewWrapper,
+  FlowFooter,
 } from "./style";
 
 export default function FlowCard({ flow }) {
@@ -67,6 +71,12 @@ export default function FlowCard({ flow }) {
         <h2>{flow.titulo}</h2>
         <p>{flow.descricao ? flow.descricao : "teste"}</p>
       </FlowPreviewWrapper>
+
+      <FlowFooter>
+        <LikeButton />
+        <CommentButton />
+        <SaveButton />
+      </FlowFooter>
     </FlowWrapper>
   );
 }

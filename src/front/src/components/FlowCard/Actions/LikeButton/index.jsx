@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Heart } from "lucide-react";
-import { ActionButton } from "./styles";
+import { Button, LikeIcon } from "./style";
 
 export default function LikeButton({ initialLiked = false, onLike }) {
   const [liked, setLiked] = useState(initialLiked);
@@ -11,8 +10,8 @@ export default function LikeButton({ initialLiked = false, onLike }) {
   };
 
   return (
-    <ActionButton onClick={toggleLike} liked={liked}>
-      <Heart color={liked ? "red" : "gray"} />
-    </ActionButton>
+    <Button onClick={toggleLike} liked={liked}>
+      <LikeIcon />
+    </Button>
   );
 }

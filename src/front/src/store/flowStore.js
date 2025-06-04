@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-// 2. Cria a store chamada useFlowStore
+//Cria a store chamada useFlowStore
 export const useFlowStore = create((set) => ({
   // Estado para armazenar os IDs dos posts curtidos
   likedPosts: [],
@@ -10,7 +10,7 @@ export const useFlowStore = create((set) => ({
   comments: {},
 
   // Função para curtir/descurtir um post
-  toggleLike: (postId) =>
+  toggleLike: async (postId) =>
     set((state) => ({
       likedPosts: state.likedPosts.includes(postId)
         ? state.likedPosts.filter((id) => id !== postId)
@@ -18,7 +18,7 @@ export const useFlowStore = create((set) => ({
     })),
 
   // Função para salvar/desalvar um post
-  toggleSave: (postId) =>
+  toggleSave: async (postId) =>
     set((state) => ({
       savedPosts: state.savedPosts.includes(postId)
         ? state.savedPosts.filter((id) => id !== postId)
@@ -35,7 +35,7 @@ export const useFlowStore = create((set) => ({
     })),
 
   // Função opcional para remover um comentário com base no índice
-  removeComment: (postId, index) =>
+  removeComment: async (postId, index) =>
     set((state) => {
       const newComments = [...(state.comments[postId] || [])];
       newComments.splice(index, 1); // Remove o comentário pelo índice
