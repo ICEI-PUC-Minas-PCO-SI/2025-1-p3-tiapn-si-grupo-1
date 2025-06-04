@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../db');
-
+//Teste
 const Curtida = sequelize.define('curtida', {
   usuario_id: {
     type: DataTypes.INTEGER,
