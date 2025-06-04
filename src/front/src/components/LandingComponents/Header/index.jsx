@@ -17,7 +17,7 @@ const Header = () => {
         <NavItem href="#">FAQ</NavItem>
       </Nav>
       <ButtonContainer>
-        <StyledLink to="/Login">
+        <StyledLink to="/login">
           <LoginButton>Login</LoginButton>
         </StyledLink> 
         <Link to="/cadastro"> 
