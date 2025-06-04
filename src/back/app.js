@@ -30,8 +30,9 @@ app.get('/', (req, res) => {
 sequelize.sync({ alter: true })  // mantém sincronizado com as models
   .then(() => {
     console.log('Banco sincronizado com Sequelize');
-    app.listen(3000, () => {
-      console.log('O servidor do KnowFlow está rodando em http://localhost:3000 🤖');
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+      console.log(`O servidor do KnowFlow está na porta ${port} 🤖`);
     });
   })
   .catch((err) => {
