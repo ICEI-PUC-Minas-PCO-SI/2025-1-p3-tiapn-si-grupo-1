@@ -5,7 +5,7 @@ import { Ellipsis } from "lucide-react";
 export const FlowWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #ededed;
+  background-color: #fff;
   padding: 20px;
   position: relative;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);

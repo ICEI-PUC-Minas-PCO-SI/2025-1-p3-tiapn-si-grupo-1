@@ -15,7 +15,7 @@ export const FeedContainer = styled.div`
 //Organiza e distribui os flows publicados
 export const FlowFeed = styled.div`
   width: 60%;
-  height: calc(100vh - 35px);
+  height: calc(100vh - 30px); /* altura total da viewport */
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -28,7 +28,7 @@ export const ScrollFeed = styled.section`
   display: flex;
   flex-direction: column;
   gap: 50px;
-  padding-right: 20px;
+  padding: 20px;
 `;
 
 // <--- FILTROS - FIXO --->
