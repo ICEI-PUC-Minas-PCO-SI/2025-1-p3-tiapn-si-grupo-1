@@ -27,11 +27,16 @@ app.get('/', (req, res) => {
   res.send('A API do KnowFlow está rodando 🤩!');
 });
 
-sequelize.sync({ alter: true })  // mantém sincronizado com as models
+// CÓDIGO CORRIGIDO (COPIE E COLE ESTE BLOCO NO LUGAR DO ANTERIOR)
+sequelize.sync({ alter: true })
   .then(() => {
     console.log('Banco sincronizado com Sequelize');
-    app.listen(3000, () => {
-      console.log('O servidor do KnowFlow está rodando em http://localhost:3000 🤖');
+    
+    // Define a porta usando a variável de ambiente do Azure, ou 3000 como padrão
+    const port = process.env.PORT || 3000;
+
+    app.listen(port, () => {
+      console.log(`O servidor do KnowFlow está rodando na porta ${port} 🤖`);
     });
   })
   .catch((err) => {
