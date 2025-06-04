@@ -45,7 +45,13 @@ Discuta como a configuração do projeto foi feita na ferramenta de versionament
 #### Sprint 3
 - _Scrum master_: Mateus Botelho 
 - Apresentação, desenvolvimento de wireframes e diagramas: Victor Alves, Lucas Borges e Mateus Botelho
-- Diagrama, modelos e scripts do banco de dados: Felipe Roque, Gabriella Paz e Rogério Gabriel 
+- Diagrama, modelos e scripts do banco de dados: Felipe Roque, Gabriella Paz e Rogério Gabriel
+
+#### Sprint 4
+- _Scrum master_: 
+- Frontend: Victor Alves, Lucas Borges e Mateus Botelho
+- Backend + banco de dados: Felipe Roque, Gabriella Paz e Rogério Gabriel 
+
 
 ###  Quadro de tarefas
 
@@ -89,6 +95,20 @@ Atualizado em: 02/05/2025
 | Mateus Botelho    | Apresentação e Wireframes | 25/04/2025     | 08/05/2025 | ✔️     | 08/05/2025 |
 | Rogério Gabriel   |Modelo Conceitual e Scripts do Banco de dados | 04/04/2025     | 08/05/2025 | ✔️    | 04/05/2025 |
 | Victor Alves      | Fluxo de usuário e Jornada de usuário  |  04/04/2025    | 08/05/2025 | ✔️   |  08/05/2025      |
+
+
+#### Sprint 4
+
+Atualizado em: 03/06/2025
+
+| Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
+| :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
+| Felipe Roque        | Backend + banco de dados | 16/05/2025     | 05/06/2025 | 📝    |   -    |
+| Gabriella Paz        | Backend + banco de dados    | 16/05/2025    | 12/03/2025 | 📝   |   -              |
+| Lucas Borges        | Frontend | 16/05/2025    | 05/06/2025 | 📝     |    -             |
+| Mateus Botelho        | Frontend + backend  |   16/05/2025       |  05/06/2025  | 📝    |   -  |  
+| Rogério Gabriel     | Backend + banco de dados  |    16/05/2025       | 05/06/2025 | 📝    |   -   |
+| Victor Alves       | Frontend  |    16/05/2025       | 05/06/2025 | 📝    |  -   |
 
 
 Legenda:
