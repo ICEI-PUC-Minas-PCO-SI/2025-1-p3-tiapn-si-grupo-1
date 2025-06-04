@@ -6,7 +6,10 @@ const flowSalvoController = {
   async criar(req, res) {
     try {
       const { usuarioId, flowId } = req.body;
-      const novo = await FlowSalvo.create({ usuarioId, flowId });
+      const novo = await FlowSalvo.create({
+        usuario_id: usuarioId,
+        flow_id: flowId,
+      });
       res.status(201).json(novo);
     } catch (error) {
       res.status(500).json({ erro: 'Erro ao salvar flow', detalhes: error.message });

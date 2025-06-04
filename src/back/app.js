@@ -18,25 +18,21 @@ app.use(express.json());
 app.use('/api/usuario', usuarioRoutes);
 app.use('/api/flow', flowRoutes);
 app.use('/api/comentario', comentarioRoutes)
-app.use('/flowsalvos', flowSalvoRoutes);
-app.use('/curtidas', curtidaRoutes);
-app.use('/comentariopostagem', comentarioPostagemRoutes);
-app.use('/postagemcomunidade', postagemComunidadeRoutes)
+app.use('/api/flowsalvos', flowSalvoRoutes);
+app.use('/api/curtidas', curtidaRoutes);
+app.use('/api/comentario/postagem', comentarioPostagemRoutes);
+app.use('/api/postagem', postagemComunidadeRoutes);
 
 app.get('/', (req, res) => {
   res.send('A API do KnowFlow está rodando 🤩!');
 });
 
-// CÓDIGO CORRIGIDO (COPIE E COLE ESTE BLOCO NO LUGAR DO ANTERIOR)
 sequelize.sync({ alter: true })
   .then(() => {
     console.log('Banco sincronizado com Sequelize');
-    
-    // Define a porta usando a variável de ambiente do Azure, ou 3000 como padrão
     const port = process.env.PORT || 3000;
-
     app.listen(port, () => {
-      console.log(`O servidor do KnowFlow está rodando na porta ${port} 🤖`);
+      console.log(`O servidor do KnowFlow está na porta ${port} 🤖`);
     });
   })
   .catch((err) => {
