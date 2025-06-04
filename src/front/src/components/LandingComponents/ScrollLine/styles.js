@@ -22,3 +22,16 @@ export const ProgressCircle = styled.div`
   position: absolute;
   left: 92px;
 `
+
+export const HorizontalLine = styled.div`
+  position: absolute;
+  top: 450px;
+  right: 57.5rem;
+  height: 4px;
+  width: 500px; /* largura final fixa */
+  background-color: blue;
+  z-index: 0;
+  transform: scaleX(0); /* começa invisível */
+  transform-origin: right; /* cresce da direita para a esquerda */
+  transition: transform 0.1s ease-out;
+`;

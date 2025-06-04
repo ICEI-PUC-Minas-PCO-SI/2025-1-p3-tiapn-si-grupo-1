@@ -96,3 +96,15 @@ export const DescriptionF = styled.div`
   text-align: center;
 
 `
+export const HorizontalLine2 = styled.div`
+  position: absolute;
+  top: 1375px;
+  right: 20rem;
+  height: 4px;
+  width: 900px; /* largura final fixa */
+  background-color: blue;
+  z-index: 0;
+  transform: scaleX(0); /* começa invisível */
+  transform-origin: right; /* cresce da direita para a esquerda */
+  transition: transform 0.1s ease-out;
+`;

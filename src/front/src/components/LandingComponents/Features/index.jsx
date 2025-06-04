@@ -1,6 +1,26 @@
-import { Card, Circleplus, DescriptionF, Diferencial, FeaturesContainer, RotatedSplit, ThreeColumnContainer, UsersStyle } from "./styles";
+import { useRef, useEffect } from "react";
+import { Card, Circleplus, DescriptionF, Diferencial, FeaturesContainer, RotatedSplit, ThreeColumnContainer, UsersStyle, HorizontalLine2 } from "./styles";
+
+
 
 const Features = () => {
+    const horizontalLineRef = useRef(null);  
+    
+    useEffect(() => {
+     const handleScroll = () => {
+       const scrollTop = window.scrollY;
+       const triggerPoint = 200;
+       const progress = Math.min((scrollTop - triggerPoint) / 1500, 1);
+    
+       if (horizontalLineRef.current) {
+         horizontalLineRef.current.style.transform = `scaleX(${progress})`;
+       }
+     };
+    
+     window.addEventListener("scroll", handleScroll);
+     return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
   return (
     <FeaturesContainer>
         <Diferencial>Nosso <strong>diferencial</strong> está em...</Diferencial>
@@ -18,6 +38,7 @@ const Features = () => {
                 <p><strong>Feedback contínuo</strong> com avaliação do material e sugestões de colaboradores</p>
             </Card>
         </ThreeColumnContainer>
+         <HorizontalLine2 ref={horizontalLineRef}/> 
         <DescriptionF>Enquanto outras ferramentas de mercado oferecem funcionalidades genéricas, o KnowFlow foi construído com um único objetivo: <strong>ser a plataforma definitiva de gestão do conhecimento corporativo.</strong></DescriptionF>
     </FeaturesContainer>
   )
