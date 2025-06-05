@@ -23,6 +23,8 @@ export const HeaderContainer = styled.header`
 export const LogoContainer = styled.div`
   display: flex;
   align-items: center;
+  transition: transform 0.2s ease-in-out;
+
 
   img {
     height: 55px; 
@@ -38,6 +40,7 @@ export const LogoContainer = styled.div`
 export const Nav = styled.nav`
   display: flex;
   gap: 5rem;
+  
 
   @media (max-width: 768px) {
     width: 100%;
@@ -52,6 +55,7 @@ export const NavItem = styled.a`
   transition: color 0.2s;
   font-family: 'Inter', sans-serif;
   text-decoration: none;
+  transition: transform 0.2s ease-in-out;
 
   &:hover {
     transform: scale(1.10); 
@@ -85,6 +89,7 @@ export const LoginButton = styled.a`
   color: #565656;
   transition: color 0.2s;
   text-decoration: none;
+  transition: transform 0.2s ease-in-out;
 
   &:hover {
     transform: scale(1.10); 
@@ -116,7 +121,9 @@ export const SignUpButton = styled.a`
   font-weight: 500;
   background-color: #233DFF;
   font-size: 15px;
-  text-decoration: none;
+  text-decoration: none;   
+  transition: transform 0.2s ease-in-out;
+
 
   &:hover {
     transform: scale(1.05); 
