@@ -16,7 +16,8 @@ const listarTodas = async (req, res) => {
     }catch (erro){
         res.status(500).json({ erro: 'Erro ao buscar postagens.', detalhes: erro.message});
     }
-}; 
+};
+ 
 const buscarPorId = async (req, res) => {
     try {
         const postagem = await PostagemComunidade.findByPk(req.params.id);
