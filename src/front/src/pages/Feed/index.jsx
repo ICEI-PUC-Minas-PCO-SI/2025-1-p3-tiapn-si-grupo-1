@@ -62,14 +62,11 @@ export default function Feed() {
         <ComponentDivider />
         <ScrollFeed>
           {flows.length > 0 ? (
-            flows.map((flow) => (
-              <FlowCard flow={flow} />
-              //Substituir por FlowCard quando estiver pronto
-              //Placeholder de flow cards
-            ))
+            flows.map((flow) => <FlowCard flow={flow} />)
           ) : (
             <p>Carregando flows...</p>
           )}
+          <ComponentDivider />
         </ScrollFeed>
       </FlowFeed>
 
