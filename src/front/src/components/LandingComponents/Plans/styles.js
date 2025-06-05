@@ -111,7 +111,7 @@ export const HorizontalLine3 = styled.div`
   top: 2200px;
   right: 20rem;
   height: 4px;
-  width: 900px; /* largura final fixa */
+  width: 1250px; /* largura final fixa */
   background-color: blue;
   z-index: 0;
   transform: scaleX(0); /* começa invisível */

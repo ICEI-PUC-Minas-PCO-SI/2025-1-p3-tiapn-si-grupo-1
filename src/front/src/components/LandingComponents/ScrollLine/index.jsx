@@ -14,7 +14,7 @@ useEffect(() => {
   let currentHeight = 0
 
   const updateLine = () => {
-    const targetHeight = window.scrollY / 1.1
+    const targetHeight = (window.scrollY / 1.1) * 1.05
 
     // Interpolação suave
     currentHeight += (targetHeight - currentHeight) * 0.1
