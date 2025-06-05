@@ -14,10 +14,15 @@ const filtrosRoutes = require("./src/routes/filtros");
 
 const app = express();
 
-// Habilita CORS para todas as origens
-app.use(cors());
-/*CORS (Cross-Origin Resource Sharing) é um mecanismo de segurança implementado 
-pelos navegadores que controla quais origens (domínios) têm permissão para acessar recursos de um servidor.*/
+const cors = require("cors");
+
+const corsOptions = {
+  origin: "*", // permite qualquer origem
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
