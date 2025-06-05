@@ -223,7 +223,7 @@ const FlowEditor = () => {
         .filter((tag) => tag);
 
       const response = await axios.post(
-        'https://layerg-knowflow.pxipv3.easypanel.host/api/flow',
+        'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow',
         {
           titulo: flowData.title,
           descricao: flowData.description,
