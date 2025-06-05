@@ -48,9 +48,9 @@ Discuta como a configuração do projeto foi feita na ferramenta de versionament
 - Diagrama, modelos e scripts do banco de dados: Felipe Roque, Gabriella Paz e Rogério Gabriel
 
 #### Sprint 4
-- _Scrum master_: 
+- _Scrum master_: Lucas Borges 
 - Frontend: Victor Alves, Lucas Borges e Mateus Botelho
-- Backend + banco de dados: Felipe Roque, Gabriella Paz e Rogério Gabriel 
+- Backend + banco de dados: Felipe Roque, Gabriella Paz, Rogério Gabriel e  Mateus Botelho 
 
 
 ###  Quadro de tarefas
