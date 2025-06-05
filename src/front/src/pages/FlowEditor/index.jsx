@@ -223,7 +223,7 @@ const FlowEditor = () => {
         .filter((tag) => tag);
 
       const response = await axios.post(
-        'http://localhost:3000/api/flow',
+        'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow',
         {
           titulo: flowData.title,
           descricao: flowData.description,
