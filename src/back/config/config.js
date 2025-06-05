@@ -9,7 +9,7 @@ module.exports = {
       dialect: process.env.DATABASE_DIALECT,
       dialectOptions: {
       ssl: {
-        require: false,
+        require: true,
         rejectUnauthorized: false
       }
     }
