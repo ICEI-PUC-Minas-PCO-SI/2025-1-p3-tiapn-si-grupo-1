@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
 
   .app-container {
     display: flex;
-    height: 100vh;
+    height: 220rem;
     width: 100%;
   }
 
@@ -26,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
 
   button {
     cursor: pointer;
+    
   }
 
   input, textarea {

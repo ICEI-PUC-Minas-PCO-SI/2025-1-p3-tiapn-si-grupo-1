@@ -8,7 +8,7 @@ export const SidebarContainer = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: ${props => props.theme.spacing.md} 0;
+  padding: ${props => props.theme.spacing.sm} 0;
 `;
 
 export const Logo = styled.div`
