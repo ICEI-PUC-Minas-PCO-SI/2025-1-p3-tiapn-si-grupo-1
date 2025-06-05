@@ -9,7 +9,6 @@ export const FeedContainer = styled.div`
   justify-content: space-between;
   position: relative;
   gap: 20px;
-  border: 1px solid violet;
 `;
 
 //<--- FLOWS - SCROLLAVEL --->

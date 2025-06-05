@@ -1,16 +1,8 @@
-import { useState } from "react";
 import { Button, LikeIcon } from "./style";
 
-export default function LikeButton({ initialLiked = false, onLike }) {
-  const [liked, setLiked] = useState(initialLiked);
-
-  const toggleLike = () => {
-    setLiked(!liked);
-    if (onLike) onLike(!liked);
-  };
-
+export default function LikeButton() {
   return (
-    <Button onClick={toggleLike} liked={liked}>
+    <Button>
       <LikeIcon />
     </Button>
   );

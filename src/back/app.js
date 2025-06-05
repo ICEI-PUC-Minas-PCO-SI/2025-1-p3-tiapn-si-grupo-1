@@ -22,7 +22,6 @@ pelos navegadores que controla quais origens (domínios) têm permissão para ac
 app.use(express.json());
 
 // Rotas da API
-
 app.use("/api/filtros", filtrosRoutes);
 app.use("/api/usuario", usuarioRoutes);
 app.use("/api/flow", flowRoutes);
