@@ -13,7 +13,7 @@ const HeaderRegister = () => {
       </LogoContainer>
 
       <ButtonContainer>
-        <Link to="/cadastro">
+        <Link to="/login">
           <SignUpButton>Login<ChevronRight strokeWidth={3} size={25} /> </SignUpButton>
         </Link>
       </ButtonContainer>

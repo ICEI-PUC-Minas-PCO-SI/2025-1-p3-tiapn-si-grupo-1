@@ -28,13 +28,14 @@ export const ThreeColumnContainerPlan = styled.div`
     padding: 2rem;
     z-index: 2;
     margin-top: 119rem;
+    width: 90%;
 `
 
 export const CardPlans = styled.div`
   background-color: #fff;
   border-radius: 12px;
   padding: 2rem;
-  width: 400px;
+  width: 28rem;
   height: 520px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   text-align: left;
@@ -104,3 +105,16 @@ export const CardBlueBox = styled.div`
         font-weight: 600;
     }
 `
+
+export const HorizontalLine3 = styled.div`
+  position: absolute;
+  top: 2200px;
+  right: 20rem;
+  height: 4px;
+  width: 1250px; /* largura final fixa */
+  background-color: blue;
+  z-index: 0;
+  transform: scaleX(0); /* começa invisível */
+  transform-origin: right; /* cresce da direita para a esquerda */
+  transition: transform 0.1s ease-out;
+`;

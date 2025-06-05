@@ -1,8 +1,25 @@
-import React from 'react'
-import { PlansConteiner, NossosPlanos, ThreeColumnContainerPlan, CardPlans, CardBlueBox } from './styles'
+import React, { useRef, useEffect } from 'react';
+import { PlansConteiner, NossosPlanos, ThreeColumnContainerPlan, CardPlans, CardBlueBox, HorizontalLine3 } from './styles'
 import { Check } from 'lucide-react';
 
 const Plans = () => {
+    const horizontalLineRef = useRef(null);  
+    
+    useEffect(() => {
+     const handleScroll = () => {
+       const scrollTop = window.scrollY;
+       const triggerPoint = 200;
+       const progress = Math.min((scrollTop - triggerPoint) / 2200, 1);
+    
+       if (horizontalLineRef.current) {
+         horizontalLineRef.current.style.transform = `scaleX(${progress})`;
+       }
+     };
+    
+     window.addEventListener("scroll", handleScroll);
+     return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+    
   return (
     <PlansConteiner>
         <NossosPlanos>Nossos <strong>Planos</strong></NossosPlanos>
@@ -41,6 +58,7 @@ const Plans = () => {
                 </ul>
             </CardPlans>
         </ThreeColumnContainerPlan>
+        <HorizontalLine3 ref={horizontalLineRef}/>
         
     </PlansConteiner>
   )

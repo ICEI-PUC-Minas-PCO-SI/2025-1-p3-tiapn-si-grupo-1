@@ -7,12 +7,11 @@ export const VideoContainer = styled.div`
   background-color: #fff;
   border-radius: 20px;
   padding: 10px;
-  width: 960px;
-  height: 550px;
+  width: 65%;
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   z-index: 2;
-  margin-left: 200px;
-  margin-top: 200px;
+  margin-left: 15%;
+  margin-top: 10%;
 
     video {
     width: 100%;

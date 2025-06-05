@@ -59,6 +59,7 @@ export const ThreeColumnContainer = styled.div`
     padding: 2rem;
     z-index: 2;
     margin-top: 72rem;
+    width: 90%;
 `
 
 export const Card = styled.div`
@@ -87,11 +88,23 @@ export const Card = styled.div`
 
 export const DescriptionF = styled.div`
   position: absolute;
-  top: 230vh;
-  right: 100px;
+  top: 103rem;
+  right: 10rem;
   font-size: 16px;
   font-weight: 500;
   max-width: 450px;
   text-align: center;
 
 `
+export const HorizontalLine2 = styled.div`
+  position: absolute;
+  top: 1375px;
+  right: 20rem;
+  height: 4px;
+  width: 1750px; /* largura final fixa */
+  background-color: blue;
+  z-index: 0;
+  transform: scaleX(0); /* começa invisível */
+  transform-origin: right; /* cresce da direita para a esquerda */
+  transition: transform 0.1s ease-out;
+`;
