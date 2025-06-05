@@ -1,5 +1,6 @@
 const express = require('express');
 const { sequelize } = require('./src/models');
+const cors = require("cors");
 
 const usuarioRoutes = require('./src/routes/usuarioRoutes');
 const flowRoutes = require('./src/routes/flowRoutes');
@@ -9,8 +10,19 @@ const curtidaRoutes = require('./src/routes/curtidaRouter');
 const comentarioPostagemRoutes = require('./src/routes/comentarioPostagemRoutes');
 const postagemComunidadeRoutes = require('./src/routes/postagemComunidadeRoutes');
 
-
 const app = express();
+
+const corsOptions = {
+  origin: "*", // permite qualquer origemAdd commentMore actions
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
+
+/*CORS (Cross-Origin Resource Sharing) é um mecanismo de segurança implementado 
+pelos navegadores que controla quais origens (domínios) têm permissão para acessar recursos de um servidor.*/
+
 
 app.use(express.json());
 
