@@ -15,7 +15,9 @@ Frequentemente há necessidade de verificar diferentes sistemas ou solicitar apo
 - Ausência de histórico automatizado;
 - Demora na resposta;
 - Retrabalho por perda de dados.
-
+  
+  ![Consultar Processo AS_IS](images/bpmn_as_is_consultar_processo.png)
+  
 ### 2. Documentar Processos (AS-IS)
 
 O processo de documentação de processos internos também ocorre de forma manual. Quando uma área precisa registrar um processo, geralmente é feito via documentos do Word, planilhas ou até mesmo e-mails. Os arquivos são salvos localmente ou em pastas compartilhadas sem padrão de nomenclatura ou controle de versão.
@@ -29,6 +31,8 @@ Além disso, não existe um fluxo de validação bem definido. O responsável po
 - Ausência de validação formal;
 - Registro redundante ou inconsistente;
 - Ausência de controle de versão e centralização.
+
+ ![Documentar Processos AS_IS](/images/bpmn_as_is_documentar_processo.png)
 
 ## Descrição geral da proposta (Modelagem TO BE)
 
@@ -58,6 +62,9 @@ O sistema será alimentado automaticamente a partir dos fluxos de entrada dos pr
 - Reduz riscos de perda de informações;
 - Apoia a transparência e agilidade nas decisões.
 
+  ![Consultar Processo TO-BE](images/bpmn_to_be_consultar_processo.png
+)
+
 ### 2. Documentar Processos (TO-BE)
 
 A nova proposta inclui a utilização de um sistema de gestão de processos baseado em BPMN, onde os responsáveis poderão criar, revisar e aprovar documentações dentro de um fluxo automatizado.
@@ -81,6 +88,7 @@ A documentação será feita dentro do próprio sistema, com campos padronizados
 - Melhoria da governança de processos;
 - Facilita auditorias e controles internos;
 - Suporte ao crescimento e à escalabilidade do negócio.
+![Documentar Processo TO-BE](images/bpmn_to_be_documentar_processo.png)
 
 ## Modelagem dos processos
 
