@@ -47,7 +47,7 @@ const comentarioPostagemController = {
             },
             {
               model: PostagemComunidade,
-              as: "postagemComunidade",
+              as: "PostagemComunidade",
               attributes: ["id", "titulo"],
               include: {
                 model: Usuario,
