@@ -1,16 +1,22 @@
-const express = require('express');
-const { sequelize } = require('./src/models');
+const express = require("express");
+const { sequelize } = require("./src/models");
+const cors = require("cors");
 
-const usuarioRoutes = require('./src/routes/usuarioRoutes');
-const flowRoutes = require('./src/routes/flowRoutes');
-const comentarioRoutes = require('./src/routes/comentarioRoutes');
-const flowSalvoRoutes = require('./src/routes/flowsalvoRouter');
-const curtidaRoutes = require('./src/routes/curtidaRouter');
-const comentarioPostagemRoutes = require('./src/routes/comentarioPostagemRoutes');
-const postagemComunidadeRoutes = require('./src/routes/postagemComunidadeRoutes');
-
+const filtrosRoutes = require("./src/routes/filtros");
+const usuarioRoutes = require("./src/routes/usuarioRoutes");
+const flowRoutes = require("./src/routes/flowRoutes");
+const comentarioRoutes = require("./src/routes/comentarioRoutes");
+const flowSalvoRoutes = require("./src/routes/flowsalvoRouter");
+const curtidaRoutes = require("./src/routes/curtidaRouter");
+const comentarioPostagemRoutes = require("./src/routes/comentarioPostagemRoutes");
+const postagemComunidadeRoutes = require("./src/routes/postagemComunidadeRoutes");
 
 const app = express();
+
+// Habilita CORS para todas as origens
+app.use(cors());
+/*CORS (Cross-Origin Resource Sharing) é um mecanismo de segurança implementado 
+pelos navegadores que controla quais origens (domínios) têm permissão para acessar recursos de um servidor.*/
 
 app.use(express.json());
 
@@ -23,8 +29,8 @@ app.use('/api/curtidas', curtidaRoutes);
 app.use('/api/comentario/postagem', comentarioPostagemRoutes);
 app.use('/api/postagem', postagemComunidadeRoutes);
 
-app.get('/', (req, res) => {
-  res.send('A API do KnowFlow está rodando 🤩!');
+app.get("/", (req, res) => {
+  res.send("A API do KnowFlow está rodando 🤩!");
 });
 
 sequelize.sync({ alter: true })
@@ -36,5 +42,5 @@ sequelize.sync({ alter: true })
     });
   })
   .catch((err) => {
-    console.error('Erro ao sincronizar o banco:', err);
+    console.error("Erro ao sincronizar o banco:", err);
   });
