@@ -28,11 +28,11 @@ app.use(express.json());
 app.use('/api/usuario', usuarioRoutes);
 app.use('/api/flow', flowRoutes);
 app.use('/api/comentario', comentarioRoutes)
-app.use('/api/flowsalvos', flowSalvoRoutes);
-app.use('/api/curtidas', curtidaRoutes);
-app.use('/api/comentariopostagem', comentarioPostagemRoutes);
-app.use('/api/postagem', postagemComunidadeRoutes);
-app.use("/api/filtros", filtrosRoutes);
+app.use('/flowsalvos', flowSalvoRoutes);
+app.use('/curtidas', curtidaRoutes);
+app.use('/comentariopostagem', comentarioPostagemRoutes);
+app.use('/postagemcomunidade', postagemComunidadeRoutes)
+app.use('/filtros', filtrosRoutes);
 
 app.get("/", (req, res) => {
   res.send("A API do KnowFlow está rodando 🤩!");
