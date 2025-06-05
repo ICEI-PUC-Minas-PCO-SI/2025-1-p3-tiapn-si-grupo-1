@@ -1,8 +1,9 @@
-require('dotenv').config();
-const { Sequelize } = require('sequelize');
+require("dotenv").config();
+const { Sequelize } = require("sequelize");
 
 const sequelize = new Sequelize(
   process.env.PGDATABASE,
+
   process.env.PGUSER,
   process.env.PGPASSWORD,
   {
@@ -11,11 +12,8 @@ const sequelize = new Sequelize(
     port: process.env.PGPORT || 5432,
     logging: false,
     dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      }
-    }
+      ssl: false, // Set to true if you need SSL connection
+    },
   }
 );
 
