@@ -30,7 +30,7 @@ export const Heading = styled.h1`
   font-size: 4.5vw;
   line-height: 1.2;
   margin-bottom: 2rem;
-  font-weight: 450;
+  font-weight: 400;
   font-family: 'Montserrat', sans-serif;
   width: 100%;
   text-align: left; /* Garante que o título esteja alinhado à esquerda por padrão */

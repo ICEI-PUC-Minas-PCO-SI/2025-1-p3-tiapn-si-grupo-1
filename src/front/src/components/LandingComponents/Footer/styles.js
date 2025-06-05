@@ -74,7 +74,7 @@ export const FooterLink = styled.a`
   padding: 0.25rem 0;
 
   &:hover {
-    color: #4f46e5;
+    color: #233DFF;
     transform: translateX(4px);
   }
 `
@@ -82,6 +82,7 @@ export const FooterLink = styled.a`
 export const Logo = styled.h2`
   display: flex;
   align-items: center;
+  transition: transform 0.2s ease-in-out;
   
   img {
     height: 55px; 
@@ -113,10 +114,10 @@ export const SocialIcon = styled.a`
   border: 1px solid #e5e7eb;
 
   &:hover {
-    background: #4f46e5;
+    background: #233DFF;
     color: #ffffff;
     transform: translateY(-2px);
-    border-color: #4f46e5;
+    border-color: #233DFF;
     box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
   }
 
@@ -159,7 +160,7 @@ export const NewsletterInput = styled.input`
   border: 1px solid #d1d5db;
   border-radius: 8px;
   background: #ffffff;
-  color: #111827;
+  color:rgb(39, 25, 17);
   font-size: 0.9rem;
   transition: all 0.2s ease;
 
@@ -169,27 +170,25 @@ export const NewsletterInput = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #4f46e5;
+    border-color: #233DFF;
     box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
   }
 `
 
 export const NewsletterButton = styled.button`
   padding: 0.75rem 1.5rem;
-  background: #4f46e5;
+  background: #233DFF;
   color: #ffffff;
   border: none;
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.2s ease;
   white-space: nowrap;
+  transition: transform 0.2s ease-in-out;
 
   &:hover {
-    background: #4338ca;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
   }
 
   &:active {
