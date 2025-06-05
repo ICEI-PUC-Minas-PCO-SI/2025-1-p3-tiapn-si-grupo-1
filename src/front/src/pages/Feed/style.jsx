@@ -5,9 +5,11 @@ import { Funnel } from "lucide-react";
 export const FeedContainer = styled.div`
   width: 100%;
   display: flex;
-  padding: 30px;
+  padding: 10px 30px;
   justify-content: space-between;
-  gap: 60px;
+  position: relative;
+  gap: 20px;
+  border: 1px solid violet;
 `;
 
 //<--- FLOWS - SCROLLAVEL --->
@@ -18,15 +20,14 @@ export const FlowFeed = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  border-right: 1px solid #ccc;
 `;
 
 export const ScrollFeed = styled.section`
-  flex: 1;
-
   display: flex;
   flex-direction: column;
+  padding-top: 20px;
   gap: 50px;
-  padding: 20px;
 `;
 
 // <--- FILTROS - FIXO --->
@@ -38,9 +39,7 @@ export const FeedFilters = styled.aside`
   flex-direction: column;
   gap: 20px;
   border-radius: 10px;
-  position: fixed;
-  right: 0;
-  top: 20px;
+  height: auto;
 `;
 
 export const FilterHeader = styled.header`

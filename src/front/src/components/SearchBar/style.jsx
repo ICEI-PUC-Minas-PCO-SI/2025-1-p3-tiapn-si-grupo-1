@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const Form = styled.form`
   display: flex;
   justify-content: center;
-  //border: 2px solid #233dff;
 `;
 
 export const Input = styled.input`
@@ -12,7 +11,6 @@ export const Input = styled.input`
   padding: 16px 30px 16px 46px; /* espaço à esquerda para o ícone */
   font-size: 16px;
   border: 1px solid #cccccc;
-  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   outline: none;
   transition: border-color 0.3s;

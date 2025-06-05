@@ -1,8 +1,10 @@
 import { Heart, Bookmark, MessageCircle } from "lucide-react";
+import ComponentDivider from "../ComponentDivider/Index";
 import LikeButton from "./Actions/LikeButton";
 import CommentButton from "./Actions/CommentButton";
 import SaveButton from "./Actions/SaveButton";
 import {
+  FlowCardContainer,
   FlowWrapper,
   FlowHat,
   FlowHeader,
@@ -47,37 +49,39 @@ export default function FlowCard({ flow }) {
   };
 
   return (
-    <FlowWrapper>
-      <FlowHat />
-      <FlowHeader>
-        <Avatar>{getIniciais(flow.usuario?.nome)}</Avatar>
-        <FlowAuthor>{flow.usuario.nome} /</FlowAuthor>
-        <FlowCategory>{`${" "} #${flow.categoria}`}</FlowCategory>
-        <span
-          style={{
-            width: "4px",
-            height: "4px",
-            backgroundColor: "#565656",
-            borderRadius: "50%",
-          }}
-        />
-        <DaysPublished>{getDaysAgo(flow.criado_em)}</DaysPublished>
-        <ActionButton>
-          <ActionIcon />
-        </ActionButton>
-      </FlowHeader>
+    <FlowCardContainer>
+      <FlowWrapper>
+        <FlowHat />
+        <FlowHeader>
+          <Avatar>{getIniciais(flow.usuario?.nome)}</Avatar>
+          <FlowAuthor>{flow.usuario.nome} /</FlowAuthor>
+          <FlowCategory>{`${" "} #${flow.categoria}`}</FlowCategory>
+          <span
+            style={{
+              width: "4px",
+              height: "4px",
+              backgroundColor: "#565656",
+              borderRadius: "50%",
+            }}
+          />
+          <DaysPublished>{getDaysAgo(flow.criado_em)}</DaysPublished>
+          <ActionButton>
+            <ActionIcon />
+          </ActionButton>
+        </FlowHeader>
 
-      <FlowPreviewWrapper>
-        <h2>{flow.titulo}</h2>
-        <p>{flow.descricao ? flow.descricao : "teste"}</p>
-      </FlowPreviewWrapper>
-
-      <FlowFooter>
-        <LikeButton />
-        <CommentButton />
-        <SaveButton />
-      </FlowFooter>
-    </FlowWrapper>
+        <FlowPreviewWrapper>
+          <h2>{flow.titulo}</h2>
+          <p>{flow.descricao ? flow.descricao : "teste"}</p>
+        </FlowPreviewWrapper>
+        <FlowFooter>
+          <LikeButton />
+          <CommentButton />
+          <SaveButton />
+        </FlowFooter>
+      </FlowWrapper>
+      <ComponentDivider />
+    </FlowCardContainer>
   );
 }
 /*
