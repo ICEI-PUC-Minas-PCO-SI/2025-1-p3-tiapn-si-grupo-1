@@ -2,27 +2,22 @@ const express = require("express");
 const { sequelize } = require("./src/models");
 const cors = require("cors");
 
-const filtrosRoutes = require("./src/routes/filtros");
-const usuarioRoutes = require("./src/routes/usuarioRoutes");
-const flowRoutes = require("./src/routes/flowRoutes");
-const comentarioRoutes = require("./src/routes/comentarioRoutes");
-const flowSalvoRoutes = require("./src/routes/flowsalvoRouter");
-const curtidaRoutes = require("./src/routes/curtidaRouter");
-const comentarioPostagemRoutes = require("./src/routes/comentarioPostagemRoutes");
-const postagemComunidadeRoutes = require("./src/routes/postagemComunidadeRoutes");
-const filtrosRoutes = require("./src/routes/filtros");
+const usuarioRoutes = require('./src/routes/usuarioRoutes');
+const flowRoutes = require('./src/routes/flowRoutes');
+const comentarioRoutes = require('./src/routes/comentarioRoutes');
+const flowSalvoRoutes = require('./src/routes/flowsalvoRouter');
+const curtidaRoutes = require('./src/routes/curtidaRouter');
+const comentarioPostagemRoutes = require('./src/routes/comentarioPostagemRoutes');
+const postagemComunidadeRoutes = require('./src/routes/postagemComunidadeRoutes');
 
 const app = express();
 
-const cors = require("cors");
-
-const corsOptions = {
-  origin: "*", // permite qualquer origem
+app.use(cors({
+  origin: "http://localhost:5173", // ou use '*' temporariamente para testes (não recomendado em produção)
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
+  credentials: true
+}));
 
-app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -32,9 +27,8 @@ app.use('/api/flow', flowRoutes);
 app.use('/api/comentario', comentarioRoutes)
 app.use('/api/flowsalvos', flowSalvoRoutes);
 app.use('/api/curtidas', curtidaRoutes);
-app.use('/api/comentario/postagem', comentarioPostagemRoutes);
-app.use('/api/postagem', postagemComunidadeRoutes);
-app.use("/api/filtros", filtrosRoutes);
+app.use('/api/comentariopostagem', comentarioPostagemRoutes);
+app.use('/api/postagemcomunidade', postagemComunidadeRoutes)
 
 app.get("/", (req, res) => {
   res.send("A API do KnowFlow está rodando 🤩!");

@@ -1,4 +1,4 @@
-name: Build and deploy Node.js app to Azure Web App - knowflow
+name: Build and deploy Node.js app to Azure Web App - knowflowpocess
 
 on:
   push:
@@ -22,17 +22,13 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          cd src/back
           npm install
           npm run build --if-present
           npm run test --if-present
 
       - name: Zip artifact for deployment
-        run: |
-          cd src/back
-          zip release.zip ./* -r
-          mv release.zip ../../release.zip
-          
+        run: zip release.zip ./* -r
+
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
@@ -44,7 +40,6 @@ jobs:
     needs: build
     environment:
       name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
       id-token: write
       contents: read
@@ -57,18 +52,22 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      
+
       - name: Login to Azure
-        uses: azure/login@v2
+        uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_4F769207CDD2409FA7CAC5518782D4A6 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_339DA51343CD4426B6EDAC441B953BA3 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5079020EBB6B472C949C08C6B4E0EF31 }}
+          creds: |
+            {
+              "clientId": "${{ secrets.AZURE_CLIENT_ID }}",
+              "clientSecret": "${{ secrets.AZURE_CLIENT_SECRET }}",
+              "tenantId": "${{ secrets.AZURE_TENANT_ID }}",
+              "subscriptionId": "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+            }
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'knowflow'
+          app-name: 'knowflowpocess'
           slot-name: 'Production'
           package: .

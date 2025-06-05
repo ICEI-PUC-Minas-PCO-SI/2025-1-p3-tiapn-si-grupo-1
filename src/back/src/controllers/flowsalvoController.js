@@ -17,20 +17,27 @@ const flowSalvoController = {
   },
 
 
-  async listar(req, res) {
-    try {
-      const salvos = await FlowSalvo.findAll({
-        include: [
-          { model: Usuario, attributes: ['id', 'nome'] },
-          { model: Flow, attributes: ['id', 'titulo'] }
-        ],
-        order: [['criado_em', 'DESC']]
-      });
-      res.json(salvos);
-    } catch (error) {
-      res.status(500).json({ erro: 'Erro ao listar flows salvos', detalhes: error.message });
-    }
-  },
+ async listar(req, res) {
+  try {
+    const { usuario_id } = req.query;
+    const filtro = {};
+
+    if (usuario_id) filtro.usuario_id = usuario_id;
+
+    const salvos = await FlowSalvo.findAll({
+      where: filtro,
+      include: [
+        { model: Usuario, as: 'usuario', attributes: ['id', 'nome'] },
+        { model: Flow, as: 'flow', attributes: ['id', 'titulo'] }
+      ],
+      order: [['criado_em', 'DESC']]
+    });
+
+    res.json(salvos);
+  } catch (error) {
+    res.status(500).json({ erro: 'Erro ao listar flows salvos', detalhes: error.message });
+  }
+},
 
 
   async obter(req, res) {

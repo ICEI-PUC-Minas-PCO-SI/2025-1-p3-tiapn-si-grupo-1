@@ -78,13 +78,14 @@ const comentarioController = {
         return res.status(403).json({ erro: "Permissão negada" });
       }
 
+      const { mensagem } = req.body;
+
       if (!mensagem || mensagem.trim() === "") {
         return res.status(400).json({ erro: "Mensagem não pode estar vazia" });
       }
       
 
-      const { mensagem } = req.body;
-
+    
       await comentario.update({ mensagem });
 
       res.json({ mensagem: "Comentário atualizado com sucesso" });
