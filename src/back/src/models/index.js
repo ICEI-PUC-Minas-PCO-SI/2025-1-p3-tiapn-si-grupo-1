@@ -33,11 +33,11 @@ ComentarioPostagem.belongsTo(PostagemComunidade, { foreignKey: 'postagem_id' });
 
 Usuario.hasMany(FlowSalvo, {foreignKey: 'usuario_id', as: 'registrosFlowSalvo'});
 
-Object.values(db).forEach(model => {
-  if (model.associate) {
-    model.associate(db);
-  }
-});
+// Object.values(db).forEach(model => {
+//   if (model.associate) {
+//     model.associate(db);
+//   }
+// });
 
 module.exports = {
   sequelize,
