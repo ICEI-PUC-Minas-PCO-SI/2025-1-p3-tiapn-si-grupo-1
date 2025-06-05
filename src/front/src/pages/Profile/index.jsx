@@ -64,7 +64,7 @@ const Profile = () => {
     }
 
     try {
-      const response = await axios.get('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/me', {
+      const response = await axios.get('https://layerg-knowflow.pxipv3.easypanel.host/api/usuario/me', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

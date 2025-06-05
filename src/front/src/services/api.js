@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: 'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api',
+    baseURL: 'https://layerg-knowflow.pxipv3.easypanel.host/api',
 });
 
 export default api;

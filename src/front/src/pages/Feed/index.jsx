@@ -34,7 +34,7 @@ export default function Feed() {
     async function fetchFiltros() {
       //CONSULTAR API DE FILTROS
       try {
-        const response = await axios.get("https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/filtros");
+        const response = await axios.get("https://layerg-knowflow.pxipv3.easypanel.host/api/filtros");
         setFiltros(response.data);
       } catch (error) {
         console.error("Erro ao buscar filtros:", error);
@@ -44,7 +44,7 @@ export default function Feed() {
     //CONSULTAR API DE FLOWS
     async function fetchFlows() {
       try {
-        const response = await axios.get("https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow");
+        const response = await axios.get("https://layerg-knowflow.pxipv3.easypanel.host/api/flow");
         setFlows(response.data);
       } catch (error) {
         console.error("Erro ao buscar flows:", error);
