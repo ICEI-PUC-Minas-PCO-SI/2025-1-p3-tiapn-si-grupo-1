@@ -10,7 +10,6 @@ const curtidaRoutes = require('./src/routes/curtidaRouter');
 const comentarioPostagemRoutes = require('./src/routes/comentarioPostagemRoutes');
 const postagemComunidadeRoutes = require('./src/routes/postagemComunidadeRoutes');
 
-
 const app = express();
 
 app.use(express.json());
