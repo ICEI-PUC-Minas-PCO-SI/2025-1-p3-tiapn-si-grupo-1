@@ -6,6 +6,7 @@ import FlowRoutes from "./FlowRoutes";
 import AuthRoutes from "./AuthRoutes";
 import CommunityRoutes from "./CommunityRoutes";
 import FeedRoutes from "./FeedRoutes";
+import ProfileRoutes from './ProfileRoutes';
 
 const MainRoutes = () => (
   <Routes>
@@ -19,6 +20,7 @@ const MainRoutes = () => (
     {FlowRoutes()}
     {CommunityRoutes()}
     {FeedRoutes()}
+    {ProfileRoutes()}
   </Routes>
 );
 

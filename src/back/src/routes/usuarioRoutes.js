@@ -9,5 +9,6 @@ router.post('/login', usuarioController.login);
 
 // Rota protegida (exemplo de uso do middleware)
 router.get('/', auth, usuarioController.listarTodos);
+router.get('/me', auth, usuarioController.obterUsuarioLogado);
 
 module.exports = router;
