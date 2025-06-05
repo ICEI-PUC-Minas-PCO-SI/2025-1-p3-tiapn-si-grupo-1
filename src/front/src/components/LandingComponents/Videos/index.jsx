@@ -27,7 +27,7 @@ const Video = () => {
   const handleScroll = () => {
     const scrollTop = window.scrollY;
     const triggerPoint = 200;
-    const progress = Math.min((scrollTop - triggerPoint) / 500, 1);
+    const progress = Math.min((scrollTop - triggerPoint) / 900, 1);
 
     if (horizontalLineRef.current) {
       horizontalLineRef.current.style.transform = `scaleX(${progress})`;

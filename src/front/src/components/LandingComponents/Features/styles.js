@@ -101,7 +101,7 @@ export const HorizontalLine2 = styled.div`
   top: 1375px;
   right: 20rem;
   height: 4px;
-  width: 900px; /* largura final fixa */
+  width: 1750px; /* largura final fixa */
   background-color: blue;
   z-index: 0;
   transform: scaleX(0); /* começa invisível */
