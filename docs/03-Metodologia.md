@@ -1,9 +1,9 @@
 
 # Metodologia
 
-<span style="color:red">Pré-requisitos: <a href="02-Especificacao.md"> Especificação do projeto</a></span>
+A metodologia de trabalho adotada pelo grupo baseia-se em práticas ágeis, utilizando o framework Scrum para a organização das tarefas e o desenvolvimento iterativo do projeto. O trabalho foi dividido em Sprints, cada uma com um objetivo claro e entregas definidas, permitindo o acompanhamento contínuo do progresso e a adaptação a novas demandas.
 
-Descreva aqui a metodologia de trabalho do grupo para abordar o problema. Inclua definições sobre os ambientes de trabalho utilizados pela equipe para desenvolver o projeto. Isso abrange a relação dos ambientes utilizados, a estrutura para a gestão do código-fonte, além da definição do processo e das ferramentas por meio dos quais a equipe se organiza (gestão de equipes).
+Para a gestão do projeto, foram utilizados os recursos do GitHub, como o controle de versionamento com Git, o gerenciamento de issues e o quadro Kanban do GitHub Projects. A comunicação da equipe foi realizada por meio de encontros síncronos e grupos de mensagens, garantindo o alinhamento constante entre todos os membros.
 
 ## Controle de versão
 
@@ -119,7 +119,7 @@ Legenda:
 
 ### Processo
 
-Coloque informações sobre detalhes da implementação do Scrum seguido pelo grupo. O grupo deverá fazer uso do recurso de gerenciamento de projeto oferecido pelo GitHub, que permite acompanhar o andamento do projeto, a execução das tarefas e o status de desenvolvimento da solução.
+O grupo utilizou o Scrum como metodologia de gestão do projeto, dividindo o trabalho em sprints mensais. A ferramenta de projetos do GitHub (GitHub Projects) foi usada para organizar tarefas em colunas de "Backlog", "Ready", "In progress" e "In review". Ao final de cada sprint, uma reunião de review foi feita para apresentar os avanços e ajustes necessários foram definidos nas retrospectivas.
  
 ## Relação de ambientes de trabalho
 
