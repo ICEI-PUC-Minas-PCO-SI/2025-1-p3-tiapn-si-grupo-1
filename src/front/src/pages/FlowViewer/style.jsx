@@ -76,8 +76,8 @@ export const HeaderActions = styled.div`
 export const ActionButton = styled.button`
   display: flex;
   align-items: center;
-  gap: 2px; /* Reduzido de 8px para melhor espaçamento */
-  padding: ${({ $compact }) => ($compact ? '6px 10px' : '8px 16px')}; /* Compact para botões de comentário */
+  gap: 4px; /* Reduzido de 6px para compactar ícone e texto */
+  padding: ${({ $compact }) => ($compact ? '6px 8px' : '8px 16px')}; /* Reduzido de 10px para 8px horizontalmente em $compact */
   border: 1px solid ${({ $variant, $active }) =>
     $variant === 'like' && $active ? '#ef4444' :
       $variant === 'save' && $active ? '#233DFF' :
@@ -89,33 +89,33 @@ export const ActionButton = styled.button`
   color: ${({ $variant, $active }) =>
     ($variant === 'like' && $active) || ($variant === 'save' && $active) ? '#fff' :
       '#374151'};
-  border-radius: 6px; /* Reduzido de 8px para botões menores */
-  font-size: ${({ $compact }) => ($compact ? '12px' : '14px')}; /* Menor para comentários */
+  border-radius: 6px;
+  font-size: ${({ $compact }) => ($compact ? '12px' : '14px')};
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s; /* Transição mais suave */
+  transition: all 0.15s;
 
   &:hover {
     background: ${({ $variant, $active }) =>
-    $variant === 'like' && !$active ? '#fef2f2' :
-      $variant === 'comment' ? '#eff6ff' :
-        $variant === 'save' && !$active ? '#eff6ff' :
-          $variant === 'share' ? '#f0fdf4' :
-            $variant === 'commentLike' ? '#eff6ff' :
-              $variant === 'commentReply' ? '#f3f4f6' :
-                $variant === 'commentFlag' ? '#fef2f2' :
-                  $variant === 'commentEdit' ? '#fff7ed' :
-                    $variant === 'commentDelete' ? '#fef2f2' : '#f3f4f6'};
+      $variant === 'like' && !$active ? '#fef2f2' :
+        $variant === 'comment' ? '#eff6ff' :
+          $variant === 'save' && !$active ? '#eff6ff' :
+            $variant === 'share' ? '#f0fdf4' :
+              $variant === 'commentLike' ? '#eff6ff' :
+                $variant === 'commentReply' ? '#f3f4f6' :
+                  $variant === 'commentFlag' ? '#fef2f2' :
+                    $variant === 'commentEdit' ? '#fff7ed' :
+                      $variant === 'commentDelete' ? '#fef2f2' : '#f3f4f6'};
     border-color: ${({ $variant }) =>
-    $variant === 'like' ? '#f87171' :
-      $variant === 'comment' ? '#3b82f6' :
-        $variant === 'save' ? '#233DFF' :
-          $variant === 'share' ? '#22c55e' :
-            $variant === 'commentLike' ? '#3b82f6' :
-              $variant === 'commentReply' ? '#6b7280' :
-                $variant === 'commentFlag' ? '#ef4444' :
-                  $variant === 'commentEdit' ? '#fb923c' :
-                    $variant === 'commentDelete' ? '#ef4444' : '#d1d5db'};
+      $variant === 'like' ? '#f87171' :
+        $variant === 'comment' ? '#3b82f6' :
+          $variant === 'save' ? '#233DFF' :
+            $variant === 'share' ? '#22c55e' :
+              $variant === 'commentLike' ? '#3b82f6' :
+                $variant === 'commentReply' ? '#6b7280' :
+                  $variant === 'commentFlag' ? '#ef4444' :
+                    $variant === 'commentEdit' ? '#fb923c' :
+                      $variant === 'commentDelete' ? '#ef4444' : '#d1d5db'};
   }
 `;
 
@@ -179,6 +179,7 @@ export const Canvas = styled.div`
   height: 700px;
   border-radius: 8px;
   overflow: hidden;
+  border: 0 solid rgba(229, 231, 235, 0.5);
 `;
 
 export const CommentForm = styled.div`
@@ -208,9 +209,9 @@ export const Textarea = styled.textarea`
 
 export const CommentActions = styled.div`
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   align-items: center;
-  gap: 6px; /* Reduzido de 8px para botões mais próximos */
+  gap: 2px; /* Reduzido de 4px para botões ainda mais próximos */
   flex-wrap: nowrap; /* Evita quebra de linha */
 `;
 
@@ -421,7 +422,7 @@ export const Button = styled.button`
 
   &:hover {
     background: ${({ $variant }) =>
-    $variant === 'outline' ? '#f3f4f6' : '#1e3a8a'};
+      $variant === 'outline' ? '#f3f4f6' : '#1e3a8a'};
     border-color: ${({ $variant }) => ($variant === 'outline' ? '#d1d5db' : 'none')};
   }
 `;

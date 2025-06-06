@@ -309,7 +309,7 @@ const FlowViewer = () => {
             {/* Cabeçalho */}
             <S.Header>
                 <S.HeaderContent>
-                    <S.BackButton onClick={() => navigate('/')}>
+                    <S.BackButton onClick={() => navigate('/feed')}>
                         <ArrowLeft size={16} />
                         Voltar ao Feed
                     </S.BackButton>
