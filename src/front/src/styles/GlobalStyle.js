@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
 
   .app-container {
     display: flex;
-    height: 220rem;
+    height: 100dvh;
     width: 100%;
   }
 

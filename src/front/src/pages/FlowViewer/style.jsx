@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #f9fafb, #e5e7eb);
+  background: #FAFAFA;
 `;
 
 export const ToastOverride = styled.div`
@@ -76,45 +76,53 @@ export const HeaderActions = styled.div`
 export const ActionButton = styled.button`
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
+  gap: 2px; /* Reduzido de 8px para melhor espaçamento */
+  padding: ${({ $compact }) => ($compact ? '6px 10px' : '8px 16px')}; /* Compact para botões de comentário */
   border: 1px solid ${({ $variant, $active }) =>
-        $variant === 'like' && $active ? '#ef4444' :
-            $variant === 'save' && $active ? '#233DFF' :
-                '#e5e7eb'};
+    $variant === 'like' && $active ? '#ef4444' :
+      $variant === 'save' && $active ? '#233DFF' :
+        '#e5e7eb'};
   background: ${({ $variant, $active }) =>
-        $variant === 'like' && $active ? '#ef4444' :
-            $variant === 'save' && $active ? '#233DFF' :
-                'none'};
+    $variant === 'like' && $active ? '#ef4444' :
+      $variant === 'save' && $active ? '#233DFF' :
+        'none'};
   color: ${({ $variant, $active }) =>
-        ($variant === 'like' && $active) || ($variant === 'save' && $active) ? '#fff' :
-            '#374151'};
-  border-radius: 8px;
-  font-size: 14px;
+    ($variant === 'like' && $active) || ($variant === 'save' && $active) ? '#fff' :
+      '#374151'};
+  border-radius: 6px; /* Reduzido de 8px para botões menores */
+  font-size: ${({ $compact }) => ($compact ? '12px' : '14px')}; /* Menor para comentários */
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.15s; /* Transição mais suave */
 
   &:hover {
     background: ${({ $variant, $active }) =>
-        $variant === 'like' && !$active ? '#fef2f2' :
-            $variant === 'comment' ? '#eff6ff' :
-                $variant === 'save' && !$active ? '#eff6ff' :
-                    $variant === 'share' ? '#f0fdf4' :
-                        '#f3f4f6'};
+    $variant === 'like' && !$active ? '#fef2f2' :
+      $variant === 'comment' ? '#eff6ff' :
+        $variant === 'save' && !$active ? '#eff6ff' :
+          $variant === 'share' ? '#f0fdf4' :
+            $variant === 'commentLike' ? '#eff6ff' :
+              $variant === 'commentReply' ? '#f3f4f6' :
+                $variant === 'commentFlag' ? '#fef2f2' :
+                  $variant === 'commentEdit' ? '#fff7ed' :
+                    $variant === 'commentDelete' ? '#fef2f2' : '#f3f4f6'};
     border-color: ${({ $variant }) =>
-        $variant === 'like' ? '#f87171' :
-            $variant === 'comment' ? '#3b82f6' :
-                $variant === 'save' ? '#233DFF' :
-                    $variant === 'share' ? '#22c55e' :
-                        $d1d5db};
+    $variant === 'like' ? '#f87171' :
+      $variant === 'comment' ? '#3b82f6' :
+        $variant === 'save' ? '#233DFF' :
+          $variant === 'share' ? '#22c55e' :
+            $variant === 'commentLike' ? '#3b82f6' :
+              $variant === 'commentReply' ? '#6b7280' :
+                $variant === 'commentFlag' ? '#ef4444' :
+                  $variant === 'commentEdit' ? '#fb923c' :
+                    $variant === 'commentDelete' ? '#ef4444' : '#d1d5db'};
   }
 `;
 
 export const Main = styled.main`
   max-width: 1280px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 24px 0px 24px 0px; 
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 24px;
@@ -141,6 +149,7 @@ export const Card = styled.div`
   border-radius: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   overflow: hidden;
+  border: solid 1px rgba(229, 231, 235, 0.5);
 `;
 
 export const CardHeader = styled.div`
@@ -163,7 +172,7 @@ export const CardDescription = styled.p`
 `;
 
 export const CardContent = styled.div`
-  padding: 24px;
+  padding: 10px 24px 24px 24px;
 `;
 
 export const Canvas = styled.div`
@@ -199,8 +208,10 @@ export const Textarea = styled.textarea`
 
 export const CommentActions = styled.div`
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
+  gap: 6px; /* Reduzido de 8px para botões mais próximos */
+  flex-wrap: nowrap; /* Evita quebra de linha */
 `;
 
 export const CommentHint = styled.p`
@@ -253,24 +264,25 @@ export const Comment = styled.div`
 
 export const Avatar = styled.div`
   position: relative;
-  width: 40px;
-  height: 40px;
+  width: 44px; /* Aumentado de 40px para melhor proporção */
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden; /* Garante arredondamento perfeito */
 
   img {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
+    border-radius: 50%; /* Reforça arredondamento */
     object-fit: cover;
-    border: 2px solid #f3f4f6;
   }
 `;
 
 export const VerifiedBadge = styled.div`
   position: absolute;
-  bottom: -2px;
-  right: -2px;
-  width: 16px;
-  height: 16px;
+  bottom: 0; /* Ajustado para novo tamanho */
+  right: 0;
+  width: 18px; /* Aumentado para acompanhar avatar */
+  height: 18px;
   background: #233DFF;
   color: #fff;
   border-radius: 50%;
@@ -278,6 +290,7 @@ export const VerifiedBadge = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 10px;
+  border: 2px solid #fff; /* Borda branca para contraste */
 `;
 
 export const CommentContent = styled.div`
@@ -369,6 +382,7 @@ export const AuthorInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+  margin-left: 25px;
 `;
 
 export const AuthorName = styled.span`
@@ -407,7 +421,7 @@ export const Button = styled.button`
 
   &:hover {
     background: ${({ $variant }) =>
-        $variant === 'outline' ? '#f3f4f6' : '#1e3a8a'};
+    $variant === 'outline' ? '#f3f4f6' : '#1e3a8a'};
     border-color: ${({ $variant }) => ($variant === 'outline' ? '#d1d5db' : 'none')};
   }
 `;

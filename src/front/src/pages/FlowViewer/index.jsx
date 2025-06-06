@@ -26,18 +26,32 @@ import {
     Copy,
     Image as ImageIcon,
     Users,
+    Edit,
+    Download,
+    Trash2,
 } from 'lucide-react';
 import TextNode from '../../components/TextNode';
 import DecisionNode from '../../components/DecisionNode';
 import MediaNode from '../../components/MediaNode';
+import { getIniciais, InitialsAvatar } from '../../services/avatarService'; // Novo import
 import * as S from './style';
 
+// Configura o axios para incluir o token de autenticação
+axios.interceptors.request.use((config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+
+// Componente principal para visualização de um flow
 const FlowViewer = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [flow, setFlow] = useState(null);
     const [nodes, setNodes, onNodesChange] = useNodesState([]);
-    const [edges, setEdges, onEdgesState] = useEdgesState([]);
+    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
     const [selectedNode, setSelectedNode] = useState(null);
     const [isNodeModalOpen, setIsNodeModalOpen] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
@@ -46,43 +60,80 @@ const FlowViewer = () => {
     const [showComments, setShowComments] = useState(true);
     const [stats, setStats] = useState({ likes: 0, comments: 0, saves: 0, views: 0 });
     const [comments, setComments] = useState([]);
+    const [editingCommentId, setEditingCommentId] = useState(null);
+    const [editedComment, setEditedComment] = useState('');
+    const usuarioId = localStorage.getItem('usuarioId'); // ID do usuário logado
 
+    // Memoização dos tipos de nós
     const nodeTypes = useMemo(() => ({
         textNode: TextNode,
         decisionNode: DecisionNode,
         mediaNode: MediaNode,
     }), []);
 
+    // Busca o flow e mapeia os comentários incluídos no response
     useEffect(() => {
         const fetchFlow = async () => {
             try {
-                const response = await axios.get(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${id}`);
-                const flowData = response.data;
-                setFlow(flowData);
+                // Busca o flow pelo ID, que inclui os comentários em flow.comentarios
+                const flowResponse = await axios.get(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${id}`);
+                const flowData = flowResponse.data;
+                const mappedFlow = {
+                    ...flowData,
+                    createdAt: flowData.criado_em,
+                    autor: {
+                        ...flowData.usuario,
+                        empresa: flowData.usuario.empresa || 'Sem empresa',
+                        cargo: flowData.usuario.cargo || 'Sem cargo',
+                        avatar: flowData.usuario.avatar || null, // null para usar iniciais
+                        verificado: flowData.usuario.verificado || false,
+                        username: flowData.usuario.username || flowData.usuario.email.split('@')[0],
+                        seguidores: flowData.usuario.seguidores || [],
+                    },
+                };
+                setFlow(mappedFlow);
                 setNodes(flowData.conteudo_nos || []);
                 setEdges(flowData.conteudo_conexoes || []);
                 setStats({
                     likes: flowData.stats?.likes || 0,
-                    comments: flowData.stats?.comments || 0,
+                    comments: flowData.comentarios?.length || 0,
                     saves: flowData.stats?.saves || 0,
                     views: flowData.stats?.views || 0,
                 });
-                setComments(flowData.comments || []);
-                setIsLiked(flowData.isLiked || false);
-                setIsSaved(flowData.isSaved || false);
+
+                // Mapeia os comentários do flow.comentarios
+                const mappedComments = flowData.comentarios?.map((comment) => ({
+                    id: comment.id,
+                    author: comment.usuario?.nome || 'Usuário desconhecido',
+                    username: comment.usuario?.email?.split('@')[0] || 'usuário',
+                    avatar: comment.usuario?.avatar || null, // null para usar iniciais
+                    role: comment.usuario?.cargo || 'Usuário',
+                    company: comment.usuario?.empresa || '',
+                    verified: comment.usuario?.verificado || false,
+                    content: comment.mensagem,
+                    createdAt: comment.criado_em || new Date().toISOString(),
+                    likes: comment.likes || 0,
+                    replies: comment.replies || 0,
+                    isLiked: comment.isLiked || false,
+                    isHelpful: comment.isHelpful || false,
+                    usuario_id: comment.usuario_id,
+                })) || [];
+                setComments(mappedComments);
             } catch (error) {
                 console.error('Erro ao buscar flow:', error);
-                toast.error('Erro ao carregar o flow. Tente novamente.');
+                toast.error('Erro ao carregar o flow.');
             }
         };
         fetchFlow();
     }, [id]);
 
+    // Handler para clique em um nó
     const onNodeClick = useCallback((event, node) => {
         setSelectedNode(node);
         setIsNodeModalOpen(true);
     }, []);
 
+    // Handler para curtir o flow
     const handleLike = () => {
         setIsLiked(!isLiked);
         setStats((prev) => ({
@@ -92,6 +143,7 @@ const FlowViewer = () => {
         toast.success(isLiked ? 'Like removido!' : 'Flow curtido!');
     };
 
+    // Handler para salvar o flow
     const handleSave = () => {
         setIsSaved(!isSaved);
         setStats((prev) => ({
@@ -101,11 +153,13 @@ const FlowViewer = () => {
         toast.success(isSaved ? 'Removido dos salvos!' : 'Flow salvo!');
     };
 
+    // Handler para compartilhar o link
     const handleShare = () => {
         navigator.clipboard.writeText(window.location.href);
-        toast.success('Link copiado para a área de transferência!');
+        toast.success('Link copiado!');
     };
 
+    // Handler para curtir um comentário
     const handleCommentLike = (commentId) => {
         setComments((prev) =>
             prev.map((comment) =>
@@ -121,36 +175,100 @@ const FlowViewer = () => {
         toast.success('Ação registrada!');
     };
 
-    const handleAddComment = () => {
+    // Handler para adicionar um comentário
+    const handleAddComment = async () => {
         if (!newComment.trim()) {
             toast.error('O comentário não pode estar vazio.');
             return;
         }
 
-        const comment = {
-            id: Date.now(),
-            author: 'Você',
-            username: 'usuario.atual',
-            avatar: '/placeholder.svg',
-            role: 'Usuário',
-            company: '',
-            verified: false,
-            content: newComment,
-            createdAt: new Date().toISOString(),
-            likes: 0,
-            replies: 0,
-            isLiked: false,
-            isHelpful: false,
-        };
-
-        setComments([comment, ...comments]);
-        setNewComment('');
-        setStats((prev) => ({ ...prev, comments: prev.comments + 1 }));
-        toast.success('Comentário adicionado!');
+        try {
+            const response = await axios.post('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentario', {
+                mensagem: newComment,
+                flow_id: id,
+            });
+            const newCommentData = response.data;
+            const mappedComment = {
+                id: newCommentData.id,
+                author: newCommentData.usuario?.nome || 'Você',
+                username: newCommentData.usuario?.email?.split('@')[0] || 'usuario.atual',
+                avatar: newCommentData.usuario?.avatar || null, // null para iniciais
+                role: newCommentData.usuario?.cargo || 'Usuário',
+                company: newCommentData.usuario?.empresa || '',
+                verified: newCommentData.usuario?.verificado || false,
+                content: newCommentData.mensagem,
+                createdAt: newCommentData.criado_em || new Date().toISOString(),
+                likes: 0,
+                replies: 0,
+                isLiked: false,
+                isHelpful: false,
+                usuario_id: newCommentData.usuario_id,
+            };
+            setComments([mappedComment, ...comments]);
+            setNewComment('');
+            setStats((prev) => ({ ...prev, comments: prev.comments + 1 }));
+            toast.success('Comentário adicionado!');
+        } catch (error) {
+            console.error('Erro ao adicionar comentário:', error);
+            toast.error(error.response?.data?.erro || 'Erro ao adicionar comentário.');
+        }
     };
 
+    // Handler para iniciar a edição de um comentário
+    const handleStartEdit = (comment) => {
+        setEditingCommentId(comment.id);
+        setEditedComment(comment.content);
+    };
+
+    // Handler para salvar a edição de um comentário
+    const handleEditComment = async (commentId) => {
+        if (!editedComment.trim()) {
+            toast.error('O comentário não pode estar vazio.');
+            return;
+        }
+
+        try {
+            await axios.put(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentario/${commentId}`, {
+                mensagem: editedComment,
+            });
+            setComments((prev) =>
+                prev.map((comment) =>
+                    comment.id === commentId ? { ...comment, content: editedComment } : comment
+                )
+            );
+            setEditingCommentId(null);
+            setEditedComment('');
+            toast.success('Comentário atualizado!');
+        } catch (error) {
+            console.error('Erro ao editar comentário:', error);
+            toast.error(error.response?.data?.erro || 'Erro ao editar comentário.');
+        }
+    };
+
+    // Handler para cancelar a edição
+    const handleCancelEdit = () => {
+        setEditingCommentId(null);
+        setEditedComment('');
+    };
+
+    // Handler para deletar um comentário
+    const handleDeleteComment = async (commentId) => {
+        try {
+            await axios.delete(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentario/${commentId}`);
+            setComments((prev) => prev.filter((comment) => comment.id !== commentId));
+            setStats((prev) => ({ ...prev, comments: prev.comments - 1 }));
+            toast.success('Comentário deletado!');
+        } catch (error) {
+            console.error('Erro ao deletar comentário:', error);
+            toast.error(error.response?.data?.erro || 'Erro ao deletar comentário.');
+        }
+    };
+
+    // Formata a data para exibição relativa
     const formatTimeAgo = (dateString) => {
+        if (!dateString) return 'Data inválida';
         const date = new Date(dateString);
+        if (isNaN(date.getTime())) return 'Data inválida';
         const now = new Date();
         const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
 
@@ -161,16 +279,20 @@ const FlowViewer = () => {
         return date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' });
     };
 
+    // Formata números
     const formatNumber = (num) => {
         if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
         if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
         return num.toString();
     };
 
+    // Exibe loading enquanto o flow não é carregado
     if (!flow) return <S.Loading>Carregando...</S.Loading>;
 
+    // Renderização principal
     return (
         <S.Container>
+            {/* Notificações */}
             <S.ToastOverride>
                 <ToastContainer
                     position="top-right"
@@ -184,6 +306,7 @@ const FlowViewer = () => {
                 />
             </S.ToastOverride>
 
+            {/* Cabeçalho */}
             <S.Header>
                 <S.HeaderContent>
                     <S.BackButton onClick={() => navigate('/')}>
@@ -193,16 +316,12 @@ const FlowViewer = () => {
                     <S.TitleWrapper>
                         <S.Title>{flow.titulo}</S.Title>
                         <S.Subtitle>
-                            por {flow.autor?.nome} • {flow.autor?.empresa} • {formatTimeAgo(flow.createdAt)} •{' '}
-                            {formatNumber(stats.views)} visualizações
+                            por {flow.autor?.nome || 'Autor desconhecido'} • {flow.autor?.empresa} •{' '}
+                            {formatTimeAgo(flow.createdAt)} • {formatNumber(stats.views)} visualizações
                         </S.Subtitle>
                     </S.TitleWrapper>
                     <S.HeaderActions>
-                        <S.ActionButton
-                            $active={isLiked}
-                            onClick={handleLike}
-                            $variant="like"
-                        >
+                        <S.ActionButton $active={isLiked} onClick={handleLike} $variant="like">
                             <Heart size={16} className={isLiked ? 'fill-current' : ''} />
                             {formatNumber(stats.likes)}
                         </S.ActionButton>
@@ -213,18 +332,11 @@ const FlowViewer = () => {
                             <MessageCircle size={16} />
                             {formatNumber(stats.comments)}
                         </S.ActionButton>
-                        <S.ActionButton
-                            $active={isSaved}
-                            onClick={handleSave}
-                            $variant="save"
-                        >
+                        <S.ActionButton $active={isSaved} onClick={handleSave} $variant="save">
                             <Bookmark size={16} className={isSaved ? 'fill-current' : ''} />
                             {isSaved ? 'Salvo' : 'Salvar'}
                         </S.ActionButton>
-                        <S.ActionButton
-                            onClick={handleShare}
-                            $variant="share"
-                        >
+                        <S.ActionButton onClick={handleShare} $variant="share">
                             <Share2 size={16} />
                             Compartilhar
                         </S.ActionButton>
@@ -232,8 +344,10 @@ const FlowViewer = () => {
                 </S.HeaderContent>
             </S.Header>
 
+            {/* Conteúdo principal */}
             <S.Main>
                 <S.FlowSection>
+                    {/* Flow interativo */}
                     <S.Card>
                         <S.CardHeader>
                             <S.CardTitle>
@@ -250,7 +364,7 @@ const FlowViewer = () => {
                                     nodes={nodes}
                                     edges={edges}
                                     onNodesChange={onNodesChange}
-                                    onEdgesChange={onEdgesState}
+                                    onEdgesChange={onEdgesChange}
                                     onNodeClick={onNodeClick}
                                     nodeTypes={nodeTypes}
                                     fitView
@@ -269,6 +383,7 @@ const FlowViewer = () => {
                         </S.CardContent>
                     </S.Card>
 
+                    {/* Seção de comentários */}
                     {showComments && (
                         <S.Card id="comments">
                             <S.CardHeader>
@@ -302,7 +417,11 @@ const FlowViewer = () => {
                                     {comments.map((comment) => (
                                         <S.Comment key={comment.id}>
                                             <S.Avatar>
-                                                <img src={comment.avatar} alt={comment.author} />
+                                                {comment.avatar ? (
+                                                    <img src={comment.avatar} alt={comment.author} />
+                                                ) : (
+                                                    <InitialsAvatar>{getIniciais(comment.author)}</InitialsAvatar>
+                                                )}
                                                 {comment.verified && <S.VerifiedBadge>✓</S.VerifiedBadge>}
                                             </S.Avatar>
                                             <S.CommentContent>
@@ -313,23 +432,72 @@ const FlowViewer = () => {
                                                     </S.CommentMeta>
                                                     <S.CommentTime>{formatTimeAgo(comment.createdAt)}</S.CommentTime>
                                                 </S.CommentHeader>
-                                                <S.CommentText>{comment.content}</S.CommentText>
+                                                {editingCommentId === comment.id ? (
+                                                    <div>
+                                                        <S.Textarea
+                                                            value={editedComment}
+                                                            onChange={(e) => setEditedComment(e.target.value)}
+                                                            rows={3}
+                                                        />
+                                                        <S.CommentActions>
+                                                            <S.Button
+                                                                onClick={() => handleEditComment(comment.id)}
+                                                                disabled={!editedComment.trim()}
+                                                            >
+                                                                Salvar
+                                                            </S.Button>
+                                                            <S.Button
+                                                                $variant="outline"
+                                                                onClick={handleCancelEdit}
+                                                            >
+                                                                Cancelar
+                                                            </S.Button>
+                                                        </S.CommentActions>
+                                                    </div>
+                                                ) : (
+                                                    <S.CommentText>{comment.content}</S.CommentText>
+                                                )}
                                                 <S.CommentActions>
                                                     <S.ActionButton
                                                         $variant="commentLike"
                                                         $active={comment.isLiked}
                                                         onClick={() => handleCommentLike(comment.id)}
+                                                        $compact
                                                     >
                                                         <ThumbsUp size={14} className={comment.isLiked ? 'fill-current' : ''} />
                                                         {comment.likes}
                                                     </S.ActionButton>
-                                                    <S.ActionButton $variant="commentReply">
+                                                    <S.ActionButton
+                                                        $variant="commentReply"
+                                                        $compact
+                                                    >
                                                         <MessageCircle size={14} />
                                                         {comment.replies} respostas
                                                     </S.ActionButton>
-                                                    <S.ActionButton $variant="commentFlag">
+                                                    <S.ActionButton
+                                                        $variant="commentFlag"
+                                                        $compact
+                                                    >
                                                         <Flag size={14} />
                                                     </S.ActionButton>
+                                                    {comment.usuario_id === usuarioId && (
+                                                        <>
+                                                            <S.ActionButton
+                                                                $variant="commentEdit"
+                                                                onClick={() => handleStartEdit(comment)}
+                                                                $compact
+                                                            >
+                                                                <Edit size={14} />
+                                                            </S.ActionButton>
+                                                            <S.ActionButton
+                                                                $variant="commentDelete"
+                                                                onClick={() => handleDeleteComment(comment.id)}
+                                                                $compact
+                                                            >
+                                                                <Trash2 size={14} />
+                                                            </S.ActionButton>
+                                                        </>
+                                                    )}
                                                 </S.CommentActions>
                                             </S.CommentContent>
                                         </S.Comment>
@@ -340,6 +508,7 @@ const FlowViewer = () => {
                     )}
                 </S.FlowSection>
 
+                {/* Sidebar */}
                 <S.Sidebar>
                     <S.Card>
                         <S.CardHeader>
@@ -375,11 +544,15 @@ const FlowViewer = () => {
                         <S.CardContent>
                             <S.AuthorCard>
                                 <S.Avatar>
-                                    <img src={flow.autor?.avatar || '/placeholder.png'} alt={flow.autor?.nome} />
+                                    {flow.autor?.avatar ? (
+                                        <img src={flow.autor.avatar} alt={flow.autor?.nome || 'Autor'} />
+                                    ) : (
+                                        <InitialsAvatar>{getIniciais(flow.autor?.nome)}</InitialsAvatar>
+                                    )}
                                     {flow.autor?.verificado && <S.VerifiedBadge>✓</S.VerifiedBadge>}
                                 </S.Avatar>
                                 <S.AuthorInfo>
-                                    <S.AuthorName>{flow.autor?.nome}</S.AuthorName>
+                                    <S.AuthorName>{flow.autor?.nome || 'Autor desconhecido'}</S.AuthorName>
                                     <S.AuthorRole>{flow.autor?.cargo}</S.AuthorRole>
                                     <S.AuthorCompany>{flow.autor?.empresa}</S.AuthorCompany>
                                     <S.AuthorFollowers>
@@ -401,12 +574,32 @@ const FlowViewer = () => {
                             </S.CardTitle>
                         </S.CardHeader>
                         <S.CardContent>
-                            <S.Button>Duplicar Flow</S.Button>
+                            <S.Button onClick={() => toast.info('Duplicando flow...')}>
+                                <Copy size={16} style={{ marginRight: '8px' }} />
+                                Duplicar Flow
+                            </S.Button>
+                            {flow.criado_por === flow.autor?.id && (
+                                <S.Button
+                                    onClick={() => navigate(`/editar-flow/${id}`)}
+                                    style={{ marginTop: '12px' }}
+                                >
+                                    <Edit size={16} style={{ marginRight: '8px' }} />
+                                    Editar Flow
+                                </S.Button>
+                            )}
+                            <S.Button
+                                onClick={() => toast.info('Exportando flow...')}
+                                style={{ marginTop: '12px' }}
+                            >
+                                <Download size={16} style={{ marginRight: '8px' }} />
+                                Exportar Flow
+                            </S.Button>
                         </S.CardContent>
                     </S.Card>
                 </S.Sidebar>
             </S.Main>
 
+            {/* Modal para nós */}
             {isNodeModalOpen && (
                 <S.Modal>
                     <S.ModalContent>
@@ -438,7 +631,7 @@ const FlowViewer = () => {
                                     <S.OptionList>
                                         {selectedNode.data.options?.map((option, index) => (
                                             <S.OptionButton
-                                                key={index}
+                                                key={option}
                                                 onClick={() => {
                                                     console.log(`Opção selecionada: ${option}`);
                                                     setIsNodeModalOpen(false);
@@ -455,7 +648,7 @@ const FlowViewer = () => {
                                 <S.MediaContent>
                                     <S.MediaHeader>
                                         <S.MediaIcon>
-                                            <ImageIcon size={24} color="#fff" />
+                                            <ImageIcon size={24} color="#ffffff" />
                                         </S.MediaIcon>
                                         <div>
                                             <S.MediaTitle>{selectedNode.data.title}</S.MediaTitle>
