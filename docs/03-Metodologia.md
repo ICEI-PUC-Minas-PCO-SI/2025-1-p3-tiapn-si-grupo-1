@@ -103,7 +103,7 @@ Atualizado em: 03/06/2025
 
 | Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
 | :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
-| Felipe Roque        | Backend + banco de dados | 16/05/2025     | 05/06/2025 | 📝    |   -    |
+| Felipe Roque        | Backend + banco de dados | 16/05/2025     | 05/06/2025 | ✔️   |   05/06/2025          |
 | Gabriella Paz        | Backend + banco de dados    | 16/05/2025    | 12/03/2025 | ✔️   |   05/06/2025          |
 | Lucas Borges        | Frontend | 16/05/2025    | 05/06/2025 | ✔️     |   05/06/2025             |
 | Mateus Botelho        | Frontend + backend + slides |   16/05/2025       |  05/06/2025  | ✔️    |   04/06/2025   |  
@@ -138,9 +138,13 @@ Exemplo: os artefatos do projeto são desenvolvidos a partir de diversas platafo
 | Projeto de interface                | Figma                              | http://....                            |
 | Gerenciamento do projeto            | GitHub Projects                    | <https://github.com/orgs/ICEI-PUC-Minas-PCO-SI/projects/124> |
 | Hospedagem                          | Vercel                             | http://....                            |
-| Apresentação                          | Canva                             | <https://www.canva.com/design/DAGhXcOBOm0/xqkdWNETaCVIJVsFPOb_RQ/view?utm_content=DAGhXcOBOm0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfd7f4740ee> |
-| Orquestração de processos (BPM)     | Camunda Platform                   | https://camunda.com/download/modeler/                       |
-| Modelagem do diagrama de casos de uso     | Lucidchart                   | https://www.lucidchart.com/                       |
-| Fluxo de usuário    | Miro                   |     <https://miro.com/app/board/uXjVI82qtag=/?moveToWidget=3458764627525460534&cot=14>   | 
-| Jornada de usuário  | Miro                   |   <https://miro.com/app/board/uXjVI6sPMjo=/?moveToWidget=3458764627590193750&cot=14>     | 
-| Edição de vídeos     | Adobe Premiere Pro                   | https://....                       |
+| Apresentação                        | Canva                              | <https://www.canva.com/design/DAGhXcOBOm0/xqkdWNETaCVIJVsFPOb_RQ/view?utm_content=DAGhXcOBOm0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfd7f4740ee> |
+| Orquestração de processos (BPM)     | Camunda Platform                   | <https://camunda.com/download/modeler/> |
+| Modelagem do diagrama de casos de uso | Lucidchart                      | <https://www.lucidchart.com/>          |
+| Fluxo de usuário                    | Miro                               | <https://miro.com/app/board/uXjVI82qtag=/?moveToWidget=3458764627525460534&cot=14> |
+| Jornada de usuário                  | Miro                               | <https://miro.com/app/board/uXjVI6sPMjo=/?moveToWidget=3458764627590193750&cot=14> |
+| Edição de vídeos                    | Adobe Premiere Pro                 | https://....                           |
+| Testes de API                       | Postman                            | <https://www.postman.com/>             |
+| Gerenciamento do banco de dados     | pgAdmin 4                          | <https://www.pgadmin.org/>             |
+| Banco de dados na nuvem             | Microsoft Azure (PostgreSQL)       | <https://portal.azure.com/>            |
+| Hospedagem do app na nuvem          | Microsoft Azure (App Services)     | <https://portal.azure.com/>            |
