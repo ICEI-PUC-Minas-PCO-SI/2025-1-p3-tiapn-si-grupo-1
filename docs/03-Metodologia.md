@@ -108,8 +108,7 @@ Atualizado em: 03/06/2025
 | Lucas Borges        | Frontend | 16/05/2025    | 05/06/2025 | ✔️     |   05/06/2025             |
 | Mateus Botelho        | Frontend + backend + slides |   16/05/2025       |  05/06/2025  | ✔️    |   04/06/2025   |  
 | Rogério Gabriel     | Backend + banco de dados  |    16/05/2025       | 05/06/2025 | 📝    |   -   |
-| Victor Alves       | Frontend  |    16/05/2025       | 05/06/2025 | 📝    |  -   |
-
+| Victor Alves       | Frontend - Feed   |    16/05/2025       | 05/06/2025 | ✔️    |  05/06/2025    |
 
 Legenda:
 - ✔️: terminado
