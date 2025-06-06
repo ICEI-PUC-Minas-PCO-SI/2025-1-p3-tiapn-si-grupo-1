@@ -28,7 +28,8 @@ PostagemComunidade.belongsTo(Usuario, { foreignKey: 'criado_por' });
 Usuario.hasMany(ComentarioPostagem, { foreignKey: 'usuario_id' });
 PostagemComunidade.hasMany(ComentarioPostagem, { foreignKey: 'postagem_id' });
 ComentarioPostagem.belongsTo(Usuario, { foreignKey: 'usuario_id' });
-ComentarioPostagem.belongsTo(PostagemComunidade, { foreignKey: 'postagem_id' });
+ComentarioPostagem.belongsTo(PostagemComunidade, { as: "postagem", foreignKey: 'postagem_id' });
+//ComentarioPostagem.belongsTo(PostagemComunidade, { as: "PostagemComunidade", foreignKey: 'postagem_id' });
 
 
 Usuario.hasMany(FlowSalvo, {foreignKey: 'usuario_id', as: 'registrosFlowSalvo'});
