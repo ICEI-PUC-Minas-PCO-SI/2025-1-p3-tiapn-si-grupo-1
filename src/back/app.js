@@ -1,17 +1,14 @@
-const express = require('express');
-const cors = require('cors'); // 👈 importar o cors
-const { sequelize } = require('./src/models');
+const express = require("express");
+const { sequelize } = require("./src/models");
 const cors = require("cors");
 
-const filtrosRoutes = require("./src/routes/filtros");
-const usuarioRoutes = require("./src/routes/usuarioRoutes");
-const flowRoutes = require("./src/routes/flowRoutes");
-const comentarioRoutes = require("./src/routes/comentarioRoutes");
-const flowSalvoRoutes = require("./src/routes/flowsalvoRouter");
-const curtidaRoutes = require("./src/routes/curtidaRouter");
-const comentarioPostagemRoutes = require("./src/routes/comentarioPostagemRoutes");
-const postagemComunidadeRoutes = require("./src/routes/postagemComunidadeRoutes");
-const filtrosRoutes = require("./src/routes/filtros");
+const usuarioRoutes = require('./src/routes/usuarioRoutes');
+const flowRoutes = require('./src/routes/flowRoutes');
+const comentarioRoutes = require('./src/routes/comentarioRoutes');
+const flowSalvoRoutes = require('./src/routes/flowsalvoRouter');
+const curtidaRoutes = require('./src/routes/curtidaRouter');
+const comentarioPostagemRoutes = require('./src/routes/comentarioPostagemRoutes');
+const postagemComunidadeRoutes = require('./src/routes/postagemComunidadeRoutes');
 
 const app = express();
 
@@ -28,11 +25,10 @@ app.use(express.json());
 app.use('/api/usuario', usuarioRoutes);
 app.use('/api/flow', flowRoutes);
 app.use('/api/comentario', comentarioRoutes)
-app.use('/flowsalvos', flowSalvoRoutes);
-app.use('/curtidas', curtidaRoutes);
-app.use('/comentariopostagem', comentarioPostagemRoutes);
-app.use('/postagemcomunidade', postagemComunidadeRoutes)
-app.use('/filtros', filtrosRoutes);
+app.use('/api/flowsalvos', flowSalvoRoutes);
+app.use('/api/curtidas', curtidaRoutes);
+app.use('/api/comentariopostagem', comentarioPostagemRoutes);
+app.use('/api/postagemcomunidade', postagemComunidadeRoutes)
 
 app.get("/", (req, res) => {
   res.send("A API do KnowFlow está rodando 🤩!");

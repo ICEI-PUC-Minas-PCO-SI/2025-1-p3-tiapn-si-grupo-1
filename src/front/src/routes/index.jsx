@@ -19,8 +19,8 @@ const MainRoutes = () => (
     {/* Rotas autenticadas */}
     {FlowRoutes()}
     {CommunityRoutes()}
-    {ProfileRoutes()}
     {FeedRoutes()}
+    {ProfileRoutes()}
   </Routes>
 );
 
