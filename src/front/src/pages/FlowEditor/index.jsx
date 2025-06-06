@@ -280,7 +280,7 @@ const FlowEditor = () => {
       <S.Header>
         <S.HeaderContent>
           <S.LeftSection>
-            <S.BackButton onClick={() => (window.location.href = '/')}>
+            <S.BackButton onClick={() => (window.location.href = '/feed')}>
               <ArrowLeft size={12} />
               Voltar
             </S.BackButton>
