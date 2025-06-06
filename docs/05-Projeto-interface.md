@@ -62,7 +62,7 @@ Post da comunidade: Ao clicar em um post da comunidade, você poderá visualizá
 
 ## Interface do sistema
 
-Visão geral da interação do usuário por meio das telas do sistema. Apresente as principais interfaces da plataforma em sua versão final.
+A interface do sistema foi desenvolvida para oferecer uma navegação simples, intuitiva e eficiente. Utilizando tecnologias modernas, como React e Material UI, o layout prioriza a usabilidade e a experiência do usuário.
 
 ### Tela principal do sistema
 
@@ -72,30 +72,19 @@ Ao clicar em um card, o usuário é direcionado para a visualização completa d
 
 ![Wireframe 1](images/Wireframe-1.png)
 
-> Insira aqui a tela principal do sistema
-
 
 ###  Telas do processo 1
 
 Ao interagir com um card, o sistema renderiza o conteúdo completo do flow correspondente. Esse conteúdo inclui a visualização do flow estruturado com React Flow, com nós personalizados que integram instâncias do Editor.js para edição de conteúdo diretamente dentro de cada nó. Além da navegação pelo grafo interativo, é possível acessar uma aba localizada no canto inferior da página, onde são exibidas informações complementares sobre o flow, como descrição, categorias, tags e a seção de comentários. Usuários que não são donos do flow não podem editar nem dispor os nós de forma diferente.
 
-> Insira aqui a tela da atividade 1
 
 ![Wireframe 2](images/Wireframe-2.png)
-
-Descrição da tela relativa à atividade 2 do processo 1.
-
-> Insira aqui a tela da atividade 2
 
 
 ### Telas do processo 2
 
 Ao clicar no botão localizado no menu lateral esquerdo, o usuário é direcionado para a tela de criação de fluxo. A primeira etapa consiste em um formulário onde são inseridos os dados do flow: título, descrição, categorias e tags. Após avançar, o usuário acessa a interface de construção visual do flow, baseada em React Flow, com um nó inicial já exibido e integrado a uma instância do Editor.js. Esse nó inicial serve como ponto de partida, permitindo a criação de novos nós conectados a ele. Cada novo nó criado também conterá uma instância independente do Editor.js, sendo posicionado à direita do nó anterior. Durante a criação, a interface também exibe, de forma fixa, uma seção informativa, permitindo ao usuário visualizar em tempo real os dados informados na etapa anterior. O botão "Etapa Anterior" permite retornar ao formulário de dados do flow. Ao clicar em "Publicar", o flow é salvo e o usuário é automaticamente redirecionado para a tela principal com os flows publicados.
 
-> Insira aqui a tela da atividade 1
 
 ![Wireframe 4](images/Wireframe-4.png)
 
-Descrição da tela relativa à atividade 2 do processo 2.
-
-> Insira aqui a tela da atividade 2
