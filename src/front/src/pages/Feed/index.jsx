@@ -4,6 +4,8 @@ import ComponentDivider from "../../components/ComponentDivider/Index";
 import SearchBar from "../../components/SearchBar";
 import FilterMenu from "../../components/FilterOptions";
 import FlowCard from "../../components/FlowCard";
+import debounce from "lodash.debounce";
+import axios from "axios"; //responsável pela comunicação com as APIs
 
 //componentes internos
 import {
@@ -15,9 +17,12 @@ import {
   FilterIcon,
   FilterTitle,
 } from "./style";
-import axios from "axios"; //responsável pela comunicação com as APIs
 
 export default function Feed() {
+  //STATE que armazena o termo de busca
+  const [searchTerm, setSearchTerm] = useState("");
+  //STATE que mantém os flows a serem exibidos no feed
+  const [flows, setFlows] = useState([]);
   //STATE que armazena todos os filtros disponíveis
   const [filtros, setFiltros] = useState({
     categorias: [],
@@ -25,16 +30,48 @@ export default function Feed() {
     autores: [],
   });
 
-  //STATE que mantém os flows a serem exibidos no feed
-  const [flows, setFlows] = useState([]);
+  const fetchFlows = async (termo = "") => {
+    console.log("Buscando flows com termo:", termo);
+    try {
+      const response = await axios.get("http://localhost:3000/api/flow", {
+        params: { search: termo },
+      });
+      setFlows(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar flows:", error);
+    }
+  };
+
+  async function fetchFiltros() {
+    //CONSULTAR API DE FILTROS
+    try {
+      const response = await axios.get("http://localhost:3000/api/filtros");
+      setFiltros(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar filtros:", error);
+    }
+  }
+
+  const debouncedFetchFlows = debounce(fetchFlows, 500);
 
   useEffect(() => {
+    // Carrega todos inicialmente
+    fetchFiltros();
+    fetchFlows();
+  }, []);
+
+  useEffect(() => {
+    debouncedFetchFlows(searchTerm);
+    return debouncedFetchFlows.cancel;
+  }, [searchTerm]);
+
+  /*seEffect(() => {
     //Codígo que será executado após a renderização
 
     async function fetchFiltros() {
       //CONSULTAR API DE FILTROS
       try {
-        const response = await axios.get("https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/filtros");
+        const response = await axios.get("http://localhost:3000/api/filtros");
         setFiltros(response.data);
       } catch (error) {
         console.error("Erro ao buscar filtros:", error);
@@ -42,31 +79,32 @@ export default function Feed() {
     }
 
     //CONSULTAR API DE FLOWS
-    async function fetchFlows() {
+    const fetchFlows = async (termo = "") => {
       try {
-        const response = await axios.get("https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow");
+        const response = await axios.get("http://localhost:3000/api/flow", {
+          params: { search: termo },
+        });
         setFlows(response.data);
       } catch (error) {
         console.error("Erro ao buscar flows:", error);
       }
-    }
+    };
 
     fetchFiltros();
     fetchFlows();
-  }, []);
+  }, []);*/
 
   return (
     <FeedContainer>
       <FlowFeed>
-        <SearchBar />
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <ComponentDivider />
         <ScrollFeed>
           {flows.length > 0 ? (
-            flows.map((flow) => <FlowCard flow={flow} />)
+            flows.map((flow) => <FlowCard flow={flow} key={flow.id} />)
           ) : (
             <p>Carregando flows...</p>
           )}
-          <ComponentDivider />
         </ScrollFeed>
       </FlowFeed>
 

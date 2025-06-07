@@ -1,21 +1,33 @@
 import { Search } from "lucide-react";
-import { useState } from "react";
 import { Form, Input, IconWrapper, InputWrapper } from "./style";
+import debounce from "lodash.debounce";
+import { useState, useEffect, useMemo } from "react";
 
 //31/05 - UPDATES
 //- Barra de pesquisa já adicionada
 //- valor de busca já mapeado
 //- Resta apenas relacionar as pesquisas com os flow criados
 
-export default function SearchBar() {
-  const [description, setDescription] = useState("");
+export default function SearchBar({ searchTerm, setSearchTerm }) {
+  const [query, setQuery] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  // Função debounced apenas para a busca
+  const debouncedSearch = useMemo(
+    () => debounce((value) => setSearchTerm(value), 0),
+    [setSearchTerm]
+  );
+
+  // Sempre que o usuário digita, atualiza localmente e dispara o debounce
+  useEffect(() => {
+    debouncedSearch(query);
+    return () => debouncedSearch.cancel(); // limpeza
+  }, [query, debouncedSearch]);
+
+  const handleChange = (e) => {
+    setQuery(e.target.value); // resposta instantânea no input
   };
-
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <InputWrapper>
         <IconWrapper>
           <Search size={20} />
@@ -23,8 +35,8 @@ export default function SearchBar() {
         <Input
           type="text"
           placeholder="Buscar Flow por título, tag ou autor..."
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={searchTerm}
+          onChange={handleChange}
         ></Input>
       </InputWrapper>
     </Form>
