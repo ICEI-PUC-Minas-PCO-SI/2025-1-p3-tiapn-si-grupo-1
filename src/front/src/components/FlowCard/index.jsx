@@ -29,6 +29,26 @@ export default function FlowCard({ flow }) {
     );
   };
 
+  const getHoursAgo = (publishDate) => {
+    const now = new Date();
+    const date = new Date(publishDate);
+    const diffMs = Math.abs(now - date);
+    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+    const diffHours = Math.floor(diffMinutes / 60);
+
+    if (diffMinutes < 1) {
+      return "Agora mesmo";
+    } else if (diffMinutes < 60) {
+      return diffMinutes === 1
+        ? "1minuto atrás"
+        : `${diffMinutes} minutos atrás`;
+    } else if (diffHours < 24) {
+      return diffHours === 1 ? "1 hora atrás" : `${diffHours} horas atrás`;
+    } else {
+      return "Há mais de 24 horas";
+    }
+  };
+
   const getDaysAgo = (publishDate) => {
     const today = new Date();
     const date = new Date(publishDate);
@@ -36,7 +56,7 @@ export default function FlowCard({ flow }) {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     return diffDays === 0
-      ? "Hoje"
+      ? getHoursAgo(publishDate)
       : diffDays === 1
       ? `Há 1 dia`
       : diffDays < 7

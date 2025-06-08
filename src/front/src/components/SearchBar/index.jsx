@@ -27,7 +27,7 @@ export default function SearchBar({ searchTerm, setSearchTerm }) {
     setQuery(e.target.value); // resposta instantânea no input
   };
   return (
-    <Form>
+    <Form onSubmit={(e) => e.preventDefault()}>
       <InputWrapper>
         <IconWrapper>
           <Search size={20} />

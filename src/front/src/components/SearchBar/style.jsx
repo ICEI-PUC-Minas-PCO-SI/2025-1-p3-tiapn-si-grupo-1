@@ -10,17 +10,23 @@ export const Input = styled.input`
 
   padding: 16px 30px 16px 46px; /* espaço à esquerda para o ícone */
   font-size: 16px;
-  border: 1px solid #cccccc;
+  border: 1px solid #dee2ff;
   border-radius: 10px;
   outline: none;
   transition: border-color 0.3s;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    border-color: #233dff;
+    background-color: #dee2ff;
+  }
 
   &:focus {
     border-color: #233dff;
   }
 
   &::placeholder {
-    color: #aaa;
+    color: #333333;
   }
 `;
 
@@ -34,6 +40,6 @@ export const IconWrapper = styled.div`
   top: 50%;
   left: 16px;
   transform: translateY(-50%);
-  color: #cccccc;
+  color: #233dff;
   pointer-events: none;
 `;

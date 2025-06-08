@@ -4,18 +4,31 @@ import ComponentDivider from "../../components/ComponentDivider/Index";
 import SearchBar from "../../components/SearchBar";
 import FilterMenu from "../../components/FilterOptions";
 import FlowCard from "../../components/FlowCard";
+import FlowsNotFound from "../../components/SystemResponses/FlowsNotFound";
 import debounce from "lodash.debounce";
 import axios from "axios"; //responsável pela comunicação com as APIs
 
 //componentes internos
 import {
   FeedContainer,
+  FeedMain,
   FlowFeed,
   FeedFilters,
   ScrollFeed,
   FilterHeader,
   FilterIcon,
   FilterTitle,
+  FeedHeader,
+  HeaderTitle,
+  HeaderTop,
+  HeaderActions,
+  TrendingButton,
+  RecentButton,
+  CreateFlowButton,
+  TrendingIcon,
+  RecentIcon,
+  CreateFlowIcon,
+  SearchMethods,
 } from "./style";
 
 export default function Feed() {
@@ -65,7 +78,63 @@ export default function Feed() {
     return debouncedFetchFlows.cancel;
   }, [searchTerm]);
 
-  /*seEffect(() => {
+  return (
+    <FeedContainer>
+      <FeedHeader>
+        <HeaderTop>
+          <HeaderTitle>
+            <h1 style={{ color: "#000" }}>Descobrir Flows</h1>
+            <p>Navegue por conteúdos criados por quem entende do assunto</p>
+          </HeaderTitle>
+          <HeaderActions>
+            <TrendingButton>
+              <TrendingIcon size={16} />
+              Trending
+            </TrendingButton>
+            <RecentButton>
+              <RecentIcon size={16} />
+              Recentes
+            </RecentButton>
+            <CreateFlowButton>
+              <CreateFlowIcon size={16} />
+              Criar Flow
+            </CreateFlowButton>
+          </HeaderActions>
+        </HeaderTop>
+
+        <SearchMethods>
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        </SearchMethods>
+      </FeedHeader>
+      <FeedMain>
+        <FlowFeed>
+          <ComponentDivider />
+          <ScrollFeed>
+            {flows.length > 0 ? (
+              flows.map((flow) => <FlowCard flow={flow} key={flow.id} />)
+            ) : (
+              <FlowsNotFound />
+            )}
+          </ScrollFeed>
+        </FlowFeed>
+
+        <FeedFilters>
+          <FilterHeader>
+            <FilterTitle>
+              <FilterIcon />
+              Filtros
+            </FilterTitle>
+          </FilterHeader>
+          <FilterMenu filterType={"Categorias"} filtros={filtros.categorias} />
+          <FilterMenu filterType={"Tags"} filtros={filtros.tags} />
+          <FilterMenu filterType={"Autores"} filtros={filtros.autores} />
+        </FeedFilters>
+      </FeedMain>
+    </FeedContainer>
+  );
+}
+
+/*seEffect(() => {
     //Codígo que será executado após a renderização
 
     async function fetchFiltros() {
@@ -93,32 +162,3 @@ export default function Feed() {
     fetchFiltros();
     fetchFlows();
   }, []);*/
-
-  return (
-    <FeedContainer>
-      <FlowFeed>
-        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <ComponentDivider />
-        <ScrollFeed>
-          {flows.length > 0 ? (
-            flows.map((flow) => <FlowCard flow={flow} key={flow.id} />)
-          ) : (
-            <p>Carregando flows...</p>
-          )}
-        </ScrollFeed>
-      </FlowFeed>
-
-      <FeedFilters>
-        <FilterHeader>
-          <FilterTitle>
-            <FilterIcon />
-            Filtros
-          </FilterTitle>
-        </FilterHeader>
-        <FilterMenu filterType={"Categorias"} filtros={filtros.categorias} />
-        <FilterMenu filterType={"Tags"} filtros={filtros.tags} />
-        <FilterMenu filterType={"Autores"} filtros={filtros.autores} />
-      </FeedFilters>
-    </FeedContainer>
-  );
-}
