@@ -5,17 +5,24 @@ const flowController = {
   // Listar todos os flows (exibido no feed)
   async listar(req, res) {
     try {
-      const { search } = req.query;
+      const { search, categoria } = req.query;
 
-      const whereClause = search
-        ? {
-            [Op.or]: [
-              { tags: { [Op.contains]: [search] } },
-              { titulo: { [Op.iLike]: `%${search}%` } },
-              { descricao: { [Op.iLike]: `%${search}%` } },
-            ],
-          }
-        : {};
+      // Construindo a condição de busca
+      const whereClause = {};
+
+      // Filtro de categoria, se existir
+      if (categoria) {
+        whereClause.categoria = categoria;
+      }
+
+      // Filtro de pesquisa, se existir
+      if (search) {
+        whereClause[Op.or] = [
+          { tags: { [Op.contains]: [search] } },
+          { titulo: { [Op.iLike]: `%${search}%` } },
+          { descricao: { [Op.iLike]: `%${search}%` } },
+        ];
+      }
 
       const flows = await Flow.findAll({
         where: whereClause,

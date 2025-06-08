@@ -1,13 +1,20 @@
 import { create } from "zustand";
+import axios from "axios";
 
 //Cria a store chamada useFlowStore
-export const useFlowStore = create((set) => ({
+export const useFlowStore = create((set, get) => ({
   // Estado para armazenar os IDs dos posts curtidos
   likedPosts: [],
   // Estado para armazenar os IDs dos posts salvos
   savedPosts: [],
   // Estado para armazenar comentários. Cada postId terá um array de comentários
   comments: {},
+  //Estado para armazenar categoria ativa
+  category: "",
+  //Estado para segurar os itens de pesquisa
+  searchTerm: "",
+  //Estado que armazena quais flows devem ser exibidos
+  flows: [],
 
   // Função para curtir/descurtir um post
   toggleLike: async (postId) =>
@@ -46,4 +53,32 @@ export const useFlowStore = create((set) => ({
         },
       };
     }),
+
+  setCategory: (categoria) => {
+    set({ category: categoria });
+    get().fetchFlows(); // atualiza a lista
+  },
+
+  setSearchTerm: (termo) => {
+    set({ searchTerm: termo });
+    get().fetchFlows(); // atualiza a lista
+  },
+
+  fetchFlows: async ({ useCategory = true, useSearch = true } = {}) => {
+    const { category, searchTerm } = get();
+    const params = {};
+    if (useCategory && category) params.categoria = category;
+    if (useSearch && searchTerm) params.search = searchTerm;
+
+    console.log("Buscando flows com:", { category, searchTerm });
+    try {
+      const response = await axios.get("http://localhost:3000/api/flow", {
+        params,
+      });
+      set({ flows: response.data });
+    } catch (error) {
+      console.error("Erro ao buscar flows:", error);
+      set({ flows: [] });
+    }
+  },
 }));

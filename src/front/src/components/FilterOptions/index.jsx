@@ -9,9 +9,8 @@ import {
 } from "./style";
 import { useState } from "react";
 
-//Botão para acionar os filtros 
+//Botão para acionar os filtros
 import Filter from "../Filter";
-
 
 export default function FilterMenu({ filterType, filtros }) {
   //Define qual o tipo de filtro está sendo disposto na tela
@@ -36,18 +35,7 @@ export default function FilterMenu({ filterType, filtros }) {
 
   return (
     <FilterWrapper>
-      <Header>
-        <Title>
-          {type === "categorias" ? (
-            <CategoriesIcon />
-          ) : type === "tags" ? (
-            <TagsIcon />
-          ) : (
-            <AuthorIcon />
-          )}
-          {`${filterType} - ${filtros.length} resultados`}
-        </Title>
-      </Header>
+      <Header></Header>
       <FilterList>
         {Array.isArray(filtros) && filtros.length > 0 ? (
           filtros.map((item, index) => {

@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
-export const Button = styled.button`
+export const CategoriesWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border: 1px solid cyan;
+`;
+
+export const CategoryButton = styled.button`
   display: flex;
   gap: 3px;
   align-items: center;
@@ -10,7 +17,7 @@ export const Button = styled.button`
   color: #565656;
   border: 2px solid #dee2ff;
   cursor: pointer;
-  transition: all 0.4s ease-in-out;
+  transition: all 0.3s ease-in-out;
   font-weight: 500;
 
   background-color: ${({ $isActive }) => ($isActive ? "#233dff" : "#fff")};
@@ -18,8 +25,8 @@ export const Button = styled.button`
   border-color: ${({ $isActive }) => ($isActive ? "#233dff" : "#dee2ff")};
 
   &:hover {
+    background-color: ${({ $isActive }) => ($isActive ? "#233dff" : "#dee2ff")};
     border: 2px solid #233dff;
-    background-color: #dee2ff;
-    transform: scale(1.05);
+    transform: scale(1.03);
   }
 `;

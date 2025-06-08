@@ -5,6 +5,12 @@ import SearchBar from "../../components/SearchBar";
 import FilterMenu from "../../components/FilterOptions";
 import FlowCard from "../../components/FlowCard";
 import FlowsNotFound from "../../components/SystemResponses/FlowsNotFound";
+import Categories from "../../components/FilterOptions/Categories";
+
+//Global state
+import { useFlowStore } from "../../store/flowStore";
+
+//Bibliotecas
 import debounce from "lodash.debounce";
 import axios from "axios"; //responsável pela comunicação com as APIs
 
@@ -32,31 +38,20 @@ import {
 } from "./style";
 
 export default function Feed() {
-  //STATE que armazena o termo de busca
-  const [searchTerm, setSearchTerm] = useState("");
-  //STATE que mantém os flows a serem exibidos no feed
-  const [flows, setFlows] = useState([]);
-  //STATE que armazena todos os filtros disponíveis
   const [filtros, setFiltros] = useState({
     categorias: [],
     tags: [],
     autores: [],
   });
 
-  const fetchFlows = async (termo = "") => {
-    console.log("Buscando flows com termo:", termo);
-    try {
-      const response = await axios.get("http://localhost:3000/api/flow", {
-        params: { search: termo },
-      });
-      setFlows(response.data);
-    } catch (error) {
-      console.error("Erro ao buscar flows:", error);
-    }
-  };
+  //Estados globais
+  const flows = useFlowStore((state) => state.flows);
+  const setSearchTerm = useFlowStore((state) => state.setSearchTerm);
+  const searchTerm = useFlowStore((state) => state.searchTerm);
+  const fetchFlows = useFlowStore((state) => state.fetchFlows);
+  const category = useFlowStore((state) => state.category);
 
   async function fetchFiltros() {
-    //CONSULTAR API DE FILTROS
     try {
       const response = await axios.get("http://localhost:3000/api/filtros");
       setFiltros(response.data);
@@ -65,17 +60,23 @@ export default function Feed() {
     }
   }
 
-  const debouncedFetchFlows = debounce(fetchFlows, 500);
+  const debouncedSetSearchTerm = debounce((term) => {
+    setSearchTerm(term);
+  }, 0);
 
+  //
   useEffect(() => {
-    // Carrega todos inicialmente
+    fetchFlows(); // carrega os flows ao entrar na página
     fetchFiltros();
-    fetchFlows();
   }, []);
 
   useEffect(() => {
-    debouncedFetchFlows(searchTerm);
-    return debouncedFetchFlows.cancel;
+    fetchFlows(); // atualiza os flows quando a categoria muda
+  }, [category]);
+
+  useEffect(() => {
+    debouncedSetSearchTerm(searchTerm); // dispara a busca com delay
+    return debouncedSetSearchTerm.cancel;
   }, [searchTerm]);
 
   return (
@@ -104,6 +105,7 @@ export default function Feed() {
 
         <SearchMethods>
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <Categories filtros={filtros.categorias} />
         </SearchMethods>
       </FeedHeader>
       <FeedMain>
@@ -125,7 +127,7 @@ export default function Feed() {
               Filtros
             </FilterTitle>
           </FilterHeader>
-          <FilterMenu filterType={"Categorias"} filtros={filtros.categorias} />
+
           <FilterMenu filterType={"Tags"} filtros={filtros.tags} />
           <FilterMenu filterType={"Autores"} filtros={filtros.autores} />
         </FeedFilters>

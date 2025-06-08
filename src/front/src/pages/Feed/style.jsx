@@ -122,7 +122,9 @@ export const CreateFlowIcon = styled(Plus)`
 
 export const SearchMethods = styled.div`
   border: 1px solid #33cc66;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 //<--- FLOWS - SCROLLAVEL --->
