@@ -6,6 +6,16 @@ const Curtida = require('./curtida');
 const FlowSalvo = require('./flowsalvo');
 const PostagemComunidade = require('./postagemComunidade');
 const ComentarioPostagem = require('./comentarioPostagem');
+const models = {
+  Usuario,
+  Flow,
+  Comentario,
+  Curtida,
+  FlowSalvo,
+  PostagemComunidade,
+  ComentarioPostagem
+};
+
 
 // Relacionamentos
 Usuario.hasMany(Flow, { foreignKey: 'criado_por' });
@@ -34,11 +44,11 @@ ComentarioPostagem.belongsTo(PostagemComunidade, { as: "postagem", foreignKey: '
 
 Usuario.hasMany(FlowSalvo, {foreignKey: 'usuario_id', as: 'registrosFlowSalvo'});
 
-// Object.values(db).forEach(model => {
-//   if (model.associate) {
-//     model.associate(db);
-//   }
-// });
+Object.values(models).forEach(model => {
+  if (model.associate) {
+    model.associate(models);
+  }
+});
 
 module.exports = {
   sequelize,
