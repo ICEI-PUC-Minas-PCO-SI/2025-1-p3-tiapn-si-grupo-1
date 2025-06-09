@@ -4,10 +4,18 @@ const curtidaController = {
   async listar(req, res) {
     try {
       const curtidas = await Curtida.findAll({
-        include: {
+        include: [
+        {
           model: Flow,
+          as: 'flow',
           attributes: ["id", "titulo"], // mostra só isso do Flow
         },
+        {
+          model: Usuario,
+          as: 'usuario',
+          attributes: ["id", "nome"]
+        }
+      ],
         order: [["criado_em", "ASC"]],
       });
       res.json(curtidas);
