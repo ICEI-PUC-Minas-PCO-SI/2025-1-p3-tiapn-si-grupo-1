@@ -35,7 +35,7 @@ const curtidaController = {
 
  async obter(req, res) {
   try {
-    const { usuario_id, flow_id } = req.body;
+    const { usuario_id, flow_id } = req.params;
 
     if (!usuario_id || !flow_id) {
       return res.status(400).json({ erro: "usuario_id e flow_id são obrigatórios" });
@@ -107,7 +107,7 @@ const curtidaController = {
   },
 
   async remover(req, res) {
-    const { flow_id } = req.body;
+    const { flow_id } = req.params;
     const usuario_id = req.usuarioId;
 
     try {
