@@ -47,10 +47,11 @@ const curtidaController = {
 
   async criar(req, res) {
     try {
-      const usuarioId = req.usuario.id;
-      const { flowId } = req.body;
+      const usuario_id = req.usuario.id; 
+      const { flow_id } = req.body;        
 
-      const novaCurtida = await Curtida.create({ usuarioId, flowId });
+
+      const novaCurtida = await Curtida.create({ usuario_id, flow_id });
 
       res.status(201).json(novaCurtida);
     } catch (error) {
