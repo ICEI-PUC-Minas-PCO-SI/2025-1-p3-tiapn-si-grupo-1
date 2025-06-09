@@ -13,23 +13,21 @@ export const FeedContainer = styled.div`
 `;
 
 export const FeedMain = styled.div`
-  border: 1px solid #6c63ff;
   display: flex;
+  gap: 20px;
 `;
 
 // <--- HEADER - FIXO --->
 export const FeedHeader = styled.header`
   display: flex;
   flex-direction: column;
-  border: 1px solid #6c63ff;
   background-color: #fff;
   border-radius: 10px;
-  padding: 15px;
+  padding: 32px;
   gap: 20px;
 `;
 
 export const HeaderTop = styled.div`
-  border: 1px solid #ff3366;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -38,7 +36,6 @@ export const HeaderTop = styled.div`
 export const HeaderTitle = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid #233dff;
 `;
 
 export const HeaderActions = styled.div`
@@ -121,7 +118,6 @@ export const CreateFlowIcon = styled(Plus)`
 `;
 
 export const SearchMethods = styled.div`
-  border: 1px solid #33cc66;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -131,11 +127,12 @@ export const SearchMethods = styled.div`
 //Organiza e distribui os flows publicados
 export const FlowFeed = styled.div`
   width: 60%;
-  padding: 20px;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border-right: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 10px;
 `;
 
 export const ScrollFeed = styled.section`
@@ -156,6 +153,7 @@ export const FeedFilters = styled.aside`
   gap: 20px;
   border-radius: 10px;
   height: auto;
+  background-color: #fff;
 `;
 
 export const FilterHeader = styled.header`

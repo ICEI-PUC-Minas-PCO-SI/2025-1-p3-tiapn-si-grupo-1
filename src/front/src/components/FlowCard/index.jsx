@@ -11,11 +11,18 @@ import {
   Avatar,
   FlowAuthor,
   FlowCategory,
+  AuthorRole,
   DaysPublished,
   ActionButton,
   ActionIcon,
   FlowPreviewWrapper,
   FlowFooter,
+  AuthorInfo,
+  FlowDetails,
+  Dot,
+  FlowDescription,
+  FlowTitle,
+  FlowTags,
 } from "./style";
 
 export default function FlowCard({ flow }) {
@@ -71,28 +78,29 @@ export default function FlowCard({ flow }) {
   return (
     <FlowCardContainer>
       <FlowWrapper>
-        <FlowHat />
+        <FlowHat>{flow.categoria}</FlowHat>
         <FlowHeader>
           <Avatar>{getIniciais(flow.usuario?.nome)}</Avatar>
-          <FlowAuthor>{flow.usuario.nome} /</FlowAuthor>
-          <FlowCategory>{`${" "} #${flow.categoria}`}</FlowCategory>
-          <span
-            style={{
-              width: "4px",
-              height: "4px",
-              backgroundColor: "#565656",
-              borderRadius: "50%",
-            }}
-          />
-          <DaysPublished>{getDaysAgo(flow.criado_em)}</DaysPublished>
+          <AuthorInfo>
+            <FlowAuthor>{flow.usuario.nome}</FlowAuthor>
+            <FlowDetails>
+              <AuthorRole>Sales Director</AuthorRole>
+              <Dot />
+              <DaysPublished>{getDaysAgo(flow.criado_em)}</DaysPublished>
+            </FlowDetails>
+          </AuthorInfo>
+
           <ActionButton>
             <ActionIcon />
           </ActionButton>
         </FlowHeader>
 
         <FlowPreviewWrapper>
-          <h2>{flow.titulo}</h2>
-          <p>{flow.descricao ? flow.descricao : "teste"}</p>
+          <FlowTitle>{flow.titulo}</FlowTitle>
+          <FlowDescription>
+            {flow.descricao ? flow.descricao : "teste"}
+          </FlowDescription>
+          <FlowTags></FlowTags>
         </FlowPreviewWrapper>
         <FlowFooter>
           <LikeButton />
@@ -100,7 +108,6 @@ export default function FlowCard({ flow }) {
           <SaveButton />
         </FlowFooter>
       </FlowWrapper>
-      <ComponentDivider />
     </FlowCardContainer>
   );
 }

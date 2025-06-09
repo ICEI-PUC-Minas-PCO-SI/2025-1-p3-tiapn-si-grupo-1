@@ -4,11 +4,11 @@ export const CategoriesWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  border: 1px solid cyan;
 `;
 
 export const CategoryButton = styled.button`
   display: flex;
+  font-size: 11px;
   gap: 3px;
   align-items: center;
   padding: 6px 12px;

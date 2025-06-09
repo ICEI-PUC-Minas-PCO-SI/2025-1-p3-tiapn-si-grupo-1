@@ -110,7 +110,6 @@ export default function Feed() {
       </FeedHeader>
       <FeedMain>
         <FlowFeed>
-          <ComponentDivider />
           <ScrollFeed>
             {flows.length > 0 ? (
               flows.map((flow) => <FlowCard flow={flow} key={flow.id} />)
