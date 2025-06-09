@@ -92,11 +92,11 @@ const flowController = {
         status
       });
 
-      res.json({ mensagem: 'Flow atualizado com sucesso' });
+      res.json({ mensagem: 'Flow atualizado com sucesso', flow });
     } catch (error) {
-      res.status(500).json({ erro: 'Erro ao atualizar flow', detalhes: error.message });
-    }
-  },
+      res.status(500).json({ erro: 'Erro ao atualizar flow', detalhes: error.message });
+    }
+  },
 
   // Deletar um flow
   async deletar(req, res) {
