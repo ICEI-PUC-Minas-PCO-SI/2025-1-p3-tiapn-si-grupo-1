@@ -5,22 +5,24 @@ const curtidaController = {
     try {
       const curtidas = await Curtida.findAll({
         include: [
-        {
-          model: Flow,
-          as: 'flow',
-          attributes: ["id", "titulo"], // mostra só isso do Flow
-        },
-        {
-          model: Usuario,
-          as: 'usuario',
-          attributes: ["id", "nome"]
-        }
-      ],
+          {
+            model: Flow,
+            as: "flow",
+            attributes: ["id", "titulo"], // mostra só isso do Flow
+          },
+          {
+            model: Usuario,
+            as: "usuario",
+            attributes: ["id", "nome"],
+          },
+        ],
         order: [["criado_em", "ASC"]],
       });
 
       if (curtidas.length === 0) {
-        return res.status(200).json({ mensagem: "Nenhuma curtida encontrada." });
+        return res
+          .status(200)
+          .json({ mensagem: "Nenhuma curtida encontrada." });
       }
 
       res.json(curtidas);
@@ -31,34 +33,40 @@ const curtidaController = {
     }
   },
 
-  async obter(req, res) {
-    try {
-      const curtida = await Curtida.findByPk(req.params.id, {
-        include: [
-          {
-            model: Flow,
-            as: 'flow',
-            attributes: ["categoria", "criado_em"],
-          },
-          {
-            model: Usuario,
-            as: 'usuario',
-            attributes: ["nome", "email"],
-          },
-        ],
-      });
+ async obter(req, res) {
+  try {
+    const { usuario_id, flow_id } = req.body;
 
-      if (!curtida) {
-        return res.status(404).json({ erro: "Curtida não encontrada" });
-      }
-
-      res.json(curtida);
-    } catch (error) {
-      res
-        .status(500)
-        .json({ erro: "Erro ao obter curtida", detalhes: error.message });
+    if (!usuario_id || !flow_id) {
+      return res.status(400).json({ erro: "usuario_id e flow_id são obrigatórios" });
     }
-  },
+
+    const curtida = await Curtida.findOne({
+      where: { usuario_id, flow_id },
+      include: [
+        {
+          model: Flow,
+          as: 'flow',
+          attributes: ['id', 'titulo']
+        },
+        {
+          model: Usuario,
+          as: 'usuario',
+          attributes: ['id', 'nome']
+        }
+      ]
+    });
+
+    if (!curtida) {
+      return res.status(404).json({ erro: "Curtida não encontrada" });
+    }
+
+    res.json(curtida);
+  } catch (error) {
+    res.status(500).json({ erro: "Erro ao obter curtida", detalhes: error.message });
+  }
+},
+
 
   async criar(req, res) {
     const { flow_id } = req.body;
@@ -66,7 +74,7 @@ const curtidaController = {
 
     try {
       const [curtida, created] = await Curtida.findOrCreate({
-        where: { flow_id, usuario_id }
+        where: { flow_id, usuario_id },
       });
 
       if (!created) {
@@ -75,10 +83,12 @@ const curtidaController = {
 
       res.status(201).json(curtida);
     } catch (error) {
-      res.status(500).json({ erro: "Erro ao criar curtida", detalhes: error.message });
+      res
+        .status(500)
+        .json({ erro: "Erro ao criar curtida", detalhes: error.message });
     }
   },
-  
+
   // Não utilizado
   async atualizar(req, res) {
     try {
@@ -97,22 +107,24 @@ const curtidaController = {
   },
 
   async remover(req, res) {
-  const { flow_id } = req.body;
-  const usuario_id = req.usuarioId;
+    const { flow_id } = req.body;
+    const usuario_id = req.usuarioId;
 
-  try {
-    const curtida = await Curtida.findOne({ where: { flow_id, usuario_id } });
+    try {
+      const curtida = await Curtida.findOne({ where: { flow_id, usuario_id } });
 
-    if (!curtida) {
-      return res.status(404).json({ erro: "Curtida não encontrada" });
+      if (!curtida) {
+        return res.status(404).json({ erro: "Curtida não encontrada" });
+      }
+
+      await curtida.destroy();
+      res.json({ mensagem: "Curtida removida com sucesso" });
+    } catch (error) {
+      res
+        .status(500)
+        .json({ erro: "Erro ao remover curtida", detalhes: error.message });
     }
-
-    await curtida.destroy();
-    res.json({ mensagem: "Curtida removida com sucesso" });
-  } catch (error) {
-    res.status(500).json({ erro: "Erro ao remover curtida", detalhes: error.message });
-  }
-}
+  },
 };
 
 module.exports = curtidaController;
