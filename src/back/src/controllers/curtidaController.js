@@ -18,6 +18,11 @@ const curtidaController = {
       ],
         order: [["criado_em", "ASC"]],
       });
+
+      if (curtidas.length === 0) {
+        return res.status(200).json({ mensagem: "Nenhuma curtida encontrada." });
+      }
+
       res.json(curtidas);
     } catch (error) {
       res
@@ -32,10 +37,12 @@ const curtidaController = {
         include: [
           {
             model: Flow,
+            as: 'flow',
             attributes: ["categoria", "criado_em"],
           },
           {
             model: Usuario,
+            as: 'usuario',
             attributes: ["nome", "email"],
           },
         ],
@@ -54,18 +61,21 @@ const curtidaController = {
   },
 
   async criar(req, res) {
+    const { flow_id } = req.body;
+    const usuario_id = req.usuarioId;
+
     try {
-      const usuario_id = req.usuario.id; 
-      const { flow_id } = req.body;        
+      const [curtida, created] = await Curtida.findOrCreate({
+        where: { flow_id, usuario_id }
+      });
 
+      if (!created) {
+        return res.status(409).json({ erro: "Curtida já existe" });
+      }
 
-      const novaCurtida = await Curtida.create({ usuario_id, flow_id });
-
-      res.status(201).json(novaCurtida);
+      res.status(201).json(curtida);
     } catch (error) {
-      res
-        .status(500)
-        .json({ erro: "Erro ao criar curtida", detalhes: error.message });
+      res.status(500).json({ erro: "Erro ao criar curtida", detalhes: error.message });
     }
   },
   
@@ -87,20 +97,22 @@ const curtidaController = {
   },
 
   async remover(req, res) {
-    try {
-      const curtida = await Curtida.findByPk(req.params.id);
-      if (!curtida) {
-        return res.status(404).json({ erro: "Curtida não encontrada" });
-      }
+  const { flow_id } = req.body;
+  const usuario_id = req.usuarioId;
 
-      await curtida.destroy();
-      res.json({ mensagem: "Curtida removida com sucesso" });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ erro: "Erro ao remover curtida", detalhes: error.message });
+  try {
+    const curtida = await Curtida.findOne({ where: { flow_id, usuario_id } });
+
+    if (!curtida) {
+      return res.status(404).json({ erro: "Curtida não encontrada" });
     }
-  },
+
+    await curtida.destroy();
+    res.json({ mensagem: "Curtida removida com sucesso" });
+  } catch (error) {
+    res.status(500).json({ erro: "Erro ao remover curtida", detalhes: error.message });
+  }
+}
 };
 
 module.exports = curtidaController;
