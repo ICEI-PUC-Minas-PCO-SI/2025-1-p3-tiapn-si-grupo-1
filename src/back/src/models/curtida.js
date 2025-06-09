@@ -35,4 +35,5 @@ Curtida.associate = (models) => {
   });
 };
 
+
 module.exports = Curtida;

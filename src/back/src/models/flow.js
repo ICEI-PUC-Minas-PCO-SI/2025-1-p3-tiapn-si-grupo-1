@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../db");
 const Usuario = require("./usuario");
+const Curtida = require("./curtida");
 
 const Flow = sequelize.define(
   "flow",
@@ -24,5 +25,6 @@ const Flow = sequelize.define(
 
 Flow.belongsTo(Usuario, { foreignKey: "criado_por" });
 Usuario.hasMany(Flow, { foreignKey: "criado_por" });
+Flow.hasMany(Curtida, { foreignKey: "flow_id" });
 
 module.exports = Flow;
