@@ -9,6 +9,7 @@ const flowSalvoRoutes = require('./src/routes/flowsalvoRouter');
 const curtidaRoutes = require('./src/routes/curtidaRouter');
 const comentarioPostagemRoutes = require('./src/routes/comentarioPostagemRoutes');
 const postagemComunidadeRoutes = require('./src/routes/postagemComunidadeRoutes');
+const filters = require('./src/routes/filtrosRouter');
 
 const app = express();
 
@@ -28,7 +29,8 @@ app.use('/api/comentario', comentarioRoutes)
 app.use('/api/flowsalvos', flowSalvoRoutes);
 app.use('/api/curtidas', curtidaRoutes);
 app.use('/api/comentariopostagem', comentarioPostagemRoutes);
-app.use('/api/postagemcomunidade', postagemComunidadeRoutes)
+app.use('/api/postagemcomunidade', postagemComunidadeRoutes);
+app.use('/api/filtros', filters)
 
 app.get("/", (req, res) => {
   res.send("A API do KnowFlow está rodando 🤩!");
