@@ -39,41 +39,59 @@ const flowSalvoController = {
   }
 },
 
-
   async obter(req, res) {
     try {
-      const { id } = req.params;
-      const salvo = await FlowSalvo.findByPk(id, {
+      const { usuario_id, flow_id } = req.params;
+      
+      if (!usuario_id || !flow_id) {
+      return res.status(400).json({ erro: "usuario_id e flow_id são obrigatórios /usuario_id/flow_id" });
+      }
+
+      const flowsalvo = await FlowSalvo.findOne({
+        where: {usuario_id, flow_id},
         include: [
           { model: Usuario, attributes: ['id', 'nome'] },
-          { model: Flow, attributes: ['id', 'titulo'] }
+          { model: Flow, attributes: ['id', 'titulo', 'criado_em'] }
         ]
       });
 
-      if (!salvo) {
+      if (!flowsalvo) {
         return res.status(404).json({ erro: 'Flow salvo não encontrado' });
       }
 
-      res.json(salvo);
+      res.json(flowsalvo);
     } catch (error) {
       res.status(500).json({ erro: 'Erro ao buscar flow salvo', detalhes: error.message });
     }
   },
 
-  async deletar(req, res) {
+async deletar(req, res) {
+    const { usuario_id, flow_id } = req.params;
+  
+    if (!usuario_id || !flow_id) {
+      return res.status(400).json({ erro: "usuario_id e flow_id são obrigatórios /usuario_id/flow_id" });
+    }
     try {
-      const { id } = req.params;
-      const deletado = await FlowSalvo.destroy({ where: { id } });
+      const flowsalvo = await FlowSalvo.findOne({ 
+        where: { usuario_id, flow_id },
+        include: [
+          { model: Usuario, attributes: ['nome'] },
+          { model: Flow, attributes: ['id', 'titulo', 'criado_em'] }
+        ]
+      });
 
-      if (deletado === 0) {
-        return res.status(404).json({ erro: 'Flow salvo não encontrado' });
+      if (!flowsalvo) {
+        return res.status(404).json({ erro: "Flowsalvo não encontrado" });
       }
 
-      res.json({ mensagem: 'Flow salvo deletado com sucesso' });
+      await flowsalvo.destroy();
+      res.json({ mensagem: "Flowsalvo removido com sucesso" });
     } catch (error) {
-      res.status(500).json({ erro: 'Erro ao deletar flow salvo', detalhes: error.message });
+      res
+        .status(500)
+        .json({ erro: "Erro ao remover flowsalvo", detalhes: error.message });
     }
-  }
+  },
 };
 
 module.exports = flowSalvoController;

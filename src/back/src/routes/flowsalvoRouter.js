@@ -9,7 +9,7 @@ router.use(autenticarToken);
 router.post('/', flowSalvoController.criar);
 router.get('/', flowSalvoController.listar);
 
-router.get('/:id', flowSalvoController.obter);
-router.delete('/:id', flowSalvoController.deletar);
+router.get('/:usuario_id/:flow_id', flowSalvoController.obter);
+router.delete('/:usuario_id/:flow_id', flowSalvoController.deletar);
 
 module.exports = router;
