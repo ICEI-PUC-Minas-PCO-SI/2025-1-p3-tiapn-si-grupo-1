@@ -33,8 +33,34 @@ import {
 import TextNode from '../../components/TextNode';
 import DecisionNode from '../../components/DecisionNode';
 import MediaNode from '../../components/MediaNode';
-import { getIniciais, InitialsAvatar } from '../../services/avatarService'; // Novo import
 import * as S from './style';
+
+// Substituição para InitialsAvatar e getIniciais
+const getIniciais = (nome) => {
+    if (!nome) return '??';
+    const partes = nome.trim().split(' ');
+    if (partes.length === 1) return partes[0].charAt(0).toUpperCase();
+    return (partes[0].charAt(0) + partes[partes.length - 1].charAt(0)).toUpperCase();
+};
+
+const InitialsAvatar = ({ children }) => (
+    <div
+        style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: '50%',
+            background: '#64748B',
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '16px',
+            fontWeight: 'bold',
+        }}
+    >
+        {children}
+    </div>
+);
 
 // Configura o axios para incluir o token de autenticação
 axios.interceptors.request.use((config) => {
@@ -45,15 +71,15 @@ axios.interceptors.request.use((config) => {
     return config;
 });
 
-// Componente principal para visualização de um flow
 const FlowViewer = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [flow, setFlow] = useState(null);
-    const [nodes, setNodes, onNodesChange] = useNodesState([]);
-    const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+    const [nodes, setNodes] = useNodesState([]);
+    const [edges, setEdges] = useEdgesState([]);
     const [selectedNode, setSelectedNode] = useState(null);
     const [isNodeModalOpen, setIsNodeModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
     const [newComment, setNewComment] = useState('');
@@ -62,20 +88,17 @@ const FlowViewer = () => {
     const [comments, setComments] = useState([]);
     const [editingCommentId, setEditingCommentId] = useState(null);
     const [editedComment, setEditedComment] = useState('');
-    const usuarioId = localStorage.getItem('usuarioId'); // ID do usuário logado
+    const usuarioId = localStorage.getItem('usuarioId');
 
-    // Memoização dos tipos de nós
     const nodeTypes = useMemo(() => ({
         textNode: TextNode,
         decisionNode: DecisionNode,
         mediaNode: MediaNode,
     }), []);
 
-    // Busca o flow e mapeia os comentários incluídos no response
     useEffect(() => {
         const fetchFlow = async () => {
             try {
-                // Busca o flow pelo ID, que inclui os comentários em flow.comentarios
                 const flowResponse = await axios.get(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${id}`);
                 const flowData = flowResponse.data;
                 const mappedFlow = {
@@ -83,30 +106,23 @@ const FlowViewer = () => {
                     createdAt: flowData.criado_em,
                     autor: {
                         ...flowData.usuario,
-                        empresa: flowData.usuario.empresa || 'Sem empresa',
-                        cargo: flowData.usuario.cargo || 'Sem cargo',
-                        avatar: flowData.usuario.avatar || null, // null para usar iniciais
-                        verificado: flowData.usuario.verificado || false,
-                        username: flowData.usuario.username || flowData.usuario.email.split('@')[0],
-                        seguidores: flowData.usuario.seguidores || [],
+                        empresa: flowData.usuario?.empresa || 'Sem empresa',
+                        cargo: flowData.usuario?.cargo || 'Sem cargo',
+                        avatar: flowData.usuario?.avatar || null,
+                        verificado: flowData.usuario?.verificado || false,
+                        username: flowData.usuario?.username || flowData.usuario?.email?.split('@')[0] || 'usuário',
+                        seguidores: flowData.usuario?.seguidores || [],
                     },
                 };
                 setFlow(mappedFlow);
                 setNodes(flowData.conteudo_nos || []);
                 setEdges(flowData.conteudo_conexoes || []);
-                setStats({
-                    likes: flowData.stats?.likes || 0,
-                    comments: flowData.comentarios?.length || 0,
-                    saves: flowData.stats?.saves || 0,
-                    views: flowData.stats?.views || 0,
-                });
 
-                // Mapeia os comentários do flow.comentarios
                 const mappedComments = flowData.comentarios?.map((comment) => ({
                     id: comment.id,
                     author: comment.usuario?.nome || 'Usuário desconhecido',
                     username: comment.usuario?.email?.split('@')[0] || 'usuário',
-                    avatar: comment.usuario?.avatar || null, // null para usar iniciais
+                    avatar: comment.usuario?.avatar || null,
                     role: comment.usuario?.cargo || 'Usuário',
                     company: comment.usuario?.empresa || '',
                     verified: comment.usuario?.verificado || false,
@@ -119,31 +135,79 @@ const FlowViewer = () => {
                     usuario_id: comment.usuario_id,
                 })) || [];
                 setComments(mappedComments);
-            } catch (error) {
-                console.error('Erro ao buscar flow:', error);
+
+                setStats({
+                    likes: flowData.stats?.likes || 0,
+                    comments: flowData.comentarios?.length || 0,
+                    saves: flowData.stats?.saves || 0,
+                    views: flowData.stats?.views || 0,
+                });
+
+                try {
+                    const curtidasResponse = await axios.get('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas');
+                    const userLiked = curtidasResponse.data.some(
+                        (curtida) => String(curtida.usuario_id) === String(usuarioId) && String(curtida.flow_id) === String(id)
+                    );
+                    const likeCount = curtidasResponse.data.filter(
+                        (curtida) => String(curtida.flow_id) === String(id)
+                    ).length;
+                    setIsLiked(userLiked);
+                    setStats((prev) => ({ ...prev, likes: likeCount }));
+                } catch (curtidasError) {
+                    console.error('Erro ao buscar curtidas:', curtidasError);
+                    toast.error('Erro ao carregar curtidas.');
+                }
+            } catch (flowError) {
+                console.error('Erro ao buscar flow:', flowError);
                 toast.error('Erro ao carregar o flow.');
             }
         };
         fetchFlow();
-    }, [id]);
+    }, [id, usuarioId, setNodes, setEdges]);
 
-    // Handler para clique em um nó
     const onNodeClick = useCallback((event, node) => {
         setSelectedNode(node);
         setIsNodeModalOpen(true);
     }, []);
 
-    // Handler para curtir o flow
-    const handleLike = () => {
-        setIsLiked(!isLiked);
-        setStats((prev) => ({
-            ...prev,
-            likes: isLiked ? prev.likes - 1 : prev.likes + 1,
-        }));
-        toast.success(isLiked ? 'Like removido!' : 'Flow curtido!');
+    const handleLike = async () => {
+        if (!usuarioId) {
+            toast.error('Faça login para curtir o flow.');
+            return;
+        }
+        try {
+            if (isLiked) {
+                try {
+                    const curtidasResponse = await axios.get('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas');
+                    const curtida = curtidasResponse.data.find(
+                        (c) => String(c.usuario_id) === String(usuarioId) && String(c.flow_id) === String(id)
+                    );
+                    if (!curtida || !curtida.id) {
+                        toast.error('Curtida não encontrada.');
+                        return;
+                    }
+                    await axios.delete(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas/${curtida.id}`);
+                    setIsLiked(false);
+                    setStats((prev) => ({ ...prev, likes: prev.likes - 1 }));
+                    toast.success('Like removido!');
+                } catch (curtidasError) {
+                    console.error('Erro ao buscar/remover curtida:', curtidasError);
+                    toast.error('Erro ao remover curtida.');
+                }
+            } else {
+                await axios.post('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas', {
+                    flow_id: id, // Envia como string UUID
+                });
+                setIsLiked(true);
+                setStats((prev) => ({ ...prev, likes: prev.likes + 1 }));
+                toast.success('Flow curtido!');
+            }
+        } catch (error) {
+            console.error('Erro ao processar curtida:', error);
+            toast.error(error.response?.data?.erro || 'Erro ao curtir o flow.');
+        }
     };
 
-    // Handler para salvar o flow
     const handleSave = () => {
         setIsSaved(!isSaved);
         setStats((prev) => ({
@@ -153,13 +217,23 @@ const FlowViewer = () => {
         toast.success(isSaved ? 'Removido dos salvos!' : 'Flow salvo!');
     };
 
-    // Handler para compartilhar o link
     const handleShare = () => {
         navigator.clipboard.writeText(window.location.href);
         toast.success('Link copiado!');
     };
 
-    // Handler para curtir um comentário
+    const handleDeleteFlow = async () => {
+        try {
+            await axios.delete(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${id}`);
+            toast.success('Flow deletado com sucesso!');
+            setIsDeleteModalOpen(false);
+            navigate('/feed');
+        } catch (error) {
+            console.error('Erro ao deletar flow:', error);
+            toast.error(error.response?.data?.erro || 'Erro ao deletar o flow.');
+        }
+    };
+
     const handleCommentLike = (commentId) => {
         setComments((prev) =>
             prev.map((comment) =>
@@ -175,13 +249,11 @@ const FlowViewer = () => {
         toast.success('Ação registrada!');
     };
 
-    // Handler para adicionar um comentário
     const handleAddComment = async () => {
         if (!newComment.trim()) {
             toast.error('O comentário não pode estar vazio.');
             return;
         }
-
         try {
             const response = await axios.post('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentario', {
                 mensagem: newComment,
@@ -192,7 +264,7 @@ const FlowViewer = () => {
                 id: newCommentData.id,
                 author: newCommentData.usuario?.nome || 'Você',
                 username: newCommentData.usuario?.email?.split('@')[0] || 'usuario.atual',
-                avatar: newCommentData.usuario?.avatar || null, // null para iniciais
+                avatar: newCommentData.usuario?.avatar || null,
                 role: newCommentData.usuario?.cargo || 'Usuário',
                 company: newCommentData.usuario?.empresa || '',
                 verified: newCommentData.usuario?.verificado || false,
@@ -214,19 +286,16 @@ const FlowViewer = () => {
         }
     };
 
-    // Handler para iniciar a edição de um comentário
     const handleStartEdit = (comment) => {
         setEditingCommentId(comment.id);
         setEditedComment(comment.content);
     };
 
-    // Handler para salvar a edição de um comentário
     const handleEditComment = async (commentId) => {
         if (!editedComment.trim()) {
             toast.error('O comentário não pode estar vazio.');
             return;
         }
-
         try {
             await axios.put(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentario/${commentId}`, {
                 mensagem: editedComment,
@@ -245,13 +314,11 @@ const FlowViewer = () => {
         }
     };
 
-    // Handler para cancelar a edição
     const handleCancelEdit = () => {
         setEditingCommentId(null);
         setEditedComment('');
     };
 
-    // Handler para deletar um comentário
     const handleDeleteComment = async (commentId) => {
         try {
             await axios.delete(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentario/${commentId}`);
@@ -264,14 +331,12 @@ const FlowViewer = () => {
         }
     };
 
-    // Formata a data para exibição relativa
     const formatTimeAgo = (dateString) => {
         if (!dateString) return 'Data inválida';
         const date = new Date(dateString);
         if (isNaN(date.getTime())) return 'Data inválida';
         const now = new Date();
         const diffInHours = Math.floor((now - date) / (1000 * 60 * 60));
-
         if (diffInHours < 1) return 'Agora';
         if (diffInHours < 24) return `${diffInHours}h`;
         const diffInDays = Math.floor(diffInHours / 24);
@@ -279,34 +344,28 @@ const FlowViewer = () => {
         return date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' });
     };
 
-    // Formata números
     const formatNumber = (num) => {
         if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
         if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
         return num.toString();
     };
 
-    // Exibe loading enquanto o flow não é carregado
     if (!flow) return <S.Loading>Carregando...</S.Loading>;
 
-    // Renderização principal
     return (
         <S.Container>
-            {/* Notificações */}
             <S.ToastOverride>
                 <ToastContainer
                     position="top-right"
                     autoClose={3000}
                     hideProgressBar={false}
-                    style={{ top: '60px' }}
+                    style={{ top: '75px' }}
                     newestOnTop
                     closeOnClick
                     pauseOnHover
                     theme="light"
                 />
             </S.ToastOverride>
-
-            {/* Cabeçalho */}
             <S.Header>
                 <S.HeaderContent>
                     <S.BackButton onClick={() => navigate('/feed')}>
@@ -325,10 +384,7 @@ const FlowViewer = () => {
                             <Heart size={16} className={isLiked ? 'fill-current' : ''} />
                             {formatNumber(stats.likes)}
                         </S.ActionButton>
-                        <S.ActionButton
-                            onClick={() => setShowComments(!showComments)}
-                            $variant="comment"
-                        >
+                        <S.ActionButton onClick={() => setShowComments(!showComments)} $variant="comment">
                             <MessageCircle size={16} />
                             {formatNumber(stats.comments)}
                         </S.ActionButton>
@@ -343,11 +399,8 @@ const FlowViewer = () => {
                     </S.HeaderActions>
                 </S.HeaderContent>
             </S.Header>
-
-            {/* Conteúdo principal */}
             <S.Main>
                 <S.FlowSection>
-                    {/* Flow interativo */}
                     <S.Card>
                         <S.CardHeader>
                             <S.CardTitle>
@@ -363,8 +416,6 @@ const FlowViewer = () => {
                                 <ReactFlow
                                     nodes={nodes}
                                     edges={edges}
-                                    onNodesChange={onNodesChange}
-                                    onEdgesChange={onEdgesChange}
                                     onNodeClick={onNodeClick}
                                     nodeTypes={nodeTypes}
                                     fitView
@@ -382,8 +433,6 @@ const FlowViewer = () => {
                             </S.Canvas>
                         </S.CardContent>
                     </S.Card>
-
-                    {/* Seção de comentários */}
                     {showComments && (
                         <S.Card id="comments">
                             <S.CardHeader>
@@ -404,10 +453,7 @@ const FlowViewer = () => {
                                         <S.CommentHint>
                                             Seja construtivo e respeitoso. Sua contribuição ajuda a comunidade!
                                         </S.CommentHint>
-                                        <S.SubmitButton
-                                            onClick={handleAddComment}
-                                            disabled={!newComment.trim()}
-                                        >
+                                        <S.SubmitButton onClick={handleAddComment} disabled={!newComment.trim()}>
                                             <Send size={16} />
                                             Comentar
                                         </S.SubmitButton>
@@ -439,25 +485,22 @@ const FlowViewer = () => {
                                                             onChange={(e) => setEditedComment(e.target.value)}
                                                             rows={3}
                                                         />
-                                                        <S.CommentActions>
+                                                        <S.CommentsActions>
                                                             <S.Button
                                                                 onClick={() => handleEditComment(comment.id)}
                                                                 disabled={!editedComment.trim()}
                                                             >
                                                                 Salvar
                                                             </S.Button>
-                                                            <S.Button
-                                                                $variant="outline"
-                                                                onClick={handleCancelEdit}
-                                                            >
+                                                            <S.Button $variant="outline" onClick={handleCancelEdit}>
                                                                 Cancelar
                                                             </S.Button>
-                                                        </S.CommentActions>
+                                                        </S.CommentsActions>
                                                     </div>
                                                 ) : (
                                                     <S.CommentText>{comment.content}</S.CommentText>
                                                 )}
-                                                <S.CommentActions>
+                                                <S.CommentsActions>
                                                     <S.ActionButton
                                                         $variant="commentLike"
                                                         $active={comment.isLiked}
@@ -467,20 +510,14 @@ const FlowViewer = () => {
                                                         <ThumbsUp size={14} className={comment.isLiked ? 'fill-current' : ''} />
                                                         {comment.likes}
                                                     </S.ActionButton>
-                                                    <S.ActionButton
-                                                        $variant="commentReply"
-                                                        $compact
-                                                    >
+                                                    <S.ActionButton $variant="commentReply" $compact>
                                                         <MessageCircle size={14} />
                                                         {comment.replies} respostas
                                                     </S.ActionButton>
-                                                    <S.ActionButton
-                                                        $variant="commentFlag"
-                                                        $compact
-                                                    >
+                                                    <S.ActionButton $variant="commentFlag" $compact>
                                                         <Flag size={14} />
                                                     </S.ActionButton>
-                                                    {comment.usuario_id === usuarioId && (
+                                                    {String(comment.usuario_id) === String(usuarioId) && (
                                                         <>
                                                             <S.ActionButton
                                                                 $variant="commentEdit"
@@ -498,7 +535,7 @@ const FlowViewer = () => {
                                                             </S.ActionButton>
                                                         </>
                                                     )}
-                                                </S.CommentActions>
+                                                </S.CommentsActions>
                                             </S.CommentContent>
                                         </S.Comment>
                                     ))}
@@ -507,8 +544,6 @@ const FlowViewer = () => {
                         </S.Card>
                     )}
                 </S.FlowSection>
-
-                {/* Sidebar */}
                 <S.Sidebar>
                     <S.Card>
                         <S.CardHeader>
@@ -533,7 +568,6 @@ const FlowViewer = () => {
                             </S.Tags>
                         </S.CardContent>
                     </S.Card>
-
                     <S.Card>
                         <S.CardHeader>
                             <S.CardTitle>
@@ -565,7 +599,6 @@ const FlowViewer = () => {
                             </S.Button>
                         </S.CardContent>
                     </S.Card>
-
                     <S.Card>
                         <S.CardHeader>
                             <S.CardTitle>
@@ -578,19 +611,23 @@ const FlowViewer = () => {
                                 <Copy size={16} style={{ marginRight: '8px' }} />
                                 Duplicar Flow
                             </S.Button>
-                            {flow.criado_por === flow.autor?.id && (
-                                <S.Button
-                                    onClick={() => navigate(`/editar-flow/${id}`)}
-                                    style={{ marginTop: '12px' }}
-                                >
-                                    <Edit size={16} style={{ marginRight: '8px' }} />
-                                    Editar Flow
-                                </S.Button>
+                            {String(flow.criado_por) === String(usuarioId) && (
+                                <>
+                                    <S.Button onClick={() => navigate(`/editar-flow/${id}`)} style={{ marginTop: '12px' }}>
+                                        <Edit size={16} style={{ marginRight: '8px' }} />
+                                        Editar Flow
+                                    </S.Button>
+                                    <S.Button
+                                        onClick={() => setIsDeleteModalOpen(true)}
+                                        $variant="delete"
+                                        style={{ marginTop: '12px' }}
+                                    >
+                                        <Trash2 size={16} style={{ marginRight: '8px' }} />
+                                        Deletar Flow
+                                    </S.Button>
+                                </>
                             )}
-                            <S.Button
-                                onClick={() => toast.info('Exportando flow...')}
-                                style={{ marginTop: '12px' }}
-                            >
+                            <S.Button onClick={() => toast.info('Exportando flow...')} style={{ marginTop: '12px' }}>
                                 <Download size={16} style={{ marginRight: '8px' }} />
                                 Exportar Flow
                             </S.Button>
@@ -598,8 +635,6 @@ const FlowViewer = () => {
                     </S.Card>
                 </S.Sidebar>
             </S.Main>
-
-            {/* Modal para nós */}
             {isNodeModalOpen && (
                 <S.Modal>
                     <S.ModalContent>
@@ -610,12 +645,12 @@ const FlowViewer = () => {
                                         ? 'Conteúdo'
                                         : selectedNode?.type === 'decisionNode'
                                             ? 'Decisão'
-                                            : 'Recurso')}
+                                            : 'Imagem')}
                             </S.ModalTitle>
                             <S.ModalDescription>
-                                {selectedNode?.type === 'textNode' && 'Conteúdo educativo do flow'}
-                                {selectedNode?.type === 'decisionNode' && 'Ponto de decisão interativo'}
-                                {selectedNode?.type === 'mediaNode' && 'Recurso ou arquivo complementar'}
+                                {selectedNode?.type === 'textNode' && 'Visualize o conteúdo do nó de texto'}
+                                {selectedNode?.type === 'decisionNode' && 'Explore as opções de decisão'}
+                                {selectedNode?.type === 'mediaNode' && 'Visualize a imagem associada'}
                             </S.ModalDescription>
                             <S.CloseButton onClick={() => setIsNodeModalOpen(false)}>
                                 <X size={16} />
@@ -632,10 +667,7 @@ const FlowViewer = () => {
                                         {selectedNode.data.options?.map((option, index) => (
                                             <S.OptionButton
                                                 key={option}
-                                                onClick={() => {
-                                                    console.log(`Opção selecionada: ${option}`);
-                                                    setIsNodeModalOpen(false);
-                                                }}
+                                                onClick={() => setIsNodeModalOpen(false)}
                                             >
                                                 <S.OptionNumber>{index + 1}</S.OptionNumber>
                                                 {option}
@@ -652,21 +684,45 @@ const FlowViewer = () => {
                                         </S.MediaIcon>
                                         <div>
                                             <S.MediaTitle>{selectedNode.data.title}</S.MediaTitle>
-                                            <S.MediaMeta>
-                                                {selectedNode.data.type} • {selectedNode.data.filename}
-                                            </S.MediaMeta>
                                         </div>
                                     </S.MediaHeader>
-                                    {selectedNode.data.content && (
-                                        <S.MediaDescription>{selectedNode.data.content}</S.MediaDescription>
+                                    {selectedNode.data.mediaUrl && (
+                                        <img
+                                            src={selectedNode.data.mediaUrl}
+                                            alt={selectedNode.data.title}
+                                            style={{ maxWidth: '100%', borderRadius: '8px' }}
+                                        />
                                     )}
                                     <S.MediaActions>
-                                        <S.Button>Download Arquivo</S.Button>
+                                        <S.Button>Download Imagem</S.Button>
                                         <S.Button $variant="outline">Abrir</S.Button>
                                     </S.MediaActions>
                                 </S.MediaContent>
                             )}
                         </S.ModalBody>
+                    </S.ModalContent>
+                </S.Modal>
+            )}
+            {isDeleteModalOpen && (
+                <S.Modal>
+                    <S.ModalContent>
+                        <S.ModalHeader>
+                            <S.ModalTitle>Deletar Flow</S.ModalTitle>
+                            <S.CloseButton onClick={() => setIsDeleteModalOpen(false)}>
+                                <X size={16} />
+                            </S.CloseButton>
+                        </S.ModalHeader>
+                        <S.ModalBody>
+                            <p>Tem certeza que deseja deletar o flow "{flow.titulo}"? Esta ação não pode ser desfeita.</p>
+                        </S.ModalBody>
+                        <S.ModalFooter>
+                            <S.Button $variant="outline" onClick={() => setIsDeleteModalOpen(false)}>
+                                Cancelar
+                            </S.Button>
+                            <S.Button $variant="delete" onClick={handleDeleteFlow}>
+                                Deletar
+                            </S.Button>
+                        </S.ModalFooter>
                     </S.ModalContent>
                 </S.Modal>
             )}

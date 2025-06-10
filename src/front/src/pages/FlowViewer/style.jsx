@@ -215,6 +215,14 @@ export const CommentActions = styled.div`
   flex-wrap: nowrap; /* Evita quebra de linha */
 `;
 
+
+export const CommentsActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Reduzido de 4px para botões ainda mais próximos */
+  flex-wrap: nowrap; /* Evita quebra de linha */
+`;
+
 export const CommentHint = styled.p`
   font-size: 12px;
   color: #6b7280;
@@ -383,7 +391,6 @@ export const AuthorInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  margin-left: 25px;
 `;
 
 export const AuthorName = styled.span`
