@@ -50,8 +50,12 @@ const flowSalvoController = {
       const flowsalvo = await FlowSalvo.findOne({
         where: {usuario_id, flow_id},
         include: [
-          { model: Usuario, attributes: ['id', 'nome'] },
-          { model: Flow, attributes: ['id', 'titulo', 'criado_em'] }
+          { model: Usuario,
+            as: 'salvoPor',
+            attributes: ['id', 'nome'] },
+          { model: Flow,
+            as: 'flowsSalvos',
+            attributes: ['id', 'titulo', 'criado_em'] }
         ]
       });
 
@@ -75,8 +79,12 @@ async deletar(req, res) {
       const flowsalvo = await FlowSalvo.findOne({ 
         where: { usuario_id, flow_id },
         include: [
-          { model: Usuario, attributes: ['nome'] },
-          { model: Flow, attributes: ['id', 'titulo', 'criado_em'] }
+          { model: Usuario,
+            as: 'salvoPor',
+            attributes: ['nome'] },
+          { model: Flow,
+            as: 'flowsSalvos',
+            attributes: ['id', 'titulo', 'criado_em'] }
         ]
       });
 
