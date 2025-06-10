@@ -6,6 +6,7 @@ import FlowViewer from '../pages/FlowViewer';
 const FlowRoutes = () => (
   <>
     <Route path="/criar-flow" element={<FlowEditor />} />
+    <Route path="/editar-flow/:id" element={<FlowEditor />} />
     <Route path="/flow/:id" element={<FlowViewer />} />
   </>
 );
