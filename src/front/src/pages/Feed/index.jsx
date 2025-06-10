@@ -53,7 +53,9 @@ export default function Feed() {
 
   async function fetchFiltros() {
     try {
-      const response = await axios.get("http://localhost:3000/api/filtros");
+      const response = await axios.get(
+        "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/filtros"
+      );
       setFiltros(response.data);
     } catch (error) {
       console.error("Erro ao buscar filtros:", error);

@@ -72,9 +72,12 @@ export const useFlowStore = create((set, get) => ({
 
     console.log("Buscando flows com:", { category, searchTerm });
     try {
-      const response = await axios.get("http://localhost:3000/api/flow", {
-        params,
-      });
+      const response = await axios.get(
+        "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow",
+        {
+          params,
+        }
+      );
       set({ flows: response.data });
     } catch (error) {
       console.error("Erro ao buscar flows:", error);
