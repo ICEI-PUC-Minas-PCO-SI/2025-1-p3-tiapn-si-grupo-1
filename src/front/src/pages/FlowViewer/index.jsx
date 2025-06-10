@@ -146,10 +146,10 @@ const FlowViewer = () => {
                 try {
                     const curtidasResponse = await axios.get('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas');
                     const userLiked = curtidasResponse.data.some(
-                        (curtida) => String(curtida.usuario_id) === String(usuarioId) && String(curtida.flow_id) === String(id)
+                        (curtida) => String(curtida.usuario_id || curtida.usuarioId) === String(usuarioId) && String(curtida.flow_id || curtida.flowId) === String(id)
                     );
                     const likeCount = curtidasResponse.data.filter(
-                        (curtida) => String(curtida.flow_id) === String(id)
+                        (curtida) => String(curtida.flow_id || curtida.flowId) === String(id)
                     ).length;
                     setIsLiked(userLiked);
                     setStats((prev) => ({ ...prev, likes: likeCount }));
@@ -178,32 +178,48 @@ const FlowViewer = () => {
         try {
             if (isLiked) {
                 try {
+                    console.log('Buscando curtidas para usuarioId:', usuarioId, 'e flow_id:', id);
                     const curtidasResponse = await axios.get('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas');
+                    console.log('Resposta de curtidas:', curtidasResponse.data);
                     const curtida = curtidasResponse.data.find(
-                        (c) => String(c.usuario_id) === String(usuarioId) && String(c.flow_id) === String(id)
+                        (c) =>
+                            (String(c.usuario_id || c.usuarioId) === String(usuarioId)) &&
+                            (String(c.flow_id || c.flowId) === String(id))
                     );
-                    if (!curtida || !curtida.id) {
+                    if (!curtida) {
+                        console.error('Curtida não encontrada para usuarioId:', usuarioId, 'e flow_id:', id);
                         toast.error('Curtida não encontrada.');
                         return;
                     }
-                    await axios.delete(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas/${curtida.id}`);
+                    if (!curtida.id) {
+                        console.error('ID da curtida não definido:', curtida);
+                        toast.error('ID da curtida inválido.');
+                        return;
+                    }
+                    console.log('Deletando curtida com ID:', curtida.id);
+                    await axios.delete(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas/${curtida.id}`, {
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem('token')}`,
+                        },
+                    });
                     setIsLiked(false);
                     setStats((prev) => ({ ...prev, likes: prev.likes - 1 }));
                     toast.success('Like removido!');
-                } catch (curtidasError) {
-                    console.error('Erro ao buscar/remover curtida:', curtidasError);
-                    toast.error('Erro ao remover curtida.');
+                } catch (error) {
+                    console.error('Erro ao buscar/remover curtida:', error.response?.data || error);
+                    toast.error(error.response?.data?.erro || 'Erro ao remover a curtida.');
                 }
             } else {
+                console.log('Curtindo flow com flow_id:', id);
                 await axios.post('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas', {
-                    flow_id: id, // Envia como string UUID
+                    flow_id: id,
                 });
                 setIsLiked(true);
-                setStats((prev) => ({ ...prev, likes: prev.likes + 1 }));
+                setStats((prev) => ({ ...prev, likes: prev?.likes + 1 }));
                 toast.success('Flow curtido!');
             }
         } catch (error) {
-            console.error('Erro ao processar curtida:', error);
+            console.error('Erro ao processar curtida:', error.response?.data || error);
             toast.error(error.response?.data?.erro || 'Erro ao curtir o flow.');
         }
     };
@@ -230,7 +246,8 @@ const FlowViewer = () => {
             navigate('/feed');
         } catch (error) {
             console.error('Erro ao deletar flow:', error);
-            toast.error(error.response?.data?.erro || 'Erro ao deletar o flow.');
+            toast.error(error.response?.data?.data?.erro || 'Erro ao deletar o flow.');
+            setIsDeleteModalOpen(false);
         }
     };
 
@@ -242,8 +259,7 @@ const FlowViewer = () => {
                         ...comment,
                         isLiked: !comment.isLiked,
                         likes: comment.isLiked ? comment.likes - 1 : comment.likes + 1,
-                    }
-                    : comment
+                    } : comment
             )
         );
         toast.success('Ação registrada!');
@@ -256,25 +272,25 @@ const FlowViewer = () => {
         }
         try {
             const response = await axios.post('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentario', {
-                mensagem: newComment,
+                mensagem: newCommentText,
                 flow_id: id,
             });
             const newCommentData = response.data;
             const mappedComment = {
                 id: newCommentData.id,
-                author: newCommentData.usuario?.nome || 'Você',
-                username: newCommentData.usuario?.email?.split('@')[0] || 'usuario.atual',
-                avatar: newCommentData.usuario?.avatar || null,
-                role: newCommentData.usuario?.cargo || 'Usuário',
-                company: newCommentData.usuario?.empresa || '',
-                verified: newCommentData.usuario?.verificado || false,
-                content: newCommentData.mensagem,
-                createdAt: newCommentData.criado_em || new Date().toISOString(),
+                author: newCommentData?.usuario?.nome || 'Você',
+                username: newCommentData?.usuario?.email?.split('@')[0] || 'usuario.atual',
+                avatar: newCommentData?.usuario?.avatar || null,
+                role: newCommentData?.usuario?.cargo || 'Usuário',
+                company: newCommentData?.usuario?.empresa || '',
+                verified: newCommentData?.usuario?.verificado || false,
+                content: newCommentData?.mensagem,
+                createdAt: newCommentData?.criado_em || new Date().toISOString(),
                 likes: 0,
                 replies: 0,
                 isLiked: false,
                 isHelpful: false,
-                usuario_id: newCommentData.usuario_id,
+                usuario_id: newCommentData?.usuario_id,
             };
             setComments([mappedComment, ...comments]);
             setNewComment('');

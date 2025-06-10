@@ -76,8 +76,8 @@ export const HeaderActions = styled.div`
 export const ActionButton = styled.button`
   display: flex;
   align-items: center;
-  gap: 4px; /* Reduzido de 6px para compactar ícone e texto */
-  padding: ${({ $compact }) => ($compact ? '6px 8px' : '8px 16px')}; /* Reduzido de 10px para 8px horizontalmente em $compact */
+  gap: 4px;
+  padding: ${({ $compact }) => ($compact ? '6px 8px' : '8px 16px')};
   border: 1px solid ${({ $variant, $active }) =>
     $variant === 'like' && $active ? '#ef4444' :
       $variant === 'save' && $active ? '#233DFF' :
@@ -97,25 +97,25 @@ export const ActionButton = styled.button`
 
   &:hover {
     background: ${({ $variant, $active }) =>
-      $variant === 'like' && !$active ? '#fef2f2' :
-        $variant === 'comment' ? '#eff6ff' :
-          $variant === 'save' && !$active ? '#eff6ff' :
-            $variant === 'share' ? '#f0fdf4' :
-              $variant === 'commentLike' ? '#eff6ff' :
-                $variant === 'commentReply' ? '#f3f4f6' :
-                  $variant === 'commentFlag' ? '#fef2f2' :
-                    $variant === 'commentEdit' ? '#fff7ed' :
-                      $variant === 'commentDelete' ? '#fef2f2' : '#f3f4f6'};
+    $variant === 'like' && !$active ? '#fef2f2' :
+      $variant === 'comment' ? '#eff6ff' :
+        $variant === 'save' && !$active ? '#eff6ff' :
+          $variant === 'share' ? '#f0fdf4' :
+            $variant === 'commentLike' ? '#eff6ff' :
+              $variant === 'commentReply' ? '#f3f4f6' :
+                $variant === 'commentFlag' ? '#fef2f2' :
+                  $variant === 'commentEdit' ? '#fff7ed' :
+                    $variant === 'commentDelete' ? '#fef2f2' : '#f3f4f6'};
     border-color: ${({ $variant }) =>
-      $variant === 'like' ? '#f87171' :
-        $variant === 'comment' ? '#3b82f6' :
-          $variant === 'save' ? '#233DFF' :
-            $variant === 'share' ? '#22c55e' :
-              $variant === 'commentLike' ? '#3b82f6' :
-                $variant === 'commentReply' ? '#6b7280' :
-                  $variant === 'commentFlag' ? '#ef4444' :
-                    $variant === 'commentEdit' ? '#fb923c' :
-                      $variant === 'commentDelete' ? '#ef4444' : '#d1d5db'};
+    $variant === 'like' ? '#f87171' :
+      $variant === 'comment' ? '#3b82f6' :
+        $variant === 'save' ? '#233DFF' :
+          $variant === 'share' ? '#22c55e' :
+            $variant === 'commentLike' ? '#3b82f6' :
+              $variant === 'commentReply' ? '#6b7280' :
+                $variant === 'commentFlag' ? '#ef4444' :
+                  $variant === 'commentEdit' ? '#fb923c' :
+                    $variant === 'commentDelete' ? '#ef4444' : '#d1d5db'};
   }
 `;
 
@@ -211,16 +211,15 @@ export const CommentActions = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 2px; /* Reduzido de 4px para botões ainda mais próximos */
-  flex-wrap: nowrap; /* Evita quebra de linha */
+  gap: 2px;
+  flex-wrap: nowrap;
 `;
-
 
 export const CommentsActions = styled.div`
   display: flex;
   align-items: center;
-  gap: 6px; /* Reduzido de 4px para botões ainda mais próximos */
-  flex-wrap: nowrap; /* Evita quebra de linha */
+  gap: 6px;
+  flex-wrap: nowrap;
 `;
 
 export const CommentHint = styled.p`
@@ -273,24 +272,24 @@ export const Comment = styled.div`
 
 export const Avatar = styled.div`
   position: relative;
-  width: 44px; /* Aumentado de 40px para melhor proporção */
+  width: 44px;
   height: 44px;
   border-radius: 50%;
-  overflow: hidden; /* Garante arredondamento perfeito */
+  overflow: hidden;
 
   img {
     width: 100%;
     height: 100%;
-    border-radius: 50%; /* Reforça arredondamento */
+    border-radius: 50%;
     object-fit: cover;
   }
 `;
 
 export const VerifiedBadge = styled.div`
   position: absolute;
-  bottom: 0; /* Ajustado para novo tamanho */
+  bottom: 0;
   right: 0;
-  width: 18px; /* Aumentado para acompanhar avatar */
+  width: 18px;
   height: 18px;
   background: #233DFF;
   color: #fff;
@@ -299,7 +298,7 @@ export const VerifiedBadge = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 10px;
-  border: 2px solid #fff; /* Borda branca para contraste */
+  border: 2px solid #fff;
 `;
 
 export const CommentContent = styled.div`
@@ -418,9 +417,14 @@ export const AuthorFollowers = styled.span`
 export const Button = styled.button`
   width: 100%;
   padding: 8px 16px;
-  background: ${({ $variant }) => ($variant === 'outline' ? 'none' : '#233DFF')};
-  color: ${({ $variant }) => ($variant === 'outline' ? '#374151' : '#fff')};
-  border: ${({ $variant }) => ($variant === 'outline' ? '1px solid #e5e7eb' : 'none')};
+  background: ${({ $variant }) =>
+    $variant === 'delete' ? '#ef4444' :
+      $variant === 'outline' ? 'none' : '#233DFF'};
+  color: ${({ $variant }) =>
+    $variant === 'outline' ? '#374151' : '#fff'};
+  border: ${({ $variant }) =>
+    $variant === 'outline' ? '1px solid #e5e7eb' :
+      $variant === 'delete' ? 'none' : 'none'};
   border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
@@ -429,8 +433,10 @@ export const Button = styled.button`
 
   &:hover {
     background: ${({ $variant }) =>
+    $variant === 'delete' ? '#dc2626' :
       $variant === 'outline' ? '#f3f4f6' : '#1e3a8a'};
-    border-color: ${({ $variant }) => ($variant === 'outline' ? '#d1d5db' : 'none')};
+    border-color: ${({ $variant }) =>
+    $variant === 'outline' ? '#d1d5db' : 'none'};
   }
 `;
 
@@ -493,6 +499,14 @@ export const ModalBody = styled.div`
   padding: 24px;
 `;
 
+export const ModalFooter = styled.div`
+  padding: 16px 24px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  border-top: 1px solid #e5e7eb;
+`;
+
 export const TextContent = styled.p`
   font-size: 16px;
   color: #374151;
@@ -522,15 +536,12 @@ export const OptionButton = styled.button`
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 12px;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
   background: #fff;
   font-size: 14px;
   color: #374151;
-  cursor: pointer;
-  transition: all 0.2s;
-
   &:hover {
     background: #fff7ed;
     border-color: #fb923c;
@@ -538,9 +549,10 @@ export const OptionButton = styled.button`
 `;
 
 export const OptionNumber = styled.div`
-  width: 24px;
+  width: flex;
   height: 24px;
   background: #fb923c;
+  padding: 4px 12px;
   color: #fff;
   border-radius: 50%;
   display: flex;
@@ -553,7 +565,7 @@ export const OptionNumber = styled.div`
 export const MediaContent = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
 `;
 
 export const MediaHeader = styled.div`
@@ -565,28 +577,29 @@ export const MediaHeader = styled.div`
 export const MediaIcon = styled.div`
   width: 48px;
   height: 48px;
-  background: linear-gradient(to bottom right, #10b981, #059669);
+  background: linear-gradient(to right, #10b981, #059669);
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-export const MediaTitle = styled.h4`
+export const MediaTitle = styled.div`
   font-size: 18px;
   font-weight: 600;
-  color: #1f2937;
+
+  color: #333;
 `;
 
 export const MediaMeta = styled.p`
   font-size: 14px;
-  color: #10b981;
   font-weight: 500;
+  color: #10b981;
 `;
 
 export const MediaDescription = styled.p`
   font-size: 14px;
-  color: #374151;
+  color: #333;
   line-height: 1.6;
 `;
 
@@ -598,7 +611,7 @@ export const MediaActions = styled.div`
 export const Loading = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; 
   height: 100vh;
   font-size: 16px;
   color: #374151;
