@@ -1,6 +1,6 @@
 import { Search } from "lucide-react";
 import { Form, Input, IconWrapper, InputWrapper } from "./style";
-import debounce from "lodash.debounce";
+import debounce from "lodash/debounce";
 import { useState, useEffect, useMemo } from "react";
 
 //31/05 - UPDATES
