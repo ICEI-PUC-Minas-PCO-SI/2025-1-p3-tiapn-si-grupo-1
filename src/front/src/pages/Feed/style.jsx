@@ -6,7 +6,7 @@ export const FeedContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  padding: 10px 30px;
+  padding: 20px 20px;
   justify-content: space-between;
   position: relative;
   gap: 20px;

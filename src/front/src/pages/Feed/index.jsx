@@ -11,7 +11,7 @@ import Categories from "../../components/FilterOptions/Categories";
 import { useFlowStore } from "../../store/flowStore";
 
 //Bibliotecas
-import debounce from "lodash.debounce";
+import debounce from "lodash/debounce";
 import axios from "axios"; //responsável pela comunicação com as APIs
 
 //componentes internos
