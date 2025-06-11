@@ -56,28 +56,38 @@ export const useFlowStore = create((set, get) => ({
 
   setCategory: (categoria) => {
     set({ category: categoria });
-    get().fetchFlows(); // atualiza a lista
+    const { searchTerm } = get();
+    get().fetchFlows({ category: categoria, searchTerm }); // ← PASSA os valores certos
   },
 
   setSearchTerm: (termo) => {
     set({ searchTerm: termo });
-    get().fetchFlows(); // atualiza a lista
+    const { category } = get();
+    get().fetchFlows({ searchTerm: termo, category }); // ← PASSA os valores certos
   },
 
-  fetchFlows: async ({ useCategory = true, useSearch = true } = {}) => {
-    const { category, searchTerm } = get();
-    const params = {};
-    if (useCategory && category) params.categoria = category;
-    if (useSearch && searchTerm) params.search = searchTerm;
+  fetchFlows: async (params = {}) => {
+    const { category, searchTerm } = get(); // estados atuais
+    const queryParams = new URLSearchParams();
 
-    console.log("Buscando flows com:", { category, searchTerm });
+    const finalSearchTerm = params.searchTerm ?? searchTerm;
+    const finalCategory = params.category ?? category;
+
+    if (finalSearchTerm) queryParams.append("search", finalSearchTerm);
+    if (finalCategory) queryParams.append("categoria", finalCategory);
+
+    console.log("Buscando flows com:", {
+      category: finalCategory,
+      searchTerm: finalSearchTerm,
+    });
+
+    console.log("PARAMETRO: ", queryParams.toString());
+
     try {
       const response = await axios.get(
-        "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow",
-        {
-          params,
-        }
+        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/?${queryParams.toString()}`
       );
+
       set({ flows: response.data });
     } catch (error) {
       console.error("Erro ao buscar flows:", error);

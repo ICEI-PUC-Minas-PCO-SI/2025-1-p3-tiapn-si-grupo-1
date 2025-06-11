@@ -11,7 +11,6 @@ import Categories from "../../components/FilterOptions/Categories";
 import { useFlowStore } from "../../store/flowStore";
 
 //Bibliotecas
-import debounce from "lodash.debounce";
 import axios from "axios"; //responsável pela comunicação com as APIs
 
 //componentes internos
@@ -62,24 +61,13 @@ export default function Feed() {
     }
   }
 
-  const debouncedSetSearchTerm = debounce((term) => {
-    setSearchTerm(term);
-  }, 0);
-
-  //
   useEffect(() => {
-    fetchFlows(); // carrega os flows ao entrar na página
     fetchFiltros();
   }, []);
 
   useEffect(() => {
-    fetchFlows(); // atualiza os flows quando a categoria muda
-  }, [category]);
-
-  useEffect(() => {
-    debouncedSetSearchTerm(searchTerm); // dispara a busca com delay
-    return debouncedSetSearchTerm.cancel;
-  }, [searchTerm]);
+    fetchFlows({ category, searchTerm });
+  }, [category, searchTerm]);
 
   return (
     <FeedContainer>

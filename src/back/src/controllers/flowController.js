@@ -4,24 +4,29 @@ const { Op } = require("sequelize");
 const flowController = {
   // Listar todos os flows (exibido no feed)
   async listar(req, res) {
+    console.log("Query recebida:", req.query);
     try {
       const { search, categoria } = req.query;
 
       // Construindo a condição de busca
-      const whereClause = {};
+      const whereClause = {
+        [Op.and]: [],
+      };
 
       // Filtro de categoria, se existir
       if (categoria) {
-        whereClause.categoria = categoria;
+        whereClause[Op.and].push({ categoria });
       }
 
       // Filtro de pesquisa, se existir
       if (search) {
-        whereClause[Op.or] = [
-          { tags: { [Op.contains]: [search] } },
-          { titulo: { [Op.iLike]: `%${search}%` } },
-          { descricao: { [Op.iLike]: `%${search}%` } },
-        ];
+        whereClause[Op.and].push({
+          [Op.or]: [
+            { tags: { [Op.contains]: [search] } },
+            { titulo: { [Op.iLike]: `%${search}%` } },
+            { descricao: { [Op.iLike]: `%${search}%` } },
+          ],
+        });
       }
 
       const flows = await Flow.findAll({

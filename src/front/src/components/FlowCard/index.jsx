@@ -82,7 +82,7 @@ export default function FlowCard({ flow }) {
         <FlowHeader>
           <Avatar>{getIniciais(flow.usuario?.nome)}</Avatar>
           <AuthorInfo>
-            <FlowAuthor>{flow.usuario.nome}</FlowAuthor>
+            <FlowAuthor>{flow.usuario?.nome}</FlowAuthor>
             <FlowDetails>
               <AuthorRole>Sales Director</AuthorRole>
               <Dot />
