@@ -51,10 +51,10 @@ const flowSalvoController = {
         where: {usuario_id, flow_id},
         include: [
           { model: Usuario,
-            as: 'salvoPor',
+            as: 'usuario',
             attributes: ['id', 'nome'] },
           { model: Flow,
-            as: 'flowsSalvos',
+            as: 'flow',
             attributes: ['id', 'titulo', 'criado_em'] }
         ]
       });
