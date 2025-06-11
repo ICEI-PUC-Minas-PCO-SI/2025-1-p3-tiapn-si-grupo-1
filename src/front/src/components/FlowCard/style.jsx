@@ -102,19 +102,37 @@ export const Dot = styled.span`
 
 //FlowTitle
 export const FlowTitle = styled.h2`
-  font-size: 18px;
+  font-size: 24px;
   color: #000;
 `;
 
 //FlowDescription
 export const FlowDescription = styled.p`
-  font-size: 12px;
+  font-size: 14px;
 `;
 
 //FlowTags
 export const FlowTags = styled.div`
-  border: 1px solid red;
+  display:flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
 `;
+
+//FlowTag
+export const Tag = styled.span`
+display: flex;
+  font-size: 12px;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: 15px;
+  background-color: #fff;
+  color: #565656;
+  border: 2px solid #dee2ff;
+  font-weight: 600;
+  border-color: #dee2ff;
+
+`
 
 //FlowCategory - Categoria do FlowCard
 export const FlowCategory = styled.span`

@@ -22,7 +22,7 @@ import {
   Dot,
   FlowDescription,
   FlowTitle,
-  FlowTags,
+  FlowTags, Tag,
 } from "./style";
 
 export default function FlowCard({ flow }) {
@@ -100,7 +100,10 @@ export default function FlowCard({ flow }) {
           <FlowDescription>
             {flow.descricao ? flow.descricao : "teste"}
           </FlowDescription>
-          <FlowTags></FlowTags>
+          <FlowTags>
+            {Array.isArray(flow.tags) && flow.tags.length > 0 ? flow.tags.map((tag, index) => <Tag key={index}>#{tag}</Tag>) : ""}
+          </FlowTags>
+          <ComponentDivider/>
         </FlowPreviewWrapper>
         <FlowFooter>
           <LikeButton />
