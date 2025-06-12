@@ -85,7 +85,7 @@ export const useFlowStore = create((set, get) => ({
 
     try {
       const response = await axios.get(
-        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/?${queryParams.toString()}`
+        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow?${queryParams.toString()}`
       );
 
       set({ flows: response.data });

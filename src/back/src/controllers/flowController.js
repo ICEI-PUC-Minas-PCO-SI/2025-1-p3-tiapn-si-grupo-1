@@ -4,10 +4,8 @@ const { Op } = require("sequelize");
 const flowController = {
   // Listar todos os flows (exibido no feed)
   async listar(req, res) {
-    console.log("Query recebida:", req.query);
     try {
       const { search, categoria } = req.query;
-
       // Construindo a condição de busca
       const whereClause = {
         [Op.and]: [],
