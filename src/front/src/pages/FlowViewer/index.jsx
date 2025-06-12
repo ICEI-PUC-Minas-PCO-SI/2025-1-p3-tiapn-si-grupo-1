@@ -12,11 +12,9 @@ import {
     Bookmark,
     Share2,
     Eye,
-    ThumbsUp,
     Play,
     X,
     Send,
-    Flag,
     Copy,
     Image as ImageIcon,
     Users,
@@ -159,12 +157,12 @@ const FlowViewer = () => {
                     toast.error('Erro ao carregar curtidas.');
                 }
 
-                // Buscar Flows salvos
+                // Buscar fluxos salvos
                 try {
                     const salvosResponse = await axios.get(
                         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flowsalvos?usuario_id=${usuarioId}`
                     );
-                    console.log('Flows salvos iniciais:', salvosResponse.data);
+                    console.log('Fluxos salvos iniciais:', salvosResponse.data);
                     const userSaved = salvosResponse.data.some(
                         (salvo) => String(salvo?.usuario_id) === String(usuarioId) && String(salvo?.flow_id) === String(id)
                     );
@@ -172,12 +170,12 @@ const FlowViewer = () => {
                     setIsSaved(userSaved);
                     setStats((prev) => ({ ...prev, saves: saveCount }));
                 } catch (salvosError) {
-                    console.error('Erro ao buscar Flows salvos:', salvosError);
-                    toast.error('Erro ao carregar Flows salvos.');
+                    console.error('Erro ao buscar fluxos salvos:', salvosError);
+                    toast.error('Erro ao carregar fluxos salvos.');
                 }
             } catch (flowError) {
-                console.error('Erro ao buscar Flow:', flowError);
-                toast.error('Erro ao carregar o Flow.');
+                console.error('Erro ao buscar fluxo:', flowError);
+                toast.error('Erro ao carregar o fluxo.');
             }
         };
         fetchFlow();
@@ -190,13 +188,13 @@ const FlowViewer = () => {
 
     const handleLike = async () => {
         if (!usuarioId) {
-            toast.error('Faça login para curtir o Flow.');
+            toast.error('Faça login para curtir o fluxo.');
             return;
         }
         try {
             if (isLiked) {
                 try {
-                    console.log('Descurtindo Flow para usuarioId:', usuarioId, 'e flow_id:', id);
+                    console.log('Descurtindo fluxo para usuarioId:', usuarioId, 'e flow_id:', id);
                     await axios.delete(
                         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas/${usuarioId}/${id}`,
                         {
@@ -213,29 +211,29 @@ const FlowViewer = () => {
                     toast.error(error.response?.data?.erro || 'Erro ao remover a curtida.');
                 }
             } else {
-                console.log('Curtindo Flow com flow_id:', id);
+                console.log('Curtindo fluxo com flow_id:', id);
                 await axios.post('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas', {
                     flow_id: id,
                 });
                 setIsLiked(true);
                 setStats((prev) => ({ ...prev, likes: prev?.likes + 1 }));
-                toast.success('Flow curtido!');
+                toast.success('Fluxo curtido!');
             }
         } catch (error) {
             console.error('Erro ao processar curtida:', error.response?.data || error);
-            toast.error(error.response?.data?.erro || 'Erro ao curtir o Flow.');
+            toast.error(error.response?.data?.erro || 'Erro ao curtir o fluxo.');
         }
     };
 
     const handleSave = async () => {
         if (!usuarioId) {
-            toast.error('Faça login para salvar o Flow.');
+            toast.error('Faça login para salvar o fluxo.');
             return;
         }
         try {
             if (isSaved) {
                 try {
-                    console.log('Removendo Flow salvo para usuarioId:', usuarioId, 'e flow_id:', id);
+                    console.log('Removendo fluxo salvo para usuarioId:', usuarioId, 'e flow_id:', id);
                     await axios.delete(
                         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flowsalvos/${usuarioId}/${id}`,
                         {
@@ -248,22 +246,22 @@ const FlowViewer = () => {
                     setStats((prev) => ({ ...prev, saves: prev?.saves - 1 }));
                     toast.success('Removido dos salvos!');
                 } catch (error) {
-                    console.error('Erro ao remover Flow salvo:', error.response?.data || error);
-                    toast.error(error.response?.data?.erro || 'Erro ao remover o Flow salvo.');
+                    console.error('Erro ao remover fluxo salvo:', error.response?.data || error);
+                    toast.error(error.response?.data?.erro || 'Erro ao remover o fluxo salvo.');
                 }
             } else {
-                console.log('Salvando Flow com flow_id:', id);
+                console.log('Salvando fluxo com flow_id:', id);
                 await axios.post('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flowsalvos', {
                     usuarioId,
                     flowId: id,
                 });
                 setIsSaved(true);
                 setStats((prev) => ({ ...prev, saves: prev?.saves + 1 }));
-                toast.success('Flow salvo!');
+                toast.success('Fluxo salvo!');
             }
         } catch (error) {
-            console.error('Erro ao processar Flow salvo:', error.response?.data || error);
-            toast.error(error.response?.data?.erro || 'Erro ao salvar o Flow.');
+            console.error('Erro ao processar fluxo salvo:', error.response?.data || error);
+            toast.error(error.response?.data?.erro || 'Erro ao salvar o fluxo.');
         }
     };
 
@@ -275,30 +273,32 @@ const FlowViewer = () => {
     const handleDeleteFlow = async () => {
         try {
             await axios.delete(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${id}`);
-            toast.success('Flow deletado com sucesso!');
+            toast.success('Fluxo deletado com sucesso!');
             setIsDeleteModalOpen(false);
             navigate('/feed');
         } catch (error) {
-            console.error('Erro ao deletar Flow:', error);
-            toast.error(error.response?.data?.erro || 'Erro ao deletar o Flow.');
+            console.error('Erro ao deletar fluxo:', error);
+            toast.error(error.response?.data?.erro || 'Erro ao deletar o fluxo.');
             setIsDeleteModalOpen(false);
         }
     };
 
+    /*
     const handleCommentLike = (commentId) => {
         setComments((prev) =>
             prev.map((comment) =>
                 comment.id === commentId
                     ? {
-                        ...comment,
-                        isLiked: !comment.isLiked,
-                        likes: comment.isLiked ? comment.likes - 1 : comment.likes + 1,
-                    }
+                          ...comment,
+                          isLiked: !comment.isLiked,
+                          likes: comment.isLiked ? comment.likes - 1 : comment.likes + 1,
+                      }
                     : comment
             )
         );
         toast.success('Ação registrada!');
     };
+    */
 
     const handleAddComment = async () => {
         if (!newComment.trim()) {
@@ -464,7 +464,7 @@ const FlowViewer = () => {
                         <S.CardHeader>
                             <S.CardTitle>
                                 <Play size={20} color="#233DFF" />
-                                Flow Interativo
+                                Fluxo Interativo
                             </S.CardTitle>
                             <S.CardDescription>
                                 Clique nos nós para explorar o conteúdo • Use os controles para navegar
@@ -560,6 +560,7 @@ const FlowViewer = () => {
                                                     <S.CommentText>{comment.content}</S.CommentText>
                                                 )}
                                                 <S.CommentsActions>
+                                                    {/*
                                                     <S.ActionButton
                                                         $variant="commentLike"
                                                         $active={comment.isLiked}
@@ -576,7 +577,8 @@ const FlowViewer = () => {
                                                     <S.ActionButton $variant="commentFlag" $compact>
                                                         <Flag size={14} />
                                                     </S.ActionButton>
-                                                    {String(comment.usuario_id) === String(usuarioId) && (
+                                                    */}
+                                                    {String(comment?.usuario_id) === String(usuarioId) && (
                                                         <>
                                                             <S.ActionButton
                                                                 $variant="commentEdit"
@@ -608,7 +610,7 @@ const FlowViewer = () => {
                         <S.CardHeader>
                             <S.CardTitle>
                                 <Eye size={20} color="#8B5CF6" />
-                                Sobre este Flow
+                                Sobre este Fluxo
                             </S.CardTitle>
                         </S.CardHeader>
                         <S.CardContent>
@@ -653,9 +655,11 @@ const FlowViewer = () => {
                                     </S.AuthorFollowers>
                                 </S.AuthorInfo>
                             </S.AuthorCard>
+                            {/*
                             <S.Button onClick={() => navigate(`/perfil/${flow.autor?.username}`)}>
                                 Ver Perfil Completo
                             </S.Button>
+                            */}
                         </S.CardContent>
                     </S.Card>
                     <S.Card>
@@ -666,15 +670,15 @@ const FlowViewer = () => {
                             </S.CardTitle>
                         </S.CardHeader>
                         <S.CardContent>
-                            <S.Button onClick={() => toast.info('Duplicando Flow...')}>
+                            <S.Button onClick={() => toast.info('Duplicando fluxo...')}>
                                 <Copy size={16} style={{ marginRight: '8px' }} />
-                                Duplicar Flow
+                                Duplicar Fluxo
                             </S.Button>
                             {String(flow.criado_por) === String(usuarioId) && (
                                 <>
                                     <S.Button onClick={() => navigate(`/editar-flow/${id}`)} style={{ marginTop: '12px' }}>
                                         <Edit size={16} style={{ marginRight: '8px' }} />
-                                        Editar Flow
+                                        Editar Fluxo
                                     </S.Button>
                                     <S.Button
                                         onClick={() => setIsDeleteModalOpen(true)}
@@ -682,13 +686,13 @@ const FlowViewer = () => {
                                         style={{ marginTop: '12px' }}
                                     >
                                         <Trash2 size={16} style={{ marginRight: '8px' }} />
-                                        Deletar Flow
+                                        Deletar Fluxo
                                     </S.Button>
                                 </>
                             )}
-                            <S.Button onClick={() => toast.info('Exportando Flow...')} style={{ marginTop: '12px' }}>
+                            <S.Button onClick={() => toast.info('Exportando fluxo...')} style={{ marginTop: '12px' }}>
                                 <Download size={16} style={{ marginRight: '8px' }} />
-                                Exportar Flow
+                                Exportar Fluxo
                             </S.Button>
                         </S.CardContent>
                     </S.Card>
@@ -699,31 +703,31 @@ const FlowViewer = () => {
                     <S.ModalContent>
                         <S.ModalHeader>
                             <S.ModalTitle>
-                                {selectedNode?.data.title ||
-                                    (selectedNode?.type === 'textNode'
+                                {selectedNode?.data?.title ||
+                                    (selectedNode?.data?.type === 'textNode'
                                         ? 'Conteúdo'
-                                        : selectedNode?.type === 'decisionNode'
+                                        : selectedNode?.data?.type === 'decisionNode'
                                             ? 'Decisão'
                                             : 'Imagem')}
                             </S.ModalTitle>
                             <S.ModalDescription>
-                                {selectedNode?.type === 'textNode' && 'Visualize o conteúdo do nó de texto'}
-                                {selectedNode?.type === 'decisionNode' && 'Explore as opções de decisão'}
-                                {selectedNode?.type === 'mediaNode' && 'Visualize a imagem associada'}
+                                {selectedNode?.data?.type === 'textNode' && 'Visualize o conteúdo do nó de texto'}
+                                {selectedNode?.data?.type === 'decisionNode' && 'Explore as opções de decisão'}
+                                {selectedNode?.data?.type === 'mediaNode' && 'Visualize a imagem associada'}
                             </S.ModalDescription>
                             <S.CloseButton onClick={() => setIsNodeModalOpen(false)}>
                                 <X size={16} />
                             </S.CloseButton>
                         </S.ModalHeader>
                         <S.ModalBody>
-                            {selectedNode?.type === 'textNode' && (
-                                <S.TextContent>{selectedNode.data.content}</S.TextContent>
+                            {selectedNode?.data?.type === 'textNode' && (
+                                <S.TextContent>{selectedNode.data?.content}</S.TextContent>
                             )}
-                            {selectedNode?.type === 'decisionNode' && (
+                            {selectedNode?.data?.type === 'decisionNode' && (
                                 <S.DecisionContent>
-                                    <S.DecisionQuestion>{selectedNode.data.question}</S.DecisionQuestion>
+                                    <S.DecisionQuestion>{selectedNode.data?.question}</S.DecisionQuestion>
                                     <S.OptionList>
-                                        {selectedNode.data.options?.map((option, index) => (
+                                        {selectedNode?.data?.options?.map((option, index) => (
                                             <S.OptionButton key={option} onClick={() => setIsNodeModalOpen(false)}>
                                                 <S.OptionNumber>{index + 1}</S.OptionNumber>
                                                 {option}
@@ -732,20 +736,20 @@ const FlowViewer = () => {
                                     </S.OptionList>
                                 </S.DecisionContent>
                             )}
-                            {selectedNode?.type === 'mediaNode' && (
+                            {selectedNode?.data?.type === 'mediaNode' && (
                                 <S.MediaContent>
                                     <S.MediaHeader>
                                         <S.MediaIcon>
                                             <ImageIcon size={24} color="#ffffff" />
                                         </S.MediaIcon>
                                         <div>
-                                            <S.MediaTitle>{selectedNode.data.title}</S.MediaTitle>
+                                            <S.MediaTitle>{selectedNode.data?.title}</S.MediaTitle>
                                         </div>
                                     </S.MediaHeader>
-                                    {selectedNode.data.mediaUrl && (
+                                    {selectedNode.data?.mediaUrl && (
                                         <img
-                                            src={selectedNode.data.mediaUrl}
-                                            alt={selectedNode.data.title}
+                                            src={selectedNode.data?.mediaUrl}
+                                            alt={selectedNode.data?.title}
                                             style={{ maxWidth: '100%', borderRadius: '8px' }}
                                         />
                                     )}
@@ -763,13 +767,13 @@ const FlowViewer = () => {
                 <S.Modal>
                     <S.ModalContent>
                         <S.ModalHeader>
-                            <S.ModalTitle>Deletar Flow</S.ModalTitle>
+                            <S.ModalTitle>Deletar Fluxo</S.ModalTitle>
                             <S.CloseButton onClick={() => setIsDeleteModalOpen(false)}>
                                 <X size={16} />
                             </S.CloseButton>
                         </S.ModalHeader>
                         <S.ModalBody>
-                            <p>Tem certeza que deseja deletar o Flow "{flow.titulo}"? Esta ação não pode ser desfeita.</p>
+                            <p>Tem certeza que deseja deletar o fluxo "{flow.titulo}"? Esta ação não pode ser desfeita.</p>
                         </S.ModalBody>
                         <S.ModalFooter>
                             <S.Button $variant="outline" onClick={() => setIsDeleteModalOpen(false)}>
