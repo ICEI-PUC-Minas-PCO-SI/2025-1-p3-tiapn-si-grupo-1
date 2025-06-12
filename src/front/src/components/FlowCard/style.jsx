@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, GitBranch, Eye } from "lucide-react";
 
 export const FlowCardContainer = styled.div`
   width: 100%;
@@ -113,26 +113,62 @@ export const FlowDescription = styled.p`
 
 //FlowTags
 export const FlowTags = styled.div`
-  display:flex;
+  display: flex;
   flex-wrap: wrap;
   gap: 6px;
   margin-top: 10px;
 `;
 
+//FlowMacro
+export const FlowMacro = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`;
+
+//FlowNodes
+export const FlowNodes = styled.span`
+  display: flex;
+  align-items: center;
+  color: #565656;
+  font-size: 14px;
+  padding: 6px 0;
+`;
+
+export const NodeIcon = styled(GitBranch)`
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+`;
+
+//FlowViews
+export const FlowViews = styled.span`
+  display: flex;
+  align-items: center;
+  color: #565656;
+  font-size: 14px;
+  padding: 6px 0;
+`;
+
+export const ViewIcon = styled(Eye)`
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+`;
 //FlowTag
 export const Tag = styled.span`
-display: flex;
+  display: flex;
   font-size: 12px;
   align-items: center;
   padding: 2px 10px;
   border-radius: 15px;
   background-color: #fff;
   color: #565656;
-  border: 2px solid #dee2ff;
+  border: 2px solid #e0e0e0;
   font-weight: 600;
-  border-color: #dee2ff;
-
-`
+  border-color: #e0e0e0;
+  font-weight: 400;
+`;
 
 //FlowCategory - Categoria do FlowCard
 export const FlowCategory = styled.span`
@@ -203,5 +239,5 @@ export const FlowFooter = styled.footer`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 10px;
 `;

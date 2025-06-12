@@ -1,8 +1,10 @@
-import { Heart, Bookmark, MessageCircle } from "lucide-react";
 import ComponentDivider from "../ComponentDivider/Index";
 import LikeButton from "./Actions/LikeButton";
 import CommentButton from "./Actions/CommentButton";
 import SaveButton from "./Actions/SaveButton";
+import ShareButton from "./Actions/ShareButton";
+import OpenFlowButton from "./Actions/OpenFlowButton";
+
 import {
   FlowCardContainer,
   FlowWrapper,
@@ -22,7 +24,13 @@ import {
   Dot,
   FlowDescription,
   FlowTitle,
-  FlowTags, Tag,
+  FlowTags,
+  Tag,
+  FlowNodes,
+  NodeIcon,
+  FlowViews,
+  FlowMacro,
+  ViewIcon,
 } from "./style";
 
 export default function FlowCard({ flow }) {
@@ -101,14 +109,29 @@ export default function FlowCard({ flow }) {
             {flow.descricao ? flow.descricao : "teste"}
           </FlowDescription>
           <FlowTags>
-            {Array.isArray(flow.tags) && flow.tags.length > 0 ? flow.tags.map((tag, index) => <Tag key={index}>#{tag}</Tag>) : ""}
+            {Array.isArray(flow.tags) && flow.tags.length > 0
+              ? flow.tags.map((tag, index) => <Tag key={index}>#{tag}</Tag>)
+              : ""}
           </FlowTags>
-          <ComponentDivider/>
+          <ComponentDivider />
+          <FlowMacro>
+            <FlowNodes>
+              <NodeIcon />
+              {flow.conteudo_nos.length}
+              {flow.conteudo_nos.length > 1 ? " nós" : " nó"}
+            </FlowNodes>
+            <FlowViews>
+              <ViewIcon></ViewIcon>
+              {"1921"}
+            </FlowViews>
+          </FlowMacro>
         </FlowPreviewWrapper>
         <FlowFooter>
           <LikeButton />
           <CommentButton />
           <SaveButton />
+          <ShareButton />
+          <OpenFlowButton />
         </FlowFooter>
       </FlowWrapper>
     </FlowCardContainer>
