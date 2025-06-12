@@ -1,4 +1,5 @@
 const { Flow, Usuario, Comentario } = require("../models");
+const { Op } = require("sequelize");
 
 const flowController = {
   // Listar todos os flows (exibido no feed)
@@ -6,12 +7,18 @@ const flowController = {
     console.log("Query recebida:", req.query);
     try {
       const { search, categoria } = req.query;
+
+      // Construindo a condição de busca
       const whereClause = {
         [Op.and]: [],
       };
+
+      // Filtro de categoria, se existir
       if (categoria) {
         whereClause[Op.and].push({ categoria });
       }
+
+      // Filtro de pesquisa, se existir
       if (search) {
         whereClause[Op.and].push({
           [Op.or]: [
@@ -21,6 +28,7 @@ const flowController = {
           ],
         });
       }
+
       const flows = await Flow.findAll({
         where: whereClause,
         include: [
@@ -31,6 +39,7 @@ const flowController = {
         ],
         order: [["criado_em", "DESC"]],
       });
+
       res.json(flows);
     } catch (error) {
       res
@@ -133,7 +142,7 @@ const flowController = {
         status,
       });
 
-      res.json({ mensagem: "Flow atualizado com sucesso", flow });
+      res.json({ mensagem: "Flow atualizado com sucesso" });
     } catch (error) {
       res
         .status(500)
