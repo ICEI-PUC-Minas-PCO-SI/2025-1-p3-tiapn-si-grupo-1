@@ -11,20 +11,25 @@ const flowController = {
         [Op.and]: [],
       };
 
-      // Filtro de categoria, se existir
+      // Filtro por categoria (exato)
       if (categoria) {
-        whereClause[Op.and].push({ categoria });
+        andConditions.push({ categoria });
       }
 
-      // Filtro de pesquisa, se existir
+      // Filtro por busca textual (tags, título, descrição)
       if (search) {
-        whereClause[Op.and].push({
+        andConditions.push({
           [Op.or]: [
             { tags: { [Op.contains]: [search] } },
             { titulo: { [Op.iLike]: `%${search}%` } },
             { descricao: { [Op.iLike]: `%${search}%` } },
           ],
         });
+      }
+
+      // Só adiciona o Op.and se houver filtros
+      if (andConditions.length > 0) {
+        whereClause[Op.and] = andConditions;
       }
 
       const flows = await Flow.findAll({
@@ -40,9 +45,11 @@ const flowController = {
 
       res.json(flows);
     } catch (error) {
-      res
-        .status(500)
-        .json({ erro: "Erro ao listar flows", detalhes: error.message });
+      console.error("Erro no listar:", error);
+      res.status(500).json({
+        erro: "Erro ao listar flows",
+        detalhes: error.message,
+      });
     }
   },
 
