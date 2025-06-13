@@ -4,37 +4,134 @@ import ComponentDivider from "../../components/ComponentDivider/Index";
 import SearchBar from "../../components/SearchBar";
 import FilterMenu from "../../components/FilterOptions";
 import FlowCard from "../../components/FlowCard";
+import FlowsNotFound from "../../components/SystemResponses/FlowsNotFound";
+import Categories from "../../components/FilterOptions/Categories";
+
+//Global state
+import { useFlowStore } from "../../store/flowStore";
+
+//Bibliotecas
+import axios from "axios"; //responsável pela comunicação com as APIs
 
 //componentes internos
 import {
   FeedContainer,
+  FeedMain,
   FlowFeed,
   FeedFilters,
   ScrollFeed,
   FilterHeader,
   FilterIcon,
   FilterTitle,
+  FeedHeader,
+  HeaderTitle,
+  HeaderTop,
+  HeaderActions,
+  TrendingButton,
+  RecentButton,
+  CreateFlowButton,
+  TrendingIcon,
+  RecentIcon,
+  CreateFlowIcon,
+  SearchMethods,
 } from "./style";
-import axios from "axios"; //responsável pela comunicação com as APIs
 
 export default function Feed() {
-  //STATE que armazena todos os filtros disponíveis
   const [filtros, setFiltros] = useState({
     categorias: [],
     tags: [],
     autores: [],
   });
 
-  //STATE que mantém os flows a serem exibidos no feed
-  const [flows, setFlows] = useState([]);
+  //Estados globais
+  const flows = useFlowStore((state) => state.flows);
+  const setSearchTerm = useFlowStore((state) => state.setSearchTerm);
+  const searchTerm = useFlowStore((state) => state.searchTerm);
+  const fetchFlows = useFlowStore((state) => state.fetchFlows);
+  const category = useFlowStore((state) => state.category);
+
+  async function fetchFiltros() {
+    try {
+      const response = await axios.get(
+        "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/filtros"
+      );
+      setFiltros(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar filtros:", error);
+    }
+  }
 
   useEffect(() => {
+    fetchFiltros();
+  }, []);
+
+  useEffect(() => {
+    fetchFlows({ category, searchTerm });
+  }, [category, searchTerm]);
+
+  return (
+    <FeedContainer>
+      <FeedHeader>
+        <HeaderTop>
+          <HeaderTitle>
+            <h1 style={{ color: "#000" }}>Descobrir Flows</h1>
+            <p>Navegue por conteúdos criados por quem entende do assunto</p>
+          </HeaderTitle>
+          <HeaderActions>
+            <TrendingButton>
+              <TrendingIcon size={16} />
+              Trending
+            </TrendingButton>
+            <RecentButton>
+              <RecentIcon size={16} />
+              Recentes
+            </RecentButton>
+            <CreateFlowButton>
+              <CreateFlowIcon size={16} />
+              Criar Flow
+            </CreateFlowButton>
+          </HeaderActions>
+        </HeaderTop>
+
+        <SearchMethods>
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <Categories filtros={filtros.categorias} />
+        </SearchMethods>
+      </FeedHeader>
+      <FeedMain>
+        <FlowFeed>
+          <ScrollFeed>
+            {flows.length > 0 ? (
+              flows.map((flow) => <FlowCard flow={flow} key={flow.id} />)
+            ) : (
+              <FlowsNotFound />
+            )}
+          </ScrollFeed>
+        </FlowFeed>
+
+        <FeedFilters>
+          <FilterHeader>
+            <FilterTitle>
+              <FilterIcon />
+              Filtros
+            </FilterTitle>
+          </FilterHeader>
+
+          <FilterMenu filterType={"Tags"} filtros={filtros.tags} />
+          <FilterMenu filterType={"Autores"} filtros={filtros.autores} />
+        </FeedFilters>
+      </FeedMain>
+    </FeedContainer>
+  );
+}
+
+/*seEffect(() => {
     //Codígo que será executado após a renderização
 
     async function fetchFiltros() {
       //CONSULTAR API DE FILTROS
       try {
-        const response = await axios.get("https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/filtros");
+        const response = await axios.get("http://localhost:3000/api/filtros");
         setFiltros(response.data);
       } catch (error) {
         console.error("Erro ao buscar filtros:", error);
@@ -42,45 +139,17 @@ export default function Feed() {
     }
 
     //CONSULTAR API DE FLOWS
-    async function fetchFlows() {
+    const fetchFlows = async (termo = "") => {
       try {
-        const response = await axios.get("https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow");
+        const response = await axios.get("http://localhost:3000/api/flow", {
+          params: { search: termo },
+        });
         setFlows(response.data);
       } catch (error) {
         console.error("Erro ao buscar flows:", error);
       }
-    }
+    };
 
     fetchFiltros();
     fetchFlows();
-  }, []);
-
-  return (
-    <FeedContainer>
-      <FlowFeed>
-        <SearchBar />
-        <ComponentDivider />
-        <ScrollFeed>
-          {flows.length > 0 ? (
-            flows.map((flow) => <FlowCard flow={flow} />)
-          ) : (
-            <p>Carregando flows...</p>
-          )}
-          <ComponentDivider />
-        </ScrollFeed>
-      </FlowFeed>
-
-      <FeedFilters>
-        <FilterHeader>
-          <FilterTitle>
-            <FilterIcon />
-            Filtros
-          </FilterTitle>
-        </FilterHeader>
-        <FilterMenu filterType={"Categorias"} filtros={filtros.categorias} />
-        <FilterMenu filterType={"Tags"} filtros={filtros.tags} />
-        <FilterMenu filterType={"Autores"} filtros={filtros.autores} />
-      </FeedFilters>
-    </FeedContainer>
-  );
-}
+  }, []);*/
