@@ -21,7 +21,6 @@ const GlobalStyle = createGlobalStyle`
 
   .content-area {
     flex: 1;
-    overflow: auto;
   }
 
   button {
