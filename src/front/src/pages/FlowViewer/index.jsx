@@ -98,6 +98,7 @@ const FlowViewer = () => {
                     `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${id}`
                 );
                 const flowData = flowResponse.data;
+                console.log('Dados da API:', flowData); // Log para depuração
                 const mappedFlow = {
                     ...flowData,
                     createdAt: flowData.criado_em,
@@ -182,6 +183,7 @@ const FlowViewer = () => {
     }, [id, usuarioId, setNodes, setEdges]);
 
     const onNodeClick = useCallback((event, node) => {
+        console.log('Nó selecionado:', node); // Log para depuração
         setSelectedNode(node);
         setIsNodeModalOpen(true);
     }, []);
@@ -282,23 +284,6 @@ const FlowViewer = () => {
             setIsDeleteModalOpen(false);
         }
     };
-
-    /*
-    const handleCommentLike = (commentId) => {
-        setComments((prev) =>
-            prev.map((comment) =>
-                comment.id === commentId
-                    ? {
-                          ...comment,
-                          isLiked: !comment.isLiked,
-                          likes: comment.isLiked ? comment.likes - 1 : comment.likes + 1,
-                      }
-                    : comment
-            )
-        );
-        toast.success('Ação registrada!');
-    };
-    */
 
     const handleAddComment = async () => {
         if (!newComment.trim()) {
@@ -560,24 +545,6 @@ const FlowViewer = () => {
                                                     <S.CommentText>{comment.content}</S.CommentText>
                                                 )}
                                                 <S.CommentsActions>
-                                                    {/*
-                                                    <S.ActionButton
-                                                        $variant="commentLike"
-                                                        $active={comment.isLiked}
-                                                        onClick={() => handleCommentLike(comment.id)}
-                                                        $compact
-                                                    >
-                                                        <ThumbsUp size={14} className={comment.isLiked ? 'fill-current' : ''} />
-                                                        {comment.likes}
-                                                    </S.ActionButton>
-                                                    <S.ActionButton $variant="commentReply" $compact>
-                                                        <MessageCircle size={14} />
-                                                        {comment.replies} respostas
-                                                    </S.ActionButton>
-                                                    <S.ActionButton $variant="commentFlag" $compact>
-                                                        <Flag size={14} />
-                                                    </S.ActionButton>
-                                                    */}
                                                     {String(comment?.usuario_id) === String(usuarioId) && (
                                                         <>
                                                             <S.ActionButton
@@ -655,11 +622,6 @@ const FlowViewer = () => {
                                     </S.AuthorFollowers>
                                 </S.AuthorInfo>
                             </S.AuthorCard>
-                            {/*
-                            <S.Button onClick={() => navigate(`/perfil/${flow.autor?.username}`)}>
-                                Ver Perfil Completo
-                            </S.Button>
-                            */}
                         </S.CardContent>
                     </S.Card>
                     <S.Card>
@@ -704,60 +666,86 @@ const FlowViewer = () => {
                         <S.ModalHeader>
                             <S.ModalTitle>
                                 {selectedNode?.data?.title ||
-                                    (selectedNode?.data?.type === 'textNode'
+                                    (selectedNode?.type === 'textNode'
                                         ? 'Conteúdo'
-                                        : selectedNode?.data?.type === 'decisionNode'
+                                        : selectedNode?.type === 'decisionNode'
                                             ? 'Decisão'
-                                            : 'Imagem')}
+                                            : selectedNode?.type === 'mediaNode'
+                                                ? 'Imagem'
+                                                : 'Nó Desconhecido')}
                             </S.ModalTitle>
                             <S.ModalDescription>
-                                {selectedNode?.data?.type === 'textNode' && 'Visualize o conteúdo do nó de texto'}
-                                {selectedNode?.data?.type === 'decisionNode' && 'Explore as opções de decisão'}
-                                {selectedNode?.data?.type === 'mediaNode' && 'Visualize a imagem associada'}
+                                {console.log('ModalDescription - selectedNode.type:', selectedNode?.type)} {/* Log de depuração */}
+                                {selectedNode?.type === 'textNode' && 'Visualize o conteúdo do nó de texto'}
+                                {selectedNode?.type === 'decisionNode' && 'Explore as opções de decisão'}
+                                {selectedNode?.type === 'mediaNode' && 'Visualize a imagem associada'}
+                                {!selectedNode?.type && 'Tipo de nó não identificado'}
                             </S.ModalDescription>
                             <S.CloseButton onClick={() => setIsNodeModalOpen(false)}>
                                 <X size={16} />
                             </S.CloseButton>
                         </S.ModalHeader>
-                        <S.ModalBody>
-                            {selectedNode?.data?.type === 'textNode' && (
-                                <S.TextContent>{selectedNode.data?.content}</S.TextContent>
+                        <S.ModalBody key={selectedNode?.id}>
+                            {console.log('ModalBody - selectedNode:', selectedNode)} {/* Log de depuração */}
+                            {!selectedNode?.data && (
+                                <S.TextContent>Nenhum dado disponível para este nó.</S.TextContent>
                             )}
-                            {selectedNode?.data?.type === 'decisionNode' && (
-                                <S.DecisionContent>
-                                    <S.DecisionQuestion>{selectedNode.data?.question}</S.DecisionQuestion>
+                            {selectedNode?.type === 'textNode' && (
+                                <S.TextContent data-testid="text-node-content">
+                                    {console.log('Renderizando textNode - Content:', selectedNode.data?.content)} {/* Log de depuração */}
+                                    {selectedNode.data?.content || 'Conteúdo não disponível.'}
+                                </S.TextContent>
+                            )}
+                            {selectedNode?.type === 'decisionNode' && (
+                                <S.DecisionContent data-testid="decision-node-content">
+                                    {console.log('Renderizando decisionNode - Question:', selectedNode.data?.question, 'Options:', selectedNode.data?.options)} {/* Log de depuração */}
+                                    <S.DecisionQuestion>
+                                        {selectedNode.data?.question || 'Pergunta não disponível.'}
+                                    </S.DecisionQuestion>
                                     <S.OptionList>
-                                        {selectedNode?.data?.options?.map((option, index) => (
-                                            <S.OptionButton key={option} onClick={() => setIsNodeModalOpen(false)}>
-                                                <S.OptionNumber>{index + 1}</S.OptionNumber>
-                                                {option}
-                                            </S.OptionButton>
-                                        ))}
+                                        {selectedNode?.data?.options?.length ? (
+                                            selectedNode.data.options.map((option, index) => (
+                                                <S.OptionButton key={option} onClick={() => setIsNodeModalOpen(false)}>
+                                                    <S.OptionNumber>{index + 1}</S.OptionNumber>
+                                                    {option}
+                                                </S.OptionButton>
+                                            ))
+                                        ) : (
+                                            <S.TextContent>Sem opções disponíveis.</S.TextContent>
+                                        )}
                                     </S.OptionList>
                                 </S.DecisionContent>
                             )}
-                            {selectedNode?.data?.type === 'mediaNode' && (
-                                <S.MediaContent>
+                            {selectedNode?.type === 'mediaNode' && (
+                                <S.MediaContent data-testid="media-node-content">
+                                    {console.log('Renderizando mediaNode - MediaUrl:', selectedNode.data?.mediaUrl)} {/* Log de depuração */}
                                     <S.MediaHeader>
                                         <S.MediaIcon>
                                             <ImageIcon size={24} color="#ffffff" />
                                         </S.MediaIcon>
                                         <div>
-                                            <S.MediaTitle>{selectedNode.data?.title}</S.MediaTitle>
+                                            <S.MediaTitle>
+                                                {selectedNode.data?.title || 'Imagem sem título'}
+                                            </S.MediaTitle>
                                         </div>
                                     </S.MediaHeader>
-                                    {selectedNode.data?.mediaUrl && (
+                                    {selectedNode.data?.mediaUrl ? (
                                         <img
                                             src={selectedNode.data?.mediaUrl}
-                                            alt={selectedNode.data?.title}
+                                            alt={selectedNode.data?.title || 'Imagem'}
                                             style={{ maxWidth: '100%', borderRadius: '8px' }}
                                         />
+                                    ) : (
+                                        <S.TextContent>Imagem não disponível.</S.TextContent>
                                     )}
                                     <S.MediaActions>
                                         <S.Button>Download Imagem</S.Button>
                                         <S.Button $variant="outline">Abrir</S.Button>
                                     </S.MediaActions>
                                 </S.MediaContent>
+                            )}
+                            {selectedNode?.type && !['textNode', 'decisionNode', 'mediaNode'].includes(selectedNode?.type) && (
+                                <S.TextContent>Tipo de nó desconhecido: {selectedNode.type}</S.TextContent>
                             )}
                         </S.ModalBody>
                     </S.ModalContent>
