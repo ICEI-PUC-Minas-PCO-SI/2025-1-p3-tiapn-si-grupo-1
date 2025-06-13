@@ -46,6 +46,6 @@ export const FilterList = styled.div`
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 10px;
   padding: 6px 12px;
 `;

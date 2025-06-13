@@ -1,9 +1,9 @@
 
 # Metodologia
 
-<span style="color:red">Pré-requisitos: <a href="02-Especificacao.md"> Especificação do projeto</a></span>
+A metodologia de trabalho adotada pelo grupo baseia-se em práticas ágeis, utilizando o framework Scrum para a organização das tarefas e o desenvolvimento iterativo do projeto. O trabalho foi dividido em Sprints, cada uma com um objetivo claro e entregas definidas, permitindo o acompanhamento contínuo do progresso e a adaptação a novas demandas.
 
-Descreva aqui a metodologia de trabalho do grupo para abordar o problema. Inclua definições sobre os ambientes de trabalho utilizados pela equipe para desenvolver o projeto. Isso abrange a relação dos ambientes utilizados, a estrutura para a gestão do código-fonte, além da definição do processo e das ferramentas por meio dos quais a equipe se organiza (gestão de equipes).
+Para a gestão do projeto, foram utilizados os recursos do GitHub, como o controle de versionamento com Git, o gerenciamento de issues e o quadro Kanban do GitHub Projects. A comunicação da equipe foi realizada por meio de encontros síncronos e grupos de mensagens, garantindo o alinhamento constante entre todos os membros.
 
 ## Controle de versão
 
@@ -45,7 +45,13 @@ Discuta como a configuração do projeto foi feita na ferramenta de versionament
 #### Sprint 3
 - _Scrum master_: Mateus Botelho 
 - Apresentação, desenvolvimento de wireframes e diagramas: Victor Alves, Lucas Borges e Mateus Botelho
-- Diagrama, modelos e scripts do banco de dados: Felipe Roque, Gabriella Paz e Rogério Gabriel 
+- Diagrama, modelos e scripts do banco de dados: Felipe Roque, Gabriella Paz e Rogério Gabriel
+
+#### Sprint 4
+- _Scrum master_: Lucas Borges 
+- Frontend: Victor Alves, Lucas Borges e Mateus Botelho
+- Backend + banco de dados: Felipe Roque, Gabriella Paz, Rogério Gabriel e  Mateus Botelho 
+
 
 ###  Quadro de tarefas
 
@@ -91,6 +97,19 @@ Atualizado em: 02/05/2025
 | Victor Alves      | Fluxo de usuário e Jornada de usuário  |  04/04/2025    | 08/05/2025 | ✔️   |  08/05/2025      |
 
 
+#### Sprint 4
+
+Atualizado em: 03/06/2025
+
+| Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
+| :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
+| Felipe Roque        | Backend + banco de dados | 16/05/2025     | 05/06/2025 | ✔️   |   05/06/2025          |
+| Gabriella Paz        | Backend + banco de dados    | 16/05/2025    | 12/03/2025 | ✔️   |   05/06/2025          |
+| Lucas Borges        | Frontend | 16/05/2025    | 05/06/2025 | ✔️     |   05/06/2025             |
+| Mateus Botelho        | Frontend + backend + slides |   16/05/2025       |  05/06/2025  | ✔️    |   04/06/2025   |  
+| Rogério Gabriel     | Backend + banco de dados  |    16/05/2025       | 05/06/2025 | 📝    |   -   |
+| Victor Alves       | Frontend - Feed   |    16/05/2025       | 05/06/2025 | ✔️    |  05/06/2025    |
+
 Legenda:
 - ✔️: terminado
 - 📝: em execução
@@ -99,7 +118,7 @@ Legenda:
 
 ### Processo
 
-Coloque informações sobre detalhes da implementação do Scrum seguido pelo grupo. O grupo deverá fazer uso do recurso de gerenciamento de projeto oferecido pelo GitHub, que permite acompanhar o andamento do projeto, a execução das tarefas e o status de desenvolvimento da solução.
+O grupo utilizou o Scrum como metodologia de gestão do projeto, dividindo o trabalho em sprints mensais. A ferramenta de projetos do GitHub (GitHub Projects) foi usada para organizar tarefas em colunas de "Backlog", "Ready", "In progress" e "In review". Ao final de cada sprint, uma reunião de review foi feita para apresentar os avanços e ajustes necessários foram definidos nas retrospectivas.
  
 ## Relação de ambientes de trabalho
 
@@ -118,9 +137,13 @@ Exemplo: os artefatos do projeto são desenvolvidos a partir de diversas platafo
 | Projeto de interface                | Figma                              | http://....                            |
 | Gerenciamento do projeto            | GitHub Projects                    | <https://github.com/orgs/ICEI-PUC-Minas-PCO-SI/projects/124> |
 | Hospedagem                          | Vercel                             | http://....                            |
-| Apresentação                          | Canva                             | <https://www.canva.com/design/DAGhXcOBOm0/xqkdWNETaCVIJVsFPOb_RQ/view?utm_content=DAGhXcOBOm0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfd7f4740ee> |
-| Orquestração de processos (BPM)     | Camunda Platform                   | https://camunda.com/download/modeler/                       |
-| Modelagem do diagrama de casos de uso     | Lucidchart                   | https://www.lucidchart.com/                       |
-| Fluxo de usuário    | Miro                   |     <https://miro.com/app/board/uXjVI82qtag=/?moveToWidget=3458764627525460534&cot=14>   | 
-| Jornada de usuário  | Miro                   |   <https://miro.com/app/board/uXjVI6sPMjo=/?moveToWidget=3458764627590193750&cot=14>     | 
-| Edição de vídeos     | Adobe Premiere Pro                   | https://....                       |
+| Apresentação                        | Canva                              | <https://www.canva.com/design/DAGhXcOBOm0/xqkdWNETaCVIJVsFPOb_RQ/view?utm_content=DAGhXcOBOm0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=hfd7f4740ee> |
+| Orquestração de processos (BPM)     | Camunda Platform                   | <https://camunda.com/download/modeler/> |
+| Modelagem do diagrama de casos de uso | Lucidchart                      | <https://www.lucidchart.com/>          |
+| Fluxo de usuário                    | Miro                               | <https://miro.com/app/board/uXjVI82qtag=/?moveToWidget=3458764627525460534&cot=14> |
+| Jornada de usuário                  | Miro                               | <https://miro.com/app/board/uXjVI6sPMjo=/?moveToWidget=3458764627590193750&cot=14> |
+| Edição de vídeos                    | Adobe Premiere Pro                 | https://....                           |
+| Testes de API                       | Postman                            | <https://www.postman.com/>             |
+| Gerenciamento do banco de dados     | pgAdmin 4                          | <https://www.pgadmin.org/>             |
+| Banco de dados na nuvem             | Microsoft Azure (PostgreSQL)       | <https://portal.azure.com/>            |
+| Hospedagem do app na nuvem          | Microsoft Azure (App Services)     | <https://portal.azure.com/>            |

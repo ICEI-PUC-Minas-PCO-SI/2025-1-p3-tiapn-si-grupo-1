@@ -1,26 +1,138 @@
 import styled from "styled-components";
-import { Funnel } from "lucide-react";
+import { Funnel, TrendingUp, Clock, Plus } from "lucide-react";
 
 //elemento que mantém a estrutura da página de feed, divide a página entre flows/filtos
 export const FeedContainer = styled.div`
   width: 100%;
   display: flex;
-  padding: 10px 30px;
+  flex-direction: column;
+  padding: 20px 20px;
   justify-content: space-between;
   position: relative;
   gap: 20px;
-  border: 1px solid violet;
+`;
+
+export const FeedMain = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
+// <--- HEADER - FIXO --->
+export const FeedHeader = styled.header`
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 32px;
+  gap: 20px;
+`;
+
+export const HeaderTop = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const HeaderTitle = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const HeaderActions = styled.div`
+  display: flex;
+  gap: 12px;
+`;
+
+//BOTÕES DE DE AÇÃO DO HEADER
+export const TrendingButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #233dff;
+  border: 1px solid #233dff;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px 12px;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    background-color: #dee2ff;
+    color: #333333;
+    svg {
+      color: #333333;
+      transform: scale(1.2);
+    }
+  }
+`;
+
+export const TrendingIcon = styled(TrendingUp)`
+  color: #233dff;
+  transition: all 0.4s ease-in-out;
+`;
+export const RecentButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #233dff;
+  border: 1px solid #233dff;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px 12px;
+
+  &:hover {
+    background-color: #dee2ff;
+    color: #333333;
+    svg {
+      color: #333333;
+      transform: scale(1.2);
+    }
+  }
+`;
+
+export const RecentIcon = styled(Clock)`
+  color: #233dff;
+  transition: all 0.4s ease-in-out;
+`;
+
+export const CreateFlowButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+  border: 1px solid #233dff;
+  background-color: #233dff;
+  border-radius: 5px;
+  padding: 10px 20px;
+  transition: all 0.4s ease-in-out;
+
+  &:hover {
+    svg {
+      transform: scale(1.4); /* Gira 360 graus */
+      color: #fff;
+    }
+  }
+`;
+export const CreateFlowIcon = styled(Plus)`
+  color: #fff;
+  transition: all 0.4s ease-in-out;
+`;
+
+export const SearchMethods = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 //<--- FLOWS - SCROLLAVEL --->
 //Organiza e distribui os flows publicados
 export const FlowFeed = styled.div`
   width: 60%;
-  padding: 20px;
+ padding: 64px 32px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border-right: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: 10px;
 `;
 
 export const ScrollFeed = styled.section`
@@ -28,6 +140,7 @@ export const ScrollFeed = styled.section`
   flex-direction: column;
   padding-top: 20px;
   gap: 50px;
+  height: 100%;
 `;
 
 // <--- FILTROS - FIXO --->
@@ -40,6 +153,7 @@ export const FeedFilters = styled.aside`
   gap: 20px;
   border-radius: 10px;
   height: auto;
+  background-color: #fff;
 `;
 
 export const FilterHeader = styled.header`

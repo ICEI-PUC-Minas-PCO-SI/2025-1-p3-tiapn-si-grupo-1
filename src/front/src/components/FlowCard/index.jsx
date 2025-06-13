@@ -1,8 +1,10 @@
-import { Heart, Bookmark, MessageCircle } from "lucide-react";
 import ComponentDivider from "../ComponentDivider/Index";
 import LikeButton from "./Actions/LikeButton";
 import CommentButton from "./Actions/CommentButton";
 import SaveButton from "./Actions/SaveButton";
+import ShareButton from "./Actions/ShareButton";
+import OpenFlowButton from "./Actions/OpenFlowButton";
+
 import {
   FlowCardContainer,
   FlowWrapper,
@@ -11,11 +13,24 @@ import {
   Avatar,
   FlowAuthor,
   FlowCategory,
+  AuthorRole,
   DaysPublished,
   ActionButton,
   ActionIcon,
   FlowPreviewWrapper,
   FlowFooter,
+  AuthorInfo,
+  FlowDetails,
+  Dot,
+  FlowDescription,
+  FlowTitle,
+  FlowTags,
+  Tag,
+  FlowNodes,
+  NodeIcon,
+  FlowViews,
+  FlowMacro,
+  ViewIcon,
 } from "./style";
 
 export default function FlowCard({ flow }) {
@@ -29,6 +44,26 @@ export default function FlowCard({ flow }) {
     );
   };
 
+  const getHoursAgo = (publishDate) => {
+    const now = new Date();
+    const date = new Date(publishDate);
+    const diffMs = Math.abs(now - date);
+    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+    const diffHours = Math.floor(diffMinutes / 60);
+
+    if (diffMinutes < 1) {
+      return "Agora mesmo";
+    } else if (diffMinutes < 60) {
+      return diffMinutes === 1
+        ? "1minuto atrás"
+        : `${diffMinutes} minutos atrás`;
+    } else if (diffHours < 24) {
+      return diffHours === 1 ? "1 hora atrás" : `${diffHours} horas atrás`;
+    } else {
+      return "Há mais de 24 horas";
+    }
+  };
+
   const getDaysAgo = (publishDate) => {
     const today = new Date();
     const date = new Date(publishDate);
@@ -36,7 +71,7 @@ export default function FlowCard({ flow }) {
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
     return diffDays === 0
-      ? "Hoje"
+      ? getHoursAgo(publishDate)
       : diffDays === 1
       ? `Há 1 dia`
       : diffDays < 7
@@ -51,36 +86,54 @@ export default function FlowCard({ flow }) {
   return (
     <FlowCardContainer>
       <FlowWrapper>
-        <FlowHat />
+        <FlowHat>{flow.categoria}</FlowHat>
         <FlowHeader>
           <Avatar>{getIniciais(flow.usuario?.nome)}</Avatar>
-          <FlowAuthor>{flow.usuario.nome} /</FlowAuthor>
-          <FlowCategory>{`${" "} #${flow.categoria}`}</FlowCategory>
-          <span
-            style={{
-              width: "4px",
-              height: "4px",
-              backgroundColor: "#565656",
-              borderRadius: "50%",
-            }}
-          />
-          <DaysPublished>{getDaysAgo(flow.criado_em)}</DaysPublished>
+          <AuthorInfo>
+            <FlowAuthor>{flow.usuario?.nome}</FlowAuthor>
+            <FlowDetails>
+              <AuthorRole>Sales Director</AuthorRole>
+              <Dot />
+              <DaysPublished>{getDaysAgo(flow.criado_em)}</DaysPublished>
+            </FlowDetails>
+          </AuthorInfo>
+
           <ActionButton>
             <ActionIcon />
           </ActionButton>
         </FlowHeader>
 
         <FlowPreviewWrapper>
-          <h2>{flow.titulo}</h2>
-          <p>{flow.descricao ? flow.descricao : "teste"}</p>
+          <FlowTitle>{flow.titulo}</FlowTitle>
+          <FlowDescription>
+            {flow.descricao ? flow.descricao : "teste"}
+          </FlowDescription>
+          <FlowTags>
+            {Array.isArray(flow.tags) && flow.tags.length > 0
+              ? flow.tags.map((tag, index) => <Tag key={index}>#{tag}</Tag>)
+              : ""}
+          </FlowTags>
+          <ComponentDivider />
+          <FlowMacro>
+            <FlowNodes>
+              <NodeIcon />
+              {flow.conteudo_nos.length}
+              {flow.conteudo_nos.length > 1 ? " nós" : " nó"}
+            </FlowNodes>
+            <FlowViews>
+              <ViewIcon></ViewIcon>
+              {"1921"}
+            </FlowViews>
+          </FlowMacro>
         </FlowPreviewWrapper>
         <FlowFooter>
           <LikeButton />
           <CommentButton />
           <SaveButton />
+          <ShareButton />
+          <OpenFlowButton />
         </FlowFooter>
       </FlowWrapper>
-      <ComponentDivider />
     </FlowCardContainer>
   );
 }

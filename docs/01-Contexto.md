@@ -29,6 +29,7 @@ Um dos principais desafios enfrentados por muitas empresas é a falta de uma pla
 
 Desenvolver um sistema de Hub dinâmico de conhecimento empresarial que otimize os processos internos das empresas. 
 
+Já os objetivos específicos são:
 - Colaborar para o aprendizado dos colaboradores de uma empresa.
 - Facilitar a busca por informações necessárias para projetos e processos.
 - Promover a centralização de documentações, tutoriais e procedimentos. 

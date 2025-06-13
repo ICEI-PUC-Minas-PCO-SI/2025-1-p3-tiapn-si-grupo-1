@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { MessageCircle } from "lucide-react";
+import { Share2 } from "lucide-react";
 
 export const Button = styled.button`
   display: flex;
@@ -20,7 +20,7 @@ export const Button = styled.button`
   }
 `;
 
-export const CommentIcon = styled(MessageCircle)`
+export const ShareIcon = styled(Share2)`
   width: 16px;
   height: 16px;
   color: #565656;

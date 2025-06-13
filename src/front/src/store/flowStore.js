@@ -1,13 +1,20 @@
 import { create } from "zustand";
+import axios from "axios";
 
 //Cria a store chamada useFlowStore
-export const useFlowStore = create((set) => ({
+export const useFlowStore = create((set, get) => ({
   // Estado para armazenar os IDs dos posts curtidos
   likedPosts: [],
   // Estado para armazenar os IDs dos posts salvos
   savedPosts: [],
   // Estado para armazenar comentários. Cada postId terá um array de comentários
   comments: {},
+  //Estado para armazenar categoria ativa
+  category: "",
+  //Estado para segurar os itens de pesquisa
+  searchTerm: "",
+  //Estado que armazena quais flows devem ser exibidos
+  flows: [],
 
   // Função para curtir/descurtir um post
   toggleLike: async (postId) =>
@@ -46,4 +53,45 @@ export const useFlowStore = create((set) => ({
         },
       };
     }),
+
+  setCategory: (categoria) => {
+    set({ category: categoria });
+    const { searchTerm } = get();
+    get().fetchFlows({ category: categoria, searchTerm }); // ← PASSA os valores certos
+  },
+
+  setSearchTerm: (termo) => {
+    set({ searchTerm: termo });
+    const { category } = get();
+    get().fetchFlows({ searchTerm: termo, category }); // ← PASSA os valores certos
+  },
+
+  fetchFlows: async (params = {}) => {
+    const { category, searchTerm } = get(); // estados atuais
+    const queryParams = new URLSearchParams();
+
+    const finalSearchTerm = params.searchTerm ?? searchTerm;
+    const finalCategory = params.category ?? category;
+
+    if (finalSearchTerm) queryParams.append("search", finalSearchTerm);
+    if (finalCategory) queryParams.append("categoria", finalCategory);
+
+    console.log("Buscando flows com:", {
+      category: finalCategory,
+      searchTerm: finalSearchTerm,
+    });
+
+    console.log("PARAMETRO: ", queryParams.toString());
+
+    try {
+      const response = await axios.get(
+        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow?${queryParams.toString()}`
+      );
+
+      set({ flows: response.data });
+    } catch (error) {
+      console.error("Erro ao buscar flows:", error);
+      set({ flows: [] });
+    }
+  },
 }));
