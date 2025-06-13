@@ -7,9 +7,8 @@ export const Container = styled.div`
 
 export const MainContent = styled.main`
   flex: 1;
-  margin-left: 250px; /* Ajustado para sidebar fixo em desktops */
   transition: margin-left 0.3s ease;
-
+  margin-right: 45%;
   @media (max-width: 768px) {
     margin-left: 0; /* Remove margem em dispositivos móveis */
   }
@@ -30,6 +29,7 @@ export const CommunityHeader = styled.div`
   flex-direction: column;
   gap: 1rem;
   margin-bottom: 2rem;
+  background-color: red;
 
   @media (min-width: 768px) {
     flex-direction: row;
