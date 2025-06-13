@@ -42,7 +42,7 @@ const Video = () => {
     <>
     <VideoContainer>
       <video ref={videoRef} className="plyr" playsInline controls>
-        <source src="public/demo.mp4" type="video/mp4" />
+        <source src="assets/demo.mp4" type="video/mp4" />
       </video>
     </VideoContainer>
       <HorizontalLine ref={horizontalLineRef}/> 
