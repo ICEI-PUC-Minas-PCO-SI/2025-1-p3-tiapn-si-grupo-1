@@ -59,6 +59,17 @@ export const ModalBody = styled.div`
   margin-bottom: 1rem;
 `;
 
+export const ErrorMessage = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ff4d4f;
+  font-size: 0.875rem;
+  background: #fff1f0;
+  padding: 0.75rem;
+  border-radius: 4px;
+`;
+
 export const Input = styled.input`
   padding: 0.75rem;
   border: 1px solid #e5e5e5;
@@ -70,6 +81,11 @@ export const Input = styled.input`
   &:focus {
     outline: none;
     border-color: #233dff;
+  }
+
+  &:disabled {
+    background: #f0f0f0;
+    cursor: not-allowed;
   }
 `;
 
@@ -87,6 +103,11 @@ export const TextArea = styled.textarea`
     outline: none;
     border-color: #233dff;
   }
+
+  &:disabled {
+    background: #f0f0f0;
+    cursor: not-allowed;
+  }
 `;
 
 export const Select = styled.select`
@@ -100,6 +121,11 @@ export const Select = styled.select`
   &:focus {
     outline: none;
     border-color: #233dff;
+  }
+
+  &:disabled {
+    background: #f0f0f0;
+    cursor: not-allowed;
   }
 `;
 
@@ -118,7 +144,12 @@ export const Button = styled.button`
   cursor: pointer;
   font-size: 1rem;
 
-  &:hover {
+  &:hover:not(:disabled) {
     background: ${({ primary }) => (primary ? '#1e33cc' : '#f0f0f0')};
+  }
+
+  &:disabled {
+    background: #f0f0f0;
+    cursor: not-allowed;
   }
 `;

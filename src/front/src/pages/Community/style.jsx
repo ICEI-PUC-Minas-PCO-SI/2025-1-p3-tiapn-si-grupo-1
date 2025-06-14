@@ -1,14 +1,34 @@
 import styled from 'styled-components';
+import { Funnel } from "lucide-react";
 
 export const Container = styled.div`
-  min-height: 100vh;
-  background: #ffffff;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px;
+  justify-content: space-between;
+  position: relative;
+  gap: 20px;
+`;
+
+export const ContentRow = styled.div`
+  display: flex;
+  flex-direction: row; /* Cria colunas para MainContent e CommunityFilters */
+  gap: 20px;
+  width: 100%;
+  max-width: 100%; /* Mesma largura máxima do ContentWrapper */
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column; /* Empilha em telas menores */
+  }
 `;
 
 export const MainContent = styled.main`
   flex: 1;
   transition: margin-left 0.3s ease;
-  margin-right: 45%;
+  background-color: #ffffff;
+  border-radius: 10px;
   @media (max-width: 768px) {
     margin-left: 0; /* Remove margem em dispositivos móveis */
   }
@@ -27,9 +47,10 @@ export const ContentWrapper = styled.div`
 export const CommunityHeader = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
-  background-color: red;
+  gap: 20px;
+  background-color: #ffffff;
+  padding: 32px;
+  border-radius: 10px;
 
   @media (min-width: 768px) {
     flex-direction: row;
@@ -246,5 +267,59 @@ export const EmptyTitle = styled.h3`
 export const EmptyText = styled.p`
   font-size: 1rem;
   color: #565656;
+  margin-bottom: 1rem;
+`;
+
+// FILTROS FIXOS DA COMUNIDADE
+export const CommunityFilters = styled.aside`
+  width: 40%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 10px;
+  height: auto;
+  background-color: #fff;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const FilterHeaderCommunity = styled.header`
+  margin-bottom: 20px;
+`;
+
+export const FilterIcon = styled(Funnel)`
+  fill: #333;
+  stroke: #333;
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+`;
+
+export const FilterTitleCommunity = styled.h2`
+  font-size: 18px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+`;
+
+export const Loading = styled.div`
+  text-align: center;
+  padding: 2rem;
+  font-size: 1rem;
+  color: #565656;
+`;
+
+export const ErrorMessage = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ff4d4f;
+  font-size: 0.875rem;
+  background: #fff1f0;
+  padding: 0.75rem;
+  border-radius: 4px;
   margin-bottom: 1rem;
 `;

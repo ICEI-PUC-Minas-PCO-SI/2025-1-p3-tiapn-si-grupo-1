@@ -10,6 +10,7 @@ export const FeedContainer = styled.div`
   justify-content: space-between;
   position: relative;
   gap: 20px;
+  
 `;
 
 export const FeedMain = styled.div`
