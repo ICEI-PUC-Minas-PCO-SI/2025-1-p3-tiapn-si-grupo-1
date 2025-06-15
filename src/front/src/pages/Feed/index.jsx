@@ -12,6 +12,7 @@ import { useFlowStore } from "../../store/flowStore";
 
 //Bibliotecas
 import axios from "axios"; //responsável pela comunicação com as APIs
+import { Navigate, useNavigate } from "react-router-dom";
 
 //componentes internos
 import {
@@ -43,6 +44,8 @@ export default function Feed() {
     autores: [],
   });
 
+  const navigate = useNavigate();
+
   //Estados globais
   const flows = useFlowStore((state) => state.flows);
   const setSearchTerm = useFlowStore((state) => state.setSearchTerm);
@@ -50,6 +53,12 @@ export default function Feed() {
   const fetchFlows = useFlowStore((state) => state.fetchFlows);
   const category = useFlowStore((state) => state.category);
 
+  //Usuario
+  const userToken = localStorage.token;
+  const userID = localStorage.usuarioId;
+
+  console.log("TOKEN: " + userToken);
+  console.log("ID: " + userID);
   async function fetchFiltros() {
     try {
       const response = await axios.get(
@@ -61,13 +70,20 @@ export default function Feed() {
     }
   }
 
+  //Verificação feita para assegurar que o usuário esteja logado para acessa o feed
   useEffect(() => {
-    fetchFiltros();
-  }, []);
+    if (!userToken) {
+      navigate("/login");
+    }
+  });
 
   useEffect(() => {
     fetchFlows({ category, searchTerm });
   }, [category, searchTerm]);
+
+  useEffect(() => {
+    fetchFiltros();
+  }, []);
 
   return (
     <FeedContainer>
