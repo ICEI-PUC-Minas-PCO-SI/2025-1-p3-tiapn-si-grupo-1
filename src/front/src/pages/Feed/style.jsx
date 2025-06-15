@@ -127,7 +127,7 @@ export const SearchMethods = styled.div`
 //Organiza e distribui os flows publicados
 export const FlowFeed = styled.div`
   width: 60%;
-  padding: 40px 20px;
+ padding: 64px 32px;
   display: flex;
   flex-direction: column;
   gap: 20px;

@@ -18,7 +18,6 @@ export const FlowWrapper = styled.div`
   border: 2px solid #e4e6eb;
   padding: 20px;
   position: relative;
-  cursor: pointer;
   gap: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
