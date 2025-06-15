@@ -1,6 +1,5 @@
 //componentes externos
 import { useEffect, useState } from "react";
-import ComponentDivider from "../../components/ComponentDivider/Index";
 import SearchBar from "../../components/SearchBar";
 import FilterMenu from "../../components/FilterOptions";
 import FlowCard from "../../components/FlowCard";
@@ -118,7 +117,9 @@ export default function Feed() {
         <FlowFeed>
           <ScrollFeed>
             {flows.length > 0 ? (
-              flows.map((flow) => <FlowCard flow={flow} key={flow.id} />)
+              flows.map((flow) => (
+                <FlowCard flow={flow} key={flow.id} userID={userID} />
+              ))
             ) : (
               <FlowsNotFound />
             )}
