@@ -4,16 +4,26 @@ import GlobalStyle from "./styles/GlobalStyle";
 import { theme } from "./styles/theme";
 import Sidebar from "./components/Sidebar";
 import MainRoutes from "./routes";
+import Overlay from "./components/Overlay";
+import { useUIStore } from "./store/uiStore";
+import SearchPage from "./components/SearchPage";
 
 function LayoutWrapper() {
   const location = useLocation();
   const hideSidebarOn = ["/", "/login", "/cadastro", "/recuperar-senha"];
   const hideSidebar = hideSidebarOn.includes(location.pathname);
 
+  //Pega o estado de overlay
+  const isOverlayActive = useUIStore((state) => state.isOverlayActive);
+  const isSearchModalOpen = useUIStore((state) => state.isSearchModalOpen);
+
   return (
     <div className="app-container">
       {!hideSidebar && <Sidebar />}
       <main className="content-area">
+        {isOverlayActive && <Overlay />} {/* Mostra overlay se ativo */}
+        {isSearchModalOpen && <SearchPage />}
+        {/*Modal de busca */}
         <MainRoutes />
       </main>
     </div>

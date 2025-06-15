@@ -15,6 +15,8 @@ export const useFlowStore = create((set, get) => ({
   searchTerm: "",
   //Estado que armazena quais flows devem ser exibidos
   flows: [],
+  //Estado que indica que uma consulta está sendo realizada
+  loading: false,
 
   // Função para curtir/descurtir um post
   toggleLike: async (postId) =>
@@ -67,6 +69,8 @@ export const useFlowStore = create((set, get) => ({
   },
 
   fetchFlows: async (params = {}) => {
+    set({ loading: true });
+
     const { category, searchTerm } = get(); // estados atuais
     const queryParams = new URLSearchParams();
 
@@ -92,6 +96,8 @@ export const useFlowStore = create((set, get) => ({
     } catch (error) {
       console.error("Erro ao buscar flows:", error);
       set({ flows: [] });
+    } finally {
+      set({ loading: false });
     }
   },
 }));

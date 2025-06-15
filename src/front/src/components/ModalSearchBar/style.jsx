@@ -3,31 +3,22 @@ import styled from "styled-components";
 export const Form = styled.form`
   display: flex;
   justify-content: center;
+  width: 100%;
 `;
 
 export const Input = styled.input`
   width: 100%;
-
-  padding: 16px 30px 16px 46px; /* espaço à esquerda para o ícone */
+  padding: 24px 32px 24px 56px; /* espaço à esquerda para o ícone */
   font-size: 16px;
-  border: 1px solid #dee2ff;
-  border-radius: 10px;
+  border: none;
   outline: none;
-  cursor: pointer;
   transition: border-color 0.3s;
   transition: all 0.4s ease-in-out;
 
-  &:hover {
-    border-color: #233dff;
-    background-color: #dee2ff;
-  }
-
-  &:focus {
-    border-color: #233dff;
-  }
+  border-top-left-radius: 15px;
 
   &::placeholder {
-    color: #333333;
+    color: #66768c;
   }
 `;
 

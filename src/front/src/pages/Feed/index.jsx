@@ -5,6 +5,8 @@ import FilterMenu from "../../components/FilterOptions";
 import FlowCard from "../../components/FlowCard";
 import FlowsNotFound from "../../components/SystemResponses/FlowsNotFound";
 import Categories from "../../components/FilterOptions/Categories";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import Overlay from "../../components/Overlay";
 
 //Global state
 import { useFlowStore } from "../../store/flowStore";
@@ -51,6 +53,7 @@ export default function Feed() {
   const searchTerm = useFlowStore((state) => state.searchTerm);
   const fetchFlows = useFlowStore((state) => state.fetchFlows);
   const category = useFlowStore((state) => state.category);
+  const loading = useFlowStore((state) => state.loading);
 
   //Usuario
   const userToken = localStorage.token;
@@ -58,6 +61,7 @@ export default function Feed() {
 
   console.log("TOKEN: " + userToken);
   console.log("ID: " + userID);
+
   async function fetchFiltros() {
     try {
       const response = await axios.get(
@@ -116,13 +120,15 @@ export default function Feed() {
       <FeedMain>
         <FlowFeed>
           <ScrollFeed>
-            {flows.length > 0 ? (
+            {loading ? (
+              <LoadingSpinner />
+            ) : flows.length > 0 ? (
               flows.map((flow) => (
                 <FlowCard flow={flow} key={flow.id} userID={userID} />
               ))
-            ) : (
+            ) : !loading && flows.length === 0 ? (
               <FlowsNotFound />
-            )}
+            ) : null}
           </ScrollFeed>
         </FlowFeed>
 
