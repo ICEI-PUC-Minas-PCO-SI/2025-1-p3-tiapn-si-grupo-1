@@ -1,17 +1,19 @@
 //componentes externos
 import { useEffect, useState } from "react";
-import ComponentDivider from "../../components/ComponentDivider/Index";
 import SearchBar from "../../components/SearchBar";
 import FilterMenu from "../../components/FilterOptions";
 import FlowCard from "../../components/FlowCard";
 import FlowsNotFound from "../../components/SystemResponses/FlowsNotFound";
 import Categories from "../../components/FilterOptions/Categories";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import Overlay from "../../components/Overlay";
 
 //Global state
 import { useFlowStore } from "../../store/flowStore";
 
 //Bibliotecas
 import axios from "axios"; //responsável pela comunicação com as APIs
+import { Navigate, useNavigate } from "react-router-dom";
 
 //componentes internos
 import {
@@ -37,18 +39,27 @@ import {
 } from "./style";
 
 export default function Feed() {
+  const navigate = useNavigate();
   const [filtros, setFiltros] = useState({
     categorias: [],
     tags: [],
     autores: [],
   });
 
+  const handleClick = () => {
+    navigate("/criar-flow");
+  };
+
   //Estados globais
   const flows = useFlowStore((state) => state.flows);
-  const setSearchTerm = useFlowStore((state) => state.setSearchTerm);
   const searchTerm = useFlowStore((state) => state.searchTerm);
   const fetchFlows = useFlowStore((state) => state.fetchFlows);
   const category = useFlowStore((state) => state.category);
+  const loading = useFlowStore((state) => state.loading);
+
+  //Usuario
+  const userToken = localStorage.token;
+  const userID = localStorage.usuarioId;
 
   async function fetchFiltros() {
     try {
@@ -61,13 +72,20 @@ export default function Feed() {
     }
   }
 
+  //Verificação feita para assegurar que o usuário esteja logado para acessa o feed
   useEffect(() => {
-    fetchFiltros();
-  }, []);
+    if (!userToken) {
+      navigate("/login");
+    }
+  });
 
   useEffect(() => {
     fetchFlows({ category, searchTerm });
   }, [category, searchTerm]);
+
+  useEffect(() => {
+    fetchFiltros();
+  }, []);
 
   return (
     <FeedContainer>
@@ -86,7 +104,7 @@ export default function Feed() {
               <RecentIcon size={16} />
               Recentes
             </RecentButton>
-            <CreateFlowButton>
+            <CreateFlowButton onClick={handleClick}>
               <CreateFlowIcon size={16} />
               Criar Flow
             </CreateFlowButton>
@@ -94,18 +112,22 @@ export default function Feed() {
         </HeaderTop>
 
         <SearchMethods>
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <SearchBar />
           <Categories filtros={filtros.categorias} />
         </SearchMethods>
       </FeedHeader>
       <FeedMain>
         <FlowFeed>
           <ScrollFeed>
-            {flows.length > 0 ? (
-              flows.map((flow) => <FlowCard flow={flow} key={flow.id} />)
-            ) : (
+            {loading ? (
+              <LoadingSpinner />
+            ) : flows.length > 0 ? (
+              flows.map((flow) => (
+                <FlowCard flow={flow} key={flow.id} userID={userID} />
+              ))
+            ) : !loading && flows.length === 0 ? (
               <FlowsNotFound />
-            )}
+            ) : null}
           </ScrollFeed>
         </FlowFeed>
 
@@ -116,9 +138,6 @@ export default function Feed() {
               Filtros
             </FilterTitle>
           </FilterHeader>
-
-          <FilterMenu filterType={"Tags"} filtros={filtros.tags} />
-          <FilterMenu filterType={"Autores"} filtros={filtros.autores} />
         </FeedFilters>
       </FeedMain>
     </FeedContainer>

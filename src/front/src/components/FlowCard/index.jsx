@@ -33,7 +33,10 @@ import {
   ViewIcon,
 } from "./style";
 
-export default function FlowCard({ flow }) {
+export default function FlowCard({ flow, userID }) {
+  //Usuario
+  const user = userID;
+
   //Função temporária para criar dinamicamente um "avatar" para o usuário
   const getIniciais = (nome) => {
     if (!nome) return "";
@@ -68,7 +71,7 @@ export default function FlowCard({ flow }) {
     const today = new Date();
     const date = new Date(publishDate);
     const diffTime = Math.abs(today - date);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
     return diffDays === 0
       ? getHoursAgo(publishDate)
@@ -131,7 +134,7 @@ export default function FlowCard({ flow }) {
           <CommentButton />
           <SaveButton />
           <ShareButton />
-          <OpenFlowButton />
+          <OpenFlowButton flowID={flow.id} />
         </FlowFooter>
       </FlowWrapper>
     </FlowCardContainer>
