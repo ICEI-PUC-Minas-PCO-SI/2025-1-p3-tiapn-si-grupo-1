@@ -39,13 +39,16 @@ import {
 } from "./style";
 
 export default function Feed() {
+  const navigate = useNavigate();
   const [filtros, setFiltros] = useState({
     categorias: [],
     tags: [],
     autores: [],
   });
 
-  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/criar-flow");
+  };
 
   //Estados globais
   const flows = useFlowStore((state) => state.flows);
@@ -101,7 +104,7 @@ export default function Feed() {
               <RecentIcon size={16} />
               Recentes
             </RecentButton>
-            <CreateFlowButton>
+            <CreateFlowButton onClick={handleClick}>
               <CreateFlowIcon size={16} />
               Criar Flow
             </CreateFlowButton>
