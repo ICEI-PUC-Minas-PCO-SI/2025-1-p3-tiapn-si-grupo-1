@@ -1,9 +1,9 @@
 import React from 'react';
 import * as S from './style';
-import { MessageCircle, ArrowUp, ArrowDown, Bookmark } from 'lucide-react';
+import { MessageCircle, ArrowUp, ArrowDown, Bookmark, Trash2, Eye } from 'lucide-react';
 
 // Componente que exibe um único post da comunidade
-export const CommunityPost = ({ post, onVote, onSave }) => {
+export const CommunityPost = ({ post, onVote, onSave, onView, onDelete, currentUserId }) => {
   return (
     <S.PostCard>
       {/* Cabeçalho do post com informações do autor */}
@@ -24,20 +24,8 @@ export const CommunityPost = ({ post, onVote, onSave }) => {
           ))}
         </S.Tags>
       </S.PostContent>
-      {/* Rodapé com ações (votar, comentar, salvar) */}
+      {/* Rodapé com ações (votar, comentar, salvar, visualizar, deletar) */}
       <S.PostFooter>
-        <S.VoteButton
-          active={post.isUpvoted}
-          onClick={() => onVote(post.id, 'up')}
-        >
-          <ArrowUp size={16} /> {post.upvotes}
-        </S.VoteButton>
-        <S.VoteButton
-          active={post.isDownvoted}
-          onClick={() => onVote(post.id, 'down')}
-        >
-          <ArrowDown size={16} /> {post.downvotes}
-        </S.VoteButton>
         <S.CommentButton>
           <MessageCircle size={16} /> {post.comments}
         </S.CommentButton>
@@ -47,6 +35,15 @@ export const CommunityPost = ({ post, onVote, onSave }) => {
         >
           <Bookmark size={16} />
         </S.SaveButton>
+        <S.ViewButton onClick={onView}>
+          <Eye size={16} /> Visualizar
+        </S.ViewButton>
+        {/* Exibe o botão de exclusão apenas se o usuário for o autor */}
+        {currentUserId === post.author.id && (
+          <S.DeleteButton onClick={onDelete}>
+            <Trash2 size={16} />
+          </S.DeleteButton>
+        )}
       </S.PostFooter>
     </S.PostCard>
   );

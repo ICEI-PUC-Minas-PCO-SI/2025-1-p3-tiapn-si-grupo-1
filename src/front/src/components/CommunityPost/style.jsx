@@ -122,3 +122,35 @@ export const SaveButton = styled.button`
     color: #ffffff;
   }
 `;
+
+export const ViewButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: transparent;
+  border: 1px solid #e5e5e5;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  color: #333333;
+  cursor: pointer;
+  font-size: 0.875rem;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: 1px solid #e5e5e5;
+  padding: 0.5rem;
+  border-radius: 4px;
+  color: #ff4d4f;
+  cursor: pointer;
+
+  &:hover {
+    background: #fff1f0;
+  }
+`;

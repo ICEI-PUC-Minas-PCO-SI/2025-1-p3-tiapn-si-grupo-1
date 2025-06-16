@@ -59,74 +59,63 @@ export const ModalBody = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const ErrorMessage = styled.div`
+export const PostHeader = styled.div`
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: #ff4d4f;
+  gap: 1rem;
+  margin-bottom: 1rem;
+`;
+
+export const AuthorAvatar = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+export const AuthorName = styled.h3`
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333333;
+`;
+
+export const AuthorRole = styled.span`
   font-size: 0.875rem;
-  background: #fff1f0;
-  padding: 0.75rem;
-  border-radius: 4px;
+  color: #565656;
 `;
 
-export const Input = styled.input`
-  padding: 0.75rem;
-  border: 1px solid #e5e5e5;
-  border-radius: 4px;
-  font-size: 1rem;
-  color: #333333;
-  background: #ffffff;
-
-  &:focus {
-    outline: none;
-    border-color: #233dff;
-  }
-
-  &:disabled {
-    background: #f0f0f0;
-    cursor: not-allowed;
-  }
+export const PostContent = styled.div`
+  margin-bottom: 1rem;
 `;
 
-export const TextArea = styled.textarea`
-  padding: 0.75rem;
-  border: 1px solid #e5e5e5;
-  border-radius: 4px;
+export const PostText = styled.p`
   font-size: 1rem;
   color: #333333;
-  background: #ffffff;
-  min-height: 150px;
-  resize: vertical;
-
-  &:focus {
-    outline: none;
-    border-color: #233dff;
-  }
-
-  &:disabled {
-    background: #f0f0f0;
-    cursor: not-allowed;
-  }
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
 `;
 
-export const Select = styled.select`
-  padding: 0.75rem;
-  border: 1px solid #e5e5e5;
-  border-radius: 4px;
-  font-size: 1rem;
+export const Tags = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+`;
+
+export const Tag = styled.span`
+  background: #f0f0f0;
   color: #333333;
-  background: #ffffff;
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+`;
 
-  &:focus {
-    outline: none;
-    border-color: #233dff;
-  }
-
-  &:disabled {
-    background: #f0f0f0;
-    cursor: not-allowed;
-  }
+export const PostMeta = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  color: #565656;
 `;
 
 export const ModalFooter = styled.div`
@@ -139,13 +128,35 @@ export const Button = styled.button`
   padding: 0.75rem 1.5rem;
   border: 1px solid #e5e5e5;
   border-radius: 4px;
-  background: ${({ primary }) => (primary ? '#233dff' : '#ffffff')};
-  color: ${({ primary }) => (primary ? '#ffffff' : '#333333')};
+  background: #ffffff;
+  color: #333333;
   cursor: pointer;
   font-size: 1rem;
 
   &:hover:not(:disabled) {
-    background: ${({ primary }) => (primary ? '#1e33cc' : '#f0f0f0')};
+    background: #f0f0f0;
+  }
+
+  &:disabled {
+    background: #f0f0f0;
+    cursor: not-allowed;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid #ff4d4f;
+  border-radius: 4px;
+  background: #ffffff;
+  color: #ff4d4f;
+  cursor: pointer;
+  font-size: 1rem;
+
+  &:hover:not(:disabled) {
+    background: #fff1f0;
   }
 
   &:disabled {
