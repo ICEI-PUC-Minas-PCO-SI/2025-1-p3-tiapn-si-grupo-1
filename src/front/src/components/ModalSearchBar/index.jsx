@@ -7,23 +7,17 @@ import { useUIStore } from "../../store/uiStore";
 
 export default function ModalSearchBar() {
   const openSearchModal = useUIStore((state) => state.openSearchModal);
-  const searchTerm = useFlowStore((state) => state.searchTerm);
-  const setSearchTerm = useFlowStore((state) => state.setSearchTerm);
+  const modalSearchTerm = useFlowStore((state) => state.modalSearchTerm);
+  const setModalSearchTerm = useFlowStore((state) => state.setModalSearchTerm);
 
   // Estado local para o input, atualizado instantaneamente
-  const [localSearch, setLocalSearch] = useState(searchTerm);
+  const [localSearch, setLocalSearch] = useState(modalSearchTerm);
 
   // Função debounced para atualizar o estado global
   const debouncedSearch = useMemo(
-    () => debounce(setSearchTerm, 300),
-    [setSearchTerm]
+    () => debounce(setModalSearchTerm, 300),
+    [setModalSearchTerm]
   );
-
-  //Sempre que o usuário digita, atualiza localmente e dispara o debounce
-  //useEffect(() => {
-  //debouncedSearch(query);
-  //return () => debouncedSearch.cancel(); // limpeza
-  //}, [query, debouncedSearch]);
 
   // Handler do input, atualiza local e dispara debounce
   const handleChange = (e) => {

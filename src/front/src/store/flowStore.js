@@ -14,9 +14,14 @@ export const useFlowStore = create((set, get) => ({
   //Estado para segurar os itens de pesquisa
   searchTerm: "",
   //Estado que armazena quais flows devem ser exibidos
-  flows: [],
+  flows: [], //Feed Principal
   //Estado que indica que uma consulta está sendo realizada
   loading: false,
+  //modal
+  //Estado que armazena apenas os flows para aparecer no modal
+  modalFlows: [],
+  modalSearchTerm: "",
+  modalLoading: false,
 
   // Função para curtir/descurtir um post
   toggleLike: async (postId) =>
@@ -65,7 +70,12 @@ export const useFlowStore = create((set, get) => ({
   setSearchTerm: (termo) => {
     set({ searchTerm: termo });
     const { category } = get();
-    get().fetchFlows({ searchTerm: termo, category }); // ← PASSA os valores certos
+    get().fetchFlows({ searchTerm: termo, category }); // feed principal
+  },
+
+  setModalSearchTerm: (termo) => {
+    set({ modalSearchTerm: termo });
+    get().fetchModalFlows(termo); // apenas no modal
   },
 
   fetchFlows: async (params = {}) => {
@@ -80,13 +90,6 @@ export const useFlowStore = create((set, get) => ({
     if (finalSearchTerm) queryParams.append("search", finalSearchTerm);
     if (finalCategory) queryParams.append("categoria", finalCategory);
 
-    console.log("Buscando flows com:", {
-      category: finalCategory,
-      searchTerm: finalSearchTerm,
-    });
-
-    console.log("PARAMETRO: ", queryParams.toString());
-
     try {
       const response = await axios.get(
         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow?${queryParams.toString()}`
@@ -100,4 +103,30 @@ export const useFlowStore = create((set, get) => ({
       set({ loading: false });
     }
   },
+
+  fetchModalFlows: async (termo = "") => {
+    set({ modalLoading: true });
+    const search = termo || get().modalSearchTerm || "";
+    const queryParams = new URLSearchParams();
+
+    if (search.trim() !== "") queryParams.append("search", search);
+
+    try {
+      const response = await axios.get(
+        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow?${queryParams.toString()}`
+      );
+      set({ modalFlows: response.data });
+    } catch (error) {
+      console.error("Erro ao buscar flows no modal:", error);
+      set({ modalFlows: [] });
+    } finally {
+      set({ modalLoading: false });
+    }
+  },
+
+  resetModalSearch: () =>
+    set({
+      searchTerm: "",
+      modalFlows: [],
+    }),
 }));

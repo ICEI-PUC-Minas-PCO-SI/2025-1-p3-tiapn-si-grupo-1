@@ -49,7 +49,6 @@ export default function Feed() {
 
   //Estados globais
   const flows = useFlowStore((state) => state.flows);
-  const setSearchTerm = useFlowStore((state) => state.setSearchTerm);
   const searchTerm = useFlowStore((state) => state.searchTerm);
   const fetchFlows = useFlowStore((state) => state.fetchFlows);
   const category = useFlowStore((state) => state.category);
@@ -58,9 +57,6 @@ export default function Feed() {
   //Usuario
   const userToken = localStorage.token;
   const userID = localStorage.usuarioId;
-
-  console.log("TOKEN: " + userToken);
-  console.log("ID: " + userID);
 
   async function fetchFiltros() {
     try {
@@ -113,7 +109,7 @@ export default function Feed() {
         </HeaderTop>
 
         <SearchMethods>
-          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          <SearchBar />
           <Categories filtros={filtros.categorias} />
         </SearchMethods>
       </FeedHeader>
@@ -139,9 +135,6 @@ export default function Feed() {
               Filtros
             </FilterTitle>
           </FilterHeader>
-
-          <FilterMenu filterType={"Tags"} filtros={filtros.tags} />
-          <FilterMenu filterType={"Autores"} filtros={filtros.autores} />
         </FeedFilters>
       </FeedMain>
     </FeedContainer>

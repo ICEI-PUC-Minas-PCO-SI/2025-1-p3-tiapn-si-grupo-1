@@ -36,7 +36,6 @@ import {
 export default function FlowCard({ flow, userID }) {
   //Usuario
   const user = userID;
-  console.log("USER ID FLOWCARD: " + user);
 
   //Função temporária para criar dinamicamente um "avatar" para o usuário
   const getIniciais = (nome) => {
@@ -73,7 +72,6 @@ export default function FlowCard({ flow, userID }) {
     const date = new Date(publishDate);
     const diffTime = Math.abs(today - date);
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    console.log(diffDays);
 
     return diffDays === 0
       ? getHoursAgo(publishDate)
