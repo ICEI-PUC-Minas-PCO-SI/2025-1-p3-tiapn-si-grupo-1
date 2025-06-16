@@ -3,24 +3,98 @@ import * as S from './style';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CommunityPost } from '../../components/CommunityPost';
 import { CreatePostForm } from '../../components/CreatePostForm';
+import { PostDetail } from '../../components/PostDetail';
+import { SearchBarCommunity } from '../../components/SearchBarCommunity';
 import { postTypes, categories } from '../../data/mockPosts';
 import { TrendingUp, Clock, MessageCircle, Plus, Filter, X, FilterIcon, AlertCircle } from 'lucide-react';
-import SearchBar from '../../components/SearchBar';
 import axios from 'axios';
 
 // Página principal da comunidade
 export const Community = () => {
   // Estados para controle da interface
-  const [showCreatePost, setShowCreatePost] = useState(false);
+  const [mostrarCriarPostagem, setMostrarCriarPostagem] = useState(false); 
   const [selectedType, setSelectedType] = useState('Todos');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
-  const [sortBy, setSortBy] = useState('hot');
+  const [sortBy, setSortBy] = useState('new');
   const [posts, setPosts] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentUserId, setCurrentUserId] = useState(null);
+  const [userNamesCache, setUserNamesCache] = useState({}); // Cache para nomes de usuários
 
-  // Carregar posts da API ao montar o componente
+  // Obter ID do usuário autenticado
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const response = await axios.get(
+            'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/me',
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
+          setCurrentUserId(response.data.id);
+        } catch (err) {
+          console.error('Erro ao buscar dados do usuário:', err);
+        }
+      }
+    };
+    fetchUserData();
+  }, []);
+
+  // Função para buscar o nome do usuário pelo ID
+  const fetchUserName = async (userId) => {
+    if (!userId) return 'Usuário Desconhecido';
+    if (userNamesCache[userId]) return userNamesCache[userId];
+    try {
+      const response = await axios.get(
+        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/${userId}`
+      );
+      const userName = response.data.nome || 'Usuário Desconhecido';
+      setUserNamesCache((prev) => ({ ...prev, [userId]: userName }));
+      return userName;
+    } catch (err) {
+      console.error(`Erro ao buscar nome do usuário ${userId}:`, err);
+      return 'Usuário Desconhecido';
+    }
+  };
+
+  // Função para mapear posts da API para o formato do front-end
+  const mapPostFromApi = async (post) => {
+    const userName = await fetchUserName(post.criado_por);
+    return {
+      id: post.id,
+      title: post.titulo,
+      content: post.conteudo,
+      author: {
+        name: userName,
+        avatar: post.author?.avatar || '/placeholder.svg?height=40&width=40',
+        role: post.author?.role || 'Membro',
+        reputation: post.author?.reputation || 0,
+        id: post.criado_por || null,
+      },
+      type: post.tipo || 'Discussão',
+      category: post.categoria || 'Geral',
+      tags: post.tags || [],
+      upvotes: post.upvotes || 0,
+      downvotes: post.downvotes || 0,
+      comments: post.comments || 0,
+      createdAt: new Date(post.criado_em).toLocaleString('pt-BR', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      createdAtRaw: post.criado_em, // Preserva a data original para ordenação
+      hasFlow: post.tipo === 'Flow Compartilhado' || post.tipo === 'Showcase',
+      flowId: post.id,
+      isUpvoted: false,
+      isDownvoted: false,
+      isSaved: false,
+    };
+  };
+
+  // Carregar posts da API (LISTAR_POSTAGEM)
   useEffect(() => {
     const fetchPosts = async () => {
       setIsLoading(true);
@@ -29,33 +103,8 @@ export const Community = () => {
         const response = await axios.get(
           'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade'
         );
-        // Mapear posts da API para o formato esperado
-        const mappedPosts = response.data.map((post) => ({
-          id: post.id,
-          title: post.titulo,
-          content: post.conteudo,
-          author: {
-            name: post.author?.name || 'Usuário Desconhecido',
-            avatar: post.author?.avatar || '/placeholder.svg?height=40&width=40',
-            role: post.author?.role || 'Membro',
-            reputation: post.author?.reputation || 0,
-          },
-          type: post.tipo || 'Discussão',
-          category: post.categoria || 'Geral',
-          tags: post.tags || [],
-          upvotes: post.upvotes || 0,
-          downvotes: post.downvotes || 0,
-          comments: post.comments || 0,
-          createdAt: new Date(post.criado_em).toLocaleString('pt-BR', {
-            hour: '2-digit',
-            minute: '2-digit',
-          }),
-          hasFlow: post.tipo === 'Flow Compartilhado' || post.tipo === 'Showcase',
-          flowId: post.id,
-          isUpvoted: false,
-          isDownvoted: false,
-          isSaved: false,
-        }));
+        // Mapear todos os posts assincronamente
+        const mappedPosts = await Promise.all(response.data.map(mapPostFromApi));
         setPosts(mappedPosts);
       } catch (err) {
         setError('Erro ao carregar os posts. Tente novamente.');
@@ -103,13 +152,53 @@ export const Community = () => {
           }
         }
         return post;
-      }),
+      })
     );
   };
 
   // Função para salvar/desalvar post
   const handleSave = (postId) => {
     setPosts(posts.map((post) => (post.id === postId ? { ...post, isSaved: !post.isSaved } : post)));
+  };
+
+  // Função para visualizar detalhes do post (BUSCAR_POSTAGEM)
+  const handleViewPost = async (postId) => {
+    try {
+      const response = await axios.get(
+        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade/${postId}`
+      );
+      const mappedPost = await mapPostFromApi(response.data);
+      setSelectedPost(mappedPost);
+    } catch (err) {
+      setError('Erro ao carregar os detalhes do post.');
+    }
+  };
+
+  // Função para deletar post (DELETAR_POSTAGEM)
+  const handleDeletePost = async (postId, authorId) => {
+    if (authorId !== currentUserId) {
+      setError('Você só pode deletar seus próprios posts.');
+      return;
+    }
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('Usuário não autenticado. Faça login para deletar o post.');
+      return;
+    }
+    try {
+      await axios.delete(
+        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade/${postId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setPosts(posts.filter((post) => post.id !== postId));
+      setSelectedPost(null);
+    } catch (err) {
+      setError('Erro ao deletar o post. Verifique sua permissão ou tente novamente.');
+      if (err.response?.status === 401 || err.response?.status === 403) {
+        localStorage.removeItem('token');
+        setError('Sessão expirada. Faça login novamente.');
+      }
+    }
   };
 
   // Função para limpar filtros
@@ -121,18 +210,23 @@ export const Community = () => {
   // Verifica se há filtros ativos
   const hasActiveFilters = selectedType !== 'Todos' || selectedCategory !== 'Todos';
 
-  // Filtra posts com base no tipo e categoria selecionados
+  // Filtra posts com base no tipo, categoria e termo de busca
   const filteredPosts = posts.filter((post) => {
     const matchesType = selectedType === 'Todos' || post.type === selectedType;
     const matchesCategory = selectedCategory === 'Todos' || post.category === selectedCategory;
-    return matchesType && matchesCategory;
+    const matchesSearch = searchTerm
+      ? post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        post.content.toLowerCase().includes(searchTerm.toLowerCase())
+      : true;
+    return matchesType && matchesCategory && matchesSearch;
   });
 
   // Ordena posts com base no critério selecionado
   const sortedPosts = [...filteredPosts].sort((a, b) => {
+    console.log(`Ordenando posts por ${sortBy}`);
     switch (sortBy) {
       case 'new':
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        return new Date(b.createdAtRaw).getTime() - new Date(a.createdAtRaw).getTime();
       case 'top':
         return b.comments - a.comments;
       case 'hot':
@@ -149,6 +243,7 @@ export const Community = () => {
         <div>
           <S.Title>Comunidade KnowFlow</S.Title>
           <S.Subtitle>Compartilhe conhecimento, tire dúvidas e colabore com a comunidade</S.Subtitle>
+          <SearchBarCommunity searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </div>
         <S.ButtonGroup>
           <S.FilterButton
@@ -163,13 +258,12 @@ export const Community = () => {
               </S.Badge>
             )}
           </S.FilterButton>
-          <S.CreatePostButton onClick={() => setShowCreatePost(true)}>
+          <S.CreatePostButton onClick={() => setMostrarCriarPostagem(true)}>
             <Plus size={16} />
             Criar Post
           </S.CreatePostButton>
         </S.ButtonGroup>
       </S.CommunityHeader>
-      <SearchBar />
       <S.ContentRow>
         <S.MainContent>
           <S.ContentWrapper>
@@ -239,10 +333,6 @@ export const Community = () => {
                 {/* Ordenação */}
                 <S.SortSection>
                   <S.Tabs>
-                    <S.TabButton active={sortBy === 'hot'} onClick={() => setSortBy('hot')}>
-                      <TrendingUp size={16} />
-                      Em Alta
-                    </S.TabButton>
                     <S.TabButton active={sortBy === 'new'} onClick={() => setSortBy('new')}>
                       <Clock size={16} />
                       Mais Recentes
@@ -270,7 +360,14 @@ export const Community = () => {
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <CommunityPost post={post} onVote={handleVote} onSave={handleSave} />
+                        <CommunityPost
+                          post={post}
+                          onVote={handleVote}
+                          onSave={handleSave}
+                          onView={() => handleViewPost(post.id)}
+                          onDelete={() => handleDeletePost(post.id, post.author.id)}
+                          currentUserId={currentUserId}
+                        />
                       </motion.div>
                     ))}
                   </AnimatePresence>
@@ -310,10 +407,19 @@ export const Community = () => {
         </S.CommunityFilters>
       </S.ContentRow>
       {/* Modal de criar post */}
-      {showCreatePost && (
+      {mostrarCriarPostagem && (
         <CreatePostForm
-          onClose={() => setShowCreatePost(false)}
+          onClose={() => setMostrarCriarPostagem(false)}
           onPostCreated={handlePostCreated}
+        />
+      )}
+      {/* Modal de detalhes do post */}
+      {selectedPost && (
+        <PostDetail
+          post={selectedPost}
+          onClose={() => setSelectedPost(null)}
+          onDelete={() => handleDeletePost(selectedPost.id, selectedPost.author.id)}
+          currentUserId={currentUserId}
         />
       )}
     </S.Container>

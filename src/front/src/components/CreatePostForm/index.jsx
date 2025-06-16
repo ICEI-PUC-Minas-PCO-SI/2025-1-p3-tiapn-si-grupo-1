@@ -29,9 +29,7 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
       const response = await axios.get(
         'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/me',
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
       return {
@@ -84,6 +82,9 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
         conteudo: content,
         criado_por: userId,
         criado_em: createdAt,
+        tipo: type || 'Discussão',
+        categoria: category || 'Geral',
+        tags: formattedTags,
       };
 
       // Enviar requisição para criar o post
@@ -91,9 +92,7 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
         'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade',
         payload,
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
 
@@ -103,14 +102,15 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
         title: response.data.titulo,
         content: response.data.conteudo,
         author: {
-          name: userName, // Nome obtido do endpoint
-          avatar: getIniciais(userName), // Iniciais do nome (ex.: "JS")
-          role: 'Membro', // Substitua com dados reais, se disponível
-          reputation: 0, // Substitua com dados reais, se disponível
+          name: userName,
+          avatar: getIniciais(userName),
+          role: 'Membro',
+          reputation: 0,
+          id: userId,
         },
-        type: type || 'Discussão', // Usa valor do formulário ou fallback
-        category: category || 'Geral', // Usa valor do formulário ou fallback
-        tags: formattedTags,
+        type: response.data.tipo || 'Discussão',
+        category: response.data.categoria || 'Geral',
+        tags: response.data.tags || [],
         upvotes: 0,
         downvotes: 0,
         comments: 0,
@@ -118,7 +118,7 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
           hour: '2-digit',
           minute: '2-digit',
         }),
-        hasFlow: type === 'Flow Compartilhado' || type === 'Showcase',
+        hasFlow: response.data.tipo === 'Flow Compartilhado' || response.data.tipo === 'Showcase',
         flowId: response.data.id,
         isUpvoted: false,
         isDownvoted: false,
@@ -131,7 +131,6 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
       // Fechar o modal após sucesso
       onClose();
     } catch (err) {
-      // Log detalhado do erro no console para depuração
       console.error('Erro ao criar post:', {
         status: err.response?.status,
         data: err.response?.data,
@@ -139,7 +138,6 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
         payloadSent: payload,
       });
 
-      // Extrair mensagem de erro
       const errorMessage =
         err.response?.data?.erro ||
         err.response?.data?.message ||
@@ -148,7 +146,6 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
 
       setError(errorMessage);
 
-      // Remover token inválido, se necessário
       if (err.response?.status === 401 || err.response?.status === 403) {
         localStorage.removeItem('token');
         setError('Sessão expirada. Faça login novamente.');

@@ -13,14 +13,14 @@ export const Container = styled.div`
 
 export const ContentRow = styled.div`
   display: flex;
-  flex-direction: row; /* Cria colunas para MainContent e CommunityFilters */
+  flex-direction: row;
   gap: 20px;
   width: 100%;
-  max-width: 100%; /* Mesma largura máxima do ContentWrapper */
+  max-width: 100%;
   margin: 0 auto;
 
   @media (max-width: 768px) {
-    flex-direction: column; /* Empilha em telas menores */
+    flex-direction: column;
   }
 `;
 
@@ -30,7 +30,7 @@ export const MainContent = styled.main`
   background-color: #ffffff;
   border-radius: 10px;
   @media (max-width: 768px) {
-    margin-left: 0; /* Remove margem em dispositivos móveis */
+    margin-left: 0;
   }
 `;
 
@@ -63,6 +63,7 @@ export const Title = styled.h1`
   font-size: 1.875rem;
   font-weight: 700;
   color: #333333;
+  
 
   @media (max-width: 768px) {
     font-size: 1.5rem;
@@ -270,7 +271,6 @@ export const EmptyText = styled.p`
   margin-bottom: 1rem;
 `;
 
-// FILTROS FIXOS DA COMUNIDADE
 export const CommunityFilters = styled.aside`
   width: 40%;
   padding: 20px;
