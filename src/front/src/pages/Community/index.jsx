@@ -6,13 +6,23 @@ import { CreatePostForm } from '../../components/CreatePostForm';
 import { PostDetail } from '../../components/PostDetail';
 import { SearchBarCommunity } from '../../components/SearchBarCommunity';
 import { postTypes, categories } from '../../data/mockPosts';
-import { TrendingUp, Clock, MessageCircle, Plus, Filter, X, FilterIcon, AlertCircle } from 'lucide-react';
+import { 
+  TrendingUp, 
+  Clock, 
+  MessageCircle, 
+  Plus, 
+  Filter, 
+  X, 
+  FilterIcon, 
+  AlertCircle 
+} from 'lucide-react';
 import axios from 'axios';
+import { FiltrosComunidade } from '../../components/FiltrosComunidade';
 
 // Página principal da comunidade
 export const Community = () => {
   // Estados para controle da interface
-  const [mostrarCriarPostagem, setMostrarCriarPostagem] = useState(false); 
+  const [mostrarCriarPostagem, setMostrarCriarPostagem] = useState(false);
   const [selectedType, setSelectedType] = useState('Todos');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [sortBy, setSortBy] = useState('new');
@@ -45,21 +55,31 @@ export const Community = () => {
   }, []);
 
   // Função para buscar o nome do usuário pelo ID
-  const fetchUserName = async (userId) => {
-    if (!userId) return 'Usuário Desconhecido';
-    if (userNamesCache[userId]) return userNamesCache[userId];
-    try {
-      const response = await axios.get(
-        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/${userId}`
-      );
-      const userName = response.data.nome || 'Usuário Desconhecido';
-      setUserNamesCache((prev) => ({ ...prev, [userId]: userName }));
-      return userName;
-    } catch (err) {
-      console.error(`Erro ao buscar nome do usuário ${userId}:`, err);
-      return 'Usuário Desconhecido';
-    }
-  };
+const fetchUserName = async (userId) => {
+  if (!userId) return 'Usuário Desconhecido';
+  if (userNamesCache[userId]) return userNamesCache[userId];
+
+  const token = localStorage.getItem('token'); // PEGAR O TOKEN
+  if (!token) return 'Usuário Desconhecido';
+
+  try {
+    const response = await axios.get(
+      `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`, // ENVIA O TOKEN AQUI
+        },
+      }
+    );
+    const userName = response.data.nome || 'Usuário Desconhecido';
+    setUserNamesCache((prev) => ({ ...prev, [userId]: userName }));
+    return userName;
+  } catch (err) {
+    console.error(`Erro ao buscar nome do usuário ${userId}:`, err);
+    return 'Usuário Desconhecido';
+  }
+};
+
 
   // Função para mapear posts da API para o formato do front-end
   const mapPostFromApi = async (post) => {
@@ -85,7 +105,7 @@ export const Community = () => {
         hour: '2-digit',
         minute: '2-digit',
       }),
-      createdAtRaw: post.criado_em, // Preserva a data original para ordenação
+      createdAtRaw: post.criado_em,
       hasFlow: post.tipo === 'Flow Compartilhado' || post.tipo === 'Showcase',
       flowId: post.id,
       isUpvoted: false,
@@ -94,7 +114,7 @@ export const Community = () => {
     };
   };
 
-  // Carregar posts da API (LISTAR_POSTAGEM)
+  // Carregar posts da API
   useEffect(() => {
     const fetchPosts = async () => {
       setIsLoading(true);
@@ -103,7 +123,6 @@ export const Community = () => {
         const response = await axios.get(
           'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade'
         );
-        // Mapear todos os posts assincronamente
         const mappedPosts = await Promise.all(response.data.map(mapPostFromApi));
         setPosts(mappedPosts);
       } catch (err) {
@@ -115,12 +134,11 @@ export const Community = () => {
     fetchPosts();
   }, []);
 
-  // Função para adicionar um novo post à lista
+  // Funções de manipulação de posts
   const handlePostCreated = (newPost) => {
     setPosts([newPost, ...posts]);
   };
 
-  // Função para manipular votação (upvote/downvote)
   const handleVote = (postId, type) => {
     setPosts(
       posts.map((post) => {
@@ -156,12 +174,10 @@ export const Community = () => {
     );
   };
 
-  // Função para salvar/desalvar post
   const handleSave = (postId) => {
     setPosts(posts.map((post) => (post.id === postId ? { ...post, isSaved: !post.isSaved } : post)));
   };
 
-  // Função para visualizar detalhes do post (BUSCAR_POSTAGEM)
   const handleViewPost = async (postId) => {
     try {
       const response = await axios.get(
@@ -174,7 +190,6 @@ export const Community = () => {
     }
   };
 
-  // Função para deletar post (DELETAR_POSTAGEM)
   const handleDeletePost = async (postId, authorId) => {
     if (authorId !== currentUserId) {
       setError('Você só pode deletar seus próprios posts.');
@@ -201,16 +216,13 @@ export const Community = () => {
     }
   };
 
-  // Função para limpar filtros
   const clearFilters = () => {
     setSelectedType('Todos');
     setSelectedCategory('Todos');
   };
 
-  // Verifica se há filtros ativos
   const hasActiveFilters = selectedType !== 'Todos' || selectedCategory !== 'Todos';
 
-  // Filtra posts com base no tipo, categoria e termo de busca
   const filteredPosts = posts.filter((post) => {
     const matchesType = selectedType === 'Todos' || post.type === selectedType;
     const matchesCategory = selectedCategory === 'Todos' || post.category === selectedCategory;
@@ -221,7 +233,6 @@ export const Community = () => {
     return matchesType && matchesCategory && matchesSearch;
   });
 
-  // Ordena posts com base no critério selecionado
   const sortedPosts = [...filteredPosts].sort((a, b) => {
     console.log(`Ordenando posts por ${sortBy}`);
     switch (sortBy) {
@@ -236,6 +247,12 @@ export const Community = () => {
         return scoreB - scoreA;
     }
   });
+
+  const handleOpenCreateFlow = () => {
+    setMostrarCriarPostagem(true);
+    // Aqui você pode adicionar lógica para sugerir "Flow Compartilhado" como tipo padrão no CreatePostForm
+    // Exemplo: passar uma prop para o formulário, se ele suportar
+  };
 
   return (
     <S.Container>
@@ -267,7 +284,6 @@ export const Community = () => {
       <S.ContentRow>
         <S.MainContent>
           <S.ContentWrapper>
-            {/* Painel de filtros */}
             <AnimatePresence>
               {showFilters && (
                 <motion.div
@@ -319,7 +335,6 @@ export const Community = () => {
               )}
             </AnimatePresence>
 
-            {/* Estado de carregamento ou erro */}
             {isLoading && <S.Loading>Carregando posts...</S.Loading>}
             {error && (
               <S.ErrorMessage>
@@ -330,7 +345,6 @@ export const Community = () => {
 
             {!isLoading && !error && (
               <>
-                {/* Ordenação */}
                 <S.SortSection>
                   <S.Tabs>
                     <S.TabButton active={sortBy === 'new'} onClick={() => setSortBy('new')}>
@@ -348,7 +362,6 @@ export const Community = () => {
                   </S.PostCount>
                 </S.SortSection>
 
-                {/* Lista de posts */}
                 <S.PostList>
                   <AnimatePresence mode="popLayout">
                     {sortedPosts.map((post) => (
@@ -373,7 +386,6 @@ export const Community = () => {
                   </AnimatePresence>
                 </S.PostList>
 
-                {/* Mensagem para quando não há posts */}
                 {sortedPosts.length === 0 && (
                   <S.EmptyState>
                     <S.EmptyIconWrapper>
@@ -398,22 +410,15 @@ export const Community = () => {
           </S.ContentWrapper>
         </S.MainContent>
         <S.CommunityFilters>
-          <S.FilterHeaderCommunity>
-            <S.FilterTitleCommunity>
-              <FilterIcon />
-              Filtros
-            </S.FilterTitleCommunity>
-          </S.FilterHeaderCommunity>
+          <FiltrosComunidade onOpenCreateFlow={handleOpenCreateFlow} />
         </S.CommunityFilters>
       </S.ContentRow>
-      {/* Modal de criar post */}
       {mostrarCriarPostagem && (
         <CreatePostForm
           onClose={() => setMostrarCriarPostagem(false)}
           onPostCreated={handlePostCreated}
         />
       )}
-      {/* Modal de detalhes do post */}
       {selectedPost && (
         <PostDetail
           post={selectedPost}
