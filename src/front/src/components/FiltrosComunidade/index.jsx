@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './style';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const FiltrosComunidade = ({ onOpenCreateFlow }) => {
   const [users, setUsers] = useState([]);
+  const navigate = useNavigate();
+
+
+  const handleCreateFlow = () => {
+    navigate('/criar-flow');
+  };
 
   // Função para obter as iniciais do nome
   const getIniciais = (nome) => {
@@ -43,7 +50,7 @@ export const FiltrosComunidade = ({ onOpenCreateFlow }) => {
         <S.IncentiveMessage>
           Crie flows incríveis e ajude outras pessoas a aprender e crescer. Sua contribuição faz a diferença!
         </S.IncentiveMessage>
-        <S.CreateFlowButton onClick={onOpenCreateFlow}>
+        <S.CreateFlowButton onClick={handleCreateFlow}>
           Criar um Flow
         </S.CreateFlowButton>
       </S.Section>
