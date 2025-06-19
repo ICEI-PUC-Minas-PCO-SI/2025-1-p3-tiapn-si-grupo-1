@@ -4,12 +4,23 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  
+
 `;
+
+export const LogoSection = styled.div`
+padding-top: 3rem;
+    img{
+        height: 100px;
+        display: block;
+        margin: auto;
+    }
+`
 
 export const Section = styled.div`
   background: #ffffff;
   border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 1rem;
 `;
 
@@ -55,6 +66,7 @@ export const UserAvatar = styled.img`
   border-radius: 50%;
   object-fit: cover;
   cursor: pointer;
+  background-color: blue;
 
   &:hover {
     opacity: 0.8;

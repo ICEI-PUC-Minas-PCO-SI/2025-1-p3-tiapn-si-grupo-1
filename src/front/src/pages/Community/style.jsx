@@ -278,8 +278,12 @@ export const CommunityFilters = styled.aside`
   flex-direction: column;
   gap: 20px;
   border-radius: 10px;
-  height: auto;
+  height: 93vh;
   background-color: #fff;
+  position: sticky;
+  top: 30px;
+  align-self: flex-start;
+  
 
   @media (max-width: 768px) {
     width: 100%;

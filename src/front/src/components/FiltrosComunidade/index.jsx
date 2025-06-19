@@ -46,6 +46,11 @@ export const FiltrosComunidade = ({ onOpenCreateFlow }) => {
           ))}
         </S.UserList>
       </S.Section>
+      <S.LogoSection>
+        <a href="">
+            <img src="../public/KnowFlow-Logo.png" alt="" />
+         </a>
+      </S.LogoSection>
     </S.Container>
   );
 };
