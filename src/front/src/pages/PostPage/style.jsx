@@ -1,9 +1,37 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  max-width: 800px;
+export const ContainerGeral = styled.section`
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  width: 100%;
+  max-width: 100%;
   margin: 0 auto;
-  padding: 1.5rem;
+
+`;
+
+export const PostFilters = styled.aside`
+  width: 40%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border-radius: 10px;
+  height: 93vh;
+  background-color: #fff;
+  position: sticky;
+  margin-top: 30px;
+  align-self: flex-start;
+  
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const Container = styled.div`
+  width: 70%;
+  padding: 1rem;
 `;
 
 export const Loading = styled.div`

@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as S from './style';
 import { ArrowLeft, ChevronUp, ChevronDown, MessageCircle, Bookmark, Share2, Send, Edit, Trash2 } from 'lucide-react';
+import { FiltrosComunidade } from '../../components/FiltrosComunidade';
 
 // Função para obter iniciais do nome
 const getIniciais = (nome) => {
@@ -309,6 +310,7 @@ export const PostPage = () => {
   if (!post) return <S.ErrorMessage>Post não encontrado.</S.ErrorMessage>;
 
   return (
+    <S.ContainerGeral>
     <S.Container>
       <ToastContainer position="top-right" autoClose={3000} />
       <S.Breadcrumb>
@@ -427,5 +429,9 @@ export const PostPage = () => {
         </S.CommentList>
       </S.CommentSection>
     </S.Container>
+      <S.PostFilters>
+        <FiltrosComunidade/>
+      </S.PostFilters>
+    </S.ContainerGeral>
   );
 };

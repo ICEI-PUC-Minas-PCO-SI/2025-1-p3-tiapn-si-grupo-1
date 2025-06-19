@@ -1,20 +1,25 @@
 import styled from 'styled-components';
 
-// Container do post
 export const PostCard = styled.div`
   background: #ffffff;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 1rem;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  cursor: pointer;
 
   &:hover {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+
+  &:focus {
+    outline: 2px solid #233dff;
+    outline-offset: 2px;
   }
 `;
 
-// Cabeçalho do post
 export const PostHeader = styled.div`
   display: flex;
   align-items: center;
@@ -22,7 +27,6 @@ export const PostHeader = styled.div`
   margin-bottom: 1rem;
 `;
 
-// Avatar do autor
 export const Avatar = styled.div`
   width: 40px;
   height: 40px;
@@ -38,25 +42,21 @@ export const Avatar = styled.div`
   text-transform: uppercase;
 `;
 
-// Nome do autor
 export const AuthorName = styled.h3`
   font-size: 1rem;
   font-weight: 600;
   color: #333333;
 `;
 
-// Cargo e data do autor
 export const AuthorRole = styled.span`
   font-size: 0.75rem;
   color: #666666;
 `;
 
-// Conteúdo do post
 export const PostContent = styled.div`
   margin-bottom: 1rem;
 `;
 
-// Título do post
 export const PostTitle = styled.h2`
   font-size: 1.25rem;
   font-weight: 600;
@@ -64,21 +64,18 @@ export const PostTitle = styled.h2`
   margin-bottom: 0.5rem;
 `;
 
-// Texto do post
 export const PostText = styled.p`
   font-size: 0.875rem;
   color: #565656;
   line-height: 1.5;
 `;
 
-// Container de tags
 export const Tags = styled.div`
   display: flex;
   gap: 0.5rem;
   margin-top: 0.75rem;
 `;
 
-// Tag individual
 export const Tag = styled.span`
   background: #f0f0f0;
   color: #333333;
@@ -87,14 +84,12 @@ export const Tag = styled.span`
   border-radius: 4px;
 `;
 
-// Rodapé do post
 export const PostFooter = styled.div`
   display: flex;
   gap: 1rem;
   align-items: center;
 `;
 
-// Botão de comentários
 export const CommentButton = styled.button`
   display: flex;
   align-items: center;
@@ -110,7 +105,6 @@ export const CommentButton = styled.button`
   }
 `;
 
-// Botão de salvar
 export const SaveButton = styled.button`
   display: flex;
   align-items: center;
@@ -126,23 +120,6 @@ export const SaveButton = styled.button`
   }
 `;
 
-// Botão de visualizar
-export const ViewButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  background: none;
-  border: none;
-  color: #666666;
-  font-size: 0.875rem;
-  cursor: pointer;
-
-  &:hover {
-    color: #233dff;
-  }
-`;
-
-// Botão de deletar
 export const DeleteButton = styled.button`
   display: flex;
   align-items: center;

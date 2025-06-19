@@ -3,7 +3,6 @@ import * as S from './style';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CommunityPost } from '../../components/CommunityPost';
 import { CreatePostForm } from '../../components/CreatePostForm';
-import { PostDetail } from '../../components/PostDetail';
 import { SearchBarCommunity } from '../../components/SearchBarCommunity';
 import { postTypes, categories } from '../../data/mockPosts';
 import { 
@@ -13,7 +12,6 @@ import {
   Plus, 
   Filter, 
   X, 
-  FilterIcon, 
   AlertCircle 
 } from 'lucide-react';
 import axios from 'axios';
@@ -30,7 +28,6 @@ export const Community = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const [selectedPost, setSelectedPost] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentUserId, setCurrentUserId] = useState(null);
   const [userNamesCache, setUserNamesCache] = useState({}); // Cache para nomes de usuários
@@ -187,18 +184,6 @@ export const Community = () => {
     setPosts(posts.map((post) => (post.id === postId ? { ...post, isSaved: !post.isSaved } : post)));
   };
 
-  const handleViewPost = async (postId) => {
-    try {
-      const response = await axios.get(
-        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade/${postId}`
-      );
-      const mappedPost = await mapPostFromApi(response.data);
-      setSelectedPost(mappedPost);
-    } catch (err) {
-      setError('Erro ao carregar os detalhes do post.');
-    }
-  };
-
   const handleDeletePost = async (postId, authorId) => {
     if (authorId !== currentUserId) {
       setError('Você só pode deletar seus próprios posts.');
@@ -215,7 +200,6 @@ export const Community = () => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setPosts(posts.filter((post) => post.id !== postId));
-      setSelectedPost(null);
     } catch (err) {
       setError('Erro ao deletar o post. Verifique sua permissão ou tente novamente.');
       if (err.response?.status === 401 || err.response?.status === 403) {
@@ -384,7 +368,6 @@ export const Community = () => {
                           post={post}
                           onVote={handleVote}
                           onSave={handleSave}
-                          onView={() => handleViewPost(post.id)}
                           onDelete={() => handleDeletePost(post.id, post.author.id)}
                           currentUserId={currentUserId}
                         />
@@ -424,14 +407,6 @@ export const Community = () => {
         <CreatePostForm
           onClose={() => setMostrarCriarPostagem(false)}
           onPostCreated={handlePostCreated}
-        />
-      )}
-      {selectedPost && (
-        <PostDetail
-          post={selectedPost}
-          onClose={() => setSelectedPost(null)}
-          onDelete={() => handleDeletePost(selectedPost.id, selectedPost.author.id)}
-          currentUserId={currentUserId}
         />
       )}
     </S.Container>
