@@ -1,74 +1,85 @@
 import styled from 'styled-components';
 
+// Container principal
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  
-
-`;
-
-export const LogoSection = styled.div`
-padding-top: 3rem;
-    img{
-        height: 100px;
-        display: block;
-        margin: auto;
-    }
-`
-
-export const Section = styled.div`
+  gap: 1.5rem;
+  padding: 1.5rem;
   background: #ffffff;
   border: 1px solid #e5e5e5;
-  border-radius: 10px;
-  padding: 1rem;
+  border-radius: 8px;
 `;
 
+// Seção
+export const Section = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+`;
+
+// Título da seção
 export const SectionTitle = styled.h3`
   font-size: 1rem;
   font-weight: 600;
   color: #333333;
-  margin-bottom: 1rem;
 `;
 
+// Mensagem de incentivo
 export const IncentiveMessage = styled.p`
   font-size: 0.875rem;
   color: #565656;
-  margin-bottom: 1rem;
   line-height: 1.5;
 `;
 
+// Botão de criar flow
 export const CreateFlowButton = styled.button`
-  padding: 0.75rem 1.5rem;
   background: #233dff;
   color: #ffffff;
   border: none;
   border-radius: 4px;
-  cursor: pointer;
+  padding: 0.75rem 1rem;
   font-size: 0.875rem;
-  width: 100%;
-  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s ease;
 
   &:hover {
     background: #1e33cc;
   }
 `;
 
+// Lista de usuários
 export const UserList = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 `;
 
-export const UserAvatar = styled.img`
+// Avatar do usuário
+export const Avatar = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  object-fit: cover;
-  cursor: pointer;
-  background-color: blue;
+  background-color: #ffffff;
+  border: 2px solid #233dff;
+  color: #233dff;
+  font-weight: 400;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  cursor: default;
+`;
 
-  &:hover {
-    opacity: 0.8;
+// Seção do logo
+export const LogoSection = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+
+  img {
+    max-width: 100%;
+    height: auto;
   }
 `;

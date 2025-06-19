@@ -1,6 +1,6 @@
 import React from 'react';
 import * as S from './style';
-import { MessageCircle, ArrowUp, ArrowDown, Bookmark, Trash2, Eye } from 'lucide-react';
+import { MessageCircle, Bookmark, Trash2, Eye } from 'lucide-react';
 
 // Componente que exibe um único post da comunidade
 export const CommunityPost = ({ post, onVote, onSave, onView, onDelete, currentUserId }) => {
@@ -8,7 +8,7 @@ export const CommunityPost = ({ post, onVote, onSave, onView, onDelete, currentU
     <S.PostCard>
       {/* Cabeçalho do post com informações do autor */}
       <S.PostHeader>
-        <S.AuthorAvatar src={post.author.avatar} alt={post.author.name} />
+        <S.Avatar>{post.author.initials}</S.Avatar>
         <div>
           <S.AuthorName>{post.author.name}</S.AuthorName>
           <S.AuthorRole>{post.author.role} • {post.createdAt}</S.AuthorRole>

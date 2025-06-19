@@ -35,6 +35,16 @@ export const Community = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [userNamesCache, setUserNamesCache] = useState({}); // Cache para nomes de usuários
 
+  // Função para obter as iniciais do nome
+  const getIniciais = (nome) => {
+    if (!nome) return "";
+    const partes = nome.trim().split(" ");
+    if (partes.length === 1) return partes[0][0].toUpperCase();
+    return (
+      partes[0][0].toUpperCase() + partes[partes.length - 1][0].toUpperCase()
+    );
+  };
+
   // Obter ID do usuário autenticado e lista de usuários
   useEffect(() => {
     const fetchUserDataAndUsers = async () => {
@@ -89,7 +99,7 @@ export const Community = () => {
       content: post.conteudo,
       author: {
         name: userName,
-        avatar: post.author?.avatar || '/placeholder.svg?height=40&width=40',
+        initials: getIniciais(userName), // Adiciona as iniciais
         role: post.author?.role || 'Membro',
         reputation: post.author?.reputation || 0,
         id: post.criado_por || null,
@@ -131,7 +141,7 @@ export const Community = () => {
       }
     };
     fetchPosts();
-  }, [userNamesCache]); // Adiciona userNamesCache como dependência
+  }, [userNamesCache]);
 
   // Funções de manipulação de posts
   const handlePostCreated = (newPost) => {

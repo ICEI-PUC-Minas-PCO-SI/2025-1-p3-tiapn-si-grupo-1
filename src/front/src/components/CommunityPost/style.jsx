@@ -1,156 +1,159 @@
 import styled from 'styled-components';
 
+// Container do post
 export const PostCard = styled.div`
   background: #ffffff;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   padding: 1.5rem;
   margin-bottom: 1rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
 `;
 
+// Cabeçalho do post
 export const PostHeader = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   margin-bottom: 1rem;
 `;
 
-export const AuthorAvatar = styled.img`
+// Avatar do autor
+export const Avatar = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  object-fit: cover;
+  background-color: #ffffff;
+  border: 2px solid #233dff;
+  color: #233dff;
+  font-weight: 400;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
 `;
 
+// Nome do autor
 export const AuthorName = styled.h3`
   font-size: 1rem;
   font-weight: 600;
   color: #333333;
 `;
 
+// Cargo e data do autor
 export const AuthorRole = styled.span`
-  font-size: 0.875rem;
-  color: #565656;
+  font-size: 0.75rem;
+  color: #666666;
 `;
 
+// Conteúdo do post
 export const PostContent = styled.div`
   margin-bottom: 1rem;
 `;
 
+// Título do post
 export const PostTitle = styled.h2`
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 600;
   color: #333333;
   margin-bottom: 0.5rem;
 `;
 
+// Texto do post
 export const PostText = styled.p`
-  font-size: 1rem;
-  color: #333333;
-  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: #565656;
   line-height: 1.5;
 `;
 
+// Container de tags
 export const Tags = styled.div`
   display: flex;
-  flex-wrap: wrap;
   gap: 0.5rem;
+  margin-top: 0.75rem;
 `;
 
+// Tag individual
 export const Tag = styled.span`
   background: #f0f0f0;
   color: #333333;
-  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 4px;
-  font-size: 0.875rem;
 `;
 
+// Rodapé do post
 export const PostFooter = styled.div`
   display: flex;
-  align-items: center;
   gap: 1rem;
-`;
-
-export const VoteButton = styled.button`
-  display: flex;
   align-items: center;
-  gap: 0.25rem;
-  background: ${({ active }) => (active ? '#233dff' : 'transparent')};
-  color: ${({ active }) => (active ? '#ffffff' : '#333333')};
-  border: 1px solid #e5e5e5;
-  padding: 0.5rem 0.75rem;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.875rem;
-
-  &:hover {
-    background: #233dff;
-    color: #ffffff;
-  }
 `;
 
+// Botão de comentários
 export const CommentButton = styled.button`
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  background: transparent;
-  border: 1px solid #e5e5e5;
-  padding: 0.5rem 0.75rem;
-  border-radius: 4px;
-  color: #333333;
-  cursor: pointer;
+  background: none;
+  border: none;
+  color: #666666;
   font-size: 0.875rem;
+  cursor: pointer;
 
   &:hover {
-    background: #f0f0f0;
+    color: #233dff;
   }
 `;
 
+// Botão de salvar
 export const SaveButton = styled.button`
   display: flex;
   align-items: center;
-  background: ${({ active }) => (active ? '#233dff' : 'transparent')};
-  color: ${({ active }) => (active ? '#ffffff' : '#333333')};
-  border: 1px solid #e5e5e5;
-  padding: 0.5rem;
-  border-radius: 4px;
+  gap: 0.25rem;
+  background: none;
+  border: none;
+  color: ${({ active }) => (active ? '#233dff' : '#666666')};
+  font-size: 0.875rem;
   cursor: pointer;
 
   &:hover {
-    background: #233dff;
-    color: #ffffff;
+    color: #233dff;
   }
 `;
 
+// Botão de visualizar
 export const ViewButton = styled.button`
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  background: transparent;
-  border: 1px solid #e5e5e5;
-  padding: 0.5rem 0.75rem;
-  border-radius: 4px;
-  color: #333333;
-  cursor: pointer;
+  background: none;
+  border: none;
+  color: #666666;
   font-size: 0.875rem;
+  cursor: pointer;
 
   &:hover {
-    background: #f0f0f0;
+    color: #233dff;
   }
 `;
 
+// Botão de deletar
 export const DeleteButton = styled.button`
   display: flex;
   align-items: center;
-  background: transparent;
-  border: 1px solid #e5e5e5;
-  padding: 0.5rem;
-  border-radius: 4px;
-  color: #ff4d4f;
+  gap: 0.25rem;
+  background: none;
+  border: none;
+  color: #d32f2f;
+  font-size: 0.875rem;
   cursor: pointer;
 
   &:hover {
-    background: #fff1f0;
+    color: #b71c1c;
   }
 `;
