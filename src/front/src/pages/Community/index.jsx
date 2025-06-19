@@ -35,55 +35,54 @@ export const Community = () => {
   const [currentUserId, setCurrentUserId] = useState(null);
   const [userNamesCache, setUserNamesCache] = useState({}); // Cache para nomes de usuários
 
-  // Obter ID do usuário autenticado
+  // Obter ID do usuário autenticado e lista de usuários
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUserDataAndUsers = async () => {
       const token = localStorage.getItem('token');
-      if (token) {
-        try {
-          const response = await axios.get(
-            'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/me',
-            { headers: { Authorization: `Bearer ${token}` } }
-          );
-          setCurrentUserId(response.data.id);
-        } catch (err) {
-          console.error('Erro ao buscar dados do usuário:', err);
-        }
+      if (!token) {
+        setError('Usuário não autenticado. Faça login.');
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        // Buscar dados do usuário logado
+        const userResponse = await axios.get(
+          'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/me',
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setCurrentUserId(userResponse.data.id);
+
+        // Buscar lista de todos os usuários
+        const usersResponse = await axios.get(
+          'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario',
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+        // Criar mapa de IDs para nomes
+        const userNamesMap = usersResponse.data.reduce((acc, user) => {
+          acc[user.id] = user.nome || 'Usuário Desconhecido';
+          return acc;
+        }, {});
+        setUserNamesCache(userNamesMap);
+      } catch (err) {
+        console.error('Erro ao buscar dados:', err);
+        setError('Erro ao carregar dados do usuário ou lista de usuários.');
+      } finally {
+        setIsLoading(false);
       }
     };
-    fetchUserData();
+    fetchUserDataAndUsers();
   }, []);
 
-  // Função para buscar o nome do usuário pelo ID
-const fetchUserName = async (userId) => {
-  if (!userId) return 'Usuário Desconhecido';
-  if (userNamesCache[userId]) return userNamesCache[userId];
-
-  const token = localStorage.getItem('token'); // PEGAR O TOKEN
-  if (!token) return 'Usuário Desconhecido';
-
-  try {
-    const response = await axios.get(
-      `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/${userId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`, // ENVIA O TOKEN AQUI
-        },
-      }
-    );
-    const userName = response.data.nome || 'Usuário Desconhecido';
-    setUserNamesCache((prev) => ({ ...prev, [userId]: userName }));
-    return userName;
-  } catch (err) {
-    console.error(`Erro ao buscar nome do usuário ${userId}:`, err);
-    return 'Usuário Desconhecido';
-  }
-};
-
+  // Função para buscar o nome do usuário pelo ID (usando cache)
+  const fetchUserName = (userId) => {
+    if (!userId) return 'Usuário Desconhecido';
+    return userNamesCache[userId] || 'Usuário Desconhecido';
+  };
 
   // Função para mapear posts da API para o formato do front-end
   const mapPostFromApi = async (post) => {
-    const userName = await fetchUserName(post.criado_por);
+    const userName = fetchUserName(post.criado_por);
     return {
       id: post.id,
       title: post.titulo,
@@ -132,7 +131,7 @@ const fetchUserName = async (userId) => {
       }
     };
     fetchPosts();
-  }, []);
+  }, [userNamesCache]); // Adiciona userNamesCache como dependência
 
   // Funções de manipulação de posts
   const handlePostCreated = (newPost) => {
@@ -250,8 +249,6 @@ const fetchUserName = async (userId) => {
 
   const handleOpenCreateFlow = () => {
     setMostrarCriarPostagem(true);
-    // Aqui você pode adicionar lógica para sugerir "Flow Compartilhado" como tipo padrão no CreatePostForm
-    // Exemplo: passar uma prop para o formulário, se ele suportar
   };
 
   return (
@@ -430,3 +427,5 @@ const fetchUserName = async (userId) => {
     </S.Container>
   );
 };
+
+export default Community;
