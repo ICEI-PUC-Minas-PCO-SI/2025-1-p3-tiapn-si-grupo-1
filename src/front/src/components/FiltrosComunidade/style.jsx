@@ -7,7 +7,6 @@ export const Container = styled.div`
   gap: 1.5rem;
   padding: 1.5rem;
   background: #ffffff;
-  border: 1px solid #e5e5e5;
   border-radius: 8px;
 `;
 
@@ -79,7 +78,51 @@ export const LogoSection = styled.div`
   margin-top: 1rem;
 
   img {
-    max-width: 100%;
+    max-width: 50%;
     height: auto;
   }
+  a {
+    display: flex;
+    justify-content: center;
+  }
+`;
+
+// Seção de rodapé
+export const FooterSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+`;
+
+// Links do rodapé
+export const FooterLinks = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #565656;
+
+  a {
+    color: #565656;
+    text-decoration: none;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #233dff;
+    }
+  }
+
+  span {
+    color: #565656;
+  }
+`;
+
+// Texto de direitos autorais
+export const Copyright = styled.p`
+  font-size: 0.75rem;
+  color: #565656;
+  text-align: center;
 `;

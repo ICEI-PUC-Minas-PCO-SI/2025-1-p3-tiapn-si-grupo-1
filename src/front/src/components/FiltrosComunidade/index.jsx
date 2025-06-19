@@ -62,9 +62,27 @@ export const FiltrosComunidade = ({ onOpenCreateFlow }) => {
       </S.Section>
       <S.LogoSection>
         <a href="">
-          <img src="../public/KnowFlow-Logo.png" alt="Logo KnowFlow" />
+          <img src="/KnowFlow-Logo.png" alt="Logo KnowFlow" />
         </a>
       </S.LogoSection>
+      <S.FooterSection>
+        <S.FooterLinks>
+          <a href="/termos-de-servico">Termos de Serviço</a>
+          <span>|</span>
+          <a href="/politica-de-privacidade">Política de Privacidade</a>
+          <span>|</span>
+          <a href="/politica-de-cookies">Política de Cookies</a>
+          <span>|</span>
+          <a href="/acessibilidade">Acessibilidade</a>
+          <span>|</span>
+          <a href="/informacoes-de-anuncios">Informações de Anúncios</a>
+          <span>|</span>
+          <a href="/mais">Mais</a>
+        </S.FooterLinks>
+        <S.Copyright>
+          © 2025 KnowFlow Corp.
+        </S.Copyright>
+      </S.FooterSection>
     </S.Container>
   );
 };
