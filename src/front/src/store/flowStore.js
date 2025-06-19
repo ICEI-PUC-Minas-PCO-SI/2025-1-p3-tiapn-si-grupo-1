@@ -177,45 +177,45 @@ export const useFlowStore = create((set, get) => ({
         console.error("Erro ao buscar salvos:", savesError);
       }
 
-      // Busca todos os comentários
-      let comentarios = [];
-      try {
-        const comentariosResponse = await axios.get(
-          "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentario"
-        );
-        comentarios = comentariosResponse.data;
-        console.log("Comentarios Response:", comentarios); // Log para depuração
-      } catch (comentariosError) {
-        console.error("Erro ao buscar comentários:", comentariosError);
-      }
-
       // Mapeia os flows para incluir stats corretos
-      const mappedFlows = flowsResponse.data.map((flow) => {
-        // Conta curtidas
-        const likeCount = curtidas.filter(
-          (curtida) => String(curtida.flow_id) === String(flow.id)
-        ).length;
+      const mappedFlows = await Promise.all(
+        flowsResponse.data.map(async (flow) => {
+          // Conta curtidas
+          const likeCount = curtidas.filter(
+            (curtida) => String(curtida.flow_id) === String(flow.id)
+          ).length;
 
-        // Conta comentários
-        const commentCount = comentarios.filter(
-          (comentario) => String(comentario.flow_id) === String(flow.id)
-        ).length;
+          // Busca comentários para este flow via /api/flow/:id
+          let commentCount = 0;
+          try {
+            const flowDetailResponse = await axios.get(
+              `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${flow.id}`
+            );
+            console.log(`Flow Detail Response for flow ${flow.id}:`, flowDetailResponse.data); // Log para depuração
+            commentCount = Array.isArray(flowDetailResponse.data.comentarios)
+              ? flowDetailResponse.data.comentarios.length
+              : flow.stats?.comments || 0;
+          } catch (flowDetailError) {
+            console.error(`Erro ao buscar detalhes do flow ${flow.id}:`, flowDetailError);
+            commentCount = flow.stats?.comments || 0; // Fallback
+          }
 
-        // Conta salvos
-        const saveCount = saves.filter(
-          (save) => String(save.flow_id) === String(flow.id)
-        ).length;
+          // Conta salvos
+          const saveCount = saves.filter(
+            (save) => String(save.flow_id) === String(flow.id)
+          ).length;
 
-        return {
-          ...flow,
-          stats: {
-            likes: likeCount,
-            comments: commentCount || flow.comentarios?.length || flow.stats?.comments || 0,
-            saves: saveCount || flow.stats?.saves || 0,
-            views: flow.stats?.views || 0,
-          },
-        };
-      });
+          return {
+            ...flow,
+            stats: {
+              likes: likeCount,
+              comments: commentCount,
+              saves: saveCount,
+              views: flow.stats?.views || 0,
+            },
+          };
+        })
+      );
 
       console.log("Mapped Flows:", mappedFlows); // Log para depuração
       set({ flows: mappedFlows });
