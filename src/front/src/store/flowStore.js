@@ -1,7 +1,16 @@
 import { create } from "zustand";
 import axios from "axios";
 
-//Cria a store chamada useFlowStore
+// Configura o axios para incluir o token de autenticação (alinhado com FlowViewer)
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Cria a store chamada useFlowStore
 export const useFlowStore = create((set, get) => ({
   // Estado para armazenar os IDs dos posts curtidos
   likedPosts: [],
@@ -9,35 +18,70 @@ export const useFlowStore = create((set, get) => ({
   savedPosts: [],
   // Estado para armazenar comentários. Cada postId terá um array de comentários
   comments: {},
-  //Estado para armazenar categoria ativa
+  // Estado para armazenar categoria ativa
   category: "",
-  //Estado para segurar os itens de pesquisa
+  // Estado para segurar os itens de pesquisa
   searchTerm: "",
-  //Estado que armazena quais flows devem ser exibidos
-  flows: [], //Feed Principal
-  //Estado que indica que uma consulta está sendo realizada
+  // Estado que armazena quais flows devem ser exibidos
+  flows: [], // Feed Principal
+  // Estado que indica que uma consulta está sendo realizada
   loading: false,
-  //modal
-  //Estado que armazena apenas os flows para aparecer no modal
+  // Modal
   modalFlows: [],
   modalSearchTerm: "",
   modalLoading: false,
 
   // Função para curtir/descurtir um post
-  toggleLike: async (postId) =>
-    set((state) => ({
-      likedPosts: state.likedPosts.includes(postId)
-        ? state.likedPosts.filter((id) => id !== postId)
-        : [...state.likedPosts, postId],
-    })),
+  toggleLike: async (postId) => {
+    try {
+      const usuarioId = localStorage.getItem("usuarioId");
+      if (!usuarioId) throw new Error("Usuário não autenticado");
+
+      const { likedPosts } = get();
+      if (likedPosts.includes(postId)) {
+        // Remover curtida
+        const curtidasResponse = await axios.get(
+          "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas"
+        );
+        const curtida = curtidasResponse.data.find(
+          (c) =>
+            String(c.usuario_id || c.usuarioId) === String(usuarioId) &&
+            String(c.flow_id || c.flowId) === String(postId)
+        );
+        if (!curtida || !curtida.id) throw new Error("Curtida não encontrada");
+        await axios.delete(
+          `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas/${curtida.id}`
+        );
+      } else {
+        // Adicionar curtida
+        await axios.post(
+          "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas",
+          { flow_id: postId }
+        );
+      }
+      set((state) => ({
+        likedPosts: state.likedPosts.includes(postId)
+          ? state.likedPosts.filter((id) => id !== postId)
+          : [...state.likedPosts, postId],
+      }));
+    } catch (error) {
+      console.error("Erro ao processar curtida:", error);
+    }
+  },
 
   // Função para salvar/desalvar um post
-  toggleSave: async (postId) =>
-    set((state) => ({
-      savedPosts: state.savedPosts.includes(postId)
-        ? state.savedPosts.filter((id) => id !== postId)
-        : [...state.savedPosts, postId],
-    })),
+  toggleSave: async (postId) => {
+    try {
+      // Aqui você pode adicionar chamadas à API para salvar/desalvar, se necessário
+      set((state) => ({
+        savedPosts: state.savedPosts.includes(postId)
+          ? state.savedPosts.filter((id) => id !== postId)
+          : [...state.savedPosts, postId],
+      }));
+    } catch (error) {
+      console.error("Erro ao processar save:", error);
+    }
+  },
 
   // Função para adicionar um comentário a um post específico
   addComment: (postId, comment) =>
@@ -52,7 +96,7 @@ export const useFlowStore = create((set, get) => ({
   removeComment: async (postId, index) =>
     set((state) => {
       const newComments = [...(state.comments[postId] || [])];
-      newComments.splice(index, 1); // Remove o comentário pelo índice
+      newComments.splice(index, 1);
       return {
         comments: {
           ...state.comments,
@@ -64,24 +108,24 @@ export const useFlowStore = create((set, get) => ({
   setCategory: (categoria) => {
     set({ category: categoria });
     const { searchTerm } = get();
-    get().fetchFlows({ category: categoria, searchTerm }); // ← PASSA os valores certos
+    get().fetchFlows({ category: categoria, searchTerm });
   },
 
   setSearchTerm: (termo) => {
     set({ searchTerm: termo });
     const { category } = get();
-    get().fetchFlows({ searchTerm: termo, category }); // feed principal
+    get().fetchFlows({ searchTerm: termo, category });
   },
 
   setModalSearchTerm: (termo) => {
     set({ modalSearchTerm: termo });
-    get().fetchModalFlows(termo); // apenas no modal
+    get().fetchModalFlows(termo);
   },
 
   fetchFlows: async (params = {}) => {
     set({ loading: true });
 
-    const { category, searchTerm } = get(); // estados atuais
+    const { category, searchTerm } = get();
     const queryParams = new URLSearchParams();
 
     const finalSearchTerm = params.searchTerm ?? searchTerm;
@@ -91,11 +135,42 @@ export const useFlowStore = create((set, get) => ({
     if (finalCategory) queryParams.append("categoria", finalCategory);
 
     try {
-      const response = await axios.get(
+      // Busca os flows
+      const flowsResponse = await axios.get(
         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow?${queryParams.toString()}`
       );
 
-      set({ flows: response.data });
+      // Busca todas as curtidas
+      let curtidas = [];
+      try {
+        const curtidasResponse = await axios.get(
+          "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas"
+        );
+        curtidas = curtidasResponse.data;
+      } catch (curtidasError) {
+        console.error("Erro ao buscar curtidas:", curtidasError);
+      }
+
+      // Mapeia os flows para incluir stats corretos
+      const mappedFlows = flowsResponse.data.map((flow) => {
+        // Conta curtidas para este flow
+        const likeCount = curtidas.filter(
+          (curtida) => String(curtida.flow_id || curtida.flowId) === String(flow.id)
+        ).length;
+
+        // Retorna o flow com stats ajustado
+        return {
+          ...flow,
+          stats: {
+            likes: likeCount,
+            comments: flow.comentarios?.length || 0,
+            saves: flow.stats?.saves || 0,
+            views: flow.stats?.views || 0,
+          },
+        };
+      });
+
+      set({ flows: mappedFlows });
     } catch (error) {
       console.error("Erro ao buscar flows:", error);
       set({ flows: [] });
