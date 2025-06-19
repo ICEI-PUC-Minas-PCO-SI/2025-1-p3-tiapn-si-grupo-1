@@ -142,7 +142,10 @@ const flowController = {
         status,
       });
 
-      res.json({ mensagem: "Flow atualizado com sucesso" });
+      res.json({
+        mensagem: "Flow atualizado com sucesso",
+        id: flow.id,
+      });
     } catch (error) {
       res
         .status(500)
