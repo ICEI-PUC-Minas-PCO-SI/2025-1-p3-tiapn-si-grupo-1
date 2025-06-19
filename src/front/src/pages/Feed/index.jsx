@@ -50,15 +50,6 @@ export default function Feed() {
     navigate("/criar-flow");
   };
 
-  //Configurando Token para todas as requisoções na página
-  axios.interceptors.request.use((config) => {
-    const token = localStorage.getItem('token');
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;  
-});
-
   //Estados globais
   const flows = useFlowStore((state) => state.flows);
   const searchTerm = useFlowStore((state) => state.searchTerm);
