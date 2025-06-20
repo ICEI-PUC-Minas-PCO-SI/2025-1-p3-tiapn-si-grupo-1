@@ -54,12 +54,6 @@ export default function SearchPage() {
     fetchUsers(); // só faz uma vez ao abrir o modal
   }, []);
 
-  useEffect(() => {
-    if (activeOption === "tags") {
-      fetchFiltros();
-    }
-  }, [activeOption]);
-
   const handleOptionClick = (option) => {
     setActiveOption(option);
 

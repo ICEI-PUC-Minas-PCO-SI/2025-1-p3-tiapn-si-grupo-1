@@ -3,7 +3,6 @@ import debounce from "lodash.debounce";
 import { Search } from "lucide-react";
 import { Form, Input, IconWrapper, InputWrapper } from "./style";
 import { useFlowStore } from "../../store/flowStore";
-import { useUIStore } from "../../store/uiStore";
 import { useUserStore } from "../../store/userStore";
 import { useEffect } from "react";
 import { useFiltroStore } from "../../store/filterStore";
@@ -16,17 +15,9 @@ export default function ModalSearchBar({ activeOption }) {
   // Estado local para o input, atualizado instantaneamente
   const [localSearch, setLocalSearch] = useState(modalSearchTerm);
 
-  // Estado que controla a abertura do modal de busca
-  const openSearchModal = useUIStore((state) => state.openSearchModal);
-
   // Funções para filtrar usuários e tags, obtidas do estado global
   const filterUsers = useUserStore((state) => state.filterUsers);
   const filterTags = useFiltroStore((state) => state.filterTags);
-
-  // Zera o campo quando o componente monta
-  useEffect(() => {
-    setLocalSearch("");
-  }, []);
 
   const debouncedSearch = useMemo(
     () =>
@@ -73,7 +64,6 @@ export default function ModalSearchBar({ activeOption }) {
           placeholder="Buscar Flow por título, tag ou autor..."
           value={localSearch} // valor controlado
           onChange={handleChange}
-          onFocus={openSearchModal}
         ></Input>
       </InputWrapper>
     </Form>

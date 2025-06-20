@@ -21,7 +21,7 @@ export default function ModalTagCard({ tag }) {
         </TagDetails>
       </TagInfo>
 
-      <ShowTagFlowsButton />
+      <ShowTagFlowsButton tag={tag} />
     </TagCardWrapper>
   );
 }

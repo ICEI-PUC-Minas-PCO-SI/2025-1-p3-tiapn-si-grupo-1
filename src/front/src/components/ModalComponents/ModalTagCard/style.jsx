@@ -42,4 +42,5 @@ export const TagDetails = styled.span`
 
 export const TagName = styled.h2`
   font-size: 16px;
+  color: #666666;
 `;

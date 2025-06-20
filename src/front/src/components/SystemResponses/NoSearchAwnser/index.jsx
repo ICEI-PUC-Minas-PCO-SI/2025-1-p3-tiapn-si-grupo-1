@@ -8,7 +8,7 @@ export default function NoSearchAwnser({ search }) {
         <SearchIcon size={100} />
       </IconWrapper>
       <h3 style={{ color: "#333333" }}>
-        Nenhum{`${search === "tag" ? "a" : " "}`}
+        Nenhum{`${search === "tags" ? "a " : " "}`}
         {`${
           search === "usuarios"
             ? "usuário"
@@ -16,7 +16,7 @@ export default function NoSearchAwnser({ search }) {
             ? "flow"
             : "tag"
         }`}{" "}
-        encontrado
+        encontrad{`${search === "tags" ? "a " : "o "}`}
       </h3>
       <p>Tente usar termos diferentes ou mais específicos</p>
     </MessageWrapper>

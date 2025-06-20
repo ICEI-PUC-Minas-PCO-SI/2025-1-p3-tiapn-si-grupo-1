@@ -17,7 +17,8 @@ export const useFlowStore = create((set, get) => ({
   flows: [], //Feed Principal
   //Estado que indica que uma consulta está sendo realizada
   loading: false,
-  //modal
+
+  //MODAL
   //Estado que armazena apenas os flows para aparecer no modal
   modalFlows: [],
   modalSearchTerm: "",
