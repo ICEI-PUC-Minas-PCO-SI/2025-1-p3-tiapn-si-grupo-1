@@ -1,10 +1,11 @@
-import { Button, CommentIcon } from "./style.jsx";
 import { MessageCircle } from "lucide-react";
+import { Button, CommentIcon } from "./style";
 
-export default function CommentButton() {
+export default function CommentButton({ comments }) {
   return (
     <Button>
-      <CommentIcon />
+      <CommentIcon as={MessageCircle} />
+      {comments}
     </Button>
   );
 }
