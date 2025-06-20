@@ -24,7 +24,7 @@ const PostagemComunidade = sequelize.define(
 },
     tipo: {
   type: DataTypes.ENUM("Discussão", "Solicitação", "Dúvida"),
-  allowNull: false,
+  allowNull: true,
   comment: "1 = Discussão, 2 = Solicitação, 3 = Dúvida",
 },
     tags: DataTypes.ARRAY(DataTypes.STRING),
