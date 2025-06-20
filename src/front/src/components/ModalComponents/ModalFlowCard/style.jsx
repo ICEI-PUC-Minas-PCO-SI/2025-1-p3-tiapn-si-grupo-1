@@ -35,9 +35,9 @@ export const Avatar = styled.div`
   height: 32px;
   border-radius: 50%;
   background-color: #fff;
-  border: 1px solid #233dff;
+  border: 2px solid #233dff;
   color: #233dff;
-  font-weight: 400;
+  font-weight: 600;
   font-size: 14px;
   display: flex;
   align-items: center;

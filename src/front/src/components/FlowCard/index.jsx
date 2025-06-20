@@ -36,6 +36,7 @@ import {
 export default function FlowCard({ flow, userID }) {
   //Usuario
   const user = userID;
+  console.log(flow);
 
   //Função temporária para criar dinamicamente um "avatar" para o usuário
   const getIniciais = (nome) => {
@@ -76,14 +77,14 @@ export default function FlowCard({ flow, userID }) {
     return diffDays === 0
       ? getHoursAgo(publishDate)
       : diffDays === 1
-      ? `Há 1 dia`
-      : diffDays < 7
-      ? `${diffDays} dias atrás`
-      : diffDays < 30
-      ? `${Math.floor(diffDays / 7)} semana(s) atrás`
-      : diffDays < 365
-      ? `${Math.floor(diffDays / 30)} mês(es) atrás`
-      : `${Math.floor(diffDays / 365)} ano(s) atrás`;
+        ? `Há 1 dia`
+        : diffDays < 7
+          ? `${diffDays} dias atrás`
+          : diffDays < 30
+            ? `${Math.floor(diffDays / 7)} semana(s) atrás`
+            : diffDays < 365
+              ? `${Math.floor(diffDays / 30)} mês(es) atrás`
+              : `${Math.floor(diffDays / 365)} ano(s) atrás`;
   };
 
   return (
@@ -120,8 +121,8 @@ export default function FlowCard({ flow, userID }) {
           <FlowMacro>
             <FlowNodes>
               <NodeIcon />
-              {flow.conteudo_nos.length}
-              {flow.conteudo_nos.length > 1 ? " nós" : " nó"}
+              {flow.conteudo_nos?.length || 0}
+              {(flow.conteudo_nos?.length || 0) == 1 ? " nós" : " nó"}
             </FlowNodes>
             <FlowViews>
               <ViewIcon></ViewIcon>
@@ -130,9 +131,9 @@ export default function FlowCard({ flow, userID }) {
           </FlowMacro>
         </FlowPreviewWrapper>
         <FlowFooter>
-          <LikeButton />
-          <CommentButton />
-          <SaveButton />
+          <LikeButton likes={flow.stats?.likes || 0} />
+          <CommentButton comments={flow.stats?.comments || 0} />
+          <SaveButton saves={flow.stats?.saves || 0} />
           <ShareButton />
           <OpenFlowButton flowID={flow.id} />
         </FlowFooter>
@@ -140,32 +141,3 @@ export default function FlowCard({ flow, userID }) {
     </FlowCardContainer>
   );
 }
-/*
- {
-    "id": "9ee8cd23-e726-4701-9d5b-0fa164264c0c",
-    "titulo": "Relatórios de Resultados Mensais",
-    "descricao": "Consolidação e divulgação dos resultados mensais.",
-    "conteudo_nos": [
-      {
-        "id": "18",
-        "data": "Exemplo de conteúdo"
-      }
-    ],
-    "conteudo_conexoes": [],
-    "tags": [
-      "relatório",
-      "resultados",
-      "financeiro",
-      "análise",
-      "mensal"
-    ],
-    "categoria": "Financeiro",
-    "status": "rascunho",
-    "criado_em": "2025-06-01T19:54:59.878Z",
-    "criado_por": "1bd732c8-b167-4c50-95d4-2f0fe153e790",
-    "usuario": {
-      "id": "1bd732c8-b167-4c50-95d4-2f0fe153e790",
-      "nome": "Patrícia Lima"
-    }
-  }
-*/

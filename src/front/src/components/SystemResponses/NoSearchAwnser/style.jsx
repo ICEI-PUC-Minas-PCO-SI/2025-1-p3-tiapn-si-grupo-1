@@ -7,7 +7,7 @@ export const MessageWrapper = styled.div`
   align-items: center;
 
   justify-content: center;
-  height: 100%;
+  height: 100vh;
   font-weight: 400;
   color: #666666;
 `;

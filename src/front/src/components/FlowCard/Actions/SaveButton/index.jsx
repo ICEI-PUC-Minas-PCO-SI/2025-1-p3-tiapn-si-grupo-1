@@ -1,9 +1,10 @@
 import { Button, SaveIcon } from "./style";
 
-export default function SaveButtonComponent() {
+export default function SaveButton({ saves }) {
   return (
     <Button>
-      <SaveIcon></SaveIcon>
+      <SaveIcon />
+      {saves}
     </Button>
   );
 }

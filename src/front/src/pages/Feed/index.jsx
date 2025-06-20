@@ -72,6 +72,7 @@ export default function Feed() {
     }
   }
 
+
   //Verificação feita para assegurar que o usuário esteja logado para acessa o feed
   useEffect(() => {
     if (!userToken) {

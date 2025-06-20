@@ -6,10 +6,8 @@ const flowController = {
   async listar(req, res) {
     try {
       const { search, categoria } = req.query;
-      // Construindo a condição de busca
-      const whereClause = {
-        [Op.and]: [],
-      };
+      // Inicializa as condições para o WHERE
+      const andConditions = [];
 
       // Filtro por categoria (exato)
       if (categoria) {
@@ -26,6 +24,10 @@ const flowController = {
           ],
         });
       }
+
+      // Construindo a condição de busca
+      const whereClause =
+        andConditions.length > 0 ? { [Op.and]: andConditions } : {};
 
       // Só adiciona o Op.and se houver filtros
       if (andConditions.length > 0) {

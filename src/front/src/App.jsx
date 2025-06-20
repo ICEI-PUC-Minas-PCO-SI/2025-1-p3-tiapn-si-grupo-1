@@ -7,6 +7,7 @@ import MainRoutes from "./routes";
 import Overlay from "./components/Overlay";
 import { useUIStore } from "./store/uiStore";
 import SearchPage from "./components/SearchPage";
+import "./services/axiosConfig"
 
 function LayoutWrapper() {
   const location = useLocation();

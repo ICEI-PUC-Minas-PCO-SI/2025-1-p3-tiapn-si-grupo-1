@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Ellipsis, GitBranch, Eye } from "lucide-react";
+import { Ellipsis, GitBranch, Eye, Heart, MessageCircle, Bookmark } from "lucide-react";
 
 export const FlowCardContainer = styled.div`
   width: 100%;
@@ -9,7 +9,6 @@ export const FlowCardContainer = styled.div`
   gap: 20px;
 `;
 
-//Flow Wrapper - Envolve o contéudo do FlowCard
 export const FlowWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -18,16 +17,12 @@ export const FlowWrapper = styled.div`
   border: 2px solid #e4e6eb;
   padding: 20px;
   position: relative;
-  gap: 10px;
+  gap: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-
-  /* Border radius customizado */
   border-top-left-radius: 0;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
-
-  //Efeito de transição
   transition: all 0.4s ease-in-out;
 
   &:hover {
@@ -59,7 +54,6 @@ export const FlowHat = styled.div`
   border-top-right-radius: 10px;
 `;
 
-// FlowHeader - Cabeçalho do FlowCard
 export const FlowHeader = styled.header`
   display: flex;
   align-items: center;
@@ -67,20 +61,17 @@ export const FlowHeader = styled.header`
   gap: 12px;
 `;
 
-//FlowAuthor - Autor do FlowCard
 export const FlowAuthor = styled.span`
   color: #333;
   font-weight: 600;
   font-size: 14px;
 `;
 
-//AuthorRole
 export const AuthorRole = styled.span`
   font-size: 11px;
   color: #565656;
 `;
 
-//AuthorInfo
 export const AuthorInfo = styled.div`
   display: flex;
   flex-direction: column;
@@ -99,18 +90,15 @@ export const Dot = styled.span`
   background-color: #565656;
 `;
 
-//FlowTitle
 export const FlowTitle = styled.h2`
   font-size: 24px;
   color: #000;
 `;
 
-//FlowDescription
 export const FlowDescription = styled.p`
   font-size: 14px;
 `;
 
-//FlowTags
 export const FlowTags = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -118,14 +106,12 @@ export const FlowTags = styled.div`
   margin-top: 10px;
 `;
 
-//FlowMacro
 export const FlowMacro = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
 `;
 
-//FlowNodes
 export const FlowNodes = styled.span`
   display: flex;
   align-items: center;
@@ -140,7 +126,6 @@ export const NodeIcon = styled(GitBranch)`
   margin-right: 6px;
 `;
 
-//FlowViews
 export const FlowViews = styled.span`
   display: flex;
   align-items: center;
@@ -154,7 +139,7 @@ export const ViewIcon = styled(Eye)`
   height: 14px;
   margin-right: 6px;
 `;
-//FlowTag
+
 export const Tag = styled.span`
   display: flex;
   font-size: 12px;
@@ -169,22 +154,18 @@ export const Tag = styled.span`
   font-weight: 400;
 `;
 
-//FlowCategory - Categoria do FlowCard
 export const FlowCategory = styled.span`
   font-size: 16px;
   color: #565656;
   font-weight: 600;
 `;
 
-//DaysPublished - tempo desde a publicação do FlowCard
 export const DaysPublished = styled.span`
   font-size: 11px;
   color: #565656;
   font-weight: 400;
 `;
 
-//ActionButton - Botão de ação do FlowCard
-//06/03 - O botão ainda não tem funcionalidades definidas, falta desevolver o que ele deve fazer
 export const ActionButton = styled.button`
   width: 32px;
   height: 32px;
@@ -195,21 +176,19 @@ export const ActionButton = styled.button`
   justify-content: center;
   transition: all 0.3s ease-in;
   background-color: #ffff;
-  margin-left: auto; // empurra para o final do flex container
+  margin-left: auto;
 
   &:hover {
     background-color: #ededed;
   }
 `;
 
-//ActionIcon - Ícone de ação do FlowCard
 export const ActionIcon = styled(Ellipsis)`
   width: 16px;
   height: 16px;
   color: #333;
 `;
 
-//AVATAR - placeholder para a foto de perfil do usuário
 export const Avatar = styled.div`
   width: 40px;
   height: 40px;
@@ -222,10 +201,8 @@ export const Avatar = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url("path/to/ellipsis-icon.svg"); // Substitua pelo caminho do seu ícone
 `;
 
-//FlowPreviewWapper - Envolve o preview do FlowCard
 export const FlowPreviewWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -233,10 +210,45 @@ export const FlowPreviewWrapper = styled.div`
   margin-top: 10px;
 `;
 
-//FlowFooter - Rodapé do FlowCard
 export const FlowFooter = styled.footer`
   display: flex;
   align-items: center;
   gap: 10px;
   margin-top: 10px;
+`;
+
+export const Button = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 6px; /* Adicionado para espaçar ícone e texto */
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: default; /* Sem interação */
+  color: #4B5563;
+  font-size: 14px;
+  font-weight: 500;
+
+  &:hover {
+    background: #F3F4F6;
+  }
+`;
+
+export const LikeIcon = styled(Heart)`
+  width: 16px;
+  height: 16px;
+  color: #4B5563;
+`;
+
+export const CommentIcon = styled(MessageCircle)`
+  width: 16px;
+  height: 16px;
+  color: #4B5563;
+`;
+
+export const SaveIcon = styled(Bookmark)`
+  width: 16px;
+  height: 16px;
+  color: #4B5563;
 `;

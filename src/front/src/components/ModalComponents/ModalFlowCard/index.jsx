@@ -54,9 +54,10 @@ export default function ModalFlowCard({ flow }) {
         <FlowInfo>
           <Info>
             <NodeIcon size={14} />
-            {flow.conteudo_nos.length}
-            {flow.conteudo_nos.length > 1 ? " nós" : " nó"}
+            {flow.conteudo_nos?.length || 0}
+            {(flow.conteudo_nos?.length || 0) !== 1 ? " nós" : " nó"}
           </Info>
+
           <Info>
             <EyeIcon size={14} />
             1921
