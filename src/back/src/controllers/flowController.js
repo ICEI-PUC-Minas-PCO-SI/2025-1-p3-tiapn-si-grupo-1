@@ -93,7 +93,7 @@ const flowController = {
 
       let postRelacionado = null;
       if (post_id) {
-        const postRelacionado = await PostagemComunidade.findByPk(post_id);
+        postRelacionado = await PostagemComunidade.findByPk(post_id);
         if (!postRelacionado) {
           res.status(400).json({ erro: "Post relacionado não encontrado" });
         }
