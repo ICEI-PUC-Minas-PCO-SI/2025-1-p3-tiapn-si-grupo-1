@@ -17,7 +17,9 @@ export const PostDetail = ({ post, onClose, onDelete, currentUserId }) => {
         {/* Corpo do modal */}
         <S.ModalBody>
           <S.PostHeader>
-            <S.AuthorAvatar src={post.author.avatar} alt={post.author.name} />
+            <S.AuthorAvatar title={post.author.name}>
+              {post.author.initials}
+            </S.AuthorAvatar>
             <div>
               <S.AuthorName>{post.author.name}</S.AuthorName>
               <S.AuthorRole>{post.author.role} • {post.createdAt}</S.AuthorRole>

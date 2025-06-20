@@ -214,15 +214,15 @@ const FlowEditor = () => {
       nds.map((node) =>
         node.id === selectedNode.id
           ? {
-              ...node,
-              data: {
-                title: nodeData.title,
-                content: nodeData.content || undefined,
-                question: nodeData.question || undefined,
-                options: nodeData.options?.filter((opt) => opt.trim()).slice(0, 3) || undefined,
-                mediaUrl: nodeData.mediaUrl || undefined,
-              },
-            }
+            ...node,
+            data: {
+              title: nodeData.title,
+              content: nodeData.content || undefined,
+              question: nodeData.question || undefined,
+              options: nodeData.options?.filter((opt) => opt.trim()).slice(0, 3) || undefined,
+              mediaUrl: nodeData.mediaUrl || undefined,
+            },
+          }
           : node
       )
     );
@@ -271,34 +271,39 @@ const FlowEditor = () => {
           conteudo_conexoes: edges,
           categoria: flowData.category,
           tags: tagsArray,
-          status: 'rascunho',
+          status: 'rascunho', // Ajustado para refletir isPublic
         };
         console.log('Payload preparado:', payload);
 
         let response;
+        let flowId;
         if (isEditing) {
           console.log(`Enviando PUT para /api/flow/${id}`);
           response = await axios.put(
             `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${id}`,
             payload
           );
+          flowId = id; // Para edição, o ID é o mesmo da URL
+          console.log('Resposta do servidor (PUT):', response.data);
         } else {
           console.log('Enviando POST para /api/flow');
           response = await axios.post(
             'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow',
             payload
           );
+          console.log('Resposta do servidor (POST):', response.data);
+          flowId = response.data.flow_id; // Para criação, usa flow_id da resposta
         }
 
-        console.log('Resposta do servidor:', response.data);
-        if (!response.data.flow?.id) {
-          console.error('ID não encontrado na resposta:', response.data);
+        if (!flowId) {
+          console.error('ID do flow não encontrado na resposta:', response.data);
           toast.error('Erro: ID do flow não retornado pelo servidor.');
           return;
         }
-        toast.success('Flow atualizado com sucesso!');
-        console.log(`Redirecionando para /flow/${response.data.flow.id}`);
-        navigate(`/flow/${response.data.flow.id}`);
+
+        toast.success(isEditing ? 'Flow atualizado com sucesso!' : 'Flow criado com sucesso!');
+        console.log(`Redirecionando para /feed`);
+        navigate('/feed');
       } catch (error) {
         console.error('Erro ao salvar flow:', error);
         const errorMessage = error.response?.data?.erro || 'Erro ao salvar flow.';
@@ -306,7 +311,7 @@ const FlowEditor = () => {
         toast.error(errorMessage);
       }
     },
-    [flowData, nodes, edges, isEditing, id, navigate]
+    [flowData, nodes, edges, isEditing, id, navigate, isPublic]
   );
 
   const nextStep = useCallback(() => {
@@ -612,8 +617,8 @@ const FlowEditor = () => {
                 {selectedNode?.type === 'textNode'
                   ? 'Nó de Conteúdo'
                   : selectedNode?.type === 'decisionNode'
-                  ? 'Nó de Decisão'
-                  : 'Nó de Imagem'}
+                    ? 'Nó de Decisão'
+                    : 'Nó de Imagem'}
               </S.ModalTitle>
               <S.ModalDescription>Configure o conteúdo e comportamento do nó</S.ModalDescription>
             </S.ModalHeader>
