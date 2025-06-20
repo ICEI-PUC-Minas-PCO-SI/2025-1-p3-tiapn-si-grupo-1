@@ -1,20 +1,20 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.addColumn('flow_salvo', 'usuario_id', {
-      type: Sequelize.INTEGER,
-      allowNull: false,
+  async up(queryInterface, Sequelize) {
+    await queryInterface.addColumn('flow', 'post_id', {
+      type: Sequelize.UUID,
+      allowNull: true,
       references: {
-        model: 'usuario',
-        key: 'id'
+        model: 'postagem_comunidade',
+        key: 'id',
       },
-      onDelete: 'CASCADE'
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL',
     });
   },
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeColumn('flow_salvo', 'usuario_id');
+  async down(queryInterface, Sequelize) {
+    await queryInterface.removeColumn('flow', 'post_id');
   }
 };
