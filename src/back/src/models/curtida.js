@@ -25,7 +25,7 @@ const Curtida = sequelize.define(
     post_id: {
       type: DataTypes.UUID,
       allowNull: true,
-      references: {model: "postagem_comunidade", key: "id"},
+      references: { model: "postagem_comunidade", key: "id" },
     },
     criado_em: {
       type: DataTypes.DATE,
@@ -35,14 +35,7 @@ const Curtida = sequelize.define(
   {
     tableName: "curtida",
     timestamps: false,
-  });
-
-Curtida.belongsTo(Usuario, { foreignKey: "usuario_id", as: "usuario" });
-Curtida.belongsTo(Flow, { foreignKey: "flow_id", as: "flow" });
-Curtida.belongsTo(PostagemComunidade, { foreignKey: "post_id", as: "postagem" });
-
-Usuario.hasMany(Curtida, { foreignKey: "usuario_id", as: "curtidas" });
-Flow.hasMany(Curtida, { foreignKey: "flow_id", as: "curtidas" });
-PostagemComunidade.hasMany(Curtida, { foreignKey: "post_id", as: "curtidas" });
+  }
+);
 
 module.exports = Curtida;

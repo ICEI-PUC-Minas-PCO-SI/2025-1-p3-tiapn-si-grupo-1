@@ -29,11 +29,8 @@ const ComentarioPostagem = sequelize.define(
   },
   {
     timestamps: false,
-    tableName: 'comentario_postagem',
+    tableName: "comentario_postagem",
   }
 );
-
-ComentarioPostagem.belongsTo(Usuario, {foreignKey: 'usuario_id' });
-ComentarioPostagem.belongsTo(PostagemComunidade, {foreignKey: 'postagem_id'});
 
 module.exports = ComentarioPostagem;

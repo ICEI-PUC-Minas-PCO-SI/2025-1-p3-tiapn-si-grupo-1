@@ -41,12 +41,4 @@ const Flow = sequelize.define(
   { timestamps: false, tableName: "flow" }
 );
 
-Flow.belongsTo(Usuario, { foreignKey: "criado_por" });
-Usuario.hasMany(Flow, { foreignKey: "criado_por" });
-
-Flow.belongsTo(PostagemComunidade, { foreignKey: "post_id" });
-PostagemComunidade.hasMany(Flow, { foreignKey: "post_id" });
-
-Flow.hasMany(Curtida, { foreignKey: "flow_id" });
-
 module.exports = Flow;
