@@ -113,7 +113,7 @@ const flowController = {
 
       if (postRelacionado) {
         res.status(201).json({
-          mensagem: `Flow criado com sucesso na postagem "${postRelacionado.titulo}"`,
+          mensagem: `Flow criado com sucesso na postagem de título: "${postRelacionado.titulo}"`,
           flow_id: novoFlow.id,
         });
       } else {
