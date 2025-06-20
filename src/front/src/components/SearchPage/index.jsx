@@ -47,7 +47,6 @@ export default function SearchPage() {
   //Estado das tags
   const filteredTags = useFiltroStore((state) => state.filteredTags);
   const loadingFilter = useFiltroStore((state) => state.loadingFilter);
-  const fetchFiltros = useFiltroStore((state) => state.fetchFiltros);
   const filterTags = useFiltroStore((state) => state.filterTags);
 
   useEffect(() => {
