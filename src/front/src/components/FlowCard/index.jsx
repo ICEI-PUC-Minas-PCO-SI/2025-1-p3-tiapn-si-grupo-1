@@ -36,6 +36,7 @@ import {
 export default function FlowCard({ flow, userID }) {
   //Usuario
   const user = userID;
+  console.log(flow);
 
   //Função temporária para criar dinamicamente um "avatar" para o usuário
   const getIniciais = (nome) => {
@@ -120,8 +121,8 @@ export default function FlowCard({ flow, userID }) {
           <FlowMacro>
             <FlowNodes>
               <NodeIcon />
-              {flow.conteudo_nos.length}
-              {flow.conteudo_nos.length > 1 ? " nós" : " nó"}
+              {flow.conteudo_nos?.length || 0}
+              {(flow.conteudo_nos?.length || 0) == 1 ? " nós" : " nó"}
             </FlowNodes>
             <FlowViews>
               <ViewIcon></ViewIcon>

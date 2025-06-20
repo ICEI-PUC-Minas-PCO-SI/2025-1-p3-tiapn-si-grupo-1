@@ -6,17 +6,24 @@ import { useFlowStore } from "../../store/flowStore";
 import { useUIStore } from "../../store/uiStore";
 import { useUserStore } from "../../store/userStore";
 import { useEffect } from "react";
+import { useFiltroStore } from "../../store/filterStore";
 
 export default function ModalSearchBar({ activeOption }) {
-  const openSearchModal = useUIStore((state) => state.openSearchModal);
+  // Termo de busca do modal para os flows, obtido do estado global
   const modalSearchTerm = useFlowStore((state) => state.modalSearchTerm);
   const setModalSearchTerm = useFlowStore((state) => state.setModalSearchTerm);
-  const filterUsers = useUserStore((state) => state.filterUsers);
 
   // Estado local para o input, atualizado instantaneamente
   const [localSearch, setLocalSearch] = useState(modalSearchTerm);
 
-  // Zera o campo quando o componente monta (ex: troca de aba com key)
+  // Estado que controla a abertura do modal de busca
+  const openSearchModal = useUIStore((state) => state.openSearchModal);
+
+  // Funções para filtrar usuários e tags, obtidas do estado global
+  const filterUsers = useUserStore((state) => state.filterUsers);
+  const filterTags = useFiltroStore((state) => state.filterTags);
+
+  // Zera o campo quando o componente monta
   useEffect(() => {
     setLocalSearch("");
   }, []);
@@ -28,10 +35,11 @@ export default function ModalSearchBar({ activeOption }) {
           setModalSearchTerm(value);
         } else if (activeOption === "usuarios") {
           filterUsers(value);
+        } else if (activeOption === "tags") {
+          filterTags(value);
         }
-        // Se quiser, adicione para "tags" também aqui
       }, 300),
-    [activeOption, setModalSearchTerm, filterUsers]
+    [activeOption, setModalSearchTerm, filterUsers, filterTags]
   );
 
   // Função debounced para atualizar o estado global
@@ -48,6 +56,8 @@ export default function ModalSearchBar({ activeOption }) {
         setModalSearchTerm(localSearch);
       } else if (activeOption === "usuarios") {
         filterUsers(localSearch);
+      } else if (activeOption === "tags") {
+        filterTags(localSearch);
       }
     }
   }, [activeOption]);

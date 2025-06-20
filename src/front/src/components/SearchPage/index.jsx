@@ -15,28 +15,50 @@ import ModalSearchBar from "../ModalSearchBar";
 import { useUIStore } from "../../store/uiStore";
 import { useFlowStore } from "../../store/flowStore";
 import { useUserStore } from "../../store/userStore";
+import { useFiltroStore } from "../../store/filterStore";
 import LoadingSpinner from "../LoadingSpinner";
 import ModalFlowCard from "../ModalComponents/ModalFlowCard";
 import NoSearchAwnser from "../SystemResponses/NoSearchAwnser";
 import ModalUserCard from "../../components/ModalComponents/ModalUserCard";
 import { useEffect } from "react";
+import ModalTagCard from "../ModalComponents/ModalTagCard";
 
 export default function SearchPage() {
   const [activeOption, setActiveOption] = useState("flows");
+
+  // Estado que controla a abertura do modal de busca
   const closeSearchModal = useUIStore((state) => state.closeSearchModal);
+
+  // Estado dos flows dentro do modal
   const modalFlows = useFlowStore((state) => state.modalFlows);
   const modalLoading = useFlowStore((state) => state.modalLoading);
-  const loadingUsers = useUserStore((state) => state.loadingUsers);
-  const fetchUsers = useUserStore((state) => state.fetchUsers);
-  const filteredUsers = useUserStore((state) => state.filteredUsers);
+
+  // Estados e funções da searchbar dentro do moadal
   const setModalSearchTerm = useFlowStore((state) => state.setModalSearchTerm);
   const resetFilteredUsers = useUserStore((state) => state.resetFilteredUsers);
   const modalSearchTerm = useFlowStore((state) => state.modalSearchTerm);
+
+  // Estado dos usuários
+  const loadingUsers = useUserStore((state) => state.loadingUsers);
+  const fetchUsers = useUserStore((state) => state.fetchUsers);
+  const filteredUsers = useUserStore((state) => state.filteredUsers);
   const filterUsers = useUserStore((state) => state.filterUsers);
+
+  //Estado das tags
+  const filteredTags = useFiltroStore((state) => state.filteredTags);
+  const loadingFilter = useFiltroStore((state) => state.loadingFilter);
+  const fetchFiltros = useFiltroStore((state) => state.fetchFiltros);
+  const filterTags = useFiltroStore((state) => state.filterTags);
 
   useEffect(() => {
     fetchUsers(); // só faz uma vez ao abrir o modal
   }, []);
+
+  useEffect(() => {
+    if (activeOption === "tags") {
+      fetchFiltros();
+    }
+  }, [activeOption]);
 
   const handleOptionClick = (option) => {
     setActiveOption(option);
@@ -50,6 +72,10 @@ export default function SearchPage() {
       resetFilteredUsers(); // primeiro reseta
       if (termoAtual.trim() !== "") {
         filterUsers(termoAtual); // aplica o filtro
+      }
+    } else if (option === "tags") {
+      if (termoAtual.trim() !== "") {
+        filterTags(termoAtual); // nova linha aqui ✅
       }
     }
   };
@@ -72,6 +98,7 @@ export default function SearchPage() {
             {modalFlows.length}
             {")"}
           </SearchOption>
+
           <SearchOption
             isActive={activeOption === "usuarios"}
             onClick={() => handleOptionClick("usuarios")}
@@ -80,11 +107,14 @@ export default function SearchPage() {
             {filteredUsers.length}
             {")"}
           </SearchOption>
+
           <SearchOption
             isActive={activeOption === "tags"}
             onClick={() => handleOptionClick("tags")}
           >
-            Tags
+            {"Tags ("}
+            {filteredTags.length}
+            {")"}
           </SearchOption>
         </SearchOptionsList>
         <ModalFlowsContainer>
@@ -104,6 +134,16 @@ export default function SearchPage() {
             ) : filteredUsers.length > 0 ? (
               filteredUsers.map((user) => (
                 <ModalUserCard key={user.id} usuario={user} />
+              ))
+            ) : (
+              <NoSearchAwnser search={activeOption} />
+            )
+          ) : activeOption === "tags" ? (
+            loadingFilter ? (
+              <LoadingSpinner />
+            ) : filteredTags.length > 0 ? (
+              filteredTags.map((tag, index) => (
+                <ModalTagCard key={index} tag={tag} />
               ))
             ) : (
               <NoSearchAwnser search={activeOption} />
