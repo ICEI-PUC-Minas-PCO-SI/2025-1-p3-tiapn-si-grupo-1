@@ -1,16 +1,14 @@
 import styled from "styled-components";
-import { Funnel, TrendingUp, Clock, Plus } from "lucide-react";
+import { Funnel, TrendingUp, Gauge, Plus } from "lucide-react";
 
 //elemento que mantém a estrutura da página de feed, divide a página entre flows/filtos
 export const FeedContainer = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 20px 20px;
   justify-content: space-between;
   position: relative;
   gap: 20px;
-  
 `;
 
 export const FeedMain = styled.div`
@@ -58,9 +56,8 @@ export const TrendingButton = styled.button`
 
   &:hover {
     background-color: #dee2ff;
-    color: #333333;
+
     svg {
-      color: #333333;
       transform: scale(1.2);
     }
   }
@@ -70,7 +67,7 @@ export const TrendingIcon = styled(TrendingUp)`
   color: #233dff;
   transition: all 0.4s ease-in-out;
 `;
-export const RecentButton = styled.button`
+export const StatisticsButton = styled.button`
   display: flex;
   align-items: center;
   gap: 5px;
@@ -82,15 +79,13 @@ export const RecentButton = styled.button`
 
   &:hover {
     background-color: #dee2ff;
-    color: #333333;
     svg {
-      color: #333333;
       transform: scale(1.2);
     }
   }
 `;
 
-export const RecentIcon = styled(Clock)`
+export const StatisticsIcon = styled(Gauge)`
   color: #233dff;
   transition: all 0.4s ease-in-out;
 `;
@@ -128,7 +123,7 @@ export const SearchMethods = styled.div`
 //Organiza e distribui os flows publicados
 export const FlowFeed = styled.div`
   width: 60%;
- padding: 64px 32px;
+  padding: 64px 32px;
   display: flex;
   flex-direction: column;
   gap: 20px;

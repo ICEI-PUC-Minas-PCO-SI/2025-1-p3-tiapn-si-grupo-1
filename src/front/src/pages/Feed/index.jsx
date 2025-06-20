@@ -30,12 +30,12 @@ import {
   HeaderTop,
   HeaderActions,
   TrendingButton,
-  RecentButton,
   CreateFlowButton,
   TrendingIcon,
-  RecentIcon,
+  StatisticsButton,
   CreateFlowIcon,
   SearchMethods,
+  StatisticsIcon,
 } from "./style";
 
 export default function Feed() {
@@ -72,7 +72,6 @@ export default function Feed() {
     }
   }
 
-
   //Verificação feita para assegurar que o usuário esteja logado para acessa o feed
   useEffect(() => {
     if (!userToken) {
@@ -101,10 +100,10 @@ export default function Feed() {
               <TrendingIcon size={16} />
               Trending
             </TrendingButton>
-            <RecentButton>
-              <RecentIcon size={16} />
-              Recentes
-            </RecentButton>
+            <StatisticsButton>
+              <StatisticsIcon size={16} />
+              Estatísticas
+            </StatisticsButton>
             <CreateFlowButton onClick={handleClick}>
               <CreateFlowIcon size={16} />
               Criar Flow

@@ -53,6 +53,11 @@ export const useFlowStore = create((set, get) => ({
     }
   },
 
+  applyTagFilter: async (tag) => {
+    set({ category: tag, searchTerm: "" }); // atualiza os filtros de uma vez
+    await get().fetchFlows({ category: tag, searchTerm: "" }); // busca usando os valores atualizados
+  },
+
   toggleSave: async (postId) => {
     try {
       const usuarioId = localStorage.getItem("usuarioId");

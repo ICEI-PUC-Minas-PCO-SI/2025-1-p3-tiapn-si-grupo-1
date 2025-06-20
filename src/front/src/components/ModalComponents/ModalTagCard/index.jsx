@@ -7,6 +7,7 @@ import {
   TagName,
 } from "./style";
 
+import { useFlowStore } from "../../../store/flowStore";
 import ShowTagFlowsButton from "../ModalTagCard/ShowTagFlowsButton";
 
 export default function ModalTagCard({ tag }) {

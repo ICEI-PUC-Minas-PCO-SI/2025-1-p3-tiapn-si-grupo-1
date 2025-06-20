@@ -6,6 +6,7 @@ import { useUIStore } from "../../store/uiStore";
 
 export default function SearchBar() {
   const openSearchModal = useUIStore((state) => state.openSearchModal);
+
   return (
     <Form onSubmit={(e) => e.preventDefault()}>
       <InputWrapper>
