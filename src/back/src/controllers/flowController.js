@@ -1,4 +1,4 @@
-const { Flow, Usuario, Comentario } = require("../models");
+const { Flow, Usuario, Comentario, PostagemComunidade } = require("../models");
 const { Op } = require("sequelize");
 
 const flowController = {
@@ -92,7 +92,16 @@ const flowController = {
         categoria,
         tags,
         status,
+        post_id,
       } = req.body;
+
+      let postRelacionado = null;
+      if (post_id) {
+        postRelacionado = await PostagemComunidade.findByPk(post_id);
+        if (!postRelacionado) {
+          res.status(400).json({ erro: "Post relacionado não encontrado" });
+        }
+      }
 
       const novoFlow = await Flow.create({
         titulo,
@@ -102,14 +111,26 @@ const flowController = {
         categoria,
         tags,
         status,
+        post_id: post_id || null,
         criado_por: req.usuarioId,
       });
 
-      res.status(201).json(novoFlow);
+      if (postRelacionado) {
+        res.status(201).json({
+          mensagem: `Flow criado com sucesso na postagem de título: "${postRelacionado.titulo}"`,
+          flow_id: novoFlow.id,
+        });
+      } else {
+        res.status(201).json({
+          mensagem: "Flow criado com sucesso",
+          flow_id: novoFlow.id,
+        });
+      }
     } catch (error) {
-      res
-        .status(500)
-        .json({ erro: "Erro ao criar flow", detalhes: error.message });
+      res.status(500).json({
+        erro: "Erro ao criar flow",
+        detalhes: error.message,
+      });
     }
   },
 
@@ -146,7 +167,10 @@ const flowController = {
         status,
       });
 
-      res.json({ mensagem: "Flow atualizado com sucesso" });
+      res.json({
+        mensagem: "Flow atualizado com sucesso",
+        id: flow.id,
+      });
     } catch (error) {
       res
         .status(500)

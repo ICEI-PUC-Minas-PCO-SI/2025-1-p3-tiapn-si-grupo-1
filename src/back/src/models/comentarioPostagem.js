@@ -33,7 +33,7 @@ const ComentarioPostagem = sequelize.define(
   },
   {
     timestamps: false,
-    tableName: 'comentario_postagem',
+    tableName: "comentario_postagem",
   }
 );
 

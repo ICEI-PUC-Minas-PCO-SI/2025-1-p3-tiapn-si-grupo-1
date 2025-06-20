@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../../db");
 const Usuario = require("./usuario");
 const Curtida = require("./curtida");
+const PostagemComunidade = require("./postagemComunidade");
 
 const Flow = sequelize.define(
   "flow",
@@ -19,12 +20,25 @@ const Flow = sequelize.define(
     categoria: DataTypes.STRING,
     status: DataTypes.ENUM("rascunho"),
     criado_em: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+
+    post_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: {
+        model: PostagemComunidade,
+        key: "id",
+      },
+    },
+    criado_por: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: Usuario,
+        key: "id",
+      },
+    },
   },
   { timestamps: false, tableName: "flow" }
 );
-
-Flow.belongsTo(Usuario, { foreignKey: "criado_por" });
-Usuario.hasMany(Flow, { foreignKey: "criado_por" });
-Flow.hasMany(Curtida, { foreignKey: "flow_id" });
 
 module.exports = Flow;

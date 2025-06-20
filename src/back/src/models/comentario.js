@@ -1,10 +1,10 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../db");
-const Usuario = require('./usuario');
-const Flow = require('./flow');
+const Usuario = require("./usuario");
+const Flow = require("./flow");
 
 const Comentario = sequelize.define(
-  'comentario',
+  "comentario",
   {
     id: {
       type: DataTypes.UUID,
@@ -33,7 +33,7 @@ const Comentario = sequelize.define(
   },
   {
     timestamps: false,
-    tableName: 'comentario',
+    tableName: "comentario",
   }
 );
 

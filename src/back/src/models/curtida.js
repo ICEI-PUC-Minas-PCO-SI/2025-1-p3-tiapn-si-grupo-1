@@ -1,39 +1,41 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../db');
-//Teste
-const Curtida = sequelize.define('curtida', {
-  usuario_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-    references: { model: 'usuario', key: 'id' }
+const { DataTypes } = require("sequelize");
+const sequelize = require("../../db");
+const PostagemComunidade = require("./postagemComunidade");
+const Flow = require("./flow");
+const Usuario = require("./usuario");
+
+const Curtida = sequelize.define(
+  "curtida",
+  {
+    id: {
+      type: DataTypes.UUID,
+      primaryKey: true,
+      defaultValue: DataTypes.UUIDV4,
+    },
+    usuario_id: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: { model: "usuario", key: "id" },
+    },
+    flow_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: { model: "flow", key: "id" },
+    },
+    post_id: {
+      type: DataTypes.UUID,
+      allowNull: true,
+      references: { model: "postagem_comunidade", key: "id" },
+    },
+    criado_em: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
   },
-  flow_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    primaryKey: true,
-    references: { model: 'flow', key: 'id' }
-  },
-  criado_em: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW
+  {
+    tableName: "curtida",
+    timestamps: false,
   }
-}, {
-  tableName: 'curtida',
-  timestamps: false
-});
-
-Curtida.associate = (models) => {
-  Curtida.belongsTo(models.Usuario, {
-    foreignKey: 'usuario_id',
-    as: 'usuario'
-  });
-
-  Curtida.belongsTo(models.Flow, {
-    foreignKey: 'flow_id',
-    as: 'flow'
-  });
-};
-
+);
 
 module.exports = Curtida;
