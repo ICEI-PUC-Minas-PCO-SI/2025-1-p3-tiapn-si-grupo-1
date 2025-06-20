@@ -6,32 +6,54 @@ const {
 
 const comentarioPostagemController = {
   //criar comentario postagem
-  async comentar(req, res) {
-    try {
-      const { mensagem, postagem_id } = req.body;
+ async comentar(req, res) {
+  try {
+    const { mensagem, postagem_id, comentario_pai_id } = req.body;
 
-      if (!mensagem || mensagem.trim() === "") {
-        return res.status(400).json({ erro: "Comentario vazio" });
-      }
-
-      if (!postagem_id) {
-        return res.status(400).json({ erro: "postagen_id é obrigatório" });
-      }
-
-      const novoComentarioPostagem = await ComentarioPostagem.create({
-        mensagem,
-        usuario_id: req.usuarioId,
-        postagem_id,
-      });
-
-      res.status(201).json(novoComentarioPostagem);
-    } catch (error) {
-      res.status(500).json({
-        erro: "Erro ao criar comentário na postagem",
-        detalhes: error.message,
-      });
+    if (!mensagem || mensagem.trim() === "") {
+      return res.status(400).json({ erro: "Comentário vazio" });
     }
-  },
+
+    if (!postagem_id) {
+      return res.status(400).json({ erro: "postagem_id é obrigatório" });
+    }
+
+    const postagemExiste = await PostagemComunidade.findByPk(postagem_id);
+    if (!postagemExiste) {
+      return res.status(400).json({ erro: "Postagem não encontrada" });
+    }
+
+    if (comentario_pai_id) {
+      const comentarioPai = await ComentarioPostagem.findOne({
+        where: {
+          id: comentario_pai_id,
+          postagem_id,
+        },
+      });
+
+      if (!comentarioPai) {
+        return res.status(400).json({
+          erro: "Comentário pai inválido ou não pertence à mesma postagem",
+        });
+      }
+    }
+
+    const novoComentarioPostagem = await ComentarioPostagem.create({
+      mensagem,
+      usuario_id: req.usuarioId,
+      postagem_id,
+      comentario_pai_id: comentario_pai_id || null,
+    });
+
+    res.status(201).json(novoComentarioPostagem);
+  } catch (error) {
+    res.status(500).json({
+      erro: "Erro ao criar comentário na postagem",
+      detalhes: error.message,
+    });
+  }
+},
+
 
   //Obter detalhes de um comentario em uma postagem
   async obter(req, res) {
@@ -105,6 +127,7 @@ const comentarioPostagemController = {
       });
     }
   },
+  
   // Deletar um comentário em uma postagem
   async deletar(req, res) {
     try {
@@ -129,6 +152,10 @@ const comentarioPostagemController = {
       });
     }
   },
+
 };
+
+  
+
 
 module.exports = comentarioPostagemController;

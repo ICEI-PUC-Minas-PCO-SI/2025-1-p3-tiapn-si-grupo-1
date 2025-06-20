@@ -26,6 +26,10 @@ const Comentario = sequelize.define(
       type: DataTypes.UUID,
       allowNull: false,
     },
+     comentario_pai_id: {
+    type: DataTypes.UUID,
+    allowNull: true,
+    },
   },
   {
     timestamps: false,
@@ -35,5 +39,7 @@ const Comentario = sequelize.define(
 
   Comentario.belongsTo(Usuario, { foreignKey: 'usuario_id' });
   Comentario.belongsTo(Flow, { foreignKey: 'flow_id' });
-
+  Comentario.belongsTo(Comentario, { as: 'comentarioPai', foreignKey: 'comentario_pai_id' });
+  Comentario.hasMany(Comentario, { as: 'respostas', foreignKey: 'comentario_pai_id' });
+  
 module.exports = Comentario;

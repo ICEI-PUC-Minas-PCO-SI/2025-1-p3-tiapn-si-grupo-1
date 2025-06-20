@@ -36,6 +36,10 @@ const flowController = {
             model: Usuario,
             attributes: ["id", "nome"],
           },
+           {
+            model: Comentario,
+            include: { model: Usuario, attributes: ["id", "nome"] },
+          },
         ],
         order: [["criado_em", "DESC"]],
       });
