@@ -66,16 +66,25 @@ export const PostHeader = styled.div`
   margin-bottom: 1rem;
 `;
 
-export const AuthorAvatar = styled.img`
+export const AuthorAvatar = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  object-fit: cover;
+  background-color: #ffffff;
+  border: 2px solid #233dff;
+  color: #233dff;
+  font-weight: bold;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+  cursor: default;
 `;
 
 export const AuthorName = styled.h3`
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: bold;
   color: #333333;
 `;
 
@@ -85,7 +94,9 @@ export const AuthorRole = styled.span`
 `;
 
 export const PostContent = styled.div`
-  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 export const PostText = styled.p`
@@ -99,11 +110,11 @@ export const Tags = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 `;
 
-export const Tag = styled.span`
-  background: #f0f0f0;
+export const Tag = styled.div`
+  background: #e8e8e8;
   color: #333333;
   padding: 0.25rem 0.75rem;
   border-radius: 4px;
@@ -120,25 +131,25 @@ export const PostMeta = styled.div`
 
 export const ModalFooter = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 1rem;
 `;
 
 export const Button = styled.button`
   padding: 0.75rem 1.5rem;
-  border: 1px solid #e5e5e5;
+  border: none;
   border-radius: 4px;
-  background: #ffffff;
-  color: #333333;
+  background: #233dff;
+  color: #ffffff;
   cursor: pointer;
   font-size: 1rem;
 
   &:hover:not(:disabled) {
-    background: #f0f0f0;
+    background: #1e33cc;
   }
 
   &:disabled {
-    background: #f0f0f0;
+    background: #555555;
     cursor: not-allowed;
   }
 `;
@@ -146,21 +157,21 @@ export const Button = styled.button`
 export const DeleteButton = styled.button`
   display: flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.75rem 1.5rem;
-  border: 1px solid #ff4d4f;
+  gap: 2px;
+  padding: 0.75rem 1rem;
+  border: none;
   border-radius: 4px;
-  background: #ffffff;
-  color: #ff4d4f;
+  background: #ff4d4f;
+  color: #ffffff;
   cursor: pointer;
   font-size: 1rem;
 
-  &:hover:not(:disabled) {
-    background: #fff1f0;
+  &:hover:disabled {
+    background: #cc0000;
   }
 
   &:disabled {
-    background: #f0f0f0;
+    background: #555;
     cursor: not-allowed;
   }
 `;
