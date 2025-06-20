@@ -70,19 +70,30 @@ const curtidaController = {
     }
   },
   async criar(req, res) {
-    const { flow_id } = req.body;
+    const { flow_id, post_id } = req.body;
     const usuario_id = req.usuarioId;
 
+    if(!flow_id && !post_id) {
+      res.status(400).json({erro: "flow_id ou post_id vazio."});
+    }
+
     try {
+      const whereClause = {usuario_id};
+      if (flow_id) whereClause.flow_id = flow_id;
+      if (post_id) whereClause.post_id = post_id;
+
       const [curtida, created] = await Curtida.findOrCreate({
-        where: { flow_id, usuario_id },
+        where: whereClause,
       });
 
       if (!created) {
-        return res.status(409).json({ erro: "Curtida já existe" });
+        res.status(409).json({ erro: "Curtida já existe" });
       }
 
-      res.status(201).json(curtida);
+      res.status(201).json({
+        mensagem: "Curtida registrada",
+        curtida,
+      });
     } catch (error) {
       res
         .status(500)
