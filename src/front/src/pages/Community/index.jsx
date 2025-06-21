@@ -30,7 +30,9 @@ export const Community = () => {
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentUserId, setCurrentUserId] = useState(null);
-  const [userNamesCache, setUserNamesCache] = useState({}); // Cache para nomes de usuários
+  const [userNamesCache, setUserNamesCache] = useState({});
+  const [postToEdit, setPostToEdit] = useState(null); // Estado para post em edição
+  const [isEditing, setIsEditing] = useState(false); // Estado para modo de edição
 
   // Função para obter as iniciais do nome
   const getIniciais = (nome) => {
@@ -96,7 +98,7 @@ export const Community = () => {
       content: post.conteudo,
       author: {
         name: userName,
-        initials: getIniciais(userName), // Adiciona as iniciais
+        initials: getIniciais(userName),
         role: post.author?.role || 'Membro',
         reputation: post.author?.reputation || 0,
         id: post.criado_por || null,
@@ -143,6 +145,10 @@ export const Community = () => {
   // Funções de manipulação de posts
   const handlePostCreated = (newPost) => {
     setPosts([newPost, ...posts]);
+  };
+
+  const handlePostUpdated = (updatedPost) => {
+    setPosts(posts.map((post) => (post.id === updatedPost.id ? updatedPost : post)));
   };
 
   const handleVote = (postId, type) => {
@@ -209,6 +215,12 @@ export const Community = () => {
     }
   };
 
+  const handleEditPost = (post) => {
+    setPostToEdit(post);
+    setIsEditing(true);
+    setMostrarCriarPostagem(true);
+  };
+
   const clearFilters = () => {
     setSelectedType('Todos');
     setSelectedCategory('Todos');
@@ -243,6 +255,8 @@ export const Community = () => {
 
   const handleOpenCreateFlow = () => {
     setMostrarCriarPostagem(true);
+    setIsEditing(false);
+    setPostToEdit(null);
   };
 
   return (
@@ -369,6 +383,7 @@ export const Community = () => {
                           onVote={handleVote}
                           onSave={handleSave}
                           onDelete={() => handleDeletePost(post.id, post.author.id)}
+                          onEdit={handleEditPost}
                           currentUserId={currentUserId}
                         />
                       </motion.div>
@@ -405,8 +420,16 @@ export const Community = () => {
       </S.ContentRow>
       {mostrarCriarPostagem && (
         <CreatePostForm
-          onClose={() => setMostrarCriarPostagem(false)}
+          onClose={() => {
+            setMostrarCriarPostagem(false);
+            setIsEditing(false);
+            setPostToEdit(null);
+          }}
           onPostCreated={handlePostCreated}
+          onPostUpdated={handlePostUpdated}
+          postToEdit={postToEdit}
+          isEditing={isEditing}
+          currentUserId={currentUserId}
         />
       )}
     </S.Container>
