@@ -9,11 +9,16 @@ export const FeedContainer = styled.div`
   justify-content: space-between;
   position: relative;
   gap: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100vh;
 `;
 
 export const FeedMain = styled.div`
   display: flex;
   gap: 20px;
+  margin-top: 260px; // altura do FeedHeader
+  overflow: hidden;
 `;
 
 // <--- HEADER - FIXO --->
@@ -24,6 +29,11 @@ export const FeedHeader = styled.header`
   border-radius: 10px;
   padding: 32px;
   gap: 20px;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  z-index: 10;
 `;
 
 export const HeaderTop = styled.div`
@@ -40,54 +50,6 @@ export const HeaderTitle = styled.div`
 export const HeaderActions = styled.div`
   display: flex;
   gap: 12px;
-`;
-
-//BOTÕES DE DE AÇÃO DO HEADER
-export const TrendingButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: #233dff;
-  border: 1px solid #233dff;
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 10px 12px;
-  transition: all 0.4s ease-in-out;
-
-  &:hover {
-    background-color: #dee2ff;
-
-    svg {
-      transform: scale(1.2);
-    }
-  }
-`;
-
-export const TrendingIcon = styled(TrendingUp)`
-  color: #233dff;
-  transition: all 0.4s ease-in-out;
-`;
-export const StatisticsButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: #233dff;
-  border: 1px solid #233dff;
-  background-color: #fff;
-  border-radius: 5px;
-  padding: 10px 12px;
-
-  &:hover {
-    background-color: #dee2ff;
-    svg {
-      transform: scale(1.2);
-    }
-  }
-`;
-
-export const StatisticsIcon = styled(Gauge)`
-  color: #233dff;
-  transition: all 0.4s ease-in-out;
 `;
 
 export const CreateFlowButton = styled.button`
@@ -122,34 +84,59 @@ export const SearchMethods = styled.div`
 //<--- FLOWS - SCROLLAVEL --->
 //Organiza e distribui os flows publicados
 export const FlowFeed = styled.div`
-  width: 60%;
+  width: 70%;
   padding: 64px 32px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   background-color: #fff;
   border-radius: 10px;
+  flex: 1;
+  padding: 24px;
+
+  /* Estilo da barra de rolagem vertical */
+  ::-webkit-scrollbar {
+    width: 12px; /* largura da scrollbar */
+  }
+
+  /* Track (trilho de fundo) */
+  ::-webkit-scrollbar-track {
+    background: transparent; /* pode pôr uma cor se quiser */
+  }
+
+  /* Thumb (a "alça" que desliza) */
+  ::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 8px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+
+  /* Thumb no hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+  }
 `;
 
 export const ScrollFeed = styled.section`
   display: flex;
   flex-direction: column;
-  padding-top: 20px;
+  padding-top: 44px;
+  padding-right: 30px;
   gap: 50px;
   height: 100%;
+  overflow-y: auto;
 `;
 
 // <--- FILTROS - FIXO --->
 //Aside que organiza os elementos disponíveis para filtro
-export const FeedFilters = styled.aside`
-  width: 40%;
-  padding: 20px;
+export const FeedStatistics = styled.aside`
+  width: 30%;
   display: flex;
   flex-direction: column;
+  height: 600px;
   gap: 20px;
   border-radius: 10px;
-  height: auto;
-  background-color: #fff;
 `;
 
 export const FilterHeader = styled.header`

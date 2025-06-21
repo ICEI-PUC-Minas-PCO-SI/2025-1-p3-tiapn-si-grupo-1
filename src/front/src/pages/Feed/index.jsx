@@ -7,6 +7,7 @@ import FlowsNotFound from "../../components/SystemResponses/FlowsNotFound";
 import Categories from "../../components/FilterOptions/Categories";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import Overlay from "../../components/Overlay";
+import StatisticsBoard from "../../components/StatisticsBoard";
 
 //Global state
 import { useFlowStore } from "../../store/flowStore";
@@ -20,22 +21,15 @@ import {
   FeedContainer,
   FeedMain,
   FlowFeed,
-  FeedFilters,
+  FeedStatistics,
   ScrollFeed,
-  FilterHeader,
-  FilterIcon,
-  FilterTitle,
   FeedHeader,
   HeaderTitle,
   HeaderTop,
   HeaderActions,
-  TrendingButton,
   CreateFlowButton,
-  TrendingIcon,
-  StatisticsButton,
   CreateFlowIcon,
   SearchMethods,
-  StatisticsIcon,
 } from "./style";
 
 export default function Feed() {
@@ -72,6 +66,8 @@ export default function Feed() {
     }
   }
 
+  console.log(flows);
+
   //Verificação feita para assegurar que o usuário esteja logado para acessa o feed
   useEffect(() => {
     if (!userToken) {
@@ -96,14 +92,6 @@ export default function Feed() {
             <p>Navegue por conteúdos criados por quem entende do assunto</p>
           </HeaderTitle>
           <HeaderActions>
-            <TrendingButton>
-              <TrendingIcon size={16} />
-              Trending
-            </TrendingButton>
-            <StatisticsButton>
-              <StatisticsIcon size={16} />
-              Estatísticas
-            </StatisticsButton>
             <CreateFlowButton onClick={handleClick}>
               <CreateFlowIcon size={16} />
               Criar Flow
@@ -130,45 +118,11 @@ export default function Feed() {
             ) : null}
           </ScrollFeed>
         </FlowFeed>
-
-        <FeedFilters>
-          <FilterHeader>
-            <FilterTitle>
-              <FilterIcon />
-              Filtros
-            </FilterTitle>
-          </FilterHeader>
-        </FeedFilters>
+        <FeedStatistics>
+          <Trending
+          <StatisticsBoard />
+        </FeedStatistics>
       </FeedMain>
     </FeedContainer>
   );
 }
-
-/*seEffect(() => {
-    //Codígo que será executado após a renderização
-
-    async function fetchFiltros() {
-      //CONSULTAR API DE FILTROS
-      try {
-        const response = await axios.get("http://localhost:3000/api/filtros");
-        setFiltros(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar filtros:", error);
-      }
-    }
-
-    //CONSULTAR API DE FLOWS
-    const fetchFlows = async (termo = "") => {
-      try {
-        const response = await axios.get("http://localhost:3000/api/flow", {
-          params: { search: termo },
-        });
-        setFlows(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar flows:", error);
-      }
-    };
-
-    fetchFiltros();
-    fetchFlows();
-  }, []);*/

@@ -22,7 +22,6 @@ import NoSearchAwnser from "../SystemResponses/NoSearchAwnser";
 import ModalUserCard from "../../components/ModalComponents/ModalUserCard";
 import { useEffect } from "react";
 import ModalTagCard from "../ModalComponents/ModalTagCard";
-import { set } from "lodash";
 
 export default function SearchPage() {
   const [activeOption, setActiveOption] = useState("flows");
@@ -50,15 +49,9 @@ export default function SearchPage() {
   const loadingFilter = useFiltroStore((state) => state.loadingFilter);
   const filterTags = useFiltroStore((state) => state.filterTags);
 
-  // Estado das categorias no feed principal
-  const category = useFlowStore((state) => state.category);
-  const setCategory = useFlowStore((state) => state.setCategory);
-
   useEffect(() => {
     fetchUsers(); // só faz uma vez ao abrir o modal
   }, []);
-
-  console.log(modalFlows);
 
   const handleOptionClick = (option) => {
     setActiveOption(option);

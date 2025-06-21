@@ -21,6 +21,8 @@ import {
 } from "./style";
 
 export default function ModalFlowCard({ flow }) {
+  console.log("ESSE É O FLOW DO MODAL:", JSON.stringify(flow, null, 2));
+
   //Função temporária para criar dinamicamente um "avatar" para o usuário
   const getIniciais = (nome) => {
     if (!nome) return "";
@@ -60,7 +62,7 @@ export default function ModalFlowCard({ flow }) {
 
           <Info>
             <EyeIcon size={14} />
-            1921
+            {flow.stats}
           </Info>
           <Info>
             <HeartIcon size={14} />

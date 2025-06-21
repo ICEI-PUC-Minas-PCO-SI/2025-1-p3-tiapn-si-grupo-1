@@ -159,7 +159,6 @@ export const useFlowStore = create((set, get) => ({
       const flowsResponse = await axios.get(
         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow?${queryParams.toString()}`
       );
-      console.log("Flows Response:", flowsResponse.data); // Log para depuração
 
       // Busca todas as curtidas
       let curtidas = [];
@@ -167,6 +166,7 @@ export const useFlowStore = create((set, get) => ({
         const curtidasResponse = await axios.get(
           "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas"
         );
+
         // Trata caso em que a API retorna objeto com mensagem
         curtidas = Array.isArray(curtidasResponse.data)
           ? curtidasResponse.data
@@ -186,6 +186,7 @@ export const useFlowStore = create((set, get) => ({
           "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flowsalvos"
         );
         saves = Array.isArray(savesResponse.data) ? savesResponse.data : [];
+
         console.log("Saves Response:", saves); // Log para depuração
       } catch (savesError) {
         console.error("Erro ao buscar salvos:", savesError);
@@ -259,6 +260,7 @@ export const useFlowStore = create((set, get) => ({
       const response = await axios.get(
         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow?${queryParams.toString()}`
       );
+
       set({ modalFlows: response.data });
     } catch (error) {
       console.error("Erro ao buscar flows no modal:", error);

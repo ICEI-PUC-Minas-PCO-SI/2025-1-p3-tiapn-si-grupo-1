@@ -1,12 +1,12 @@
-import React from 'react';
-import * as S from './style';
-import { Search, X } from 'lucide-react';
+import React from "react";
+import * as S from "./style";
+import { Search, X } from "lucide-react";
 
 // Componente de barra de pesquisa para a comunidade
 export const SearchBarCommunity = ({ searchTerm, setSearchTerm }) => {
   // Função para limpar o campo de busca
   const handleClear = () => {
-    setSearchTerm('');
+    setSearchTerm("");
   };
 
   return (

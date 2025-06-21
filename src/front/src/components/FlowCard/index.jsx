@@ -36,7 +36,6 @@ import {
 export default function FlowCard({ flow, userID }) {
   //Usuario
   const user = userID;
-  console.log(flow);
 
   //Função temporária para criar dinamicamente um "avatar" para o usuário
   const getIniciais = (nome) => {
@@ -77,14 +76,14 @@ export default function FlowCard({ flow, userID }) {
     return diffDays === 0
       ? getHoursAgo(publishDate)
       : diffDays === 1
-        ? `Há 1 dia`
-        : diffDays < 7
-          ? `${diffDays} dias atrás`
-          : diffDays < 30
-            ? `${Math.floor(diffDays / 7)} semana(s) atrás`
-            : diffDays < 365
-              ? `${Math.floor(diffDays / 30)} mês(es) atrás`
-              : `${Math.floor(diffDays / 365)} ano(s) atrás`;
+      ? `Há 1 dia`
+      : diffDays < 7
+      ? `${diffDays} dias atrás`
+      : diffDays < 30
+      ? `${Math.floor(diffDays / 7)} semana(s) atrás`
+      : diffDays < 365
+      ? `${Math.floor(diffDays / 30)} mês(es) atrás`
+      : `${Math.floor(diffDays / 365)} ano(s) atrás`;
   };
 
   return (
@@ -122,7 +121,7 @@ export default function FlowCard({ flow, userID }) {
             <FlowNodes>
               <NodeIcon />
               {flow.conteudo_nos?.length || 0}
-              {(flow.conteudo_nos?.length || 0) == 1 ? " nós" : " nó"}
+              {(flow.conteudo_nos?.length || 0) != 1 ? " nós" : " nó"}
             </FlowNodes>
             <FlowViews>
               <ViewIcon></ViewIcon>
