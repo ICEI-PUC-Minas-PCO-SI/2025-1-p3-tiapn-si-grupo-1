@@ -8,6 +8,7 @@ import Categories from "../../components/FilterOptions/Categories";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import Overlay from "../../components/Overlay";
 import StatisticsBoard from "../../components/StatisticsBoard";
+import TrendingBoard from "../../components/TrendingBoard";
 
 //Global state
 import { useFlowStore } from "../../store/flowStore";
@@ -119,7 +120,7 @@ export default function Feed() {
           </ScrollFeed>
         </FlowFeed>
         <FeedStatistics>
-          <Trending
+          <TrendingBoard />
           <StatisticsBoard />
         </FeedStatistics>
       </FeedMain>
