@@ -4,7 +4,9 @@ const auth = require('../middlewares/auth');
 const criar = async (req, res) => {
     try{
         const novaPostagem = await PostagemComunidade.create( {...req.body,  criado_por: req.usuarioId} );
-       
+        if (!req.usuarioId) {
+          return res.status(401).json({ erro: "Usuário não autenticado." });
+        }
         res.status(201).json(novaPostagem);
     }catch (erro){
         res.status(500).json({ erro: 'Erro ao criar a postagem.'});

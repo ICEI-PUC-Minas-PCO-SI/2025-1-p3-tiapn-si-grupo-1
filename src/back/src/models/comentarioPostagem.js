@@ -1,7 +1,5 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../db");
-const Usuario = require("./usuario");
-const PostagemComunidade = require("./postagemComunidade");
 
 const ComentarioPostagem = sequelize.define(
   "ComentarioPostagem",
@@ -13,10 +11,7 @@ const ComentarioPostagem = sequelize.define(
     },
     mensagem: {
       type: DataTypes.TEXT,
-    },
-    criado_em: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
+      allowNull: false,
     },
     postagem_id: {
       type: DataTypes.UUID,
@@ -27,21 +22,39 @@ const ComentarioPostagem = sequelize.define(
       allowNull: false,
     },
     comentario_pai_id: {
-    type: DataTypes.UUID,
-    allowNull: true,
-  },
+      type: DataTypes.UUID,
+      allowNull: true,
+    },
   },
   {
-    timestamps: false,
     tableName: "comentario_postagem",
+    timestamps: true,
+    createdAt: "criado_em",
+    updatedAt: "atualizado_em",
   }
 );
 
-ComentarioPostagem.belongsTo(Usuario, {as: 'usuario' , foreignKey: 'usuario_id' });
-ComentarioPostagem.belongsTo(PostagemComunidade, {as: "postagem", foreignKey: 'postagem_id'});
-ComentarioPostagem.belongsTo(ComentarioPostagem, { as: 'comentarioPai', foreignKey: 'comentario_pai_id' });
-ComentarioPostagem.hasMany(ComentarioPostagem, { as: 'respostas', foreignKey: 'comentario_pai_id' });
+// Associações
+ComentarioPostagem.associate = (models) => {
+  ComentarioPostagem.belongsTo(models.Usuario, {
+    as: "usuario",
+    foreignKey: "usuario_id",
+  });
 
+  ComentarioPostagem.belongsTo(models.PostagemComunidade, {
+    as: "postagem",
+    foreignKey: "postagem_id",
+  });
 
+  ComentarioPostagem.belongsTo(models.ComentarioPostagem, {
+    as: "comentarioPai",
+    foreignKey: "comentario_pai_id",
+  });
+
+  ComentarioPostagem.hasMany(models.ComentarioPostagem, {
+    as: "respostas",
+    foreignKey: "comentario_pai_id",
+  });
+};
 
 module.exports = ComentarioPostagem;

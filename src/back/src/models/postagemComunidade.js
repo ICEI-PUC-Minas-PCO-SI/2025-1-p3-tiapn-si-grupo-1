@@ -1,5 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../db");
+const ComentarioPostagem = require('./comentarioPostagem');
+const Usuario = require('./usuario')
+
 
 const PostagemComunidade = sequelize.define(
   "PostagemComunidade",
