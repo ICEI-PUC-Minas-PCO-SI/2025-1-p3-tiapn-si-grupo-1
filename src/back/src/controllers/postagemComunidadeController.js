@@ -1,11 +1,13 @@
 const { PostagemComunidade, ComentarioPostagem, Usuario } = require("../models");
+const auth = require('../middlewares/auth');
 
 const criar = async (req, res) => {
     try{
-        const novaPostagem = await PostagemComunidade.create(req.body);
+        const novaPostagem = await PostagemComunidade.create( {...req.body,  criado_por: req.usuarioId} );
+       
         res.status(201).json(novaPostagem);
     }catch (erro){
-        res.status(500).json({ erro: 'Erro ao criar a postagem.', detalhes: erro.message});
+        res.status(500).json({ erro: 'Erro ao criar a postagem.'});
     }
 
 };
@@ -26,7 +28,7 @@ const listarTodas = async (req, res) => {
     });
     res.status(200).json(postagens);
   } catch (erro) {
-    res.status(500).json({ erro: 'Erro ao buscar postagens.', detalhes: erro.message });
+    res.status(500).json({ erro: 'Erro ao buscar postagens.'});
   }
 };
 
@@ -52,7 +54,7 @@ const buscarPorId = async (req, res) => {
 
     res.status(200).json(postagem);
   } catch (erro) {
-    res.status(500).json({ erro: 'Erro ao buscar postagem.', detalhes: erro.message });
+    res.status(500).json({ erro: 'Erro ao buscar postagem.'});
   }
 }; 
 
@@ -65,14 +67,14 @@ const atualizar = async (req, res) => {
         await postagem.update(req.body);
         res.status(200).json(postagem);
     }catch (erro){
-        res.status(500).json({ erro: 'Erro ao atualizar postagem.', detalhes: erro.message });
+        res.status(500).json({ erro: 'Erro ao atualizar postagem.' });
     }
 }; 
 const deletar = async(req, res) => {
     try {
         const postagem = await PostagemComunidade.findByPk(req.params.id);
         if(!postagem){
-            return res.status(404).json({erro: 'Erro ao excluir postagem.', detalhes: erro.message});
+            return res.status(404).json({erro: 'Erro ao excluir postagem.'});
         }
         await postagem.destroy();
         res.status(204).send();
@@ -82,7 +84,7 @@ const deletar = async(req, res) => {
 }; 
 
 PostagemComunidade.hasMany(ComentarioPostagem, { as: 'comentarios', foreignKey: 'postagem_id' });
-PostagemComunidade.belongsTo(Usuario, { as: 'usuario', foreignKey: 'usuario_id' });
+PostagemComunidade.belongsTo(Usuario, { as: 'usuario', foreignKey: 'criado_por' });
 
 module.exports = {
     criar, 

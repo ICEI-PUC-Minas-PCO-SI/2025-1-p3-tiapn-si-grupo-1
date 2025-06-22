@@ -38,7 +38,7 @@ const ComentarioPostagem = sequelize.define(
 );
 
 ComentarioPostagem.belongsTo(Usuario, {foreignKey: 'usuario_id' });
-ComentarioPostagem.belongsTo(PostagemComunidade, {foreignKey: 'postagem_id'});
+ComentarioPostagem.belongsTo(PostagemComunidade, {as: "PostagemComunidade", foreignKey: 'postagem_id'});
 ComentarioPostagem.belongsTo(ComentarioPostagem, { as: 'comentarioPai', foreignKey: 'comentario_pai_id' });
 ComentarioPostagem.hasMany(ComentarioPostagem, { as: 'respostas', foreignKey: 'comentario_pai_id' });
 
