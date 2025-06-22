@@ -19,9 +19,6 @@ export const useFlowStore = create((set, get) => ({
   searchTerm: "",
   flows: [],
   loading: false,
-
-  //MODAL
-  //Estado que armazena apenas os flows para aparecer no modal
   modalFlows: [],
   modalSearchTerm: "",
   modalLoading: false,
@@ -54,8 +51,8 @@ export const useFlowStore = create((set, get) => ({
   },
 
   applyTagFilter: async (tag) => {
-    set({ category: tag, searchTerm: "" }); // atualiza os filtros de uma vez
-    await get().fetchFlows({ category: tag, searchTerm: "" }); // busca usando os valores atualizados
+    set({ category: tag, searchTerm: "" });
+    await get().fetchFlows({ category: tag, searchTerm: "" });
   },
 
   toggleSave: async (postId) => {
@@ -159,6 +156,7 @@ export const useFlowStore = create((set, get) => ({
       const flowsResponse = await axios.get(
         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow?${queryParams.toString()}`
       );
+      console.log("Flows Response:", flowsResponse.data); // Log para depuração
 
       // Busca todas as curtidas
       let curtidas = [];
@@ -166,8 +164,6 @@ export const useFlowStore = create((set, get) => ({
         const curtidasResponse = await axios.get(
           "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas"
         );
-
-        // Trata caso em que a API retorna objeto com mensagem
         curtidas = Array.isArray(curtidasResponse.data)
           ? curtidasResponse.data
           : curtidasResponse.data.mensagem
@@ -186,7 +182,6 @@ export const useFlowStore = create((set, get) => ({
           "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flowsalvos"
         );
         saves = Array.isArray(savesResponse.data) ? savesResponse.data : [];
-
         console.log("Saves Response:", saves); // Log para depuração
       } catch (savesError) {
         console.error("Erro ao buscar salvos:", savesError);
@@ -194,50 +189,32 @@ export const useFlowStore = create((set, get) => ({
       }
 
       // Mapeia os flows para incluir stats corretos
-      const mappedFlows = await Promise.all(
-        flowsResponse.data.map(async (flow) => {
-          // Conta curtidas
-          const likeCount = curtidas.filter(
-            (curtida) => String(curtida.flow_id) === String(flow.id)
-          ).length;
+      const mappedFlows = flowsResponse.data.map((flow) => {
+        // Conta curtidas
+        const likeCount = curtidas.filter(
+          (curtida) => String(curtida.flow_id) === String(flow.id)
+        ).length;
 
-          // Busca comentários para este flow via /api/flow/:id
-          let commentCount = 0;
-          try {
-            const flowDetailResponse = await axios.get(
-              `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${flow.id}`
-            );
-            console.log(
-              `Flow Detail Response for flow ${flow.id}:`,
-              flowDetailResponse.data
-            ); // Log para depuração
-            commentCount = Array.isArray(flowDetailResponse.data.comentarios)
-              ? flowDetailResponse.data.comentarios.length
-              : flow.stats?.comments || 0;
-          } catch (flowDetailError) {
-            console.error(
-              `Erro ao buscar detalhes do flow ${flow.id}:`,
-              flowDetailError
-            );
-            commentCount = flow.stats?.comments || 0; // Fallback
-          }
+        // Conta comentários diretamente da resposta
+        const commentCount = Array.isArray(flow.comentarios)
+          ? flow.comentarios.length
+          : 0;
 
-          // Conta salvos
-          const saveCount = saves.filter(
-            (save) => String(save.flow_id) === String(flow.id)
-          ).length;
+        // Conta salvos
+        const saveCount = saves.filter(
+          (save) => String(save.flow_id) === String(flow.id)
+        ).length;
 
-          return {
-            ...flow,
-            stats: {
-              likes: likeCount,
-              comments: commentCount,
-              saves: saveCount,
-              views: flow.stats?.views || 0,
-            },
-          };
-        })
-      );
+        return {
+          ...flow,
+          stats: {
+            likes: likeCount,
+            comments: commentCount,
+            saves: saveCount,
+            views: flow.stats?.views || 0,
+          },
+        };
+      });
 
       console.log("Mapped Flows:", mappedFlows); // Log para depuração
       set({ flows: mappedFlows });
@@ -262,7 +239,6 @@ export const useFlowStore = create((set, get) => ({
       const response = await axios.get(
         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow?${queryParams.toString()}`
       );
-
       set({ modalFlows: response.data });
     } catch (error) {
       console.error("Erro ao buscar flows no modal:", error);
