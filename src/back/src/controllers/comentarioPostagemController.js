@@ -54,9 +54,6 @@ const comentarioPostagemController = {
   }
 },
 
-
-
-
   //Obter detalhes de um comentario em uma postagem
   async obter(req, res) {
     try {
@@ -71,7 +68,7 @@ const comentarioPostagemController = {
             },
             {
               model: PostagemComunidade,
-              as: "PostagemComunidade",
+              as: "postagem",
               attributes: ["id", "titulo"],
               include: {
                 model: Usuario,
