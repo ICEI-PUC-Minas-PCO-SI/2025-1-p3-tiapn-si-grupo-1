@@ -135,6 +135,8 @@ export const FeedStatistics = styled.aside`
   height: 600px;
   gap: 20px;
   border-radius: 10px;
+  position: sticky;
+  top: 20px;
 `;
 
 export const FilterHeader = styled.header`
