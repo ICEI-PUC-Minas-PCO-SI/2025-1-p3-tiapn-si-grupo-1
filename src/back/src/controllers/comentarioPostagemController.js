@@ -247,6 +247,4 @@ const comentarioPostagemController = {
 };
 
   
-
-
 module.exports = comentarioPostagemController;

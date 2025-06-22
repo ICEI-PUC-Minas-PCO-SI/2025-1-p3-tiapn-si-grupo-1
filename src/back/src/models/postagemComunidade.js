@@ -43,4 +43,7 @@ const PostagemComunidade = sequelize.define(
   }
 );
 
+PostagemComunidade.hasMany(ComentarioPostagem, { as: 'comentarios', foreignKey: 'postagem_id' });
+PostagemComunidade.belongsTo(Usuario, { as: 'usuario', foreignKey: 'criado_por' });
+
 module.exports = PostagemComunidade;

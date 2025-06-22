@@ -83,9 +83,6 @@ const deletar = async(req, res) => {
     }
 }; 
 
-PostagemComunidade.hasMany(ComentarioPostagem, { as: 'comentarios', foreignKey: 'postagem_id' });
-PostagemComunidade.belongsTo(Usuario, { as: 'usuario', foreignKey: 'criado_por' });
-
 module.exports = {
     criar, 
     listarTodas, 
