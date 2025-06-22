@@ -20,7 +20,10 @@ function LayoutWrapper() {
   const isSearchModalOpen = useUIStore((state) => state.isSearchModalOpen);
 
   return (
-    <div className="app-container">
+    <div
+      className="app-container"
+      style={{ paddingLeft: hideSidebar ? "0" : "60px" }}
+    >
       <Toaster richColors position="top-right" />
       {!hideSidebar && <Sidebar />}
       <main className="content-area">

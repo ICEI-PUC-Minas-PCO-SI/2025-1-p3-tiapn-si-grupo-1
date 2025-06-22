@@ -9,6 +9,11 @@ export const SidebarContainer = styled.aside`
   flex-direction: column;
   align-items: center;
   padding: ${(props) => props.theme.spacing.sm} 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 100vh;
 `;
 
 export const Logo = styled.div`
@@ -96,7 +101,7 @@ export const ModalTitle = styled.h2`
   font-size: 20px;
   font-weight: 600;
   color: #1f2937;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 `;
 
 export const CloseButton = styled.button`
@@ -117,7 +122,7 @@ export const ModalBody = styled.div`
   font-size: 16px;
   color: #374151;
   line-height: 1.6;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 `;
 
 export const ModalFooter = styled.div`
@@ -132,21 +137,19 @@ export const ModalButton = styled.button`
   padding: 8px 16px;
   border-radius: 8px;
   border: ${({ variant }) =>
-    variant === 'outline' ? '1px solid #e5e7eb' : 'none'};
-  background: ${({ variant }) =>
-    variant === 'outline' ? 'none' : '#233DFF'};
-  color: ${({ variant }) =>
-    variant === 'outline' ? '#374151' : '#fff'};
+    variant === "outline" ? "1px solid #e5e7eb" : "none"};
+  background: ${({ variant }) => (variant === "outline" ? "none" : "#233DFF")};
+  color: ${({ variant }) => (variant === "outline" ? "#374151" : "#fff")};
   font-size: 14px;
   font-weight: 500;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
     background: ${({ variant }) =>
-    variant === 'outline' ? '#f3f4f6' : '#1e3a8a'};
+      variant === "outline" ? "#f3f4f6" : "#1e3a8a"};
     border-color: ${({ variant }) =>
-    variant === 'outline' ? '#d1d5db' : 'none'};
+      variant === "outline" ? "#d1d5db" : "none"};
   }
 `;
