@@ -1,17 +1,29 @@
 const { DataTypes } = require('sequelize');
-const sequelize  = require('../../db');
+const sequelize = require('../../db'); // ou seu caminho correto
 
-// Novas Colunas na Tabela de Usuário: cargo, empresa, descrição ( Rogerio )
 const Usuario = sequelize.define('usuario', {
-  id: { type: DataTypes.UUID, primaryKey: true, defaultValue: DataTypes.UUIDV4 },
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true,
+  },
   nome: DataTypes.STRING,
-  email: { type: DataTypes.STRING, unique: true },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+    allowNull: false,
+  },
   senha_hash: DataTypes.STRING,
   cargo: DataTypes.STRING,
   empresa: DataTypes.STRING,
-  descricao: DataTypes.STRING,
-  criado_em: { type: DataTypes.DATE, defaultValue: DataTypes.NOW }
-}, { timestamps: false, tableName: 'usuario', });
+  descricao: DataTypes.TEXT,
+  criado_em: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW,
+  }
+}, {
+  tableName: 'usuarios',
+  timestamps: false
+});
 
 module.exports = Usuario;
-
