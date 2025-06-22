@@ -33,10 +33,7 @@ import {
   ViewIcon,
 } from "./style";
 
-export default function FlowCard({ flow, userID }) {
-  //Usuario
-  const user = userID;
-
+export default function FlowCard({ flow }) {
   //Função temporária para criar dinamicamente um "avatar" para o usuário
   const getIniciais = (nome) => {
     if (!nome) return "";
@@ -89,13 +86,13 @@ export default function FlowCard({ flow, userID }) {
   return (
     <FlowCardContainer>
       <FlowWrapper>
-        <FlowHat>{flow.categoria}</FlowHat>
+        <FlowHat>{flow.categoria || "Sem categoria"}</FlowHat>
         <FlowHeader>
           <Avatar>{getIniciais(flow.usuario?.nome)}</Avatar>
           <AuthorInfo>
             <FlowAuthor>{flow.usuario?.nome}</FlowAuthor>
             <FlowDetails>
-              <AuthorRole>Sales Director</AuthorRole>
+              <AuthorRole>{"Flow user"}</AuthorRole>
               <Dot />
               <DaysPublished>{getDaysAgo(flow.criado_em)}</DaysPublished>
             </FlowDetails>
@@ -133,7 +130,7 @@ export default function FlowCard({ flow, userID }) {
           <LikeButton likes={flow.stats?.likes || 0} />
           <CommentButton comments={flow.stats?.comments || 0} />
           <SaveButton saves={flow.stats?.saves || 0} />
-          <ShareButton />
+          <ShareButton flowID={flow.id} />
           <OpenFlowButton flowID={flow.id} />
         </FlowFooter>
       </FlowWrapper>

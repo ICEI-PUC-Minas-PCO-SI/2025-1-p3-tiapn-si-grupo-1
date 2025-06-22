@@ -67,8 +67,6 @@ export default function Feed() {
     }
   }
 
-  console.log(flows);
-
   //Verificação feita para assegurar que o usuário esteja logado para acessa o feed
   useEffect(() => {
     if (!userToken) {

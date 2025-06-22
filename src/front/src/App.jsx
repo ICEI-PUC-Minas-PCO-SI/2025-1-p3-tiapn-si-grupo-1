@@ -7,7 +7,8 @@ import MainRoutes from "./routes";
 import Overlay from "./components/Overlay";
 import { useUIStore } from "./store/uiStore";
 import SearchPage from "./components/SearchPage";
-import "./services/axiosConfig"
+import { Toaster } from "sonner";
+import "./services/axiosConfig";
 
 function LayoutWrapper() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function LayoutWrapper() {
 
   return (
     <div className="app-container">
+      <Toaster richColors position="top-right" />
       {!hideSidebar && <Sidebar />}
       <main className="content-area">
         {isOverlayActive && <Overlay />} {/* Mostra overlay se ativo */}

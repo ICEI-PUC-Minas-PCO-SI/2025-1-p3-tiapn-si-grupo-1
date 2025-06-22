@@ -1,5 +1,12 @@
 import styled from "styled-components";
-import { Ellipsis, GitBranch, Eye, Heart, MessageCircle, Bookmark } from "lucide-react";
+import {
+  Ellipsis,
+  GitBranch,
+  Eye,
+  Heart,
+  MessageCircle,
+  Bookmark,
+} from "lucide-react";
 
 export const FlowCardContainer = styled.div`
   width: 100%;
@@ -64,11 +71,11 @@ export const FlowHeader = styled.header`
 export const FlowAuthor = styled.span`
   color: #333;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 16px;
 `;
 
 export const AuthorRole = styled.span`
-  font-size: 11px;
+  font-size: 14px;
   color: #565656;
 `;
 
@@ -161,7 +168,7 @@ export const FlowCategory = styled.span`
 `;
 
 export const DaysPublished = styled.span`
-  font-size: 11px;
+  font-size: 14px;
   color: #565656;
   font-weight: 400;
 `;
@@ -226,29 +233,29 @@ export const Button = styled.button`
   border: none;
   border-radius: 6px;
   cursor: default; /* Sem interação */
-  color: #4B5563;
+  color: #4b5563;
   font-size: 14px;
   font-weight: 500;
 
   &:hover {
-    background: #F3F4F6;
+    background: #f3f4f6;
   }
 `;
 
 export const LikeIcon = styled(Heart)`
   width: 16px;
   height: 16px;
-  color: #4B5563;
+  color: #4b5563;
 `;
 
 export const CommentIcon = styled(MessageCircle)`
   width: 16px;
   height: 16px;
-  color: #4B5563;
+  color: #4b5563;
 `;
 
 export const SaveIcon = styled(Bookmark)`
   width: 16px;
   height: 16px;
-  color: #4B5563;
+  color: #4b5563;
 `;

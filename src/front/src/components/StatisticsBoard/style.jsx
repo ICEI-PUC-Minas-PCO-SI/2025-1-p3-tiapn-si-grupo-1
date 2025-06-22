@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Users, Zap, MessageCircle, Heart } from "lucide-react";
+import { Gauge, Users, Zap, MessageCircle, Heart } from "lucide-react";
 
 export const StatisticsBoardContainer = styled.div`
   display: flex;
@@ -7,8 +7,17 @@ export const StatisticsBoardContainer = styled.div`
   padding: 32px;
   gap: 20px;
   border-radius: 10px;
-
   background-color: #ffffff;
+`;
+
+export const Header = styled.header`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const StatisticsIcon = styled(Gauge)`
+  color: #233dff;
 `;
 
 export const CardsContainer = styled.div`

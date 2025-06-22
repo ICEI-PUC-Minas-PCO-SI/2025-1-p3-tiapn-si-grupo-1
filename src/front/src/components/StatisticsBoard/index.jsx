@@ -13,6 +13,8 @@ import {
   CommunityPostsIcon,
   LikesIcon,
   FlowsIcon,
+  Header,
+  StatisticsIcon,
 } from "./style";
 
 export default function StatisticsBoard() {
@@ -31,7 +33,11 @@ export default function StatisticsBoard() {
 
   return (
     <StatisticsBoardContainer>
-      <Title>Estatísticas</Title>
+      <Header>
+        <StatisticsIcon size={24} />
+        <Title>Estatísticas</Title>
+      </Header>
+
       <CardsContainer>
         <StatisticsCard>
           <CardNumbers>

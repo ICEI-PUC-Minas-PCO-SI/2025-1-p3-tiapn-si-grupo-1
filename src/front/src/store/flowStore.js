@@ -241,9 +241,11 @@ export const useFlowStore = create((set, get) => ({
 
       console.log("Mapped Flows:", mappedFlows); // Log para depuração
       set({ flows: mappedFlows });
+      return mappedFlows;
     } catch (error) {
       console.error("Erro ao buscar flows:", error);
       set({ flows: [] });
+      return [];
     } finally {
       set({ loading: false });
     }

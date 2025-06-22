@@ -1,2 +1,109 @@
-import { TrendingUp } from "lucide-react";
+import { TrendingUp, Flame } from "lucide-react";
 import styled from "styled-components";
+
+export const TrendingBoardContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  gap: 20px;
+  border-radius: 10px;
+  background-color: #ffffff;
+`;
+
+export const Header = styled.header`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`;
+
+export const TrendingIcon = styled(TrendingUp)`
+  color: #233dff;
+`;
+
+export const Title = styled.h2`
+  font-size: 20px;
+  color: #333333;
+  font-weight: 600;
+`;
+
+export const TrendingList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
+export const TrendingItem = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  gap: 12px;
+  border-radius: 8px;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+  border: 2px solid transparent;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-color: #233dff;
+  }
+
+  &:hover h3 {
+    color: #233dff;
+  }
+`;
+export const FlowPosition = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #233dff;
+  border: 2px solid #233dff;
+  font-size: 14px;
+  align-self: center;
+`;
+export const FlowInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+export const FlowTitle = styled.h3`
+  font-size: 16px;
+  color: #333333;
+`;
+
+export const FlowFooter = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`;
+
+export const FlowAuthor = styled.p`
+  font-size: 14px;
+  color: #666666;
+`;
+
+export const FlowCategory = styled.span`
+  font-size: 12px;
+  color: #666666;
+  background-color: #dee2ff;
+  padding: 4px 12px;
+  border-radius: 12px;
+`;
+
+export const PlayIconContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border: 2px solid #ff3366;
+  border-radius: 50%;
+  margin-left: auto;
+`;
+
+export const PlayIcon = styled(Flame)`
+  stroke: #ff3366;
+`;

@@ -8,7 +8,6 @@ export const FeedContainer = styled.div`
   padding: 20px 20px;
   justify-content: space-between;
   position: relative;
-  gap: 20px;
   left: 50%;
   transform: translateX(-50%);
   height: 100vh;
@@ -18,7 +17,6 @@ export const FeedMain = styled.div`
   display: flex;
   gap: 20px;
   margin-top: 260px; // altura do FeedHeader
-  overflow: hidden;
 `;
 
 // <--- HEADER - FIXO --->
