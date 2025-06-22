@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './style';
-import { MessageCircle, Bookmark, Trash2 } from 'lucide-react';
+import { MessageCircle, Bookmark, Trash2, Edit } from 'lucide-react';
 
-export const CommunityPost = ({ post, onVote, onSave, onDelete, currentUserId }) => {
+export const CommunityPost = ({ post, onVote, onSave, onDelete, onEdit, currentUserId }) => {
   const navigate = useNavigate();
 
   // Função para redirecionar ao clicar no card
@@ -27,6 +27,18 @@ export const CommunityPost = ({ post, onVote, onSave, onDelete, currentUserId })
       role="button"
       aria-label={`Ver post: ${post.title}`}
     >
+      {/* Botão de edição no canto superior direito */}
+      {currentUserId === post.author.id && (
+        <S.EditButton
+          onClick={(e) => {
+            e.stopPropagation();
+            onEdit(post);
+          }}
+          aria-label={`Editar post: ${post.title}`}
+        >
+          <Edit size={16} />
+        </S.EditButton>
+      )}
       <S.PostHeader>
         <S.Avatar>{post.author.initials}</S.Avatar>
         <div>

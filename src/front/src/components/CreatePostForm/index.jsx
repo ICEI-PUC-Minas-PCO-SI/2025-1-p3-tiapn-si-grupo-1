@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as S from './style';
 import { X, AlertCircle } from 'lucide-react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 import { postTypes, categories } from '../../data/mockPosts';
 
-// Componente de formulário para criar um novo post
-export const CreatePostForm = ({ onClose, onPostCreated }) => {
+// Componente de formulário para criar ou editar um post
+export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEdit, isEditing, currentUserId }) => {
   // Estados para os campos do formulário
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -15,6 +16,17 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Pré-preencher os campos no modo de edição
+  useEffect(() => {
+    if (isEditing && postToEdit) {
+      setTitle(postToEdit.title);
+      setContent(postToEdit.content);
+      setType(postToEdit.type);
+      setCategory(postToEdit.category);
+      setTags(postToEdit.tags.join(', '));
+    }
+  }, [isEditing, postToEdit]);
+
   // Função para criar as iniciais do nome do usuário
   const getIniciais = (nome) => {
     if (!nome) return '';
@@ -23,7 +35,7 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
     return partes[0][0].toUpperCase() + partes[partes.length - 1][0].toUpperCase();
   };
 
-  // Função para obter o ID e nome do usuário
+  // Função para obter o nome do usuário (usado apenas na criação)
   const fetchUserData = async (token) => {
     try {
       const response = await axios.get(
@@ -57,7 +69,7 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
     // Obter token de autenticação
     const token = localStorage.getItem('token');
     if (!token) {
-      setError('Usuário não autenticado. Faça login para criar um post.');
+      setError('Usuário não autenticado. Faça login para criar ou editar um post.');
       setIsSubmitting(false);
       return;
     }
@@ -68,70 +80,98 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
       .map((tag) => tag.trim())
       .filter((tag) => tag);
 
+    // Payload da requisição
+    const payload = {
+      titulo: title,
+      conteudo: content,
+      tipo: type || 'Discussão',
+      categoria: category || 'Geral',
+      tags: formattedTags,
+      usuario_id: currentUserId, // Usar currentUserId passado como prop
+    };
+
     try {
-      // Obter ID e nome do usuário
-      const userData = await fetchUserData(token);
-      const { id: userId, nome: userName } = userData;
+      if (isEditing && postToEdit) {
+        // Editar post existente
+        const response = await axios.put(
+          `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade/${postToEdit.id}`,
+          payload,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+        const updatedPost = {
+          ...postToEdit,
+          title: response.data.titulo,
+          content: response.data.conteudo,
+          type: response.data.tipo || 'Discussão',
+          category: response.data.categoria || 'Geral',
+          tags: response.data.tags || [],
+          author: postToEdit.author, // Manter o autor original
+          createdAt: postToEdit.createdAt, // Manter a data original
+          createdAtRaw: postToEdit.createdAtRaw,
+          upvotes: postToEdit.upvotes,
+          downvotes: postToEdit.downvotes,
+          comments: postToEdit.comments,
+          hasFlow: response.data.tipo === 'Flow Compartilhado' || response.data.tipo === 'Showcase',
+          flowId: postToEdit.id,
+          isUpvoted: postToEdit.isUpvoted,
+          isDownvoted: postToEdit.isDownvoted,
+          isSaved: postToEdit.isSaved,
+        };
+        onPostUpdated(updatedPost);
+        toast.success('Post atualizado com sucesso!');
+      } else {
+        // Criar novo post
+        const userData = await fetchUserData(token);
+        const { nome: userName } = userData;
 
-      // Gerar data de criação no formato ISO 8601
-      const createdAt = new Date().toISOString();
+        const response = await axios.post(
+          'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade',
+          { ...payload, criado_por: currentUserId, criado_em: new Date().toISOString() },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
 
-      // Payload da requisição
-      const payload = {
-        titulo: title,
-        conteudo: content,
-        criado_por: userId,
-        criado_em: createdAt,
-        tipo: type || 'Discussão',
-        categoria: category || 'Geral',
-        tags: formattedTags,
-      };
+        // Mapear resposta da API para o formato esperado pelo front-end
+        const newPost = {
+          id: response.data.id,
+          title: response.data.titulo,
+          content: response.data.conteudo,
+          author: {
+            name: userName,
+            initials: getIniciais(userName),
+            role: 'Membro',
+            reputation: 0,
+            id: currentUserId,
+          },
+          type: response.data.tipo || 'Discussão',
+          category: response.data.categoria || 'Geral',
+          tags: response.data.tags || [],
+          upvotes: 0,
+          downvotes: 0,
+          comments: 0,
+          createdAt: new Date(response.data.criado_em).toLocaleString('pt-BR', {
+            hour: '2-digit',
+            minute: '2-digit',
+          }),
+          createdAtRaw: response.data.criado_em,
+          hasFlow: response.data.tipo === 'Flow Compartilhado' || response.data.tipo === 'Showcase',
+          flowId: response.data.id,
+          isUpvoted: false,
+          isDownvoted: false,
+          isSaved: false,
+        };
 
-      // Enviar requisição para criar o post
-      const response = await axios.post(
-        'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade',
-        payload,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-
-      // Mapear resposta da API para o formato esperado pelo front-end
-      const newPost = {
-        id: response.data.id,
-        title: response.data.titulo,
-        content: response.data.conteudo,
-        author: {
-          name: userName,
-          avatar: getIniciais(userName),
-          role: 'Membro',
-          reputation: 0,
-          id: userId,
-        },
-        type: response.data.tipo || 'Discussão',
-        category: response.data.categoria || 'Geral',
-        tags: response.data.tags || [],
-        upvotes: 0,
-        downvotes: 0,
-        comments: 0,
-        createdAt: new Date(response.data.criado_em).toLocaleString('pt-BR', {
-          hour: '2-digit',
-          minute: '2-digit',
-        }),
-        hasFlow: response.data.tipo === 'Flow Compartilhado' || response.data.tipo === 'Showcase',
-        flowId: response.data.id,
-        isUpvoted: false,
-        isDownvoted: false,
-        isSaved: false,
-      };
-
-      // Notificar o componente pai sobre o novo post
-      onPostCreated(newPost);
+        onPostCreated(newPost);
+        toast.success('Post criado com sucesso!');
+      }
 
       // Fechar o modal após sucesso
       onClose();
     } catch (err) {
-      console.error('Erro ao criar post:', {
+      console.error('Erro ao salvar post:', {
         status: err.response?.status,
         data: err.response?.data,
         message: err.message,
@@ -142,7 +182,7 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
         err.response?.data?.erro ||
         err.response?.data?.message ||
         err.message ||
-        'Erro ao criar o post. Verifique os dados e tente novamente.';
+        'Erro ao salvar o post. Verifique os dados e tente novamente.';
 
       setError(errorMessage);
 
@@ -160,7 +200,7 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
       <S.Modal>
         {/* Cabeçalho do modal */}
         <S.ModalHeader>
-          <h2>Criar Novo Post</h2>
+          <h2>{isEditing ? 'Editar Post' : 'Criar Novo Post'}</h2>
           <S.CloseButton onClick={onClose}>
             <X size={20} />
           </S.CloseButton>
@@ -222,7 +262,7 @@ export const CreatePostForm = ({ onClose, onPostCreated }) => {
             onClick={handleSubmit}
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Publicando...' : 'Publicar'}
+            {isSubmitting ? 'Salvando...' : isEditing ? 'Salvar Alterações' : 'Publicar'}
           </S.Button>
         </S.ModalFooter>
       </S.Modal>

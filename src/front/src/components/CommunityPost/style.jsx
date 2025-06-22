@@ -8,10 +8,33 @@ export const PostCard = styled.div`
   margin-bottom: 1rem;
   transition: box-shadow 0.2s ease, transform 0.2s ease;
   cursor: pointer;
+  position: relative; /* Para posicionar o botão de edição */
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     transform: translateY(-2px);
+  }
+
+  &:focus {
+    outline: 2px solid #233dff;
+    outline-offset: 2px;
+  }
+`;
+
+export const EditButton = styled.button`
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #666666;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+
+  &:hover {
+    color: #233dff;
+    background: #233dff1a;
   }
 
   &:focus {
