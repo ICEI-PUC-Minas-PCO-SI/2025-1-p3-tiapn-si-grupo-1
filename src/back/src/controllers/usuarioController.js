@@ -64,7 +64,7 @@ const usuarioController = {
   async listarTodos(req, res) {
     try {
       const usuarios = await Usuario.findAll({
-        attributes: ['id', 'nome', 'email', 'criado_em']
+        attributes: ['id', 'nome', 'email', 'criado_em', 'cargo', 'empresa', 'descricao']
       });
       return res.status(200).json(usuarios);
     } catch (error) {
@@ -75,7 +75,7 @@ const usuarioController = {
   async obterUsuarioLogado(req, res){
     try{
       const usuario = await Usuario.findByPk(req.usuarioId,{
-        attributes: ['id', 'nome', 'email', 'criado_em']
+        attributes: ['id', 'nome', 'email', 'criado_em', 'cargo', 'empresa', 'descricao']
       });
       
       if(!usuario){

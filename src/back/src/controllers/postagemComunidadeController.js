@@ -1,4 +1,4 @@
-const { ComentarioPost, PostagemComunidade } = require('../models');
+const { PostagemComunidade, ComentarioPostagem, Usuario } = require("../models");
 
 const criar = async (req, res) => {
     try{
@@ -10,25 +10,52 @@ const criar = async (req, res) => {
 
 };
 const listarTodas = async (req, res) => {
-    try {
-        const postagens = await PostagemComunidade.findAll();
-        res.status(200).json(postagens);
-    }catch (erro){
-        res.status(500).json({ erro: 'Erro ao buscar postagens.', detalhes: erro.message});
-    }
-};
- 
-const buscarPorId = async (req, res) => {
-    try {
-        const postagem = await PostagemComunidade.findByPk(req.params.id);
-        if (!postagem){
-            return res.status(404).json({ erro: 'Postagem não encontrada'}); 
+  try {
+    const postagens = await PostagemComunidade.findAll({
+      include: [
+        {
+          model: ComentarioPostagem,
+          as: 'comentarios', // use o alias correto conforme sua associação
+        },
+        {
+          model: Usuario,
+          as: 'usuario', // use o alias correto conforme sua associação
+          attributes: ['id', 'nome', 'email'] // opcional: limita os campos retornados
         }
-        res.status(200).json(postagem);
-    } catch(erro){
-        res.status(500).json({erro: 'Erro ao buscar postagem.', detalhes: erro.message});
+      ]
+    });
+    res.status(200).json(postagens);
+  } catch (erro) {
+    res.status(500).json({ erro: 'Erro ao buscar postagens.', detalhes: erro.message });
+  }
+};
+
+const buscarPorId = async (req, res) => {
+  try {
+    const postagem = await PostagemComunidade.findByPk(req.params.id, {
+      include: [
+        {
+          model: ComentarioPostagem,
+          as: 'comentarios',
+        },
+        {
+          model: Usuario,
+          as: 'usuario',
+          attributes: ['id', 'nome', 'email']
+        }
+      ]
+    });
+
+    if (!postagem) {
+      return res.status(404).json({ erro: 'Postagem não encontrada' });
     }
+
+    res.status(200).json(postagem);
+  } catch (erro) {
+    res.status(500).json({ erro: 'Erro ao buscar postagem.', detalhes: erro.message });
+  }
 }; 
+
 const atualizar = async (req, res) => {
     try {
         const postagem = await PostagemComunidade.findByPk(req.params.id);
@@ -53,6 +80,9 @@ const deletar = async(req, res) => {
         res.status(500).json({erro: 'Erro ao excluir postagem. ', detalhes: erro.message});
     }
 }; 
+
+PostagemComunidade.hasMany(ComentarioPostagem, { as: 'comentarios', foreignKey: 'postagem_id' });
+PostagemComunidade.belongsTo(Usuario, { as: 'usuario', foreignKey: 'usuario_id' });
 
 module.exports = {
     criar, 
