@@ -38,7 +38,7 @@ const PostagemComunidade = sequelize.define(
     criado_em: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
-    },
+    },  
   },
   {
     tableName: "postagem_comunidade",
