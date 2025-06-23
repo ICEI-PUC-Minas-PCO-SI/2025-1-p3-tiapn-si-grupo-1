@@ -41,6 +41,11 @@ const buscarPorId = async (req, res) => {
         {
           model: ComentarioPostagem,
           as: 'comentarios',
+          include: {
+            model: Usuario,
+            attributes: ["id", "nome"]
+          },
+          order: [["criado_em", "ASC"]] // ordena os comentários pela data de criação
         },
         {
           model: Usuario,
@@ -56,9 +61,9 @@ const buscarPorId = async (req, res) => {
 
     res.status(200).json(postagem);
   } catch (erro) {
-    res.status(500).json({ erro: 'Erro ao buscar postagem.'});
+    res.status(500).json({ erro: 'Erro ao buscar postagem.' });
   }
-}; 
+};
 
 const atualizar = async (req, res) => {
     try {
