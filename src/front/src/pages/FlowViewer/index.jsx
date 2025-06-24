@@ -158,12 +158,12 @@ const FlowViewer = () => {
                     toast.error('Erro ao carregar curtidas.');
                 }
 
-                // Buscar fluxos salvos
+                // Buscar Flows salvos
                 try {
                     const salvosResponse = await axios.get(
                         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flowsalvos?usuario_id=${usuarioId}`
                     );
-                    console.log('Fluxos salvos iniciais:', salvosResponse.data);
+                    console.log('Flows salvos iniciais:', salvosResponse.data);
                     const userSaved = salvosResponse.data.some(
                         (salvo) => String(salvo?.usuario_id) === String(usuarioId) && String(salvo?.flow_id) === String(id)
                     );
@@ -171,12 +171,12 @@ const FlowViewer = () => {
                     setIsSaved(userSaved);
                     setStats((prev) => ({ ...prev, saves: saveCount }));
                 } catch (salvosError) {
-                    console.error('Erro ao buscar fluxos salvos:', salvosError);
-                    toast.error('Erro ao carregar fluxos salvos.');
+                    console.error('Erro ao buscar Flows salvos:', salvosError);
+                    toast.error('Erro ao carregar Flows salvos.');
                 }
             } catch (flowError) {
-                console.error('Erro ao buscar fluxo:', flowError);
-                toast.error('Erro ao carregar o fluxo.');
+                console.error('Erro ao buscar Flow:', flowError);
+                toast.error('Erro ao carregar o Flow.');
             }
         };
         fetchFlow();
@@ -190,13 +190,13 @@ const FlowViewer = () => {
 
     const handleLike = async () => {
         if (!usuarioId) {
-            toast.error('Faça login para curtir o fluxo.');
+            toast.error('Faça login para curtir o Flow.');
             return;
         }
         try {
             if (isLiked) {
                 try {
-                    console.log('Descurtindo fluxo para usuarioId:', usuarioId, 'e flow_id:', id);
+                    console.log('Descurtindo Flow para usuarioId:', usuarioId, 'e flow_id:', id);
                     await axios.delete(
                         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas/${usuarioId}/${id}`,
                         {
@@ -213,29 +213,29 @@ const FlowViewer = () => {
                     toast.error(error.response?.data?.erro || 'Erro ao remover a curtida.');
                 }
             } else {
-                console.log('Curtindo fluxo com flow_id:', id);
+                console.log('Curtindo Flow com flow_id:', id);
                 await axios.post('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/curtidas', {
                     flow_id: id,
                 });
                 setIsLiked(true);
                 setStats((prev) => ({ ...prev, likes: prev?.likes + 1 }));
-                toast.success('Fluxo curtido!');
+                toast.success('Flow curtido!');
             }
         } catch (error) {
             console.error('Erro ao processar curtida:', error.response?.data || error);
-            toast.error(error.response?.data?.erro || 'Erro ao curtir o fluxo.');
+            toast.error(error.response?.data?.erro || 'Erro ao curtir o Flow.');
         }
     };
 
     const handleSave = async () => {
         if (!usuarioId) {
-            toast.error('Faça login para salvar o fluxo.');
+            toast.error('Faça login para salvar o Flow.');
             return;
         }
         try {
             if (isSaved) {
                 try {
-                    console.log('Removendo fluxo salvo para usuarioId:', usuarioId, 'e flow_id:', id);
+                    console.log('Removendo Flow salvo para usuarioId:', usuarioId, 'e flow_id:', id);
                     await axios.delete(
                         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flowsalvos/${usuarioId}/${id}`,
                         {
@@ -248,22 +248,22 @@ const FlowViewer = () => {
                     setStats((prev) => ({ ...prev, saves: prev?.saves - 1 }));
                     toast.success('Removido dos salvos!');
                 } catch (error) {
-                    console.error('Erro ao remover fluxo salvo:', error.response?.data || error);
-                    toast.error(error.response?.data?.erro || 'Erro ao remover o fluxo salvo.');
+                    console.error('Erro ao remover Flow salvo:', error.response?.data || error);
+                    toast.error(error.response?.data?.erro || 'Erro ao remover o Flow salvo.');
                 }
             } else {
-                console.log('Salvando fluxo com flow_id:', id);
+                console.log('Salvando Flow com flow_id:', id);
                 await axios.post('https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flowsalvos', {
                     usuarioId,
                     flowId: id,
                 });
                 setIsSaved(true);
                 setStats((prev) => ({ ...prev, saves: prev?.saves + 1 }));
-                toast.success('Fluxo salvo!');
+                toast.success('Flow salvo!');
             }
         } catch (error) {
-            console.error('Erro ao processar fluxo salvo:', error.response?.data || error);
-            toast.error(error.response?.data?.erro || 'Erro ao salvar o fluxo.');
+            console.error('Erro ao processar Flow salvo:', error.response?.data || error);
+            toast.error(error.response?.data?.erro || 'Erro ao salvar o Flow.');
         }
     };
 
@@ -275,12 +275,12 @@ const FlowViewer = () => {
     const handleDeleteFlow = async () => {
         try {
             await axios.delete(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${id}`);
-            toast.success('Fluxo deletado com sucesso!');
+            toast.success('Flow deletado com sucesso!');
             setIsDeleteModalOpen(false);
             navigate('/feed');
         } catch (error) {
-            console.error('Erro ao deletar fluxo:', error);
-            toast.error(error.response?.data?.erro || 'Erro ao deletar o fluxo.');
+            console.error('Erro ao deletar Flow:', error);
+            toast.error(error.response?.data?.erro || 'Erro ao deletar o Flow.');
             setIsDeleteModalOpen(false);
         }
     };
@@ -420,7 +420,7 @@ const FlowViewer = () => {
                         <S.Title>{flow.titulo}</S.Title>
                         <S.Subtitle>
                             por {flow.autor?.nome || 'Autor desconhecido'} • {flow.autor?.empresa} •{' '}
-                            {formatTimeAgo(flow.createdAt)} • {formatNumber(stats.views)} visualizações
+                            {formatTimeAgo(flow.createdAt)}
                         </S.Subtitle>
                     </S.TitleWrapper>
                     <S.HeaderActions>
@@ -449,7 +449,7 @@ const FlowViewer = () => {
                         <S.CardHeader>
                             <S.CardTitle>
                                 <Play size={20} color="#233DFF" />
-                                Fluxo Interativo
+                                Flow Interativo
                             </S.CardTitle>
                             <S.CardDescription>
                                 Clique nos nós para explorar o conteúdo • Use os controles para navegar
@@ -577,15 +577,13 @@ const FlowViewer = () => {
                         <S.CardHeader>
                             <S.CardTitle>
                                 <Eye size={20} color="#8B5CF6" />
-                                Sobre este Fluxo
+                                Sobre este Flow
                             </S.CardTitle>
                         </S.CardHeader>
                         <S.CardContent>
                             <S.Description>{flow.descricao}</S.Description>
                             <S.InfoList>
                                 <S.InfoItem>
-                                    <Eye size={16} />
-                                    Visualizações: <strong>{formatNumber(stats.views)}</strong>
                                 </S.InfoItem>
                             </S.InfoList>
                             <S.Tags>
@@ -618,7 +616,6 @@ const FlowViewer = () => {
                                     <S.AuthorRole>{flow.autor?.cargo}</S.AuthorRole>
                                     <S.AuthorCompany>{flow.autor?.empresa}</S.AuthorCompany>
                                     <S.AuthorFollowers>
-                                        {formatNumber(flow.autor?.seguidores?.length || 0)} seguidores
                                     </S.AuthorFollowers>
                                 </S.AuthorInfo>
                             </S.AuthorCard>
@@ -632,15 +629,15 @@ const FlowViewer = () => {
                             </S.CardTitle>
                         </S.CardHeader>
                         <S.CardContent>
-                            <S.Button onClick={() => toast.info('Duplicando fluxo...')}>
+                            <S.Button onClick={() => toast.info('Duplicando Flow...')}>
                                 <Copy size={16} style={{ marginRight: '8px' }} />
-                                Duplicar Fluxo
+                                Duplicar Flow
                             </S.Button>
                             {String(flow.criado_por) === String(usuarioId) && (
                                 <>
                                     <S.Button onClick={() => navigate(`/editar-flow/${id}`)} style={{ marginTop: '12px' }}>
                                         <Edit size={16} style={{ marginRight: '8px' }} />
-                                        Editar Fluxo
+                                        Editar Flow
                                     </S.Button>
                                     <S.Button
                                         onClick={() => setIsDeleteModalOpen(true)}
@@ -648,13 +645,13 @@ const FlowViewer = () => {
                                         style={{ marginTop: '12px' }}
                                     >
                                         <Trash2 size={16} style={{ marginRight: '8px' }} />
-                                        Deletar Fluxo
+                                        Deletar Flow
                                     </S.Button>
                                 </>
                             )}
-                            <S.Button onClick={() => toast.info('Exportando fluxo...')} style={{ marginTop: '12px' }}>
+                            <S.Button onClick={() => toast.info('Exportando Flow...')} style={{ marginTop: '12px' }}>
                                 <Download size={16} style={{ marginRight: '8px' }} />
-                                Exportar Fluxo
+                                Exportar Flow
                             </S.Button>
                         </S.CardContent>
                     </S.Card>
@@ -755,13 +752,13 @@ const FlowViewer = () => {
                 <S.Modal>
                     <S.ModalContent>
                         <S.ModalHeader>
-                            <S.ModalTitle>Deletar Fluxo</S.ModalTitle>
+                            <S.ModalTitle>Deletar Flow</S.ModalTitle>
                             <S.CloseButton onClick={() => setIsDeleteModalOpen(false)}>
                                 <X size={16} />
                             </S.CloseButton>
                         </S.ModalHeader>
                         <S.ModalBody>
-                            <p>Tem certeza que deseja deletar o fluxo "{flow.titulo}"? Esta ação não pode ser desfeita.</p>
+                            <p>Tem certeza que deseja deletar o Flow "{flow.titulo}"? Esta ação não pode ser desfeita.</p>
                         </S.ModalBody>
                         <S.ModalFooter>
                             <S.Button $variant="outline" onClick={() => setIsDeleteModalOpen(false)}>
