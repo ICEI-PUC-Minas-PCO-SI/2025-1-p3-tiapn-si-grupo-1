@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FlowCard from '../../components/FlowCard';
-import {CommunityPost} from '../../components/CommunityPost';
+import { CommunityPost } from '../../components/CommunityPost';
 import { useFlowStore } from '../../store/flowStore';
 
 // Configurar axios com URL base
@@ -35,7 +35,6 @@ const Profile = () => {
   axios.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem('token');
-      console.log('Interceptor - Configurando header Authorization:', token ? `Bearer ${token}` : 'Nenhum token');
       if (token) config.headers.Authorization = `Bearer ${token}`;
       return config;
     },
@@ -66,14 +65,12 @@ const Profile = () => {
     return `${Math.floor(diffInDays / 365)} ano${Math.floor(diffInDays / 365) > 1 ? 's' : ''} atrás`;
   };
 
-  // Buscar dados
+  // Buscar dados do usuário e posts
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       const token = localStorage.getItem('token');
-      console.log('Token encontrado:', token);
       if (!token) {
-        console.log('Nenhum token encontrado, definindo erro.');
         setError('Você precisa estar logado.');
         setIsLoading(false);
         return;
@@ -88,7 +85,6 @@ const Profile = () => {
 
         console.log('Buscando flows do usuário:', userId);
         await fetchFlows({ usuarioId: userId });
-        console.log('Flows do FlowStore:', flows);
 
         console.log('Buscando posts do usuário:', userId);
         const postsResponse = await axios.get('/PostagemComunidade', {
@@ -126,32 +122,6 @@ const Profile = () => {
           .slice(0, 1); // Limitar a 1 post
         console.log('Posts mapeados após filtragem:', mappedPosts);
         setPosts(mappedPosts);
-
-        // Filtrar flows por usuário
-        const userFlows = flows.filter((flow) => flow.criado_por === userId);
-        console.log('Flows filtrados para o usuário:', userFlows);
-
-        const commentsCount = mappedPosts.reduce((sum, post) => sum + post.comments, 0);
-        const likesReceived =
-          mappedPosts.reduce((sum, post) => sum + post.upvotes, 0) +
-          userFlows.reduce((sum, flow) => sum + (flow.stats?.likes || 0), 0);
-        const viewsTotal =
-          mappedPosts.reduce((sum, post) => sum + (post.views || 0), 0) +
-          userFlows.reduce((sum, flow) => sum + (flow.stats?.views || 0), 0);
-        setStats({
-          flowsCreated: userFlows.length,
-          postsCreated: mappedPosts.length,
-          commentsCount,
-          likesReceived,
-          viewsTotal,
-        });
-        console.log('Estatísticas calculadas:', {
-          flowsCreated: userFlows.length,
-          postsCreated: mappedPosts.length,
-          commentsCount,
-          likesReceived,
-          viewsTotal,
-        });
       } catch (err) {
         console.error('Erro ao buscar dados:', err);
         console.log('Status da resposta:', err.response?.status);
@@ -163,6 +133,38 @@ const Profile = () => {
     };
     fetchData();
   }, [fetchFlows]);
+
+  // Atualizar estatísticas quando flows ou posts mudarem
+  useEffect(() => {
+    if (!user || loading) return;
+
+    const userId = user.id;
+    const userFlows = flows.filter((flow) => flow.criado_por === userId);
+    console.log('Flows filtrados para o usuário:', userFlows);
+
+    const commentsCount = posts.reduce((sum, post) => sum + post.comments, 0);
+    const likesReceived =
+      posts.reduce((sum, post) => sum + post.upvotes, 0) +
+      userFlows.reduce((sum, flow) => sum + (flow.stats?.likes || 0), 0);
+    const viewsTotal =
+      posts.reduce((sum, post) => sum + (post.views || 0), 0) +
+      userFlows.reduce((sum, flow) => sum + (flow.stats?.views || 0), 0);
+
+    setStats({
+      flowsCreated: userFlows.length,
+      postsCreated: posts.length,
+      commentsCount,
+      likesReceived,
+      viewsTotal,
+    });
+    console.log('Estatísticas calculadas:', {
+      flowsCreated: userFlows.length,
+      postsCreated: posts.length,
+      commentsCount,
+      likesReceived,
+      viewsTotal,
+    });
+  }, [flows, posts, user, loading]);
 
   // Manipular votação
   const handleVote = (postId, type) => {
@@ -347,7 +349,11 @@ const Profile = () => {
                           {userFlows.length > 0 ? (
                             userFlows.slice(0, 2).map((flow) => {
                               console.log('Renderizando FlowCard com flow:', flow);
-                              return <FlowCard key={flow.id} flow={flow} userID={user.id} />;
+                              return (
+                                <S.FlowCardWrapper>
+                                  <FlowCard key={flow.id} flow={flow} userID={user.id} />
+                                </S.FlowCardWrapper>
+                              );
                             })
                           ) : (
                             <S.EmptyMessage>Nenhum flow criado ainda.</S.EmptyMessage>
@@ -385,7 +391,9 @@ const Profile = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.3 }}
                               >
-                                <FlowCard flow={flow} userID={user.id} />
+                                <S.FlowCardWrapper>
+                                  <FlowCard flow={flow} userID={user.id} />
+                                </S.FlowCardWrapper>
                               </motion.div>
                             );
                           })

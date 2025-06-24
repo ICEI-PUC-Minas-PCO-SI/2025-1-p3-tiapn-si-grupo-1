@@ -223,16 +223,18 @@ export const TabsList = styled.div`
   gap: 8px;
   border-bottom: 1px solid #e5e5e5;
   margin-bottom: 24px;
+  position: relative;
+  z-index: 1; /* Garante que as abas fiquem acima do conteúdo */
 `;
 
 export const TabsTrigger = styled.button`
   padding: 8px 16px;
   font-size: 16px;
   font-weight: 500;
-  color: ${(props) => (props.$active ? '#233dff' : '#666')};
+  color: ${(props) => (props.$isActive ? '#233dff' : '#666')};
   background: none;
   border: none;
-  border-bottom: ${(props) => (props.$active ? '2px solid #233dff' : 'none')};
+  border-bottom: ${(props) => (props.$isActive ? '2px solid #233dff' : 'none')};
   cursor: pointer;
   &:hover {
     color: #1e33cc;
@@ -243,7 +245,7 @@ export const TabsContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
-  
+  margin-top: 16px; /* Adiciona espaço entre TabsList e conteúdo */
 `;
 
 export const Section = styled.div`
@@ -251,16 +253,19 @@ export const Section = styled.div`
   border-radius: 8px;
   padding: 24px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espaço entre elementos internos (header e FlowCard) */
 `;
 
 export const SectionHeader = styled.h3`
   font-size: 18px;
   font-weight: 600;
   color: #1a1a1a;
-  margin-bottom: 16px;
   display: flex;
   align-items: center;
   gap: 8px;
+  margin-bottom: 8px; /* Espaço abaixo do header */
 `;
 
 export const EmptyMessage = styled.p`
@@ -294,4 +299,11 @@ export const LoadingMessage = styled.div`
   color: #666;
   text-align: center;
   margin-top: 100px;
+`;
+
+export const FlowCardWrapper = styled.div`
+  position: relative;
+  margin-top: 16px;
+  z-index: 0;
+  padding-top: 16px;;
 `;
