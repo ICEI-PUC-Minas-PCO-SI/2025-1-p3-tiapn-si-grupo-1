@@ -33,21 +33,14 @@ export default function SearchPage() {
   const modalFlows = useFlowStore((state) => state.modalFlows);
   const modalLoading = useFlowStore((state) => state.modalLoading);
 
-  // Estados e funções da searchbar dentro do moadal
-  const setModalSearchTerm = useFlowStore((state) => state.setModalSearchTerm);
-  const resetFilteredUsers = useUserStore((state) => state.resetFilteredUsers);
-  const modalSearchTerm = useFlowStore((state) => state.modalSearchTerm);
-
   // Estado dos usuários
   const loadingUsers = useUserStore((state) => state.loadingUsers);
   const fetchUsers = useUserStore((state) => state.fetchUsers);
   const filteredUsers = useUserStore((state) => state.filteredUsers);
-  const filterUsers = useUserStore((state) => state.filterUsers);
 
   //Estado das tags
   const filteredTags = useFiltroStore((state) => state.filteredTags);
   const loadingFilter = useFiltroStore((state) => state.loadingFilter);
-  const filterTags = useFiltroStore((state) => state.filterTags);
 
   useEffect(() => {
     fetchUsers(); // só faz uma vez ao abrir o modal
@@ -55,28 +48,12 @@ export default function SearchPage() {
 
   const handleOptionClick = (option) => {
     setActiveOption(option);
-
-    // Usa o termo atual da searchbar
-    const termoAtual = modalSearchTerm;
-
-    if (option === "flows") {
-      setModalSearchTerm(termoAtual); // dispara busca por flows
-    } else if (option === "usuarios") {
-      resetFilteredUsers(); // primeiro reseta
-      if (termoAtual.trim() !== "") {
-        filterUsers(termoAtual); // aplica o filtro
-      }
-    } else if (option === "tags") {
-      if (termoAtual.trim() !== "") {
-        filterTags(termoAtual); // nova linha aqui ✅
-      }
-    }
   };
 
   return (
     <SearchModal>
       <ModalHeader>
-        <ModalSearchBar activeOption={activeOption}></ModalSearchBar>
+        <ModalSearchBar></ModalSearchBar>
         <CloseButton onClick={closeSearchModal}>
           <CloseIcon />
         </CloseButton>
@@ -87,27 +64,21 @@ export default function SearchPage() {
             isActive={activeOption === "flows"}
             onClick={() => handleOptionClick("flows")}
           >
-            {"Flows ("}
-            {modalFlows.length}
-            {")"}
+            {`Flows (${modalFlows.length})`}
           </SearchOption>
 
           <SearchOption
             isActive={activeOption === "usuarios"}
             onClick={() => handleOptionClick("usuarios")}
           >
-            {"Usuários ("}
-            {filteredUsers.length}
-            {")"}
+            {`Usuários (${filteredUsers.length})`}
           </SearchOption>
 
           <SearchOption
             isActive={activeOption === "tags"}
             onClick={() => handleOptionClick("tags")}
           >
-            {"Tags ("}
-            {filteredTags.length}
-            {")"}
+            {`Tags (${filteredTags.length})`}
           </SearchOption>
         </SearchOptionsList>
         <ModalFlowsContainer>
