@@ -7,7 +7,6 @@ export const ContainerGeral = styled.section`
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
-
 `;
 
 export const PostFilters = styled.aside`
@@ -22,7 +21,6 @@ export const PostFilters = styled.aside`
   position: sticky;
   margin-top: 30px;
   align-self: flex-start;
-  
 
   @media (max-width: 768px) {
     width: 100%;
@@ -87,10 +85,10 @@ export const VoteButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  color: ${(props) => (props.active ? '#f97316' : '#9ca3af')};
+  color: ${(props) => (props.$active ? '#f97316' : '#9ca3af')};
   padding: 0.25rem;
   &:hover {
-    color: ${(props) => (props.active ? '#f97316' : '#f97316')};
+    color: ${(props) => (props.$active ? '#f97316' : '#f97316')};
     background: #f3f4f6;
   }
 `;
@@ -105,7 +103,7 @@ export const SaveButton = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  color: ${(props) => (props.active ? '#233dff' : '#9ca3af')};
+  color: ${(props) => (props.$active ? '#233dff' : '#9ca3af')};
   padding: 0.25rem;
   margin-top: 1rem;
   &:hover {
@@ -127,14 +125,14 @@ export const PostHeader = styled.div`
 `;
 
 export const AuthorAvatar = styled.div`
-  width: 40px;
-  height: 40px;
+  width: ${(props) => (props.$depth > 0 ? '32px' : '40px')};
+  height: ${(props) => (props.$depth > 0 ? '32px' : '40px')};
   border-radius: 50%;
   background-color: #ffffff;
   border: 2px solid #233dff;
   color: #233dff;
   font-weight: bold;
-  font-size: 16px;
+  font-size: ${(props) => (props.$depth > 0 ? '14px' : '16px')};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -246,7 +244,7 @@ export const PostBody = styled.div`
   color: #333333;
   line-height: 1.5;
   margin-bottom: 1.5rem;
-  white-space: pre-wrap; /* Preserva quebras de linha e espaços */
+  white-space: pre-wrap;
 `;
 
 export const PostActions = styled.div`
@@ -329,10 +327,13 @@ export const CommentList = styled.div`
 export const Comment = styled.div`
   display: flex;
   gap: 1rem;
-  background: #ffffff;
+  background: ${(props) => (props.$depth > 0 ? '#f9fafb' : '#ffffff')};
   border: 1px solid #e5e5e5;
+  border-left: ${(props) => (props.$depth > 0 ? '4px solid #233dff' : '1px solid #e5e5e5')};
   border-radius: 8px;
   padding: 1rem;
+  margin-left: ${(props) => props.$depth * 3}rem;
+  margin-bottom: 1rem
 `;
 
 export const CommentContent = styled.div`
@@ -346,12 +347,12 @@ export const CommentHeader = styled.div`
 `;
 
 export const CommentMeta = styled.span`
-  font-size: 0.875rem;
+  font-size: ${(props) => (props.$depth > 0 ? '0.8rem' : '0.875rem')};
   color: #565656;
 `;
 
 export const CommentText = styled.p`
-  font-size: 0.875rem;
+  font-size: ${(props) => (props.$depth > 0 ? '0.85rem' : '0.875rem')};
   color: #333333;
   line-height: 1.5;
 `;
@@ -366,6 +367,18 @@ export const EditForm = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+`;
+
+export const ReplyForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding-left: 2rem;
+`;
+
+export const ReplyList = styled.div`
+  margin-top: 1rem;
 `;
 
 export const EditActions = styled.div`

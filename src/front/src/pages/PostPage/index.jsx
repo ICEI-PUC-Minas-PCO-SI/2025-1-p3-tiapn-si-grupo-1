@@ -21,12 +21,13 @@ export const PostPage = () => {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  const [replyingToCommentId, setReplyingToCommentId] = useState(null);
+  const [replyContent, setReplyContent] = useState('');
   const [editingCommentId, setEditingCommentId] = useState(null);
   const [editedComment, setEditedComment] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-  const [currentUserId, setCurrentUserId] = useState(null);
-  const [userNamesCache, setUserNamesCache] = useState({});
+  const [currentUser, setCurrentUser] = useState(null);
 
   // Configurar axios com token
   axios.interceptors.request.use((config) => {
@@ -35,52 +36,31 @@ export const PostPage = () => {
     return config;
   });
 
-  // Obter ID do usuário autenticado e lista de usuários
-  useEffect(() => {
-    const fetchUserDataAndUsers = async () => {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setError('Usuário não autenticado. Faça login.');
-        setIsLoading(false);
-        return;
-      }
+  // Função para buscar dados do usuário autenticado
+  const fetchCurrentUser = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setError('Usuário não autenticado. Faça login.');
+      setIsLoading(false);
+      return null;
+    }
 
-      try {
-        // Buscar dados do usuário logado
-        const userResponse = await axios.get(
-          'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/me'
-        );
-        setCurrentUserId(userResponse.data.id);
-
-        // Buscar lista de todos os usuários
-        const usersResponse = await axios.get(
-          'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario'
-        );
-        // Criar mapa de IDs para nomes
-        const userNamesMap = usersResponse.data.reduce((acc, user) => {
-          acc[user.id] = user.nome || 'Usuário Desconhecido';
-          return acc;
-        }, {});
-        setUserNamesCache(userNamesMap);
-      } catch (err) {
-        if (process.env.NODE_ENV !== 'production') {
-          console.error('Erro ao buscar dados do usuário ou lista de usuários:', err);
-        }
-        setError('Erro ao carregar dados do usuário.');
-      }
-    };
-    fetchUserDataAndUsers();
-  }, []);
-
-  // Função para buscar o nome do usuário pelo ID (usando cache)
-  const fetchUserName = (userId) => {
-    if (!userId) return 'Usuário Desconhecido';
-    return userNamesCache[userId] || 'Usuário Desconhecido';
+    try {
+      const response = await axios.get(
+        'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/me'
+      );
+      setCurrentUser(response.data);
+      return response.data;
+    } catch (err) {
+      console.error('Erro ao buscar usuário autenticado:', err);
+      setError('Erro ao carregar dados do usuário.');
+      return null;
+    }
   };
 
   // Mapear post da API
-  const mapPostFromApi = async (post) => {
-    const userName = fetchUserName(post.criado_por);
+  const mapPostFromApi = (post) => {
+    const userName = post.usuario?.nome || 'Usuário Desconhecido';
     return {
       id: post.id,
       title: post.titulo,
@@ -88,8 +68,8 @@ export const PostPage = () => {
       author: {
         name: userName,
         initials: getIniciais(userName),
-        role: post.author?.role || 'Membro',
-        reputation: post.author?.reputation || 0,
+        role: post.usuario?.cargo || 'Membro',
+        reputation: post.usuario?.reputation || 0,
         id: post.criado_por || null,
       },
       type: post.tipo || 'Discussão',
@@ -97,7 +77,7 @@ export const PostPage = () => {
       tags: post.tags || [],
       upvotes: post.upvotes || 0,
       downvotes: post.downvotes || 0,
-      comments: post.comments || 0,
+      comments: post.comentarios?.length || 0,
       views: post.views || 0,
       createdAt: new Date(post.criado_em).toLocaleString('pt-BR', {
         hour: '2-digit',
@@ -112,8 +92,8 @@ export const PostPage = () => {
   };
 
   // Mapear comentário da API
-  const mapCommentFromApi = async (comment) => {
-    const userName = fetchUserName(comment.usuario_id);
+  const mapCommentFromApi = (comment) => {
+    const userName = comment.usuario?.nome || 'Usuário Desconhecido';
     return {
       id: comment.id,
       content: comment.mensagem,
@@ -122,59 +102,97 @@ export const PostPage = () => {
         initials: getIniciais(userName),
         role: comment.usuario?.cargo || 'Membro',
         reputation: comment.usuario?.reputation || 0,
-        id: comment.usuario_id,
+        id: comment.usuario_id || comment.usuario?.id,
       },
       createdAt: new Date(comment.criado_em).toLocaleString('pt-BR', {
         hour: '2-digit',
         minute: '2-digit',
       }),
+      comentario_pai_id: comment.comentario_pai_id,
       upvotes: comment.upvotes || 0,
       downvotes: comment.downvotes || 0,
       isUpvoted: false,
       isDownvoted: false,
+      replies: [],
     };
   };
 
-  // Carregar post e comentários
+  // Construir árvore de comentários
+  const buildCommentTree = (comments) => {
+    const commentMap = new Map();
+    const tree = [];
+
+    // Primeiro, mapeia todos os comentários
+    comments.forEach((comment) => {
+      commentMap.set(comment.id, { ...comment, replies: [] });
+    });
+
+    // Depois, aninha os comentários filhos aos pais
+    comments.forEach((comment) => {
+      if (comment.comentario_pai_id) {
+        const parent = commentMap.get(comment.comentario_pai_id);
+        if (parent) {
+          parent.replies.push(commentMap.get(comment.id));
+        } else {
+          // Se o pai não existe, adiciona como comentário de nível superior
+          tree.push(commentMap.get(comment.id));
+        }
+      } else {
+        tree.push(commentMap.get(comment.id));
+      }
+    });
+
+    // Ordena comentários e respostas por criado_em
+    const sortComments = (comments) => {
+      return comments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).map((comment) => {
+        if (comment.replies.length > 0) {
+          comment.replies = sortComments(comment.replies);
+        }
+        return comment;
+      });
+    };
+
+    return sortComments(tree);
+  };
+
+  // Carregar dados
   useEffect(() => {
-    const fetchPostAndComments = async () => {
+    const loadData = async () => {
       setIsLoading(true);
       setError('');
+
       try {
-        // Buscar post
+        // Buscar usuário autenticado
+        const user = await fetchCurrentUser();
+        if (!user) return;
+
+        // Buscar post e comentários
         const postResponse = await axios.get(
           `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade/${id}`
         );
-        const mappedPost = await mapPostFromApi(postResponse.data);
+        const postData = postResponse.data;
+        console.log('Post response:', postData);
+        const mappedPost = mapPostFromApi(postData);
         setPost(mappedPost);
 
-        // Buscar comentários
-        try {
-          const commentsResponse = await axios.get(
-            `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade/${id}/comentarios`
-          );
-          const mappedComments = await Promise.all(
-            commentsResponse.data.map(mapCommentFromApi)
-          );
-          setComments(mappedComments);
-        } catch (err) {
-          if (process.env.NODE_ENV !== 'production') {
-            console.error('Erro ao buscar comentários:', err);
-          }
-          setComments([]);
-        }
+        // Mapear comentários
+        const mappedComments = postData.comentarios
+          ? postData.comentarios.map(mapCommentFromApi)
+          : [];
+        console.log('Mapped comments:', mappedComments);
+        const commentTree = buildCommentTree(mappedComments);
+        setComments(commentTree);
       } catch (err) {
         setError('Erro ao carregar o post.');
         toast.error('Erro ao carregar dados.');
-        if (process.env.NODE_ENV !== 'production') {
-          console.error('Erro ao carregar post:', err);
-        }
+        console.error('Erro ao carregar:', err);
       } finally {
         setIsLoading(false);
       }
     };
-    fetchPostAndComments();
-  }, [id, userNamesCache]);
+
+    loadData();
+  }, [id]);
 
   // Manipular votação
   const handleVote = (type) => {
@@ -216,38 +234,52 @@ export const PostPage = () => {
     toast.success('Link copiado!');
   };
 
-  // Adicionar comentário
-  const handleAddComment = async () => {
-    if (!newComment.trim()) {
+  // Adicionar comentário ou resposta
+  const handleAddComment = async (parentCommentId = null) => {
+    const content = parentCommentId ? replyContent : newComment;
+    if (!content.trim()) {
       toast.error('O comentário não pode estar vazio.');
       return;
     }
-    if (!currentUserId) {
+    if (!currentUser?.id) {
       toast.error('Faça login para comentar.');
       return;
     }
     try {
       const response = await axios.post(
-        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade/${id}/comentarios`,
+        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentariopostagem`,
         {
-          mensagem: newComment,
-          usuario_id: currentUserId,
+          mensagem: content,
+          postagem_id: id,
+          comentario_pai_id: parentCommentId,
+          usuario_id: currentUser.id,
         }
       );
       const newCommentData = response.data;
-      const mappedComment = await mapCommentFromApi({
+      const mappedComment = mapCommentFromApi({
         ...newCommentData,
-        usuario_id: currentUserId,
+        usuario_id: currentUser.id,
+        usuario: { id: currentUser.id, nome: currentUser.nome },
       });
-      setComments([mappedComment, ...comments]);
-      setNewComment('');
-      setPost((prev) => ({ ...prev, comments: prev.comments + 1 }));
+      if (parentCommentId) {
+        setComments((prev) =>
+          prev.map((comment) =>
+            comment.id === parentCommentId
+              ? { ...comment, replies: [mappedComment, ...comment.replies] }
+              : comment
+          )
+        );
+        setReplyContent('');
+        setReplyingToCommentId(null);
+      } else {
+        setComments([mappedComment, ...comments]);
+        setNewComment('');
+        setPost((prev) => ({ ...prev, comments: prev.comments + 1 }));
+      }
       toast.success('Comentário adicionado!');
     } catch (err) {
       toast.error(err.response?.data?.erro || 'Erro ao adicionar comentário.');
-      if (process.env.NODE_ENV !== 'production') {
-        console.error('Erro ao adicionar comentário:', err);
-      }
+      console.error('Erro ao adicionar comentário:', err);
     }
   };
 
@@ -259,20 +291,27 @@ export const PostPage = () => {
     }
     try {
       await axios.put(
-        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentarioPostagem/${commentId}`,
+        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentariopostagem/${commentId}`,
         { mensagem: editedComment }
       );
-      setComments((prev) =>
-        prev.map((c) => (c.id === commentId ? { ...c, content: editedComment } : c))
-      );
+      const updateComment = (comments, commentId, newContent) => {
+        return comments.map((comment) => {
+          if (comment.id === commentId) {
+            return { ...comment, content: newContent };
+          }
+          if (comment.replies) {
+            return { ...comment, replies: updateComment(comment.replies, commentId, newContent) };
+          }
+          return comment;
+        });
+      };
+      setComments((prev) => updateComment(prev, commentId, editedComment));
       setEditingCommentId(null);
       setEditedComment('');
       toast.success('Comentário atualizado!');
     } catch (err) {
       toast.error(err.response?.data?.erro || 'Erro ao editar comentário.');
-      if (process.env.NODE_ENV !== 'production') {
-        console.error('Erro ao editar comentário:', err);
-      }
+      console.error('Erro ao editar comentário:', err);
     }
   };
 
@@ -280,16 +319,22 @@ export const PostPage = () => {
   const handleDeleteComment = async (commentId) => {
     try {
       await axios.delete(
-        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentarioPostagem/${commentId}`
+        `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/comentariopostagem/${commentId}`
       );
-      setComments((prev) => prev.filter((c) => c.id !== commentId));
+      const deleteComment = (comments, commentId) => {
+        return comments
+          .filter((comment) => comment.id !== commentId)
+          .map((comment) => ({
+            ...comment,
+            replies: comment.replies ? deleteComment(comment.replies, commentId) : comment.replies,
+          }));
+      };
+      setComments((prev) => deleteComment(prev, commentId));
       setPost((prev) => ({ ...prev, comments: prev.comments - 1 }));
       toast.success('Comentário deletado!');
     } catch (err) {
       toast.error(err.response?.data?.erro || 'Erro ao deletar comentário.');
-      if (process.env.NODE_ENV !== 'production') {
-        console.error('Erro ao deletar comentário:', err);
-      }
+      console.error('Erro ao deletar comentário:', err);
     }
   };
 
@@ -305,132 +350,179 @@ export const PostPage = () => {
     setEditedComment('');
   };
 
+  // Iniciar resposta
+  const handleStartReply = (commentId) => {
+    setReplyingToCommentId(commentId);
+    setReplyContent('');
+  };
+
+  // Cancelar resposta
+  const handleCancelReply = () => {
+    setReplyingToCommentId(null);
+    setReplyContent('');
+  };
+
   if (isLoading) return <S.Loading>Carregando...</S.Loading>;
   if (error) return <S.ErrorMessage>{error}</S.ErrorMessage>;
   if (!post) return <S.ErrorMessage>Post não encontrado.</S.ErrorMessage>;
 
+  const renderComments = (comments, depth = 0) => {
+    return comments.map((comment) => (
+      <S.Comment key={comment.id} $depth={depth}>
+        <S.AuthorAvatar title={comment.author.name} $depth={depth}>
+          {comment.author.initials}
+        </S.AuthorAvatar>
+        <S.CommentContent>
+          <S.CommentHeader>
+            <S.AuthorName>{comment.author.name}</S.AuthorName>
+            <S.CommentMeta>
+              {comment.author.role} • {comment.createdAt}
+            </S.CommentMeta>
+          </S.CommentHeader>
+          {editingCommentId === comment.id ? (
+            <S.EditForm>
+              <S.Textarea
+                value={editedComment}
+                onChange={(e) => setEditedComment(e.target.value)}
+              />
+              <S.EditActions>
+                <S.SubmitButton
+                  onClick={() => handleEditComment(comment.id)}
+                  disabled={!editedComment.trim()}
+                >
+                  Salvar
+                </S.SubmitButton>
+                <S.CancelButton onClick={handleCancelEdit}>Cancelar</S.CancelButton>
+              </S.EditActions>
+            </S.EditForm>
+          ) : (
+            <S.CommentText>{comment.content}</S.CommentText>
+          )}
+          <S.CommentActions>
+            <S.ActionButton onClick={() => handleStartReply(comment.id)}>
+              Responder
+            </S.ActionButton>
+            {comment.author.id === currentUser?.id && editingCommentId !== comment.id && (
+              <>
+                <S.ActionButton onClick={() => handleStartEdit(comment)}>
+                  <Edit size={14} />
+                </S.ActionButton>
+                <S.ActionButton onClick={() => handleDeleteComment(comment.id)}>
+                  <Trash2 size={14} />
+                </S.ActionButton>
+              </>
+            )}
+          </S.CommentActions>
+          {replyingToCommentId === comment.id && (
+            <S.ReplyForm>
+              <S.Textarea
+                placeholder="Digite sua resposta..."
+                value={replyContent}
+                onChange={(e) => setReplyContent(e.target.value)}
+              />
+              <S.EditActions>
+                <S.SubmitButton
+                  onClick={() => handleAddComment(comment.id)}
+                  disabled={!replyContent.trim()}
+                >
+                  <Send size={16} />
+                  Responder
+                </S.SubmitButton>
+                <S.CancelButton onClick={handleCancelReply}>Cancelar</S.CancelButton>
+              </S.EditActions>
+            </S.ReplyForm>
+          )}
+          {comment.replies && comment.replies.length > 0 && (
+            <S.ReplyList>
+              {renderComments(comment.replies, depth + 1)}
+            </S.ReplyList>
+          )}
+        </S.CommentContent>
+      </S.Comment>
+    ));
+  };
+
   return (
     <S.ContainerGeral>
-    <S.Container>
-      <ToastContainer position="top-right" autoClose={3000} />
-      <S.Breadcrumb>
-        <S.BackButton onClick={() => navigate('/comunidade')}>
-          <ArrowLeft size={16} />
-          Voltar para Comunidade
-        </S.BackButton>
-      </S.Breadcrumb>
-      <S.PostCard>
-        <S.VoteSection>
-          <S.VoteButton active={post.isUpvoted} onClick={() => handleVote('up')}>
-            <ChevronUp size={20} />
-          </S.VoteButton>
-          <S.VoteScore>{post.upvotes - post.downvotes}</S.VoteScore>
-          <S.VoteButton active={post.isDownvoted} onClick={() => handleVote('down')}>
-            <ChevronDown size={20} />
-          </S.VoteButton>
-          <S.SaveButton active={post.isSaved} onClick={handleSave}>
-            <Bookmark size={16} />
-          </S.SaveButton>
-        </S.VoteSection>
-        <S.PostContent>
-          <S.PostHeader>
-            <S.AuthorAvatar title={post.author.name}>
-              {post.author.initials}
-            </S.AuthorAvatar>
-            <S.AuthorInfo>
-              <S.AuthorName>{post.author.name}</S.AuthorName>
-              <S.AuthorMeta>
-                {post.author.role} • {post.createdAt} • {post.views} visualizações
-              </S.AuthorMeta>
-            </S.AuthorInfo>
-          </S.PostHeader>
-          <S.Badges>
-            <S.TypeBadge type={post.type}>{post.type}</S.TypeBadge>
-            <S.CategoryBadge>{post.category}</S.CategoryBadge>
-            {post.hasFlow && <S.FlowBadge>Flow Anexado</S.FlowBadge>}
-          </S.Badges>
-          <S.PostTitle>{post.title}</S.PostTitle>
-          <S.Tags>
-            {post.tags.map((tag) => (
-              <S.Tag key={tag}>#{tag}</S.Tag>
-            ))}
-          </S.Tags>
-          <S.PostBody>{post.content}</S.PostBody>
-          <S.PostActions>
-            <S.ActionButton>
-              <MessageCircle size={16} />
-              {post.comments} comentários
-            </S.ActionButton>
-            <S.ActionButton onClick={handleShare}>
-              <Share2 size={16} />
-              Compartilhar
-            </S.ActionButton>
-          </S.PostActions>
-        </S.PostContent>
-      </S.PostCard>
-      <S.CommentSection>
-        <S.CommentForm>
-          <S.AuthorAvatar title="Você">{getIniciais(fetchUserName(currentUserId))}</S.AuthorAvatar>
-          <S.Textarea
-            placeholder="Adicione um comentário..."
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-          <S.SubmitButton onClick={handleAddComment} disabled={!newComment.trim()}>
-            <Send size={16} />
-            Comentar
-          </S.SubmitButton>
-        </S.CommentForm>
-        <S.CommentList>
-          {comments.map((comment) => (
-            <S.Comment key={comment.id}>
-              <S.AuthorAvatar title={comment.author.name}>
-                {comment.author.initials}
+      <S.Container>
+        <ToastContainer position="top-right" autoClose={3000} />
+        <S.Breadcrumb>
+          <S.BackButton onClick={() => navigate('/comunidade')}>
+            <ArrowLeft size={16} />
+            Voltar para Comunidade
+          </S.BackButton>
+        </S.Breadcrumb>
+        <S.PostCard>
+          <S.VoteSection>
+            <S.VoteButton $active={post.isUpvoted} onClick={() => handleVote('up')}>
+              <ChevronUp size={20} />
+            </S.VoteButton>
+            <S.VoteScore>{post.upvotes - post.downvotes}</S.VoteScore>
+            <S.VoteButton $active={post.isDownvoted} onClick={() => handleVote('down')}>
+              <ChevronDown size={20} />
+            </S.VoteButton>
+            <S.SaveButton $active={post.isSaved} onClick={handleSave}>
+              <Bookmark size={16} />
+            </S.SaveButton>
+          </S.VoteSection>
+          <S.PostContent>
+            <S.PostHeader>
+              <S.AuthorAvatar title={post.author.name}>
+                {post.author.initials}
               </S.AuthorAvatar>
-              <S.CommentContent>
-                <S.CommentHeader>
-                  <S.AuthorName>{comment.author.name}</S.AuthorName>
-                  <S.CommentMeta>
-                    {comment.author.role} • {comment.createdAt}
-                  </S.CommentMeta>
-                </S.CommentHeader>
-                {editingCommentId === comment.id ? (
-                  <S.EditForm>
-                    <S.Textarea
-                      value={editedComment}
-                      onChange={(e) => setEditedComment(e.target.value)}
-                    />
-                    <S.EditActions>
-                      <S.SubmitButton
-                        onClick={() => handleEditComment(comment.id)}
-                        disabled={!editedComment.trim()}
-                      >
-                        Salvar
-                      </S.SubmitButton>
-                      <S.CancelButton onClick={handleCancelEdit}>Cancelar</S.CancelButton>
-                    </S.EditActions>
-                  </S.EditForm>
-                ) : (
-                  <S.CommentText>{comment.content}</S.CommentText>
-                )}
-                {comment.author.id === currentUserId && editingCommentId !== comment.id && (
-                  <S.CommentActions>
-                    <S.ActionButton onClick={() => handleStartEdit(comment)}>
-                      <Edit size={14} />
-                    </S.ActionButton>
-                    <S.ActionButton onClick={() => handleDeleteComment(comment.id)}>
-                      <Trash2 size={14} />
-                    </S.ActionButton>
-                  </S.CommentActions>
-                )}
-              </S.CommentContent>
-            </S.Comment>
-          ))}
-        </S.CommentList>
-      </S.CommentSection>
-    </S.Container>
+              <S.AuthorInfo>
+                <S.AuthorName>{post.author.name}</S.AuthorName>
+                <S.AuthorMeta>
+                  {post.author.role} • {post.createdAt} • {post.views} visualizações
+                </S.AuthorMeta>
+              </S.AuthorInfo>
+            </S.PostHeader>
+            <S.Badges>
+              <S.TypeBadge type={post.type}>{post.type}</S.TypeBadge>
+              <S.CategoryBadge>{post.category}</S.CategoryBadge>
+              {post.hasFlow && <S.FlowBadge>Flow Anexado</S.FlowBadge>}
+            </S.Badges>
+            <S.PostTitle>{post.title}</S.PostTitle>
+            <S.Tags>
+              {post.tags.map((tag) => (
+                <S.Tag key={tag}>#{tag}</S.Tag>
+              ))}
+            </S.Tags>
+            <S.PostBody>{post.content}</S.PostBody>
+            <S.PostActions>
+              <S.ActionButton>
+                <MessageCircle size={16} />
+                {post.comments} comentários
+              </S.ActionButton>
+              <S.ActionButton onClick={handleShare}>
+                <Share2 size={16} />
+                Compartilhar
+              </S.ActionButton>
+            </S.PostActions>
+          </S.PostContent>
+        </S.PostCard>
+        <S.CommentSection>
+          <S.CommentForm>
+            <S.AuthorAvatar title={currentUser?.nome || 'Você'}>
+              {getIniciais(currentUser?.nome || 'Você')}
+            </S.AuthorAvatar>
+            <S.Textarea
+              placeholder="Adicione um comentário..."
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            />
+            <S.SubmitButton onClick={() => handleAddComment()} disabled={!newComment.trim()}>
+              <Send size={16} />
+              Comentar
+            </S.SubmitButton>
+          </S.CommentForm>
+          <S.CommentList>
+            {renderComments(comments)}
+          </S.CommentList>
+        </S.CommentSection>
+      </S.Container>
       <S.PostFilters>
-        <FiltrosComunidade/>
+        <FiltrosComunidade />
       </S.PostFilters>
     </S.ContainerGeral>
   );
