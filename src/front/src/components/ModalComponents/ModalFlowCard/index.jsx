@@ -20,8 +20,22 @@ import {
   CommentIcon,
 } from "./style";
 
+import { useFlowStore } from "../../../store/flowStore";
+import { useEffect, useState } from "react";
+
 export default function ModalFlowCard({ flow }) {
-  console.log("ESSE É O FLOW DO MODAL:", JSON.stringify(flow, null, 2));
+  const fetchFlowsStats = useFlowStore((state) => state.fetchFlows);
+  const [flows, setFlows] = useState([]);
+  const IDFlow = flow.id;
+
+  useEffect(() => {
+    const fetch = async () => {
+      const response = await fetchFlowsStats();
+      setFlows(response);
+    };
+
+    fetch();
+  }, []);
 
   //Função temporária para criar dinamicamente um "avatar" para o usuário
   const getIniciais = (nome) => {
@@ -32,6 +46,8 @@ export default function ModalFlowCard({ flow }) {
       partes[0][0].toUpperCase() + partes[partes.length - 1][0].toUpperCase()
     );
   };
+
+  console.log("ESSE É UM FLOW CARD DO MODAL: ", flows);
 
   return (
     <FlowWrapper>
@@ -62,15 +78,15 @@ export default function ModalFlowCard({ flow }) {
 
           <Info>
             <EyeIcon size={14} />
-            {flow.stats}
+            1921
           </Info>
           <Info>
             <HeartIcon size={14} />
-            27
+            {flows.find((f) => f.id === IDFlow)?.stats?.likes || 0}
           </Info>
           <Info>
             <CommentIcon size={14} />
-            14
+            {flows.find((f) => f.id === IDFlow)?.stats?.comments || 0}
           </Info>
         </FlowInfo>
         <OpenFlowButton flowID={flow.id} />
