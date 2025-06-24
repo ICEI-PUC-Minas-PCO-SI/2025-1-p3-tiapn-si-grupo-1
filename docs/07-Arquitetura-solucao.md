@@ -14,7 +14,7 @@ O diagrama de classes ilustra graficamente a estrutura do software e como cada u
 
 
 
-![Diagrama de classes](images/Diagramadeclasse.png)
+![Diagrama de classes](images/Diagramadeclasses.drawio.png)
 
 
 ##  Modelo de dados
