@@ -4,10 +4,9 @@ import { Search } from "lucide-react";
 import { Form, Input, IconWrapper, InputWrapper } from "./style";
 import { useFlowStore } from "../../store/flowStore";
 import { useUserStore } from "../../store/userStore";
-import { useEffect } from "react";
 import { useFiltroStore } from "../../store/filterStore";
 
-export default function ModalSearchBar({ activeOption }) {
+export default function ModalSearchBar() {
   // Termo de busca do modal para os flows, obtido do estado global
   const modalSearchTerm = useFlowStore((state) => state.modalSearchTerm);
   const setModalSearchTerm = useFlowStore((state) => state.setModalSearchTerm);
@@ -22,15 +21,11 @@ export default function ModalSearchBar({ activeOption }) {
   const debouncedSearch = useMemo(
     () =>
       debounce((value) => {
-        if (activeOption === "flows") {
-          setModalSearchTerm(value);
-        } else if (activeOption === "usuarios") {
-          filterUsers(value);
-        } else if (activeOption === "tags") {
-          filterTags(value);
-        }
+        setModalSearchTerm(value);
+        filterUsers(value);
+        filterTags(value);
       }, 300),
-    [activeOption, setModalSearchTerm, filterUsers, filterTags]
+    [setModalSearchTerm, filterUsers, filterTags]
   );
 
   // Função debounced para atualizar o estado global
@@ -39,19 +34,6 @@ export default function ModalSearchBar({ activeOption }) {
     setLocalSearch(value);
     debouncedSearch(value);
   };
-
-  // Executa busca ao trocar de aba, reaproveitando o texto atual
-  useEffect(() => {
-    if (localSearch.trim() !== "") {
-      if (activeOption === "flows") {
-        setModalSearchTerm(localSearch);
-      } else if (activeOption === "usuarios") {
-        filterUsers(localSearch);
-      } else if (activeOption === "tags") {
-        filterTags(localSearch);
-      }
-    }
-  }, [activeOption]);
 
   return (
     <Form onSubmit={(e) => e.preventDefault()}>

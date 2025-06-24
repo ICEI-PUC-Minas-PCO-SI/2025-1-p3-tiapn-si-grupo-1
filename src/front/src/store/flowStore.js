@@ -139,6 +139,14 @@ export const useFlowStore = create((set, get) => ({
     get().fetchModalFlows(termo);
   },
 
+  setSearchTag: (tag) => set({ category: tag }),
+
+  searchByTag: async (tag) => {
+    const { setSearchTerm, setSearchTag } = get();
+    setSearchTag(""); // limpa categoria (caso haja)
+    setSearchTerm(tag); // define o termo de busca como a tag
+  },
+
   fetchFlows: async (params = {}) => {
     set({ loading: true });
 
