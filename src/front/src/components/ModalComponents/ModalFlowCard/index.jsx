@@ -47,8 +47,6 @@ export default function ModalFlowCard({ flow }) {
     );
   };
 
-  console.log("ESSE É UM FLOW CARD DO MODAL: ", flows);
-
   return (
     <FlowWrapper>
       <FlowHeader>

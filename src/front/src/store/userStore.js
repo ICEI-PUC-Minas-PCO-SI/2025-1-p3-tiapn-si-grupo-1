@@ -17,7 +17,6 @@ export const useUserStore = create((set, get) => ({
         users: response.data,
         filteredUsers: response.data, // inicia com todos
       });
-      console.log("USUARIOS: ", JSON.stringify(response.data));
     } catch (error) {
       console.error("Erro ao buscar usuários:", error);
       set({ users: [], filteredUsers: [] });

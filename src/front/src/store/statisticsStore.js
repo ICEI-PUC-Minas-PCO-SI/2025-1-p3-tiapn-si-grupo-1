@@ -32,7 +32,6 @@ export const useStatisticsStore = create((set) => ({
         communityPosts: postsRes.data.length,
         likes: likesRes.data.length,
       });
-      console.log("USUARIOS: ", JSON.stringify(usersRes.data));
     } catch (error) {
       console.error("Erro ao buscar estatísticas:", error);
       set({

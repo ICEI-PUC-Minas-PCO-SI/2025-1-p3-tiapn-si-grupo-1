@@ -1,7 +1,6 @@
 import { MessageWrapper, IconWrapper, SearchIcon } from "./style";
 
 export default function NoSearchAwnser({ search }) {
-  console.log(search);
   return (
     <MessageWrapper>
       <IconWrapper>

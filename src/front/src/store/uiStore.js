@@ -6,6 +6,7 @@ import { useFiltroStore } from "./filterStore";
 export const useUIStore = create((set) => ({
   isOverlayActive: false,
   isSearchModalOpen: false,
+  isLogoutModalOpen: false,
 
   openSearchModal: () => {
     set({ isOverlayActive: true, isSearchModalOpen: true });
@@ -29,6 +30,12 @@ export const useUIStore = create((set) => ({
     set({ isOverlayActive: false, isSearchModalOpen: false });
     useFlowStore.getState().resetModalSearch(); // <- limpa o search ao fechar
   },
+
+  openLogoutModal: () =>
+    set({ isOverlayActive: true, isLogoutModalOpen: true }),
+
+  closeLogoutModal: () =>
+    set({ isOverlayActive: false, isLogoutModalOpen: false }),
 
   toggleOverlay: () =>
     set((state) => ({ isOverlayActive: !state.isOverlayActive })),

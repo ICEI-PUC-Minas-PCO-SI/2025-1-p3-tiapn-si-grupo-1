@@ -1,22 +1,18 @@
 import styled from "styled-components";
-import { Funnel, TrendingUp, Gauge, Plus } from "lucide-react";
+import { Funnel, Plus } from "lucide-react";
 
 //elemento que mantém a estrutura da página de feed, divide a página entre flows/filtos
 export const FeedContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px 20px;
-  justify-content: space-between;
-  position: relative;
-  left: 50%;
-  transform: translateX(-50%);
   height: 100vh;
+  gap: 20px;
 `;
 
 export const FeedMain = styled.div`
   display: flex;
   gap: 20px;
-  margin-top: 260px; // altura do FeedHeader
 `;
 
 // <--- HEADER - FIXO --->
@@ -25,13 +21,8 @@ export const FeedHeader = styled.header`
   flex-direction: column;
   background-color: #fff;
   border-radius: 10px;
-  padding: 32px;
+  padding: 20px 32px;
   gap: 20px;
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  right: 20px;
-  z-index: 10;
 `;
 
 export const HeaderTop = styled.div`
@@ -43,6 +34,16 @@ export const HeaderTop = styled.div`
 export const HeaderTitle = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 12px;
+`;
+
+export const HeaderTitleH1 = styled.h1`
+  font-size: 28px;
+`;
+
+export const HeaderTitleDescription = styled.p`
+  font-size: 16px;
+  color: #666666;
 `;
 
 export const HeaderActions = styled.div`
@@ -89,7 +90,6 @@ export const FlowFeed = styled.div`
   gap: 20px;
   background-color: #fff;
   border-radius: 10px;
-  flex: 1;
   padding: 24px;
 
   /* Estilo da barra de rolagem vertical */

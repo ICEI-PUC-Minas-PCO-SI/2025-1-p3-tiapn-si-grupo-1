@@ -7,9 +7,8 @@ export const Form = styled.form`
 
 export const Input = styled.input`
   width: 100%;
-
-  padding: 16px 30px 16px 46px; /* espaço à esquerda para o ícone */
-  font-size: 16px;
+  padding: 16px 30px 16px 50px; /* espaço à esquerda para o ícone */
+  font-size: 14px;
   border: 1px solid #dee2ff;
   border-radius: 10px;
   outline: none;
@@ -32,15 +31,15 @@ export const Input = styled.input`
 `;
 
 export const InputWrapper = styled.div`
-  position: relative;
   width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
 `;
 
 export const IconWrapper = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 16px;
-  transform: translateY(-50%);
   color: #233dff;
   pointer-events: none;
+  left: 20px;
+  position: absolute;
 `;

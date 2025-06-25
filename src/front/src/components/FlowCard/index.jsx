@@ -113,7 +113,7 @@ export default function FlowCard({ flow }) {
               ? flow.tags.map((tag, index) => <Tag key={index}>#{tag}</Tag>)
               : ""}
           </FlowTags>
-          <ComponentDivider />
+
           <FlowMacro>
             <FlowNodes>
               <NodeIcon />

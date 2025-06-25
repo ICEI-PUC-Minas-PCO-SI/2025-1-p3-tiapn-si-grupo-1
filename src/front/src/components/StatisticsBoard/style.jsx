@@ -27,17 +27,15 @@ export const CardsContainer = styled.div`
   gap: 20px; // espaçamento entre os itens (pode ajustar conforme desejar)
 `;
 export const Title = styled.h2`
-  font-size: 20px;
+  font-size: 16px;
   color: #333333;
   font-weight: 600;
 `;
 
 export const StatisticsCard = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: start;
+  align-items: center;
   gap: 12px;
-  justify-content: space-between;
   padding: 15px;
   background-color: #f7f9fa;
   border-radius: 8px;
@@ -59,10 +57,11 @@ export const CardNumbers = styled.span`
   justify-content: center;
   gap: 6px;
   font-weight: 600;
+  font-size: 12px;
 `;
 
 export const CardTitle = styled.p`
-  font-size: 16px;
+  font-size: 12px;
   color: #666666;
 `;
 

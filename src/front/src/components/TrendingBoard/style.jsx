@@ -21,7 +21,7 @@ export const TrendingIcon = styled(TrendingUp)`
 `;
 
 export const Title = styled.h2`
-  font-size: 20px;
+  font-size: 16px;
   color: #333333;
   font-weight: 600;
 `;
@@ -55,13 +55,13 @@ export const FlowPosition = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
+  width: 26px;
+  height: 26px;
+  border-radius: 5px;
   background-color: #fff;
   color: #233dff;
   border: 2px solid #233dff;
-  font-size: 14px;
+  font-size: 12px;
   align-self: center;
 `;
 export const FlowInfo = styled.div`
@@ -71,7 +71,7 @@ export const FlowInfo = styled.div`
 `;
 
 export const FlowTitle = styled.h3`
-  font-size: 16px;
+  font-size: 12px;
   color: #333333;
 `;
 
@@ -82,12 +82,12 @@ export const FlowFooter = styled.div`
 `;
 
 export const FlowAuthor = styled.p`
-  font-size: 14px;
+  font-size: 11px;
   color: #666666;
 `;
 
 export const FlowCategory = styled.span`
-  font-size: 12px;
+  font-size: 10px;
   color: #666666;
   background-color: #dee2ff;
   padding: 4px 12px;
@@ -98,10 +98,9 @@ export const PlayIconContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px;
+  padding: 4px;
   border: 2px solid #ff3366;
   border-radius: 50%;
-  margin-left: auto;
 `;
 
 export const PlayIcon = styled(Flame)`

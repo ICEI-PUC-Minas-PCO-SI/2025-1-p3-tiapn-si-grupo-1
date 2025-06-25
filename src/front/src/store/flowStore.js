@@ -164,7 +164,6 @@ export const useFlowStore = create((set, get) => ({
       const flowsResponse = await axios.get(
         `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow?${queryParams.toString()}`
       );
-      console.log("Flows Response:", flowsResponse.data); // Log para depuração
 
       // Busca todas as curtidas
       let curtidas = [];
@@ -177,7 +176,6 @@ export const useFlowStore = create((set, get) => ({
           : curtidasResponse.data.mensagem
           ? []
           : [];
-        console.log("Curtidas Response:", curtidas); // Log para depuração
       } catch (curtidasError) {
         console.error("Erro ao buscar curtidas:", curtidasError);
         curtidas = []; // Fallback para array vazio
@@ -190,7 +188,6 @@ export const useFlowStore = create((set, get) => ({
           "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flowsalvos"
         );
         saves = Array.isArray(savesResponse.data) ? savesResponse.data : [];
-        console.log("Saves Response:", saves); // Log para depuração
       } catch (savesError) {
         console.error("Erro ao buscar salvos:", savesError);
         saves = []; // Fallback para array vazio
@@ -224,7 +221,6 @@ export const useFlowStore = create((set, get) => ({
         };
       });
 
-      console.log("Mapped Flows:", mappedFlows); // Log para depuração
       set({ flows: mappedFlows });
       return mappedFlows;
     } catch (error) {

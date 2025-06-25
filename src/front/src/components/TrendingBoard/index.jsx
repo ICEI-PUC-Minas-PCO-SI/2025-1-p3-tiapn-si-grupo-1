@@ -47,12 +47,12 @@ export default function TrendingBoard() {
   return (
     <TrendingBoardContainer>
       <Header>
-        <TrendingIcon size={24} />
+        <TrendingIcon size={20} />
         <Title>Trending</Title>
       </Header>
       <TrendingList>
         {trending.length > 0
-          ? trending.slice(0, 4).map((flow, index) => (
+          ? trending.slice(0, 3).map((flow, index) => (
               <TrendingItem key={flow.id} onClick={() => handleClick(flow.id)}>
                 <FlowPosition>
                   {index + 1}

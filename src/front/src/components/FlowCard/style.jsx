@@ -26,7 +26,7 @@ export const FlowWrapper = styled.div`
   position: relative;
   gap: 6px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border-top-left-radius: 0;
+  border-top-left-radius: 0px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
@@ -47,18 +47,21 @@ export const FlowHat = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40px;
-  padding: 0 40px;
-  font-size: 14px;
+  height: 35px;
+  padding: 0px 40px;
+  font-size: 12px;
   font-weight: 600;
   color: #fff;
-  background-color: #233dff;
-  border: 2px solid #233dff;
+  background: linear-gradient(135deg, #6c63ff, #233dff);
+  border: 2px solid linear-gradient(135deg, #6c63ff, #233dff);
   position: absolute;
-  top: -40px;
-  left: 0px;
-  border-top-left-radius: 10px;
+  top: -35px;
+  left: -2px;
   border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 0;
+
+  text-transform: capitalize;
 `;
 
 export const FlowHeader = styled.header`
@@ -71,11 +74,11 @@ export const FlowHeader = styled.header`
 export const FlowAuthor = styled.span`
   color: #333;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 12px;
 `;
 
 export const AuthorRole = styled.span`
-  font-size: 14px;
+  font-size: 11px;
   color: #565656;
 `;
 
@@ -98,7 +101,7 @@ export const Dot = styled.span`
 `;
 
 export const FlowTitle = styled.h2`
-  font-size: 24px;
+  font-size: 20px;
   color: #000;
 `;
 
@@ -123,7 +126,7 @@ export const FlowNodes = styled.span`
   display: flex;
   align-items: center;
   color: #565656;
-  font-size: 14px;
+  font-size: 12px;
   padding: 6px 0;
 `;
 
@@ -137,7 +140,7 @@ export const FlowViews = styled.span`
   display: flex;
   align-items: center;
   color: #565656;
-  font-size: 14px;
+  font-size: 12px;
   padding: 6px 0;
 `;
 
@@ -149,7 +152,7 @@ export const ViewIcon = styled(Eye)`
 
 export const Tag = styled.span`
   display: flex;
-  font-size: 12px;
+  font-size: 11px;
   align-items: center;
   padding: 2px 10px;
   border-radius: 15px;
@@ -162,13 +165,13 @@ export const Tag = styled.span`
 `;
 
 export const FlowCategory = styled.span`
-  font-size: 16px;
+  font-size: 10px;
   color: #565656;
   font-weight: 600;
 `;
 
 export const DaysPublished = styled.span`
-  font-size: 14px;
+  font-size: 10px;
   color: #565656;
   font-weight: 400;
 `;
@@ -197,14 +200,14 @@ export const ActionIcon = styled(Ellipsis)`
 `;
 
 export const Avatar = styled.div`
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background-color: #fff;
   border: 2px solid #233dff;
   color: #233dff;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;

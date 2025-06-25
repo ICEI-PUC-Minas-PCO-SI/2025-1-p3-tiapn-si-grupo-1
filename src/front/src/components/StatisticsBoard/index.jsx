@@ -34,35 +34,35 @@ export default function StatisticsBoard() {
   return (
     <StatisticsBoardContainer>
       <Header>
-        <StatisticsIcon size={24} />
+        <StatisticsIcon size={20} />
         <Title>Estatísticas</Title>
       </Header>
 
       <CardsContainer>
         <StatisticsCard>
           <CardNumbers>
-            <FlowsIcon />
+            <FlowsIcon size={18} />
             {loadingStatistics ? "..." : flows}
           </CardNumbers>
           <CardTitle>{"Flows Ativos"}</CardTitle>
         </StatisticsCard>
         <StatisticsCard>
           <CardNumbers>
-            <UsersIcon />
+            <UsersIcon size={18} />
             {loadingStatistics ? "..." : users}
           </CardNumbers>
-          <CardTitle>{"Usuários Cadastrados"}</CardTitle>
+          <CardTitle>{"Usuários"}</CardTitle>
         </StatisticsCard>
         <StatisticsCard>
           <CardNumbers>
-            <CommunityPostsIcon />
+            <CommunityPostsIcon size={18} />
             {loadingStatistics ? "..." : communityPosts}
           </CardNumbers>
           <CardTitle> {"Discussões"}</CardTitle>
         </StatisticsCard>
         <StatisticsCard>
           <CardNumbers>
-            <LikesIcon />
+            <LikesIcon size={18} />
             {loadingStatistics ? "..." : likes}
           </CardNumbers>
           <CardTitle>{"Curtidas"}</CardTitle>

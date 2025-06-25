@@ -25,6 +25,8 @@ import {
   FeedStatistics,
   ScrollFeed,
   FeedHeader,
+  HeaderTitleH1,
+  HeaderTitleDescription,
   HeaderTitle,
   HeaderTop,
   HeaderActions,
@@ -87,8 +89,10 @@ export default function Feed() {
       <FeedHeader>
         <HeaderTop>
           <HeaderTitle>
-            <h1 style={{ color: "#000" }}>Descobrir Flows</h1>
-            <p>Navegue por conteúdos criados por quem entende do assunto</p>
+            <HeaderTitleH1>Descobrir Flows</HeaderTitleH1>
+            <HeaderTitleDescription>
+              Navegue por conteúdos criados por quem entende do assunto
+            </HeaderTitleDescription>
           </HeaderTitle>
           <HeaderActions>
             <CreateFlowButton onClick={handleClick}>

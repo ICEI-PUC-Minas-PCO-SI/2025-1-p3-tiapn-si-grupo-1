@@ -7,6 +7,7 @@ import MainRoutes from "./routes";
 import Overlay from "./components/Overlay";
 import { useUIStore } from "./store/uiStore";
 import SearchPage from "./components/SearchPage";
+import LogoutModal from "./components/Sidebar/LogoutModal";
 import { Toaster } from "sonner";
 import "./services/axiosConfig";
 
@@ -18,6 +19,7 @@ function LayoutWrapper() {
   //Pega o estado de overlay
   const isOverlayActive = useUIStore((state) => state.isOverlayActive);
   const isSearchModalOpen = useUIStore((state) => state.isSearchModalOpen);
+  const isLogoutModalOpen = useUIStore((state) => state.isLogoutModalOpen);
 
   return (
     <div
@@ -29,6 +31,7 @@ function LayoutWrapper() {
       <main className="content-area">
         {isOverlayActive && <Overlay />} {/* Mostra overlay se ativo */}
         {isSearchModalOpen && <SearchPage />}
+        {isLogoutModalOpen && <LogoutModal />}
         {/*Modal de busca */}
         <MainRoutes />
       </main>
