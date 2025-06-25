@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as S from './style';
-import { MessageCircle, Bookmark, Trash2, Edit } from 'lucide-react';
+import { MessageCircle, Trash2, Edit } from 'lucide-react';
 
 export const CommunityPost = ({ post, onVote, onSave, onDelete, onEdit, currentUserId }) => {
   const navigate = useNavigate();
@@ -66,7 +66,6 @@ export const CommunityPost = ({ post, onVote, onSave, onDelete, onEdit, currentU
             onSave(post.id);
           }}
         >
-          <Bookmark size={16} />
         </S.SaveButton>
         {currentUserId === post.author.id && (
           <S.DeleteButton

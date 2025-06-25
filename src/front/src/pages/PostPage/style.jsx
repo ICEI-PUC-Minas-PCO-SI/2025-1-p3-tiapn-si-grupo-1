@@ -10,17 +10,19 @@ export const ContainerGeral = styled.section`
 `;
 
 export const PostFilters = styled.aside`
-  width: 40%;
+  width: 45%;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   border-radius: 10px;
   height: 93vh;
-  background-color: #fff;
+  background-color: #ffffff;
   position: sticky;
+  top: 30px;
   margin-top: 30px;
   align-self: flex-start;
+  margin-right: 15px;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -70,6 +72,29 @@ export const PostCard = styled.div`
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 1.5rem;
+  position: relative; /* Para posicionar o botão de edição */
+`;
+
+export const EditButton = styled.button`
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #666666;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+
+  &:hover {
+    color: #233dff;
+    background: #233dff1a;
+  }
+
+  &:focus {
+    outline: 2px solid #233dff;
+    outline-offset: 2px;
+  }
 `;
 
 export const VoteSection = styled.div`
@@ -333,7 +358,7 @@ export const Comment = styled.div`
   border-radius: 8px;
   padding: 1rem;
   margin-left: ${(props) => props.$depth * 3}rem;
-  margin-bottom: 1rem
+  margin-bottom: 1rem;
 `;
 
 export const CommentContent = styled.div`

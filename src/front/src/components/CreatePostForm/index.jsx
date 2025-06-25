@@ -7,7 +7,6 @@ import { postTypes, categories } from '../../data/mockPosts';
 
 // Componente de formulário para criar ou editar um post
 export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEdit, isEditing, currentUserId }) => {
-  // Estados para os campos do formulário
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [type, setType] = useState('');
@@ -21,7 +20,12 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
     if (isEditing && postToEdit) {
       setTitle(postToEdit.title);
       setContent(postToEdit.content);
-      setType(postToEdit.type);
+      // Mapear valores antigos para os válidos
+      let mappedType = postToEdit.type;
+      if (!['Discussão', 'Solicitação', 'Dúvida'].includes(postToEdit.type)) {
+        mappedType = 'Dúvida'; // Mapear tipos inválidos para Dúvida
+      }
+      setType(mappedType);
       setCategory(postToEdit.category);
       setTags(postToEdit.tags.join(', '));
     }
@@ -74,7 +78,7 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
       return;
     }
 
-    // Formatar tags (separadas por vírgula)
+    // Formatar tags
     const formattedTags = tags
       .split(',')
       .map((tag) => tag.trim())
@@ -84,11 +88,15 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
     const payload = {
       titulo: title,
       conteudo: content,
-      tipo: type || 'Discussão',
+      tipo: type || 'Discussão', // Garantir valor válido
       categoria: category || 'Geral',
       tags: formattedTags,
-      usuario_id: currentUserId, // Usar currentUserId passado como prop
+      usuario_id: currentUserId,
+      criado_por: currentUserId, // Incluído para criação
+      criado_em: isEditing ? undefined : new Date().toISOString(), // Apenas para criação
     };
+
+    console.log('Payload enviado:', payload);
 
     try {
       if (isEditing && postToEdit) {
@@ -107,13 +115,13 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
           type: response.data.tipo || 'Discussão',
           category: response.data.categoria || 'Geral',
           tags: response.data.tags || [],
-          author: postToEdit.author, // Manter o autor original
-          createdAt: postToEdit.createdAt, // Manter a data original
+          author: postToEdit.author,
+          createdAt: postToEdit.createdAt,
           createdAtRaw: postToEdit.createdAtRaw,
           upvotes: postToEdit.upvotes,
           downvotes: postToEdit.downvotes,
           comments: postToEdit.comments,
-          hasFlow: response.data.tipo === 'Flow Compartilhado' || response.data.tipo === 'Showcase',
+          hasFlow: response.data.tipo === 'Solicitação' || response.data.tipo === 'Dúvida',
           flowId: postToEdit.id,
           isUpvoted: postToEdit.isUpvoted,
           isDownvoted: postToEdit.isDownvoted,
@@ -128,13 +136,12 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
 
         const response = await axios.post(
           'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade',
-          { ...payload, criado_por: currentUserId, criado_em: new Date().toISOString() },
+          payload,
           {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
 
-        // Mapear resposta da API para o formato esperado pelo front-end
         const newPost = {
           id: response.data.id,
           title: response.data.titulo,
@@ -157,7 +164,7 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
             minute: '2-digit',
           }),
           createdAtRaw: response.data.criado_em,
-          hasFlow: response.data.tipo === 'Flow Compartilhado' || response.data.tipo === 'Showcase',
+          hasFlow: response.data.tipo === 'Solicitação' || response.data.tipo === 'Dúvida',
           flowId: response.data.id,
           isUpvoted: false,
           isDownvoted: false,
@@ -168,7 +175,6 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
         toast.success('Post criado com sucesso!');
       }
 
-      // Fechar o modal após sucesso
       onClose();
     } catch (err) {
       console.error('Erro ao salvar post:', {
@@ -178,11 +184,14 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
         payloadSent: payload,
       });
 
-      const errorMessage =
-        err.response?.data?.erro ||
-        err.response?.data?.message ||
-        err.message ||
-        'Erro ao salvar o post. Verifique os dados e tente novamente.';
+      let errorMessage = 'Erro ao salvar o post. Verifique os dados e tente novamente.';
+      if (err.response?.data?.detalhes?.includes('invalid input value for enum')) {
+        errorMessage = 'Tipo de post inválido. Escolha entre Discussão, Solicitação ou Dúvida.';
+      } else if (err.response?.data?.erro) {
+        errorMessage = err.response.data.erro;
+      } else if (err.response?.data?.detalhes) {
+        errorMessage = err.response.data.detalhes;
+      }
 
       setError(errorMessage);
 
@@ -198,14 +207,12 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
   return (
     <S.ModalOverlay>
       <S.Modal>
-        {/* Cabeçalho do modal */}
         <S.ModalHeader>
           <h2>{isEditing ? 'Editar Post' : 'Criar Novo Post'}</h2>
           <S.CloseButton onClick={onClose}>
             <X size={20} />
           </S.CloseButton>
         </S.ModalHeader>
-        {/* Corpo do formulário */}
         <S.ModalBody>
           {error && (
             <S.ErrorMessage>
@@ -232,7 +239,9 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
           >
             <option value="">Tipo de Post</option>
             {postTypes.slice(1).map((type) => (
-              <option key={type} value={type}>{type}</option>
+              <option key={type} value={type}>
+                {type}
+              </option>
             ))}
           </S.Select>
           <S.Select
@@ -242,7 +251,9 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
           >
             <option value="">Categoria</option>
             {categories.slice(1).map((category) => (
-              <option key={category} value={category}>{category}</option>
+              <option key={category} value={category}>
+                {category}
+              </option>
             ))}
           </S.Select>
           <S.Input
@@ -252,7 +263,6 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
             disabled={isSubmitting}
           />
         </S.ModalBody>
-        {/* Rodapé com botões de ação */}
         <S.ModalFooter>
           <S.Button onClick={onClose} disabled={isSubmitting}>
             Cancelar
@@ -269,3 +279,4 @@ export const CreatePostForm = ({ onClose, onPostCreated, onPostUpdated, postToEd
     </S.ModalOverlay>
   );
 };
+

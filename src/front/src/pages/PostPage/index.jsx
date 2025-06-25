@@ -4,8 +4,9 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as S from './style';
-import { ArrowLeft, ChevronUp, ChevronDown, MessageCircle, Bookmark, Share2, Send, Edit, Trash2 } from 'lucide-react';
+import { ArrowLeft, ChevronUp, ChevronDown, MessageCircle, Share2, Send, Edit, Trash2 } from 'lucide-react';
 import { FiltrosComunidade } from '../../components/FiltrosComunidade';
+import { CreatePostForm } from '../../components/CreatePostForm';
 
 // Função para obter iniciais do nome
 const getIniciais = (nome) => {
@@ -28,6 +29,8 @@ export const PostPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const [currentUser, setCurrentUser] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false); // Estado para o modal de edição
+  const [isEditing, setIsEditing] = useState(false); // Estado para modo de edição
 
   // Configurar axios com token
   axios.interceptors.request.use((config) => {
@@ -61,6 +64,10 @@ export const PostPage = () => {
   // Mapear post da API
   const mapPostFromApi = (post) => {
     const userName = post.usuario?.nome || 'Usuário Desconhecido';
+    let mappedType = post.tipo || 'Discussão';
+    if (!['Discussão', 'Solicitação', 'Dúvida'].includes(post.tipo)) {
+      mappedType = 'Dúvida';
+    }
     return {
       id: post.id,
       title: post.titulo,
@@ -72,7 +79,7 @@ export const PostPage = () => {
         reputation: post.usuario?.reputation || 0,
         id: post.criado_por || null,
       },
-      type: post.tipo || 'Discussão',
+      type: mappedType,
       category: post.categoria || 'Geral',
       tags: post.tags || [],
       upvotes: post.upvotes || 0,
@@ -83,7 +90,8 @@ export const PostPage = () => {
         hour: '2-digit',
         minute: '2-digit',
       }),
-      hasFlow: post.tipo === 'Flow Compartilhado' || post.tipo === 'Showcase',
+      createdAtRaw: post.criado_em,
+      hasFlow: mappedType === 'Solicitação' || mappedType === 'Dúvida',
       flowId: post.id,
       isUpvoted: false,
       isDownvoted: false,
@@ -122,19 +130,16 @@ export const PostPage = () => {
     const commentMap = new Map();
     const tree = [];
 
-    // Primeiro, mapeia todos os comentários
     comments.forEach((comment) => {
       commentMap.set(comment.id, { ...comment, replies: [] });
     });
 
-    // Depois, aninha os comentários filhos aos pais
     comments.forEach((comment) => {
       if (comment.comentario_pai_id) {
         const parent = commentMap.get(comment.comentario_pai_id);
         if (parent) {
           parent.replies.push(commentMap.get(comment.id));
         } else {
-          // Se o pai não existe, adiciona como comentário de nível superior
           tree.push(commentMap.get(comment.id));
         }
       } else {
@@ -142,7 +147,6 @@ export const PostPage = () => {
       }
     });
 
-    // Ordena comentários e respostas por criado_em
     const sortComments = (comments) => {
       return comments.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)).map((comment) => {
         if (comment.replies.length > 0) {
@@ -162,11 +166,9 @@ export const PostPage = () => {
       setError('');
 
       try {
-        // Buscar usuário autenticado
         const user = await fetchCurrentUser();
         if (!user) return;
 
-        // Buscar post e comentários
         const postResponse = await axios.get(
           `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/postagemcomunidade/${id}`
         );
@@ -175,7 +177,6 @@ export const PostPage = () => {
         const mappedPost = mapPostFromApi(postData);
         setPost(mappedPost);
 
-        // Mapear comentários
         const mappedComments = postData.comentarios
           ? postData.comentarios.map(mapCommentFromApi)
           : [];
@@ -232,6 +233,20 @@ export const PostPage = () => {
   const handleShare = () => {
     navigator.clipboard.writeText(window.location.href);
     toast.success('Link copiado!');
+  };
+
+  // Manipular edição do post
+  const handleEditPost = () => {
+    setIsEditing(true);
+    setShowEditForm(true);
+  };
+
+  // Manipular atualização do post
+  const handlePostUpdated = (updatedPost) => {
+    setPost(updatedPost);
+    setShowEditForm(false);
+    setIsEditing(false);
+    toast.success('Post atualizado com sucesso!');
   };
 
   // Adicionar comentário ou resposta
@@ -338,13 +353,13 @@ export const PostPage = () => {
     }
   };
 
-  // Iniciar edição
+  // Iniciar edição de comentário
   const handleStartEdit = (comment) => {
     setEditingCommentId(comment.id);
     setEditedComment(comment.content);
   };
 
-  // Cancelar edição
+  // Cancelar edição de comentário
   const handleCancelEdit = () => {
     setEditingCommentId(null);
     setEditedComment('');
@@ -453,6 +468,14 @@ export const PostPage = () => {
           </S.BackButton>
         </S.Breadcrumb>
         <S.PostCard>
+          {currentUser?.id === post.author.id && (
+            <S.EditButton
+              onClick={handleEditPost}
+              aria-label={`Editar post: ${post.title}`}
+            >
+              <Edit size={16} />
+            </S.EditButton>
+          )}
           <S.VoteSection>
             <S.VoteButton $active={post.isUpvoted} onClick={() => handleVote('up')}>
               <ChevronUp size={20} />
@@ -462,7 +485,6 @@ export const PostPage = () => {
               <ChevronDown size={20} />
             </S.VoteButton>
             <S.SaveButton $active={post.isSaved} onClick={handleSave}>
-              <Bookmark size={16} />
             </S.SaveButton>
           </S.VoteSection>
           <S.PostContent>
@@ -524,6 +546,19 @@ export const PostPage = () => {
       <S.PostFilters>
         <FiltrosComunidade />
       </S.PostFilters>
+      {showEditForm && (
+        <CreatePostForm
+          onClose={() => {
+            setShowEditForm(false);
+            setIsEditing(false);
+          }}
+          onPostCreated={() => {}} // Não usado na edição
+          onPostUpdated={handlePostUpdated}
+          postToEdit={post}
+          isEditing={isEditing}
+          currentUserId={currentUser?.id}
+        />
+      )}
     </S.ContainerGeral>
   );
 };

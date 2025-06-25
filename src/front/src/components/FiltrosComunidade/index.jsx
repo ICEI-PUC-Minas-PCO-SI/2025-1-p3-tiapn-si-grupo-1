@@ -2,24 +2,32 @@ import React, { useState, useEffect } from 'react';
 import * as S from './style';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Plus } from 'lucide-react'; // Ícone para o botão
 
 export const FiltrosComunidade = ({ onOpenCreateFlow }) => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
 
-
   const handleCreateFlow = () => {
-    navigate('/criar-flow');
+    if (onOpenCreateFlow) {
+      onOpenCreateFlow();
+    } else {
+      navigate('/criar-flow');
+    }
   };
 
   // Função para obter as iniciais do nome
   const getIniciais = (nome) => {
-    if (!nome) return "";
-    const partes = nome.trim().split(" ");
+    if (!nome) return '';
+    const partes = nome.trim().split(' ');
     if (partes.length === 1) return partes[0][0].toUpperCase();
-    return (
-      partes[0][0].toUpperCase() + partes[partes.length - 1][0].toUpperCase()
-    );
+    return partes[0][0].toUpperCase() + partes[partes.length - 1][0].toUpperCase();
+  };
+
+  // Gerar cor gradiente baseada no ID do usuário
+  const getGradientColor = (id) => {
+    const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4', '#ffeead', '#d4a5a5'];
+    return `linear-gradient(135deg, ${colors[id % colors.length]} 0%, #ffffff 70%)`;
   };
 
   // Carregar lista de usuários da API
@@ -35,7 +43,7 @@ export const FiltrosComunidade = ({ onOpenCreateFlow }) => {
           'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario',
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        setUsers(response.data);
+        setUsers(response.data.slice(0, 10)); // Limitar a 10 usuários
       } catch (err) {
         console.error('Erro ao carregar usuários:', err);
       }
@@ -48,23 +56,26 @@ export const FiltrosComunidade = ({ onOpenCreateFlow }) => {
       <S.Section>
         <S.SectionTitle>Contribua com a Comunidade</S.SectionTitle>
         <S.IncentiveMessage>
-          Crie flows incríveis e ajude outras pessoas a aprender e crescer. Sua contribuição faz a diferença!
+          <span role="img" aria-label="lampada">💡</span> Crie flows incríveis e ajude outras pessoas a aprender e crescer!
         </S.IncentiveMessage>
         <S.CreateFlowButton onClick={handleCreateFlow}>
-          Criar um Flow
+          <Plus size={16} /> Criar um Flow
         </S.CreateFlowButton>
       </S.Section>
       <S.Section>
-        <S.SectionTitle>Usuários</S.SectionTitle>
+        <S.SectionTitle>Membros Ativos</S.SectionTitle>
         <S.UserList>
-          {users.slice(0, 40).map((user) => (
-            <S.Avatar
-              key={user.id}
-              title={user.nome}
-            >
-              {getIniciais(user.nome)}
-            </S.Avatar>
+          {users.map((user) => (
+            <S.UserCard key={user.id} style={{ background: getGradientColor(user.id) }}>
+              <S.Avatar>{getIniciais(user.nome)}</S.Avatar>
+              <S.UserName title={user.nome}>{user.nome.length > 12 ? `${user.nome.slice(0, 12)}...` : user.nome}</S.UserName>
+            </S.UserCard>
           ))}
+          {users.length > 0 && (
+            <S.ViewMoreButton onClick={() => console.log('Ver mais usuários')}>
+              Ver todos
+            </S.ViewMoreButton>
+          )}
         </S.UserList>
       </S.Section>
       <S.LogoSection>
@@ -86,9 +97,7 @@ export const FiltrosComunidade = ({ onOpenCreateFlow }) => {
           <span>|</span>
           <a href="/mais">Mais</a>
         </S.FooterLinks>
-        <S.Copyright>
-          © 2025 KnowFlow Corp.
-        </S.Copyright>
+        <S.Copyright>© 2025 KnowFlow Corp.</S.Copyright>
       </S.FooterSection>
     </S.Container>
   );
