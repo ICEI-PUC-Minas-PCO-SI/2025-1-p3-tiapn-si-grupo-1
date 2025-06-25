@@ -10,7 +10,7 @@ export const ContainerGeral = styled.section`
 `;
 
 export const PostFilters = styled.aside`
-  width: 40%;
+  width: 45%;
   padding: 20px;
   display: flex;
   flex-direction: column;

@@ -63,41 +63,41 @@ export const PostPage = () => {
 
   // Mapear post da API
   const mapPostFromApi = (post) => {
-  const userName = post.usuario?.nome || 'Usuário Desconhecido';
-  let mappedType = post.tipo || 'Discussão';
-  if (!['Discussão', 'Solicitação', 'Dúvida'].includes(post.tipo)) {
-    mappedType = 'Dúvida';
-  }
-  return {
-    id: post.id,
-    title: post.titulo,
-    content: post.conteudo,
-    author: {
-      name: userName,
-      initials: getIniciais(userName),
-      role: post.usuario?.cargo || 'Membro',
-      reputation: post.usuario?.reputation || 0,
-      id: post.criado_por || null,
-    },
-    type: mappedType,
-    category: post.categoria || 'Geral',
-    tags: post.tags || [],
-    upvotes: post.upvotes || 0,
-    downvotes: post.downvotes || 0,
-    comments: post.comentarios?.length || 0,
-    views: post.views || 0,
-    createdAt: new Date(post.criado_em).toLocaleString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    }),
-    createdAtRaw: post.criado_em,
-    hasFlow: mappedType === 'Solicitação' || mappedType === 'Dúvida',
-    flowId: post.id,
-    isUpvoted: false,
-    isDownvoted: false,
-    isSaved: false,
+    const userName = post.usuario?.nome || 'Usuário Desconhecido';
+    let mappedType = post.tipo || 'Discussão';
+    if (!['Discussão', 'Solicitação', 'Dúvida'].includes(post.tipo)) {
+      mappedType = 'Dúvida';
+    }
+    return {
+      id: post.id,
+      title: post.titulo,
+      content: post.conteudo,
+      author: {
+        name: userName,
+        initials: getIniciais(userName),
+        role: post.usuario?.cargo || 'Membro',
+        reputation: post.usuario?.reputation || 0,
+        id: post.criado_por || null,
+      },
+      type: mappedType,
+      category: post.categoria || 'Geral',
+      tags: post.tags || [],
+      upvotes: post.upvotes || 0,
+      downvotes: post.downvotes || 0,
+      comments: post.comentarios?.length || 0,
+      views: post.views || 0,
+      createdAt: new Date(post.criado_em).toLocaleString('pt-BR', {
+        hour: '2-digit',
+        minute: '2-digit',
+      }),
+      createdAtRaw: post.criado_em,
+      hasFlow: mappedType === 'Solicitação' || mappedType === 'Dúvida',
+      flowId: post.id,
+      isUpvoted: false,
+      isDownvoted: false,
+      isSaved: false,
+    };
   };
-};
 
   // Mapear comentário da API
   const mapCommentFromApi = (comment) => {
@@ -468,7 +468,6 @@ export const PostPage = () => {
           </S.BackButton>
         </S.Breadcrumb>
         <S.PostCard>
-          {/* Botão de edição no canto superior direito */}
           {currentUser?.id === post.author.id && (
             <S.EditButton
               onClick={handleEditPost}
@@ -547,7 +546,6 @@ export const PostPage = () => {
       <S.PostFilters>
         <FiltrosComunidade />
       </S.PostFilters>
-      {/* Modal de edição */}
       {showEditForm && (
         <CreatePostForm
           onClose={() => {
