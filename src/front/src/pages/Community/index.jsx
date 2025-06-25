@@ -21,8 +21,8 @@ import { FiltrosComunidade } from '../../components/FiltrosComunidade';
 export const Community = () => {
   // Estados para controle da interface
   const [mostrarCriarPostagem, setMostrarCriarPostagem] = useState(false);
-  const [selectedType, setSelectedType] = useState('Todos');
-  const [selectedCategory, setSelectedCategory] = useState('Todos');
+  const [selectedType, setSelectedType] = useState(''); // Ajustado para '' em vez de 'Todos'
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [sortBy, setSortBy] = useState('new');
   const [posts, setPosts] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
@@ -31,8 +31,8 @@ export const Community = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [currentUserId, setCurrentUserId] = useState(null);
   const [userNamesCache, setUserNamesCache] = useState({});
-  const [postToEdit, setPostToEdit] = useState(null); // Estado para post em edição
-  const [isEditing, setIsEditing] = useState(false); // Estado para modo de edição
+  const [postToEdit, setPostToEdit] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
 
   // Função para obter as iniciais do nome
   const getIniciais = (nome) => {
@@ -92,6 +92,10 @@ export const Community = () => {
   // Função para mapear posts da API para o formato do front-end
   const mapPostFromApi = async (post) => {
     const userName = fetchUserName(post.criado_por);
+    let mappedType = post.tipo || 'Discussão';
+    if (!['Discussão', 'Solicitação', 'Dúvida'].includes(post.tipo)) {
+      mappedType = 'Dúvida'; // Mapear tipos inválidos para Dúvida
+    }
     return {
       id: post.id,
       title: post.titulo,
@@ -103,18 +107,18 @@ export const Community = () => {
         reputation: post.author?.reputation || 0,
         id: post.criado_por || null,
       },
-      type: post.tipo || 'Discussão',
+      type: mappedType,
       category: post.categoria || 'Geral',
       tags: post.tags || [],
       upvotes: post.upvotes || 0,
       downvotes: post.downvotes || 0,
-      comments: post.comments || 0,
+      comments: post.comentarios?.length || 0,
       createdAt: new Date(post.criado_em).toLocaleString('pt-BR', {
         hour: '2-digit',
         minute: '2-digit',
       }),
       createdAtRaw: post.criado_em,
-      hasFlow: post.tipo === 'Flow Compartilhado' || post.tipo === 'Showcase',
+      hasFlow: mappedType === 'Solicitação' || mappedType === 'Dúvida',
       flowId: post.id,
       isUpvoted: false,
       isDownvoted: false,
@@ -222,15 +226,15 @@ export const Community = () => {
   };
 
   const clearFilters = () => {
-    setSelectedType('Todos');
-    setSelectedCategory('Todos');
+    setSelectedType('');
+    setSelectedCategory('');
   };
 
-  const hasActiveFilters = selectedType !== 'Todos' || selectedCategory !== 'Todos';
+  const hasActiveFilters = selectedType !== '' || selectedCategory !== '';
 
   const filteredPosts = posts.filter((post) => {
-    const matchesType = selectedType === 'Todos' || post.type === selectedType;
-    const matchesCategory = selectedCategory === 'Todos' || post.category === selectedCategory;
+    const matchesType = selectedType === '' || post.type === selectedType;
+    const matchesCategory = selectedCategory === '' || post.category === selectedCategory;
     const matchesSearch = searchTerm
       ? post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         post.content.toLowerCase().includes(searchTerm.toLowerCase())
@@ -276,7 +280,7 @@ export const Community = () => {
             Filtros
             {hasActiveFilters && (
               <S.Badge>
-                {(selectedType !== 'Todos' ? 1 : 0) + (selectedCategory !== 'Todos' ? 1 : 0)}
+                {(selectedType !== '' ? 1 : 0) + (selectedCategory !== '' ? 1 : 0)}
               </S.Badge>
             )}
           </S.FilterButton>
@@ -310,7 +314,14 @@ export const Community = () => {
                     <S.FilterSection>
                       <S.FilterLabel>Tipo de Post</S.FilterLabel>
                       <S.FilterOptions>
-                        {postTypes.map((type) => (
+                        <S.FilterBadge
+                          key="Todos"
+                          active={selectedType === ''}
+                          onClick={() => setSelectedType('')}
+                        >
+                          Todos
+                        </S.FilterBadge>
+                        {postTypes.slice(1).map((type) => (
                           <S.FilterBadge
                             key={type}
                             active={selectedType === type}
@@ -324,7 +335,14 @@ export const Community = () => {
                     <S.FilterSection>
                       <S.FilterLabel>Categoria</S.FilterLabel>
                       <S.FilterOptions>
-                        {categories.map((category) => (
+                        <S.FilterBadge
+                          key="Todos"
+                          active={selectedCategory === ''}
+                          onClick={() => setSelectedCategory('')}
+                        >
+                          Todos
+                        </S.FilterBadge>
+                        {categories.slice(1).map((category) => (
                           <S.FilterBadge
                             key={category}
                             active={selectedCategory === category}
@@ -437,3 +455,4 @@ export const Community = () => {
 };
 
 export default Community;
+

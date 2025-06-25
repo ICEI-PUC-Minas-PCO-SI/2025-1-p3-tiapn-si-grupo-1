@@ -267,5 +267,5 @@ Alguém já passou por algo similar? Como recuperaram? Qualquer dica pode salvar
   },
 ];
 
-export const postTypes = ["Todos", "Discussão", "Pergunta", "Flow Compartilhado", "Showcase", "Ajuda"];
+export const postTypes = ["Todos", "Discussão", "Solicitação", "Dúvida"];
 export const categories = ["Todos", "Recursos Humanos", "Vendas", "Tecnologia", "Compliance", "Marketing", "Gestão"];
