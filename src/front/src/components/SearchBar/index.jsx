@@ -1,21 +1,14 @@
 import { Search } from "lucide-react";
-import { useState } from "react";
 import { Form, Input, IconWrapper, InputWrapper } from "./style";
+import { useUIStore } from "../../store/uiStore";
 
-//31/05 - UPDATES
-//- Barra de pesquisa já adicionada
-//- valor de busca já mapeado
-//- Resta apenas relacionar as pesquisas com os flow criados
+//Searchbar usada apenas para chamar o modal de pesquisa
 
 export default function SearchBar() {
-  const [description, setDescription] = useState("");
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  };
+  const openSearchModal = useUIStore((state) => state.openSearchModal);
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={(e) => e.preventDefault()}>
       <InputWrapper>
         <IconWrapper>
           <Search size={20} />
@@ -23,8 +16,7 @@ export default function SearchBar() {
         <Input
           type="text"
           placeholder="Buscar Flow por título, tag ou autor..."
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onFocus={openSearchModal}
         ></Input>
       </InputWrapper>
     </Form>

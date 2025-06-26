@@ -1,19 +1,18 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-// Estilização do contêiner principal
 export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  background: #fafafa;
+  background: #f5f5f5;
 `;
 
-// Estilização do cabeçalho
 export const Header = styled.header`
   background: #fff;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 16px 24px;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 16px 32px;
 `;
 
-// Estilização do conteúdo do cabeçalho
 export const HeaderContent = styled.div`
   max-width: 1200px;
   margin: 0 auto;
@@ -22,382 +21,289 @@ export const HeaderContent = styled.div`
   align-items: center;
 `;
 
-// Estilização da seção à esquerda do cabeçalho
 export const LeftSection = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
 `;
 
-// Estilização do botão de voltar
 export const BackButton = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 12px;
   background: none;
   border: none;
+  color: #233dff;
   font-size: 14px;
   cursor: pointer;
   &:hover {
-    background: #f8fafc;
-    border-radius: 4px;
+    color: #1e33cc;
   }
 `;
 
-// Estilização do título do cabeçalho
 export const Title = styled.h1`
   font-size: 24px;
   font-weight: 700;
-  color: #1e293b;
+  color: #1a1a1a;
 `;
 
-// Estilização do subtítulo do cabeçalho
 export const Subtitle = styled.p`
   font-size: 14px;
-  color: #64748b;
+  color: #666;
 `;
 
-// Estilização do conteúdo principal
 export const Main = styled.main`
+  flex: 1;
+  padding: 32px;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px;
+  width: 100%;
 `;
 
-// Estilização do cartão de perfil
+export const ProfileGrid = styled.div`
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 32px;
+`;
+
+export const Sidebar = styled.aside`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
+
 export const ProfileCard = styled.div`
   background: #fff;
-  border: 1px solid #e2e8f0;
   border-radius: 8px;
-  overflow: hidden;
-  margin-bottom: 24px;
-`;
-
-// Estilização do conteúdo do perfil
-export const ProfileContent = styled.div`
   padding: 24px;
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-`;
-
-// Estilização do contêiner do avatar
-export const AvatarContainer = styled.div`
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 4px solid #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
-// Estilização da imagem do avatar
-export const AvatarImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+export const ProfileContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 `;
 
-// Estilização das informações do perfil
-export const ProfileInfo = styled.div`
-  flex: 1;
+export const AvatarContainer = styled.div`
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #233dff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-// Estilização do nome do perfil
-export const ProfileName = styled.h1`
-  font-size: 24px;
+export const AvatarFallback = styled.span`
+  font-size: 32px;
   font-weight: 700;
-  color: #1e293b;
+  color: #fff;
 `;
 
-// Estilização do email do perfil
-export const ProfileEmail = styled.p`
-  font-size: 16px;
-  color: #64748b;
-  margin-top: 4px;
-`;
-
-// Estilização dos detalhes do perfil
-export const ProfileDetails = styled.div`
-  margin-top: 12px;
-  font-size: 14px;
-  color: #64748b;
-`;
-
-// Estilização de cada detalhe
-export const Detail = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-`;
-
-// Estilização do contêiner de abas
-export const TabsContainer = styled.div`
-  width: 100%;
-`;
-
-// Estilização da lista de abas
-export const TabsList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  border-bottom: 1px solid #e2e8f0;
-`;
-
-// Estilização do trigger de aba
-export const TabsTrigger = styled.button`
-  padding: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: ${({ active }) => (active ? '#233dff' : '#64748b')};
-  background: none;
-  border: none;
-  border-bottom: 2px solid ${({ active }) => (active ? '#233dff' : 'transparent')};
-  cursor: pointer;
-  &:hover {
-    color: #233dff;
-  }
-`;
-
-// Estilização do conteúdo da aba
-export const TabsContent = styled.div`
-  margin-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-
-// Estilização do cartão de fluxo
-export const FlowCard = styled.div`
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  gap: 16px;
-  position: relative;
-  &:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-`;
-
-// Estilização da miniatura do fluxo
-export const FlowThumbnail = styled.img`
-  width: 96px;
-  height: 64px;
-  object-fit: cover;
-  border-radius: 4px;
-`;
-
-// Estilização das informações do fluxo
-export const FlowInfo = styled.div`
-  flex: 1;
-`;
-
-// Estilização do título do fluxo
-export const FlowTitle = styled.h3`
-  font-size: 16px;
-  font-weight: 600;
-  color: #1e293b;
-  &:hover {
-    color: #233dff;
-    cursor: pointer;
-  }
-`;
-
-// Estilização da descrição do fluxo
-export const FlowDescription = styled.p`
-  font-size: 14px;
-  color: #64748b;
-  margin-top: 4px;
-`;
-
-// Estilização do autor do fluxo
-export const FlowAuthor = styled.p`
-  font-size: 14px;
-  color: #64748b;
-  margin-top: 4px;
-`;
-
-// Estilização das tags do fluxo
-export const FlowTags = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 8px;
-`;
-
-// Estilização das estatísticas do fluxo
-export const FlowStats = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-top: 8px;
-  font-size: 14px;
-  color: #64748b;
-`;
-
-// Estilização de cada estatística
-export const Stat = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-`;
-
-// Estilização da data do fluxo
-export const FlowDate = styled.div`
-  margin-left: auto;
-`;
-
-// Estilização do badge
-export const Badge = styled.span`
-  display: inline-flex;
-  align-items: center;
-  padding: 4px 8px;
-  font-size: 12px;
-  font-weight: 500;
-  border-radius: 4px;
-  ${({ variant }) => {
-    switch (variant) {
-      case 'default':
-        return css`
-          background: #233dff;
-          color: #fff;
-        `;
-      case 'secondary':
-        return css`
-          background: #f1f5f9;
-          color: #64748b;
-        `;
-      case 'success':
-        return css`
-          background: #22c55e;
-          color: #fff;
-        `;
-      case 'outline':
-        return css`
-          border: 1px solid #e2e8f0;
-          color: #64748b;
-        `;
-      default:
-        return css`
-          background: #e2e8f0;
-          color: #1e293b;
-        `;
-    }
-  }}
-`;
-
-// Estilização do cartão de atividade
-export const ActivityCard = styled.div`
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 16px;
-  display: flex;
-  gap: 12px;
-  &:hover {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-`;
-
-// Estilização dos votos da atividade
-export const ActivityVotes = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-`;
-
-// Estilização da contagem de votos
-export const VotesCount = styled.div`
-  font-size: 14px;
-  font-weight: 600;
-  color: #1e293b;
-`;
-
-// Estilização do rótulo de votos
-export const VotesLabel = styled.div`
-  font-size: 12px;
-  color: #64748b;
-`;
-
-// Estilização das informações da atividade
-export const ActivityInfo = styled.div`
-  flex: 1;
-`;
-
-// Estilização do cabeçalho da atividade
-export const ActivityHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-`;
-
-// Estilização do título da atividade
-export const ActivityTitle = styled.h3`
-  font-size: 16px;
-  font-weight: 600;
-  color: #1e293b;
-  &:hover {
-    color: #233dff;
-    cursor: pointer;
-  }
-`;
-
-// Estilização do conteúdo da atividade
-export const ActivityContent = styled.p`
-  font-size: 14px;
-  color: #64748b;
-  margin-bottom: 8px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-`;
-
-// Estilização da data da atividade
-export const ActivityDate = styled.div`
-  font-size: 14px;
-  color: #64748b;
-`;
-
-// Estilização do cartão de funcionalidades futuras
-export const UpcomingCard = styled.div`
-  background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 24px;
+export const ProfileInfo = styled.div`
   text-align: center;
 `;
 
-// Estilização do título de funcionalidades futuras
-export const UpcomingTitle = styled.h3`
+export const ProfileName = styled.h2`
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+`;
+
+export const ProfileEmail = styled.p`
+  font-size: 14px;
+  color: #666;
+  margin: 4px 0;
+`;
+
+export const ProfileDetails = styled.div`
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+export const Detail = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #333;
+`;
+
+export const ProfileActions = styled.div`
+  margin-top: 16px;
+  display: flex;
+  gap: 12px;
+`;
+
+export const EditButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #233dff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  &:hover {
+    background: #1e33cc;
+  }
+`;
+
+export const ShareButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #fff;
+  color: #233dff;
+  border: 1px solid #233dff;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  &:hover {
+    background: #f0f2ff;
+  }
+`;
+
+export const StatsCard = styled.div`
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+export const StatsHeader = styled.h3`
   font-size: 18px;
   font-weight: 600;
-  color: #1e293b;
-  margin-bottom: 12px;
+  color: #1a1a1a;
+  margin-bottom: 16px;
 `;
 
-// Estilização da descrição de funcionalidades futuras
-export const UpcomingDescription = styled.p`
+export const StatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+`;
+
+export const StatItem = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StatValue = styled.span`
+  font-size: 20px;
+  font-weight: 700;
+  color: #233dff;
+`;
+
+export const StatLabel = styled.span`
   font-size: 14px;
-  color: #64748b;
+  color: #666;
 `;
 
-// Estilização da mensagem de erro
+export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
+
+export const TabsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const TabsList = styled.div`
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1; /* Garante que as abas fiquem acima do conteúdo */
+`;
+
+export const TabsTrigger = styled.button`
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  color: ${(props) => (props.$isActive ? '#233dff' : '#666')};
+  background: none;
+  border: none;
+  border-bottom: ${(props) => (props.$isActive ? '2px solid #233dff' : 'none')};
+  cursor: pointer;
+  &:hover {
+    color: #1e33cc;
+  }
+`;
+
+export const TabsContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 16px; /* Adiciona espaço entre TabsList e conteúdo */
+`;
+
+export const Section = styled.div`
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Espaço entre elementos internos (header e FlowCard) */
+`;
+
+export const SectionHeader = styled.h3`
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px; /* Espaço abaixo do header */
+`;
+
+export const EmptyMessage = styled.p`
+  font-size: 16px;
+  color: #666;
+  text-align: center;
+  padding: 16px;
+`;
+
 export const ErrorMessage = styled.div`
   font-size: 16px;
   color: #e74c3c;
   text-align: center;
   margin-top: 100px;
+  button {
+    margin-top: 16px;
+    padding: 8px 16px;
+    background: #233dff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+      background: #1e33cc;
+    }
+  }
 `;
 
-// Estilização da mensagem de carregamento
 export const LoadingMessage = styled.div`
   font-size: 16px;
-  color: #64748b;
+  color: #666;
   text-align: center;
   margin-top: 100px;
+`;
+
+export const FlowCardWrapper = styled.div`
+  position: relative;
+  margin-top: 16px;
+  z-index: 0;
+  padding-top: 16px;;
 `;

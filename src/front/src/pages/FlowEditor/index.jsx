@@ -1,4 +1,5 @@
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import ReactFlow, {
   addEdge,
   Background,
@@ -22,7 +23,6 @@ import {
   X,
   Plus,
   Upload,
-  File,
   Sparkles,
   Zap,
   Target,
@@ -34,7 +34,14 @@ import DecisionNode from '../../components/DecisionNode';
 import MediaNode from '../../components/MediaNode';
 import * as S from './style';
 
-console.log('🧪 Componentes de estilo carregados:', Object.keys(S));
+// Configura axios com token
+axios.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const nodeTypes = {
   textNode: TextNode,
@@ -48,10 +55,12 @@ const initialEdges = [];
 const editorSteps = [
   { id: 1, title: 'Configuração', description: 'Defina título e metadados', icon: Target },
   { id: 2, title: 'Construção', description: 'Crie o flow visual', icon: Zap },
-  { id: 3, title: 'Publicação', description: 'Revise e publique', icon: CheckCircle },
+  { id: 3, title: 'Publicação', description: 'Revise e salve', icon: CheckCircle },
 ];
 
 const FlowEditor = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -74,6 +83,33 @@ const FlowEditor = () => {
   const [isPublic, setIsPublic] = useState(true);
   const reactFlowWrapper = useRef(null);
   const fileInputRef = useRef(null);
+  const isEditing = !!id;
+
+  // Carrega dados do flow para edição
+  useEffect(() => {
+    if (isEditing) {
+      const fetchFlow = async () => {
+        try {
+          const response = await axios.get(`https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${id}`);
+          const flow = response.data;
+          console.log('Dados carregados do flow:', flow);
+          setFlowData({
+            title: flow.titulo || '',
+            description: flow.descricao || '',
+            category: flow.categoria || '',
+            tags: flow.tags?.join(', ') || '',
+          });
+          setNodes(flow.conteudo_nos || []);
+          setEdges(flow.conteudo_conexoes || []);
+          setIsPublic(flow.status === 'publicado');
+        } catch (error) {
+          console.error('Erro ao carregar flow:', error);
+          toast.error('Erro ao carregar o flow para edição.');
+        }
+      };
+      fetchFlow();
+    }
+  }, [id, setNodes, setEdges]);
 
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge({ ...params, animated: true }, eds)),
@@ -101,7 +137,7 @@ const FlowEditor = () => {
       ];
       const position = positions[nodes.length % positions.length] || { x: 100, y: 100 };
       const newNode = {
-        id: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+        id: `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
         type,
         position,
         data: {
@@ -112,34 +148,37 @@ const FlowEditor = () => {
           mediaUrl: type === 'mediaNode' ? '' : undefined,
         },
       };
-      setNodes((nds) => nds.concat(newNode));
+      setNodes((nds) => nds.concat([newNode]));
+      console.log('Novo nó adicionado:', newNode);
     },
     [nodes.length, setNodes]
   );
 
   const onNodeClick = useCallback((event, node) => {
     setSelectedNode(node);
+    console.log('Nó selecionado:', node);
     setNodeData({
       title: node.data.title || '',
       content: node.data.content || '',
       question: node.data.question || '',
-      options: node.data.options && node.data.options.length ? node.data.options : ['Opção 1', 'Opção 2'],
+      options: node.data.options?.filter((opt) => opt.trim()) || ['Opção 1', 'Opção 2'],
       mediaFile: null,
       mediaUrl: node.data.mediaUrl || '',
     });
     setIsNodeModalOpen(true);
   }, []);
 
-  const handleFileUpload = (event) => {
+  const handleFileUpload = useCallback((event) => {
     const file = event.target.files?.[0];
-
-    if (!file) return;
+    if (!file) {
+      return;
+    }
 
     const isImage = file.type.startsWith('image/');
-    const isValidSize = file.size <= 10 * 1024 * 1024;
+    const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
 
     if (!isImage) {
-      toast.error('Por favor, selecione um arquivo de imagem válido (PNG, JPG, SVG).');
+      toast.error('Arquivo inválido. Selecione uma imagem (PNG, JPG, SVG).');
       return;
     }
 
@@ -149,30 +188,27 @@ const FlowEditor = () => {
     }
 
     const reader = new FileReader();
-    reader.onload = (e) => {
-      const result = e.target.result;
+    reader.onload = () => {
+      const result = reader.result;
       if (typeof result === 'string') {
         setNodeData((prev) => ({
           ...prev,
           mediaFile: file,
           mediaUrl: result,
         }));
+        console.log('Imagem carregada:', file.name);
       } else {
         toast.error('Erro ao processar a imagem.');
       }
     };
     reader.onerror = () => {
-      toast.error('Falha ao carregar a imagem. Tente novamente.');
+      toast.error('Falha ao carregar a imagem.');
     };
     reader.readAsDataURL(file);
-  };
+  }, []);
 
-  const saveNodeData = () => {
+  const saveNodeData = useCallback(() => {
     if (!selectedNode) return;
-
-    console.log('📤 Salvando nó com mediaUrl:', nodeData.mediaUrl);
-    console.log('🧠 Tipo de mediaUrl:', typeof nodeData.mediaUrl);
-    console.log('📦 nodeData completo:', nodeData);
 
     setNodes((nds) =>
       nds.map((node) =>
@@ -183,7 +219,7 @@ const FlowEditor = () => {
               title: nodeData.title,
               content: nodeData.content || undefined,
               question: nodeData.question || undefined,
-              options: nodeData.options?.filter((opt) => opt.trim()).slice(0, 3) || ['Opção 1', 'Opção 2'],
+              options: nodeData.options?.filter((opt) => opt.trim()).slice(0, 3) || undefined,
               mediaUrl: nodeData.mediaUrl || undefined,
             },
           }
@@ -191,74 +227,110 @@ const FlowEditor = () => {
       )
     );
     setIsNodeModalOpen(false);
-    toast.success('Alterações no nó salvas com sucesso!');
-  };
+    toast.success('Nó salvo com sucesso!');
+    console.log('Nó salvo:', nodeData);
+  }, [selectedNode, nodeData, setNodes]);
 
-  const deleteNode = () => {
+  const deleteNode = useCallback(() => {
     if (!selectedNode) return;
     setNodes((nds) => nds.filter((node) => node.id !== selectedNode.id));
     setEdges((eds) =>
-      eds.filter((edge) => edge.source !== selectedNode.id && edge.target !== selectedNode.id)
+      eds.filter((e) => e.source !== selectedNode.id && e.target !== selectedNode.id)
     );
     setIsNodeModalOpen(false);
     toast.success('Nó excluído com sucesso!');
-  };
+    console.log('Nó excluído:', selectedNode.id);
+  }, [selectedNode, setNodes, setEdges]);
 
-  const publishFlow = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        toast.error('Você precisa estar autenticado para publicar um flow.');
-        return;
-      }
+  const saveFlow = useCallback(
+    async () => {
+      console.log('Iniciando saveFlow...');
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.log('Token não encontrado no localStorage.');
+          toast.error('Você precisa estar autenticado.');
+          return;
+        }
 
-      if (!flowData.title || !flowData.description || !flowData.category) {
-        toast.error('Título, descrição e categoria são obrigatórios.');
-        return;
-      }
+        if (!flowData.title || !flowData.description || !flowData.category) {
+          console.log('Campos obrigatórios não preenchidos:', flowData);
+          toast.error('Título, descrição e categoria são obrigatórios.');
+          return;
+        }
 
-      const tagsArray = flowData.tags
-        .split(',')
-        .map((tag) => tag.trim())
-        .filter((tag) => tag);
+        const tagsArray = flowData.tags
+          .split(',')
+          .map((tag) => tag.trim())
+          .filter((tag) => tag);
 
-      const response = await axios.post(
-        'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow',
-        {
+        const payload = {
           titulo: flowData.title,
           descricao: flowData.description,
           conteudo_nos: nodes,
           conteudo_conexoes: edges,
           categoria: flowData.category,
           tags: tagsArray,
-          status: isPublic ? 'publicado' : 'rascunho',
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          status: 'rascunho', // Ajustado para refletir isPublic
+        };
+        console.log('Payload preparado:', payload);
+
+        let response;
+        let flowId;
+        if (isEditing) {
+          console.log(`Enviando PUT para /api/flow/${id}`);
+          response = await axios.put(
+            `https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow/${id}`,
+            payload
+          );
+          flowId = id; // Para edição, o ID é o mesmo da URL
+          console.log('Resposta do servidor (PUT):', response.data);
+        } else {
+          console.log('Enviando POST para /api/flow');
+          response = await axios.post(
+            'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow',
+            payload
+          );
+          console.log('Resposta do servidor (POST):', response.data);
+          flowId = response.data.flow_id; // Para criação, usa flow_id da resposta
         }
-      );
 
-      toast.success('Flow publicado com sucesso!');
-      console.log('Flow criado:', response.data);
-      setFlowData({ title: '', description: '', category: '', tags: '' });
-      setNodes([]);
-      setEdges([]);
-      setCurrentStep(1);
-    } catch (error) {
-      console.error('Erro ao publicar flow:', error);
-      const errorMessage = error.response?.data?.erro || 'Erro ao publicar flow. Tente novamente.';
-      toast.error(errorMessage);
+        if (!flowId) {
+          console.error('ID do flow não encontrado na resposta:', response.data);
+          toast.error('Erro: ID do flow não retornado pelo servidor.');
+          return;
+        }
+
+        toast.success(isEditing ? 'Flow atualizado com sucesso!' : 'Flow criado com sucesso!');
+        console.log(`Redirecionando para /feed`);
+        navigate('/feed');
+      } catch (error) {
+        console.error('Erro ao salvar flow:', error);
+        const errorMessage = error.response?.data?.erro || 'Erro ao salvar flow.';
+        console.log('Mensagem de erro:', errorMessage);
+        toast.error(errorMessage);
+      }
+    },
+    [flowData, nodes, edges, isEditing, id, navigate, isPublic]
+  );
+
+  const nextStep = useCallback(() => {
+    if (currentStep === 1 && (!flowData.title || !flowData.description || !flowData.category)) {
+      toast.error('Preencha todos os campos obrigatórios.');
+      return;
     }
-  };
+    if (currentStep < 3) {
+      setCurrentStep(currentStep + 1);
+      console.log('Avançando para etapa:', currentStep + 1);
+    }
+  }, [currentStep, flowData]);
 
-  const nextStep = () => {
-    if (currentStep < 3) setCurrentStep(currentStep + 1);
-  };
-  const prevStep = () => {
-    if (currentStep > 1) setCurrentStep(currentStep - 1);
-  };
+  const prevStep = useCallback(() => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+      console.log('Voltando para etapa:', currentStep - 1);
+    }
+  }, [currentStep]);
 
   const progress = (currentStep / 3) * 100;
 
@@ -268,11 +340,10 @@ const FlowEditor = () => {
         <ToastContainer
           position="top-right"
           autoClose={3000}
-          hideProgressBar={true}
+          hideProgressBar={false}
           style={{ top: '75px' }}
-          newestOnTop={false}
+          newestOnTop
           closeOnClick
-          priority={false}
           pauseOnHover
           theme="light"
         />
@@ -280,22 +351,20 @@ const FlowEditor = () => {
       <S.Header>
         <S.HeaderContent>
           <S.LeftSection>
-            <S.BackButton onClick={() => (window.location.href = '/')}>
-              <ArrowLeft size={12} />
+            <S.BackButton onClick={() => navigate('/feed')}>
+              <ArrowLeft size={16} />
               Voltar
             </S.BackButton>
-            <S.TitleWrapper>
-              <S.Title>{flowData.title || 'Novo Flow'}</S.Title>
-              <S.Subtitle>
-                Etapa {currentStep}: {editorSteps[currentStep - 1].description}
-              </S.Subtitle>
-            </S.TitleWrapper>
           </S.LeftSection>
+          <S.TitleWrapper>
+            <S.Title>{isEditing ? `Editando ${flowData.title || 'Flow'}` : 'Novo Flow'}</S.Title>
+            <S.Subtitle>Etapa {currentStep}: {editorSteps[currentStep - 1].description}</S.Subtitle>
+          </S.TitleWrapper>
           <S.StepsWrapper>
             {editorSteps.map((step, index) => (
               <S.Step key={step.id}>
                 <S.StepIcon $active={currentStep >= step.id}>
-                  <step.icon size={12} />
+                  <step.icon size={16} />
                 </S.StepIcon>
                 <S.StepTitle $active={currentStep >= step.id}>{step.title}</S.StepTitle>
                 {index < editorSteps.length - 1 && (
@@ -309,14 +378,13 @@ const FlowEditor = () => {
               <S.ProgressBar value={progress} max={100} />
               <S.ProgressText>{Math.round(progress)}%</S.ProgressText>
             </S.ProgressWrapper>
-            <S.SaveButton>
-              <Save size={12} />
-              Salvar
+            <S.SaveButton disabled title="Funcionalidade de rascunho indisponível">
+              <Save size={16} />
+              Salvar Rascunho
             </S.SaveButton>
           </S.HeaderActions>
         </S.HeaderContent>
       </S.Header>
-
       <S.Content>
         {currentStep === 1 && (
           <S.ConfigSection>
@@ -326,7 +394,7 @@ const FlowEditor = () => {
                   <Target size={20} color="#233DFF" />
                   Configuração do Flow
                 </S.CardTitle>
-                <S.CardDescription>Configure os detalhes básicos do seu flow</S.CardDescription>
+                <S.CardDescription>Configure os detalhes básicos do flow</S.CardDescription>
               </S.CardHeader>
               <S.CardContent>
                 <S.FormGroup>
@@ -342,7 +410,7 @@ const FlowEditor = () => {
                   <S.Textarea
                     value={flowData.description}
                     onChange={(e) => setFlowData({ ...flowData, description: e.target.value })}
-                    placeholder="Descreva o objetivo e conteúdo do seu flow..."
+                    placeholder="Descreva o objetivo e conteúdo do flow..."
                     rows={3}
                   />
                 </S.FormGroup>
@@ -366,7 +434,7 @@ const FlowEditor = () => {
                     <S.Input
                       value={flowData.tags}
                       onChange={(e) => setFlowData({ ...flowData, tags: e.target.value })}
-                      placeholder="design, figma, react"
+                      placeholder="Exemplo: design, figma, development"
                     />
                   </S.FormGroup>
                 </S.FormRow>
@@ -380,7 +448,6 @@ const FlowEditor = () => {
             </S.Card>
           </S.ConfigSection>
         )}
-
         {currentStep === 2 && (
           <S.EditorSection>
             <S.Sidebar>
@@ -452,16 +519,15 @@ const FlowEditor = () => {
             </S.Canvas>
           </S.EditorSection>
         )}
-
         {currentStep === 3 && (
           <S.PublishSection>
             <S.Card>
               <S.CardHeader>
                 <S.CardTitle>
                   <CheckCircle size={20} color="#233DFF" />
-                  Revisão e Publicação
+                  Revisão e Salvamento
                 </S.CardTitle>
-                <S.CardDescription>Revise seu flow e configure as opções de publicação</S.CardDescription>
+                <S.CardDescription>Revise seu flow e salve como rascunho</S.CardDescription>
               </S.CardHeader>
               <S.CardContent>
                 <S.SummaryCard>
@@ -492,17 +558,18 @@ const FlowEditor = () => {
                       type="checkbox"
                       checked={isPublic}
                       onChange={(e) => setIsPublic(e.target.checked)}
+                      disabled
                     />
                     <div>
-                      <S.CheckboxTitle>Tornar público</S.CheckboxTitle>
-                      <S.CheckboxDescription>Visível para toda a comunidade</S.CheckboxDescription>
+                      <S.CheckboxTitle>Tornar público (indisponível)</S.CheckboxTitle>
+                      <S.CheckboxDescription>Funcionalidade será liberada em breve</S.CheckboxDescription>
                     </div>
                   </S.CheckboxLabel>
                   <S.CheckboxLabel>
-                    <input type="checkbox" defaultChecked />
+                    <input type="checkbox" defaultChecked disabled />
                     <div>
-                      <S.CheckboxTitle>Permitir comentários</S.CheckboxTitle>
-                      <S.CheckboxDescription>Usuários podem comentar e dar feedback</S.CheckboxDescription>
+                      <S.CheckboxTitle>Permitir comentários (indisponível)</S.CheckboxTitle>
+                      <S.CheckboxDescription>Funcionalidade será liberada em breve</S.CheckboxDescription>
                     </div>
                   </S.CheckboxLabel>
                 </S.PublishOptions>
@@ -512,10 +579,12 @@ const FlowEditor = () => {
                     Voltar
                   </S.PrevButton>
                   <S.ButtonGroup>
-                    <S.DraftButton>Salvar Rascunho</S.DraftButton>
-                    <S.PublishButton onClick={publishFlow}>
+                    <S.DraftButton disabled title="Funcionalidade de rascunho indisponível">
+                      Salvar Rascunho
+                    </S.DraftButton>
+                    <S.PublishButton onClick={saveFlow}>
                       <Play size={16} />
-                      Publicar Flow
+                      {isEditing ? 'Atualizar Flow' : 'Publicar Flow'}
                     </S.PublishButton>
                   </S.ButtonGroup>
                 </S.ButtonWrapper>
@@ -524,7 +593,6 @@ const FlowEditor = () => {
           </S.PublishSection>
         )}
       </S.Content>
-
       {currentStep === 2 && (
         <S.Footer>
           <S.PrevButton onClick={prevStep}>
@@ -532,12 +600,11 @@ const FlowEditor = () => {
             Configuração
           </S.PrevButton>
           <S.NextButton onClick={nextStep}>
-            Revisar e Publicar
+            Revisar e Salvar
             <ChevronRight size={16} />
           </S.NextButton>
         </S.Footer>
       )}
-
       {isNodeModalOpen && (
         <S.Modal>
           <S.ModalContent>
@@ -640,7 +707,7 @@ const FlowEditor = () => {
                     <S.FormHint>Nome descritivo para a imagem</S.FormHint>
                   </S.FormGroup>
                   <S.FormGroup>
-                    <S.Label>Upload de Imagem</S.Label>
+                    <S.Label>Selecionar Imagem</S.Label>
                     <S.UploadArea>
                       <input
                         ref={fileInputRef}
@@ -672,7 +739,7 @@ const FlowEditor = () => {
                               Trocar Imagem
                             </S.UploadButton>
                             <S.RemoveFileButton
-                              onClick={() => setNodeData({ ...nodeData, mediaFile: null, mediaUrl: '' })}
+                              onClick={() => setNodeData((prev) => ({ ...prev, mediaFile: null, mediaUrl: '' }))}
                             >
                               <X size={16} />
                               Remover
@@ -682,15 +749,15 @@ const FlowEditor = () => {
                       ) : (
                         <S.UploadContent>
                           <S.UploadIcon>
-                            <Upload size={24} color="#64748B" />
+                            <Upload size={16} color="#666666" />
                           </S.UploadIcon>
                           <div>
-                            <S.UploadText>Clique para fazer upload ou arraste a imagem aqui</S.UploadText>
-                            <S.UploadHint>Suporte para PNG, JPG, SVG até 10MB</S.UploadHint>
+                            <S.UploadText>Clique para selecionar uma imagem</S.UploadText>
+                            <S.UploadHint>PNG, JPG, até 10MB</S.UploadHint>
                           </div>
                           <S.UploadButton onClick={() => fileInputRef.current?.click()}>
                             <Upload size={16} />
-                            Selecionar Imagem
+                            Selecionar
                           </S.UploadButton>
                         </S.UploadContent>
                       )}
@@ -706,10 +773,10 @@ const FlowEditor = () => {
               </S.DeleteButton>
               <S.ButtonGroup>
                 <S.CancelButton onClick={() => setIsNodeModalOpen(false)}>Cancelar</S.CancelButton>
-                <S.SaveButton onClick={saveNodeData}>
+                <S.ModalSaveButton onClick={saveNodeData}>
                   <CheckCircle size={16} />
-                  Salvar Alterações
-                </S.SaveButton>
+                  Salvar
+                </S.ModalSaveButton>
               </S.ButtonGroup>
             </S.ModalFooter>
           </S.ModalContent>
