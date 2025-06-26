@@ -36,38 +36,33 @@ Com base na análise das personas, foram identificadas as seguintes histórias d
 
 ### Requisitos funcionais
 
-|ID    | Descrição do Requisito  | Prioridade |
-|------|-----------------------------------------|----|
-| RF-001   | O sistema deve permitir que o usuário realize o cadastro informando nome, e-mail e senha | 🔴 Alta    |
-| RF-002   | O sistema deve permitir que o usuário faça login utilizando e-mail e senha cadastrados   | 🔴 Alta    |
-| RF-003   | O sistema deve permitir que o usuário redefina sua senha via e-mail caso a esqueça       | 🟡 Média   |
-| RF-004   | O sistema deve garantir que o usuário seja capaz de criar seu guia de processo           | 🔴 Alta    |
-| RF-005   | O sistema deve permitir o upload de documentos e tutoriais                               | 🔴 Alta    |
-| RF-006   | O sistema deve permitir que usuários logados visualizem tutoriais disponíveis            | 🔴 Alta    |
-| RF-007   | O sistema deve permitir comentar, curtir e salvar tutoriais                              | 🔴 Alta    |
-| RF-008   | O sistema deve permitir a organização dos conteúdos em pastas                            | 🟡 Média   |
-| RF-009   | O sistema deve permitir validação de tutoriais por usuários autorizados (validadores)    | 🔴 Alta    |
-| RF-010   | O sistema deve permitir busca avançada com palavras-chave e filtros                      | 🔴 Alta    |
-| RF-011   | O sistema deve restringir visualizações com base nos grupos aos quais o usuário pertence | 🔴 Alta    |
-| RF-012   | O sistema deve permitir vincular tutoriais a múltiplos grupos                            | 🔴 Alta    |
-| RF-013   | O sistema deve registrar o histórico de versões de tutoriais                             | 🟡 Média   |
+| ID | Descrição do Requisito | Prioridade |
+|----|------------------------|------------|
+| **RF-001** | O sistema deve permitir que o usuário realize o cadastro informando nome, e-mail e senha | 🔴 Alta |
+| **RF-002** | O sistema deve permitir que o usuário faça login utilizando e-mail e senha cadastrados | 🔴 Alta |
+| **RF-003** | O sistema deve permitir que o usuário redefina sua senha via e-mail caso a esqueça | 🟡 Média |
+| **RF-004** | O sistema deve permitir a criação de Flows interativos com blocos de conteúdo textual, decisão e multimídia | 🔴 Alta |
+| **RF-005** | O sistema deve abrir um modal de edição específico para cada tipo de nó (texto, decisão, multimídia) dentro do Flow | 🔴 Alta |
+| **RF-006** | O sistema deve permitir que o usuário visualize, comente, curta e salve Flows criados por outros usuários | 🔴 Alta |
+| **RF-007** | O sistema deve permitir pesquisar e filtrar Flows no feed principal por nome, categoria, tag ou criador | 🔴 Alta |
+| **RF-008** | O sistema deve permitir o usuário acessar um feed de Flows em destaque, recentes ou populares | 🟡 Média |
+| **RF-009** | O sistema deve disponibilizar uma área de Comunidade onde usuários possam publicar dúvidas, sugestões ou solicitações de novos Flows | 🔴 Alta |
+| **RF-010** | O sistema deve permitir que usuários criem novos Flows baseados em postagens da Comunidade | 🟡 Média |
+| **RF-011** | O sistema deve permitir interação básica entre usuários (curtir, comentar, responder comentários) | 🟡 Média |
+| **RF-012** | O sistema deve permitir que o usuário edite ou exclua seus próprios Flows e comentários | 🟡 Média |
 
 ### Requisitos não funcionais
 
-| ID       | Tipo                        | Descrição do Requisito                                                                 | Prioridade |
-|----------|-----------------------------|----------------------------------------------------------------------------------------|------------|
-| RNF-001  | Segurança| O sistema deve ser capaz de operar para diferentes empresas| 🔴 Alta|
-| RNF-002  | Segurança| O sistema deve garantir o acesso à plataforma apenas para usuários identificados pelo email corporativo | 🔴 Alta       |
-| RNF-003  | Segurança| O sistema deve garantir restrições para processos que possuem limitações de acesso| 🔴 Alta       |
-| RNF-004  | Regulamentação e Normas| Atender à LGPD e PCI-DSS| 🟡 Média|
-| RNF-005  | Usabilidade| O sistema deve ser capaz de registrar e armazenar todas as interações do usuário na plataforma| 🟡 Média      |
-| RNF-006  | Usabilidade| O sistema deve ser capaz de atualizar os elementos da pesquisa de acordo com os filtros estabelecidos| 🟡 Média      |
-| RNF-007  | Usabilidade| O sistema deve informar ao usuário o resultado de toda operação realizada por ele, seja ela um sucesso ou uma falha do processo| 🟢 Baixa      |
-| RNF-008  | Confiabilidade e Disponibilidade| É necessário que o sistema sempre informe qual o motivo de um eventual erro e então quais passos seguir| 🟢 Baixa      |
-| RNF-009  | Regulamentação e Normas| O sistema deve ser capaz de garantir que os processos registrados sigam as regras de negócio existentes da empresa| 🟢 Baixa      |
-| RNF-010  | Usabilidade| O sistema deve fornecer maneiras de interação entre usuários| 🟡 Média      |
-| RNF-011  | Usabilidade| O sistema deve permitir a criação e manutenção de estruturas de equipes dentro da companhia, garantindo a organização hierárquica e a atribuição de funções| 🟡 Média      |
-| RNF-012  | Interoperabilidade| O sistema deverá ter integração com APIs que facilitem a criação dos processos dentro da plataforma| 🔴 Alta       |
+| ID | Tipo | Descrição do Requisito | Prioridade |
+|----|------|------------------------|------------|
+| **RNF-001** | Segurança | O sistema deve garantir o acesso apenas a usuários autenticados por e-mail | 🔴 Alta |
+| **RNF-002** | Segurança | O sistema deve proteger as credenciais dos usuários com criptografia de senha | 🔴 Alta |
+| **RNF-003** | Usabilidade | O sistema deve ter interface moderna, responsiva e intuitiva, adequada para dispositivos desktop e mobile | 🔴 Alta |
+| **RNF-004** | Usabilidade | O sistema deve exibir mensagens de feedback claras após cada ação (sucesso ou erro) | 🟡 Média |
+| **RNF-005** | Desempenho | O sistema deve carregar Flows e postagens de forma rápida, mesmo com grande volume de conteúdo | 🟡 Média |
+| **RNF-006** | Interoperabilidade | O sistema deve permitir integração futura com APIs externas para compartilhamento de conteúdo | 🟡 Média |
+| **RNF-007** | Confiabilidade | O sistema deve registrar logs de erros para monitoramento e melhorias | 🟢 Baixa |
+| **RNF-008** | Regulamentação | O sistema deve seguir normas de privacidade de dados como a LGPD | 🔴 Alta |
 
 
 Com base nas histórias de usuários, enumere os requisitos da sua solução. Classifique esses requisitos em dois grupos:

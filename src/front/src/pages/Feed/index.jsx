@@ -1,86 +1,131 @@
 //componentes externos
 import { useEffect, useState } from "react";
-import ComponentDivider from "../../components/ComponentDivider/Index";
 import SearchBar from "../../components/SearchBar";
 import FilterMenu from "../../components/FilterOptions";
 import FlowCard from "../../components/FlowCard";
+import FlowsNotFound from "../../components/SystemResponses/FlowsNotFound";
+import Categories from "../../components/FilterOptions/Categories";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import Overlay from "../../components/Overlay";
+import StatisticsBoard from "../../components/StatisticsBoard";
+import TrendingBoard from "../../components/TrendingBoard";
+
+//Global state
+import { useFlowStore } from "../../store/flowStore";
+
+//Bibliotecas
+import axios from "axios"; //responsável pela comunicação com as APIs
+import { Navigate, useNavigate } from "react-router-dom";
 
 //componentes internos
 import {
   FeedContainer,
+  FeedMain,
   FlowFeed,
-  FeedFilters,
+  FeedStatistics,
   ScrollFeed,
-  FilterHeader,
-  FilterIcon,
-  FilterTitle,
+  FeedHeader,
+  HeaderTitleH1,
+  HeaderTitleDescription,
+  HeaderTitle,
+  HeaderTop,
+  HeaderActions,
+  CreateFlowButton,
+  CreateFlowIcon,
+  SearchMethods,
 } from "./style";
-import axios from "axios"; //responsável pela comunicação com as APIs
 
 export default function Feed() {
-  //STATE que armazena todos os filtros disponíveis
+  const navigate = useNavigate();
   const [filtros, setFiltros] = useState({
     categorias: [],
     tags: [],
     autores: [],
   });
 
-  //STATE que mantém os flows a serem exibidos no feed
-  const [flows, setFlows] = useState([]);
+  const handleClick = () => {
+    navigate("/criar-flow");
+  };
+
+  //Estados globais
+  const flows = useFlowStore((state) => state.flows);
+  const searchTerm = useFlowStore((state) => state.searchTerm);
+  const fetchFlows = useFlowStore((state) => state.fetchFlows);
+  const category = useFlowStore((state) => state.category);
+  const loading = useFlowStore((state) => state.loading);
+
+  //Usuario
+  const userToken = localStorage.token;
+  const userID = localStorage.usuarioId;
+
+  async function fetchFiltros() {
+    try {
+      const response = await axios.get(
+        "https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/filtros"
+      );
+      setFiltros(response.data);
+    } catch (error) {
+      console.error("Erro ao buscar filtros:", error);
+    }
+  }
+
+  //Verificação feita para assegurar que o usuário esteja logado para acessa o feed
+  useEffect(() => {
+    if (!userToken) {
+      navigate("/login");
+    }
+  });
 
   useEffect(() => {
-    //Codígo que será executado após a renderização
+    fetchFlows({ category, searchTerm });
+  }, [category, searchTerm]);
 
-    async function fetchFiltros() {
-      //CONSULTAR API DE FILTROS
-      try {
-        const response = await axios.get("https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/filtros");
-        setFiltros(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar filtros:", error);
-      }
-    }
-
-    //CONSULTAR API DE FLOWS
-    async function fetchFlows() {
-      try {
-        const response = await axios.get("https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/flow");
-        setFlows(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar flows:", error);
-      }
-    }
-
+  useEffect(() => {
     fetchFiltros();
-    fetchFlows();
   }, []);
 
   return (
     <FeedContainer>
-      <FlowFeed>
-        <SearchBar />
-        <ComponentDivider />
-        <ScrollFeed>
-          {flows.length > 0 ? (
-            flows.map((flow) => <FlowCard flow={flow} />)
-          ) : (
-            <p>Carregando flows...</p>
-          )}
-          <ComponentDivider />
-        </ScrollFeed>
-      </FlowFeed>
+      <FeedHeader>
+        <HeaderTop>
+          <HeaderTitle>
+            <HeaderTitleH1>Descobrir Flows</HeaderTitleH1>
+            <HeaderTitleDescription>
+              Navegue por conteúdos criados por quem entende do assunto
+            </HeaderTitleDescription>
+          </HeaderTitle>
+          <HeaderActions>
+            <CreateFlowButton onClick={handleClick}>
+              <CreateFlowIcon size={16} />
+              Criar Flow
+            </CreateFlowButton>
+          </HeaderActions>
+        </HeaderTop>
 
-      <FeedFilters>
-        <FilterHeader>
-          <FilterTitle>
-            <FilterIcon />
-            Filtros
-          </FilterTitle>
-        </FilterHeader>
-        <FilterMenu filterType={"Categorias"} filtros={filtros.categorias} />
-        <FilterMenu filterType={"Tags"} filtros={filtros.tags} />
-        <FilterMenu filterType={"Autores"} filtros={filtros.autores} />
-      </FeedFilters>
+        <SearchMethods>
+          <SearchBar />
+          <Categories filtros={filtros.categorias} />
+        </SearchMethods>
+      </FeedHeader>
+      <FeedMain>
+        <FlowFeed>
+          <ScrollFeed>
+            {loading ? (
+              <LoadingSpinner />
+            ) : flows.length > 0 ? (
+              flows.map((flow) => (
+                <FlowCard flow={flow} key={flow.id} userID={userID} />
+              ))
+            ) : !loading && flows.length === 0 ? (
+              <FlowsNotFound />
+            ) : null}
+          </ScrollFeed>
+        </FlowFeed>
+        <FeedStatistics>
+          <TrendingBoard />
+          <StatisticsBoard />
+        </FeedStatistics>
+      </FeedMain>
     </FeedContainer>
   );
 }

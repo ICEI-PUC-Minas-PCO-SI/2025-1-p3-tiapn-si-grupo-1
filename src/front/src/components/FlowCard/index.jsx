@@ -1,8 +1,10 @@
-import { Heart, Bookmark, MessageCircle } from "lucide-react";
 import ComponentDivider from "../ComponentDivider/Index";
 import LikeButton from "./Actions/LikeButton";
 import CommentButton from "./Actions/CommentButton";
 import SaveButton from "./Actions/SaveButton";
+import ShareButton from "./Actions/ShareButton";
+import OpenFlowButton from "./Actions/OpenFlowButton";
+
 import {
   FlowCardContainer,
   FlowWrapper,
@@ -11,11 +13,24 @@ import {
   Avatar,
   FlowAuthor,
   FlowCategory,
+  AuthorRole,
   DaysPublished,
   ActionButton,
   ActionIcon,
   FlowPreviewWrapper,
   FlowFooter,
+  AuthorInfo,
+  FlowDetails,
+  Dot,
+  FlowDescription,
+  FlowTitle,
+  FlowTags,
+  Tag,
+  FlowNodes,
+  NodeIcon,
+  FlowViews,
+  FlowMacro,
+  ViewIcon,
 } from "./style";
 
 export default function FlowCard({ flow }) {
@@ -29,14 +44,34 @@ export default function FlowCard({ flow }) {
     );
   };
 
+  const getHoursAgo = (publishDate) => {
+    const now = new Date();
+    const date = new Date(publishDate);
+    const diffMs = Math.abs(now - date);
+    const diffMinutes = Math.floor(diffMs / (1000 * 60));
+    const diffHours = Math.floor(diffMinutes / 60);
+
+    if (diffMinutes < 1) {
+      return "Agora mesmo";
+    } else if (diffMinutes < 60) {
+      return diffMinutes === 1
+        ? "1minuto atrás"
+        : `${diffMinutes} minutos atrás`;
+    } else if (diffHours < 24) {
+      return diffHours === 1 ? "1 hora atrás" : `${diffHours} horas atrás`;
+    } else {
+      return "Há mais de 24 horas";
+    }
+  };
+
   const getDaysAgo = (publishDate) => {
     const today = new Date();
     const date = new Date(publishDate);
     const diffTime = Math.abs(today - date);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
     return diffDays === 0
-      ? "Hoje"
+      ? getHoursAgo(publishDate)
       : diffDays === 1
       ? `Há 1 dia`
       : diffDays < 7
@@ -51,65 +86,54 @@ export default function FlowCard({ flow }) {
   return (
     <FlowCardContainer>
       <FlowWrapper>
-        <FlowHat />
+        <FlowHat>{flow.categoria || "Sem categoria"}</FlowHat>
         <FlowHeader>
           <Avatar>{getIniciais(flow.usuario?.nome)}</Avatar>
-          <FlowAuthor>{flow.usuario.nome} /</FlowAuthor>
-          <FlowCategory>{`${" "} #${flow.categoria}`}</FlowCategory>
-          <span
-            style={{
-              width: "4px",
-              height: "4px",
-              backgroundColor: "#565656",
-              borderRadius: "50%",
-            }}
-          />
-          <DaysPublished>{getDaysAgo(flow.criado_em)}</DaysPublished>
+          <AuthorInfo>
+            <FlowAuthor>{flow.usuario?.nome}</FlowAuthor>
+            <FlowDetails>
+              <AuthorRole>{"Flow user"}</AuthorRole>
+              <Dot />
+              <DaysPublished>{getDaysAgo(flow.criado_em)}</DaysPublished>
+            </FlowDetails>
+          </AuthorInfo>
+
           <ActionButton>
             <ActionIcon />
           </ActionButton>
         </FlowHeader>
 
         <FlowPreviewWrapper>
-          <h2>{flow.titulo}</h2>
-          <p>{flow.descricao ? flow.descricao : "teste"}</p>
+          <FlowTitle>{flow.titulo}</FlowTitle>
+          <FlowDescription>
+            {flow.descricao ? flow.descricao : "teste"}
+          </FlowDescription>
+          <FlowTags>
+            {Array.isArray(flow.tags) && flow.tags.length > 0
+              ? flow.tags.map((tag, index) => <Tag key={index}>#{tag}</Tag>)
+              : ""}
+          </FlowTags>
+
+          <FlowMacro>
+            <FlowNodes>
+              <NodeIcon />
+              {flow.conteudo_nos?.length || 0}
+              {(flow.conteudo_nos?.length || 0) != 1 ? " nós" : " nó"}
+            </FlowNodes>
+            <FlowViews>
+              <ViewIcon></ViewIcon>
+              {"1921"}
+            </FlowViews>
+          </FlowMacro>
         </FlowPreviewWrapper>
         <FlowFooter>
-          <LikeButton />
-          <CommentButton />
-          <SaveButton />
+          <LikeButton likes={flow.stats?.likes || 0} />
+          <CommentButton comments={flow.stats?.comments || 0} />
+          <SaveButton saves={flow.stats?.saves || 0} />
+          <ShareButton flowID={flow.id} />
+          <OpenFlowButton flowID={flow.id} />
         </FlowFooter>
       </FlowWrapper>
-      <ComponentDivider />
     </FlowCardContainer>
   );
 }
-/*
- {
-    "id": "9ee8cd23-e726-4701-9d5b-0fa164264c0c",
-    "titulo": "Relatórios de Resultados Mensais",
-    "descricao": "Consolidação e divulgação dos resultados mensais.",
-    "conteudo_nos": [
-      {
-        "id": "18",
-        "data": "Exemplo de conteúdo"
-      }
-    ],
-    "conteudo_conexoes": [],
-    "tags": [
-      "relatório",
-      "resultados",
-      "financeiro",
-      "análise",
-      "mensal"
-    ],
-    "categoria": "Financeiro",
-    "status": "rascunho",
-    "criado_em": "2025-06-01T19:54:59.878Z",
-    "criado_por": "1bd732c8-b167-4c50-95d4-2f0fe153e790",
-    "usuario": {
-      "id": "1bd732c8-b167-4c50-95d4-2f0fe153e790",
-      "nome": "Patrícia Lima"
-    }
-  }
-*/
