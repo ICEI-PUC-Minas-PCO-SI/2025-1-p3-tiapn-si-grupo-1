@@ -17,7 +17,7 @@ import {
 
 import { useFlowStore } from "../../store/flowStore.js";
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 export default function TrendingBoard() {
   const fetchTrendingFlows = useFlowStore((state) => state.fetchFlows);

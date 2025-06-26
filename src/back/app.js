@@ -21,7 +21,10 @@ app.use(
   })
 );
 
-app.use(express.json());
+// Middleware para tratar JSON e formulários grandes
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
+
 
 // Rotas da API
 app.use("/api/usuario", usuarioRoutes);

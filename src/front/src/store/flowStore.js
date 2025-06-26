@@ -257,4 +257,5 @@ export const useFlowStore = create((set, get) => ({
       searchTerm: "",
       modalFlows: [],
     }),
+    
 }));
