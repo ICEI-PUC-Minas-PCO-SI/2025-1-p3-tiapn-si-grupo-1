@@ -36,12 +36,10 @@ export const Community = () => {
 
   // Função para obter as iniciais do nome
   const getIniciais = (nome) => {
-    if (!nome) return "";
-    const partes = nome.trim().split(" ");
+    if (!nome) return '';
+    const partes = nome.trim().split(' ');
     if (partes.length === 1) return partes[0][0].toUpperCase();
-    return (
-      partes[0][0].toUpperCase() + partes[partes.length - 1][0].toUpperCase()
-    );
+    return partes[0][0].toUpperCase() + partes[partes.length - 1][0].toUpperCase();
   };
 
   // Obter ID do usuário autenticado e lista de usuários
@@ -55,19 +53,16 @@ export const Community = () => {
       }
 
       try {
-        // Buscar dados do usuário logado
         const userResponse = await axios.get(
           'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario/me',
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setCurrentUserId(userResponse.data.id);
 
-        // Buscar lista de todos os usuários
         const usersResponse = await axios.get(
           'https://knowflowpocess-hqbjf6gxd3b8hpaw.brazilsouth-01.azurewebsites.net/api/usuario',
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        // Criar mapa de IDs para nomes
         const userNamesMap = usersResponse.data.reduce((acc, user) => {
           acc[user.id] = user.nome || 'Usuário Desconhecido';
           return acc;
@@ -94,7 +89,7 @@ export const Community = () => {
     const userName = fetchUserName(post.criado_por);
     let mappedType = post.tipo || 'Discussão';
     if (!['Discussão', 'Solicitação', 'Dúvida'].includes(post.tipo)) {
-      mappedType = 'Dúvida'; // Mapear tipos inválidos para Dúvida
+      mappedType = 'Dúvida';
     }
     return {
       id: post.id,
@@ -243,7 +238,6 @@ export const Community = () => {
   });
 
   const sortedPosts = [...filteredPosts].sort((a, b) => {
-    console.log(`Ordenando posts por ${sortBy}`);
     switch (sortBy) {
       case 'new':
         return new Date(b.createdAtRaw).getTime() - new Date(a.createdAtRaw).getTime();
@@ -256,12 +250,6 @@ export const Community = () => {
         return scoreB - scoreA;
     }
   });
-
-  const handleOpenCreateFlow = () => {
-    setMostrarCriarPostagem(true);
-    setIsEditing(false);
-    setPostToEdit(null);
-  };
 
   return (
     <S.Container>
@@ -433,7 +421,7 @@ export const Community = () => {
           </S.ContentWrapper>
         </S.MainContent>
         <S.CommunityFilters>
-          <FiltrosComunidade onOpenCreateFlow={handleOpenCreateFlow} />
+          <FiltrosComunidade />
         </S.CommunityFilters>
       </S.ContentRow>
       {mostrarCriarPostagem && (
@@ -455,4 +443,3 @@ export const Community = () => {
 };
 
 export default Community;
-

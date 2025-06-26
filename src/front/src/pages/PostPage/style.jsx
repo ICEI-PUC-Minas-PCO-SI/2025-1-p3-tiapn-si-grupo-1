@@ -10,19 +10,51 @@ export const ContainerGeral = styled.section`
 `;
 
 export const PostFilters = styled.aside`
-  width: 45%;
+  width: 30%;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   border-radius: 10px;
-  height: 93vh;
-  background-color: #ffffff;
+  height: 100%;
+  background-color: #233DFF;
   position: sticky;
   top: 30px;
-  margin-top: 30px;
-  align-self: flex-start;
+  margin-top: 65px;
   margin-right: 15px;
+  align-self: flex-start;
+  border: 1px solid #e5e5e5;
+  overflow: hidden; /* Para não vazar para fora do box */
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0; /* Fica atrás do texto */
+  }
+
+  &::before {
+    top: -40px;
+    left: -40px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, #3e83fa 0%, #233DFF 60%);
+  }
+
+  &::after {
+    bottom: -60px;
+    right: -60px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, #5d95f5 0%, #233DFF 60%);
+  }
+
+  /* Os filhos ficam acima dos círculos */
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
 
   @media (max-width: 768px) {
     width: 100%;
@@ -296,7 +328,7 @@ export const ActionButton = styled.button`
 `;
 
 export const CommentSection = styled.div`
-  margin-top: 2rem;
+  margin-top: 0px;
 `;
 
 export const CommentForm = styled.div`
@@ -307,6 +339,7 @@ export const CommentForm = styled.div`
   border-radius: 8px;
   padding: 1rem;
   margin-bottom: 1.5rem;
+  margin-top: 1rem;
 `;
 
 export const Textarea = styled.textarea`
