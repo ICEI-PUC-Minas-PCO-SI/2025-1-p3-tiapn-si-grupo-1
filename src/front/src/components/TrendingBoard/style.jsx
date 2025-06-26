@@ -5,7 +5,7 @@ export const TrendingBoardContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 32px;
-  gap: 20px;
+  gap: 12px;
   border-radius: 10px;
   background-color: #ffffff;
 `;
@@ -29,7 +29,7 @@ export const Title = styled.h2`
 export const TrendingList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
 `;
 export const TrendingItem = styled.div`
   display: flex;
