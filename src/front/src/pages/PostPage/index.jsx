@@ -524,6 +524,9 @@ export const PostPage = () => {
           </S.PostContent>
         </S.PostCard>
         <S.CommentSection>
+          <S.CommentList>
+            {renderComments(comments)}
+          </S.CommentList>
           <S.CommentForm>
             <S.AuthorAvatar title={currentUser?.nome || 'Você'}>
               {getIniciais(currentUser?.nome || 'Você')}
@@ -538,9 +541,6 @@ export const PostPage = () => {
               Comentar
             </S.SubmitButton>
           </S.CommentForm>
-          <S.CommentList>
-            {renderComments(comments)}
-          </S.CommentList>
         </S.CommentSection>
       </S.Container>
       <S.PostFilters>

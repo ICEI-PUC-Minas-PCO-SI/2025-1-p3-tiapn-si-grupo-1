@@ -272,23 +272,54 @@ export const EmptyText = styled.p`
 `;
 
 export const CommunityFilters = styled.aside`
-  width: 40%;
+  position: sticky; /* Necessário para posicionar as bolas */
+  top: 30px;
+  width: 30%;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   border-radius: 10px;
-  height: 93vh;
-  background-color: #fff;
-  position: sticky;
-  top: 30px;
+  height: 100%;
+  background-color: #233DFF;
   align-self: flex-start;
-  
+  overflow: hidden; /* Para não vazar para fora do box */
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    z-index: 0; /* Fica atrás do texto */
+  }
+
+  &::before {
+    top: -40px;
+    left: -40px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, #3e83fa 0%, #233DFF 60%);
+  }
+
+  &::after {
+    bottom: -60px;
+    right: -60px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, #5d95f5 0%, #233DFF 60%);
+  }
+
+  /* Os filhos ficam acima dos círculos */
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
 
   @media (max-width: 768px) {
     width: 100%;
   }
 `;
+
 
 export const FilterHeaderCommunity = styled.header`
   margin-bottom: 20px;

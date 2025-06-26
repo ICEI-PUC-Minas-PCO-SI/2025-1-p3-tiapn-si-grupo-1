@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as S from './style';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Plus } from 'lucide-react'; // Ícone para o botão
+import { Lightbulb, HeartHandshake, HandHelping } from 'lucide-react'; // Ícone para o botão
 
 export const FiltrosComunidade = ({ onOpenCreateFlow }) => {
   const [users, setUsers] = useState([]);
@@ -51,54 +51,31 @@ export const FiltrosComunidade = ({ onOpenCreateFlow }) => {
     fetchUsers();
   }, []);
 
-  return (
-    <S.Container>
-      <S.Section>
-        <S.SectionTitle>Contribua com a Comunidade</S.SectionTitle>
-        <S.IncentiveMessage>
-          <span role="img" aria-label="lampada">💡</span> Crie flows incríveis e ajude outras pessoas a aprender e crescer!
-        </S.IncentiveMessage>
-        <S.CreateFlowButton onClick={handleCreateFlow}>
-          <Plus size={16} /> Criar um Flow
-        </S.CreateFlowButton>
-      </S.Section>
-      <S.Section>
-        <S.SectionTitle>Membros Ativos</S.SectionTitle>
-        <S.UserList>
-          {users.map((user) => (
-            <S.UserCard key={user.id} style={{ background: getGradientColor(user.id) }}>
-              <S.Avatar>{getIniciais(user.nome)}</S.Avatar>
-              <S.UserName title={user.nome}>{user.nome.length > 12 ? `${user.nome.slice(0, 12)}...` : user.nome}</S.UserName>
-            </S.UserCard>
-          ))}
-          {users.length > 0 && (
-            <S.ViewMoreButton onClick={() => console.log('Ver mais usuários')}>
-              Ver todos
-            </S.ViewMoreButton>
-          )}
-        </S.UserList>
-      </S.Section>
-      <S.LogoSection>
-        <a href="">
-          <img src="/KnowFlow-Logo.png" alt="Logo KnowFlow" />
-        </a>
-      </S.LogoSection>
-      <S.FooterSection>
-        <S.FooterLinks>
-          <a href="/termos-de-servico">Termos de Serviço</a>
-          <span>|</span>
-          <a href="/politica-de-privacidade">Política de Privacidade</a>
-          <span>|</span>
-          <a href="/politica-de-cookies">Política de Cookies</a>
-          <span>|</span>
-          <a href="/acessibilidade">Acessibilidade</a>
-          <span>|</span>
-          <a href="/informacoes-de-anuncios">Informações de Anúncios</a>
-          <span>|</span>
-          <a href="/mais">Mais</a>
-        </S.FooterLinks>
-        <S.Copyright>© 2025 KnowFlow Corp.</S.Copyright>
-      </S.FooterSection>
-    </S.Container>
-  );
+ return (
+  <S.Container>
+    <S.Section>
+      <S.FundoEmoji> 
+        <HeartHandshake color="#1443cf" size={30} />
+      </S.FundoEmoji>
+      <S.SectionTitle>Contribua com a Comunidade</S.SectionTitle>
+
+      <S.luz>
+      <S.SubTitle>
+        <HandHelping /> Participe, crie e compartilhe! Sua contribuição pode ajudar as pessoas a aprender e evoluir todos os dias.
+      </S.SubTitle>
+      </S.luz>
+
+      <S.SubTitleSmall>
+        Vamos transformar <strong>JUNTOS </strong>o jeito como sua
+empresa acessa o próprio conhecimento!
+      </S.SubTitleSmall>
+      <S.botaoFlow> 
+      <S.CreateFlowButton onClick={handleCreateFlow}>
+         Criar um Flow
+      </S.CreateFlowButton>
+      </S.botaoFlow>
+    </S.Section>
+    <S.ExtraInfo>Explore todas as possibilidades e venha transformar conhecimento em impacto!</S.ExtraInfo>
+  </S.Container>
+);
 };
