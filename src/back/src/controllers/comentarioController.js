@@ -1,7 +1,7 @@
 const { Comentario, Usuario, Flow } = require("../models");
 
 const comentarioController = {
-  // Criar comentário
+  // Usado para criar um comentário
   async comentar(req, res) {
     try {
       const { mensagem, flow_id } = req.body;
@@ -29,7 +29,7 @@ const comentarioController = {
     }
   },
 
-  // Obter detalhes de um comentário
+  // Obtem detalhes de um comentário
   async obter(req, res) {
     try {
       const comentario = await Comentario.findByPk(req.params.id, {
@@ -119,6 +119,97 @@ const comentarioController = {
       });
     }
   },
+
+  async listar(req, res) {
+  try {
+    const { flow_id } = req.params;
+
+    if (!flow_id) {
+      return res.status(400).json({ erro: 'flow_id é obrigatório' });
+    }
+    
+    const comentarios = await Comentario.findAll({
+      where: {
+        flow_id,
+        comentario_pai_id: null, // somente os comentários raiz
+      },
+      include: [
+        {
+          model: Usuario,
+          as: 'usuario',
+          attributes: ['id', 'nome'],
+        },
+        {
+          model: Comentario,
+          as: 'respostas',
+          include: [
+            {
+              model: Usuario,
+              as: 'usuario',
+              attributes: ['id', 'nome'],
+            },
+          ],
+        },
+      ],
+      order: [
+        ['criado_em', 'ASC'],
+        [{ model: Comentario, as: 'respostas' }, 'criado_em', 'ASC'],
+      ],
+    });
+
+    return res.json(comentarios);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ erro: 'Erro ao listar comentários', detalhes: error.message });
+  }
+},
+
+async listarRespostas(req, res) {
+  try {
+    const { comentario_pai_id } = req.params;
+
+    if (!comentario_pai_id) {
+      return res.status(400).json({ erro: 'comentario_pai_id é obrigatório' });
+    }
+
+    const respostas = await Comentario.findAll({
+      where: {
+        comentario_pai_id,
+      },
+      include: [
+        {
+          model: Usuario,
+          as: 'usuario',
+          attributes: ['id', 'nome'],
+        },
+        {
+          model: Comentario,
+          as: 'respostas',
+          include: [
+            {
+              model: Usuario,
+              as: 'usuario',
+              attributes: ['id', 'nome'],
+            },
+          ],
+        },
+      ],
+      order: [
+        ['criado_em', 'ASC'],
+        [{ model: Comentario, as: 'respostas' }, 'criado_em', 'ASC'],
+      ],
+    });
+
+    return res.json(respostas);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({
+      erro: 'Erro ao listar respostas',
+      detalhes: error.message,
+    });
+  }
+},
+
 };
 
 module.exports = comentarioController;

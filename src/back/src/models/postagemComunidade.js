@@ -1,5 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../db");
+const ComentarioPostagem = require('./comentarioPostagem');
+const Usuario = require('./usuario')
+
 
 const PostagemComunidade = sequelize.define(
   "PostagemComunidade",
@@ -15,6 +18,19 @@ const PostagemComunidade = sequelize.define(
     conteudo: {
       type: DataTypes.TEXT,
     },
+    categoria: {
+  type: DataTypes.STRING,
+  allowNull: true, // ou false, dependendo da regra
+  validate: {
+    len: [1, 100], // Exemplo de limite de tamanho
+  },
+},
+    tipo: {
+  type: DataTypes.ENUM("Discussão", "Solicitação", "Dúvida"),
+  allowNull: true,
+  // comment: "1 = Discussão, 2 = Solicitação, 3 = Dúvida",
+},
+    tags: DataTypes.ARRAY(DataTypes.STRING),
     criado_por: {
       type: DataTypes.UUID,
       allowNull: false,
@@ -22,12 +38,15 @@ const PostagemComunidade = sequelize.define(
     criado_em: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
-    },
+    },  
   },
   {
     tableName: "postagem_comunidade",
     timestamps: false,
   }
 );
+
+PostagemComunidade.hasMany(ComentarioPostagem, { as: 'comentarios', foreignKey: 'postagem_id' });
+PostagemComunidade.belongsTo(Usuario, { as: 'usuario', foreignKey: 'criado_por' });
 
 module.exports = PostagemComunidade;

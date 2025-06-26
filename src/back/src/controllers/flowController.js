@@ -1,37 +1,32 @@
-const { Flow, Usuario, Comentario } = require("../models");
+const { Flow, Usuario, Comentario, PostagemComunidade } = require("../models");
 const { Op } = require("sequelize");
 
 const flowController = {
   // Listar todos os flows (exibido no feed)
   async listar(req, res) {
+    console.log("Query recebida:", req.query);
     try {
       const { search, categoria } = req.query;
-      // Inicializa as condições para o WHERE
-      const andConditions = [];
 
-      // Filtro por categoria (exato)
+      // Construindo a condição de busca
+      const whereClause = {
+        [Op.and]: [],
+      };
+
+      // Filtro de categoria, se existir
       if (categoria) {
-        andConditions.push({ categoria });
+        whereClause[Op.and].push({ categoria });
       }
 
-      // Filtro por busca textual (tags, título, descrição)
+      // Filtro de pesquisa, se existir
       if (search) {
-        andConditions.push({
+        whereClause[Op.and].push({
           [Op.or]: [
             { tags: { [Op.contains]: [search] } },
             { titulo: { [Op.iLike]: `%${search}%` } },
             { descricao: { [Op.iLike]: `%${search}%` } },
           ],
         });
-      }
-
-      // Construindo a condição de busca
-      const whereClause =
-        andConditions.length > 0 ? { [Op.and]: andConditions } : {};
-
-      // Só adiciona o Op.and se houver filtros
-      if (andConditions.length > 0) {
-        whereClause[Op.and] = andConditions;
       }
 
       const flows = await Flow.findAll({
@@ -41,17 +36,19 @@ const flowController = {
             model: Usuario,
             attributes: ["id", "nome"],
           },
+           {
+            model: Comentario,
+            include: { model: Usuario, attributes: ["id", "nome"] },
+          },
         ],
         order: [["criado_em", "DESC"]],
       });
 
       res.json(flows);
     } catch (error) {
-      console.error("Erro no listar:", error);
-      res.status(500).json({
-        erro: "Erro ao listar flows",
-        detalhes: error.message,
-      });
+      res
+        .status(500)
+        .json({ erro: "Erro ao listar flows", detalhes: error.message });
     }
   },
 
@@ -95,7 +92,16 @@ const flowController = {
         categoria,
         tags,
         status,
+        post_id,
       } = req.body;
+
+      let postRelacionado = null;
+      if (post_id) {
+        postRelacionado = await PostagemComunidade.findByPk(post_id);
+        if (!postRelacionado) {
+          res.status(400).json({ erro: "Post relacionado não encontrado" });
+        }
+      }
 
       const novoFlow = await Flow.create({
         titulo,
@@ -105,14 +111,26 @@ const flowController = {
         categoria,
         tags,
         status,
+        post_id: post_id || null,
         criado_por: req.usuarioId,
       });
 
-      res.status(201).json(novoFlow);
+      if (postRelacionado) {
+        res.status(201).json({
+          mensagem: `Flow criado com sucesso na postagem de título: "${postRelacionado.titulo}"`,
+          flow_id: novoFlow.id,
+        });
+      } else {
+        res.status(201).json({
+          mensagem: "Flow criado com sucesso",
+          flow_id: novoFlow.id,
+        });
+      }
     } catch (error) {
-      res
-        .status(500)
-        .json({ erro: "Erro ao criar flow", detalhes: error.message });
+      res.status(500).json({
+        erro: "Erro ao criar flow",
+        detalhes: error.message,
+      });
     }
   },
 
@@ -149,7 +167,10 @@ const flowController = {
         status,
       });
 
-      res.json({ mensagem: "Flow atualizado com sucesso" });
+      res.json({
+        mensagem: "Flow atualizado com sucesso",
+        id: flow.id,
+      });
     } catch (error) {
       res
         .status(500)
