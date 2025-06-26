@@ -1,8 +1,6 @@
 const { FlowSalvo, Usuario, Flow } = require('../models');
 
 const flowSalvoController = {
-  
-
   async criar(req, res) {
     try {
       const { usuarioId, flowId } = req.body;
@@ -16,45 +14,49 @@ const flowSalvoController = {
     }
   },
 
+  async listar(req, res) {
+    try {
+      const { usuario_id } = req.query;
+      const filtro = {};
 
- async listar(req, res) {
-  try {
-    const { usuario_id } = req.query;
-    const filtro = {};
+      if (usuario_id) filtro.usuario_id = usuario_id;
 
-    if (usuario_id) filtro.usuario_id = usuario_id;
+      const salvos = await FlowSalvo.findAll({
+        where: filtro,
+        include: [
+          { model: Usuario, as: 'usuario', attributes: ['id', 'nome'] },
+          { model: Flow, as: 'flow', attributes: ['id', 'titulo'] }
+        ],
+        order: [['criado_em', 'DESC']]
+      });
 
-    const salvos = await FlowSalvo.findAll({
-      where: filtro,
-      include: [
-        { model: Usuario, as: 'usuario', attributes: ['id', 'nome'] },
-        { model: Flow, as: 'flow', attributes: ['id', 'titulo'] }
-      ],
-      order: [['criado_em', 'DESC']]
-    });
-
-    res.json(salvos);
-  } catch (error) {
-    res.status(500).json({ erro: 'Erro ao listar flows salvos', detalhes: error.message });
-  }
-},
-
+      res.json(salvos);
+    } catch (error) {
+      res.status(500).json({ erro: 'Erro ao listar flows salvos', detalhes: error.message });
+    }
+  },
 
   async obter(req, res) {
     try {
-      const { id } = req.params;
-      const salvo = await FlowSalvo.findByPk(id, {
+      const { usuario_id, flow_id } = req.params;
+      
+      if (!usuario_id || !flow_id) {
+        return res.status(400).json({ erro: "usuario_id e flow_id são obrigatórios /usuario_id/flow_id" });
+      }
+
+      const flowsalvo = await FlowSalvo.findOne({
+        where: { usuario_id, flow_id },
         include: [
-          { model: Usuario, attributes: ['id', 'nome'] },
-          { model: Flow, attributes: ['id', 'titulo'] }
+          { model: Usuario, as: 'usuario', attributes: ['id', 'nome'] },
+          { model: Flow, as: 'flow', attributes: ['id', 'titulo', 'criado_em'] }
         ]
       });
 
-      if (!salvo) {
+      if (!flowsalvo) {
         return res.status(404).json({ erro: 'Flow salvo não encontrado' });
       }
 
-      res.json(salvo);
+      res.json(flowsalvo);
     } catch (error) {
       res.status(500).json({ erro: 'Erro ao buscar flow salvo', detalhes: error.message });
     }
@@ -62,18 +64,32 @@ const flowSalvoController = {
 
   async deletar(req, res) {
     try {
-      const { id } = req.params;
-      const deletado = await FlowSalvo.destroy({ where: { id } });
-
-      if (deletado === 0) {
-        return res.status(404).json({ erro: 'Flow salvo não encontrado' });
+      const { usuario_id, flow_id } = req.params;
+  
+      if (!usuario_id || !flow_id) {
+        return res.status(400).json({ erro: "usuario_id e flow_id são obrigatórios /usuario_id/flow_id" });
       }
 
-      res.json({ mensagem: 'Flow salvo deletado com sucesso' });
+      const flowsalvo = await FlowSalvo.findOne({ 
+        where: { usuario_id, flow_id },
+        include: [
+          { model: Usuario, as: 'usuario', attributes: ['nome'] },
+          { model: Flow, as: 'flow', attributes: ['id', 'titulo', 'criado_em'] }
+        ]
+      });
+
+      if (!flowsalvo) {
+        return res.status(404).json({ erro: "Flowsalvo não encontrado" });
+      }
+
+      await flowsalvo.destroy();
+      res.json({ mensagem: "Flowsalvo removido com sucesso" });
     } catch (error) {
-      res.status(500).json({ erro: 'Erro ao deletar flow salvo', detalhes: error.message });
+      res
+        .status(500)
+        .json({ erro: "Erro ao remover flowsalvo", detalhes: error.message });
     }
-  }
+  },
 };
 
 module.exports = flowSalvoController;

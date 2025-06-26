@@ -8,6 +8,8 @@ router.get('/:id', comentarioController.obter);
 
 router.put('/:id', auth, comentarioController.atualizar);
 router.delete('/:id', auth, comentarioController.deletar);
+router.get('/flow/:flow_id/comentarios', comentarioController.listar); // listar comentarios
+router.get('/flow/comentarios/:comentario_pai_id/respostas', comentarioController.listarRespostas); // listar comentarios que sao filhos
 
 
 module.exports = router;
