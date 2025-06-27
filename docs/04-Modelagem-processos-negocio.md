@@ -32,7 +32,7 @@ Além disso, não existe um fluxo de validação bem definido. O responsável po
 - Registro redundante ou inconsistente;
 - Ausência de controle de versão e centralização.
 
- ![Documentar Processos AS_IS](/images/bpmn_as_is_documentar_processo.png)
+ ![Documentar Processos AS_IS](images/bpmn_as_is_documentar_processo.png)
 
 ## Descrição geral da proposta (Modelagem TO BE)
 
