@@ -1,4 +1,4 @@
-### 3.3.2 Processo 2 – Documentar Processos
+### 3.3.4 Processo 2 - TO BE – Documentar Processos
 
 O processo de **Documentar Processos** tem como objetivo garantir o correto registro e formalização dos processos executados dentro da organização, promovendo padronização, rastreabilidade e fácil consulta.  
 
