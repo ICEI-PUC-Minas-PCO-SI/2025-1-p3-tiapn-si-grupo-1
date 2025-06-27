@@ -91,10 +91,10 @@ A documentação será feita dentro do próprio sistema, com campos padronizados
 ![Documentar Processo TO-BE](images/bpmn_to_be_documentar_processo.png)
 
 ## Modelagem dos processos
-
-- [PROCESSO 1 - Consultar Processos](./processes/processo-to-be-consultar-processos.md "Detalhamento do processo de Consulta.")
-
-- [PROCESSO 2 - Documentar Processos](./processes/processo-to-be-documentar-processos.md "Detalhamento do processo de Documentar.")
+- [PROCESSO 1 - AS IS - Consultar Processos](./processes//bpmn_as_is_consultar_processo.png.md "Detalhamento do processo de Consulta.")
+- [PROCESSO 1 - TO BE - Consultar Processos](./processes/processo-to-be-consultar-processos.md "Detalhamento do processo de Consulta.")
+- [PROCESSO 2 - AS IS - Documentar Processos](./processes/bpmn_as_is_documentar_processo.png.md "Detalhamento do processo de Consulta.")
+- [PROCESSO 2 - TO BE - Documentar Processos](./processes/processo-to-be-documentar-processos.md "Detalhamento do processo de Documentar.")
 
 
 ## Indicadores de desempenho
