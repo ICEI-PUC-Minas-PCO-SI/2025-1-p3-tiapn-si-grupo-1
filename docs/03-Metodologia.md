@@ -53,6 +53,13 @@ Discuta como a configuração do projeto foi feita na ferramenta de versionament
 - Backend + banco de dados: Felipe Roque, Gabriella Paz, Rogério Gabriel e  Mateus Botelho 
 
 
+#### Sprint 5
+- _Scrum master_: Gabriella Paz
+- Frontend: Victor Alves, Lucas Borges e Mateus Botelho
+- Backend + documentação: Felipe Roque, Gabriella Paz e Rogério Gabriel
+- Slides: Mateus Botelho
+- Vídeo: Lucas Borges
+
 ###  Quadro de tarefas
 
 #### Sprint 1
@@ -113,7 +120,7 @@ Atualizado em: 03/06/2025
 
 #### Sprint 5
 
-Atualizado em: 23/06/2025
+Atualizado em: 27/06/2025
 
 | Responsável   | Tarefa/Requisito | Iniciado em    | Prazo      | Status | Terminado em    |
 | :----         |    :----         |      :----:    | :----:     | :----: | :----:          |
