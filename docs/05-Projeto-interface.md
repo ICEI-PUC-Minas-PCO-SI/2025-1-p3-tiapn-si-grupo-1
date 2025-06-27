@@ -1,14 +1,8 @@
 
 # Projeto de interface
 
-<span style="color:red">Pré-requisitos: <a href="02-Especificacao.md"> Especificação do projeto</a></span>
-
-
 O projeto é apartir de interfaces planejadas para interação com usuario de forma intuitiva, dispondos em telas para funções voltada ao flow e aos conhecimentos do usuario. A utiliadde do sistema é um frontend para criacao de fluxos que fazem o conhecimento ter um inicio e fim definidos para o processo especifico e tudo criado de forma fácil pelo proprio usuario.
 
-
-
- Apresente as principais interfaces da plataforma. Discuta como ela foi elaborada de forma a atender os requisitos funcionais, não funcionais e histórias de usuário abordados na <a href="02-Especificacao.md"> Especificação do projeto</a></span>.
 
  ## User flow
 
