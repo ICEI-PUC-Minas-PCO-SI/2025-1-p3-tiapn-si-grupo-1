@@ -139,7 +139,10 @@ Legenda:
 
 ### Processo
 
-O grupo utilizou o Scrum como metodologia de gestão do projeto, dividindo o trabalho em sprints mensais. A ferramenta de projetos do GitHub (GitHub Projects) foi usada para organizar tarefas em colunas de "Backlog", "Ready", "In progress" e "In review". Ao final de cada sprint, uma reunião de review foi feita para apresentar os avanços e ajustes necessários foram definidos nas retrospectivas.
+O grupo utilizou o Scrum como metodologia de gestão do projeto, dividindo o trabalho em sprints mensais. A ferramenta de projetos do GitHub (GitHub Projects) foi usada para organizar tarefas em colunas de "Backlog", "In progress" e "In review" e "Done". Ao final de cada sprint, uma reunião de review foi feita para apresentar os avanços e ajustes necessários foram definidos nas retrospectivas.
+
+
+![Print GitHub Projects](images/githubprojects.png)
  
 ## Relação de ambientes de trabalho
 
