@@ -1,4 +1,4 @@
-## 3.3.1 Processo 1 – Consultar Processos
+## 3.3.3 Processo 1 – Consultar Processos
 
 O processo de Consultar Processos tem como principal objetivo centralizar e facilitar o acesso a informações sobre processos internos da organização. A proposta de melhoria visa eliminar a dependência de comunicação interpessoal, reduzir o tempo de resposta, evitar perda de dados e aumentar a autonomia dos colaboradores.
 
