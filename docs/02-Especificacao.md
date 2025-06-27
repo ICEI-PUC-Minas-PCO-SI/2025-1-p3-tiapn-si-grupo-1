@@ -24,13 +24,14 @@ Com base na análise das personas, foram identificadas as seguintes histórias d
 |-----------------------------------|--------------------------------------------------------|---------------------------------------------------------------------|
 | Líder do meu time (Administrador) | validar os processos enviados pela equipe              | garantir que os processos criados sigam os padrões estipulados     |
 | Analista de processos (Administrador) | certificar de que as atividades possam ter algum nível de segurança | limitar o acesso de colaboradores ou equipe não autorizada         |
-| Funcionário novo (Usuário)        | buscar as atividades criadas por colegas da minha equipe | sanar eventuais dúvidas que eu possa ter                          |
+| Autor de uma publicação (Usuário) | editar e até mesmo excluir processos incorretos        | garantir a conformidade do processo                                |
 | Supervisora (Administrador)       | acompanhar o engajamento da minha equipe com a plataforma | reconhecer o desempenho de todos                                   |
 | Funcionário (Usuário)             | indicar minha satisfação com o processo que me ajudou  | trazer reconhecimento pra ele                                      |
-| Funcionário (Usuário)             | ter diferentes opções de registrar a minha atividade na plataforma | acompanhar as particularidades de algumas atividades              |
+| Funcionário novo (Usuário)        | buscar as atividades criadas por colegas da minha equipe | sanar eventuais dúvidas que eu possa ter                          |
 | Funcionário (Usuário)             | ter o contato com o dono da publicação                 | tirar minha dúvida sobre um determinado momento do processo       |
-| Autor de uma publicação (Usuário) | editar e até mesmo excluir processos incorretos        | garantir a conformidade do processo                                |
+| Funcionário (Usuário)             | ter diferentes opções de registrar a minha atividade na plataforma | acompanhar as particularidades de algumas atividades              |
 | Funcionário (Usuário)             | salvar o estado atual do meu processo enquanto faço     | que eu possa finalizá-lo depois                                    |
+
 
 ## Requisitos
 
