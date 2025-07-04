@@ -5,7 +5,7 @@
 
 ## Slides
 
-Coloque aqui o conjunto de slides.
+Veja abaixo os slides apresentados em cada sprint do desenvolvimento, contendo os avanços, decisões técnicas e funcionalidades implementadas ao longo do projeto.
 
 - [KnowFlow-Slides-Sprint-1.pdf](./sprint-1.pdf)
 - [KnowFlow-Slides-Sprint-2.pdf](./sprint-2.pdf)
