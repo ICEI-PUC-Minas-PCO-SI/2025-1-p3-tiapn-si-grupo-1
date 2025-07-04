@@ -21,15 +21,14 @@ Coloque aqui o conjunto de slides.
 O vídeo abaixo apresenta a solução desenvolvida, demonstrando as principais funcionalidades do KnowFlow.
 Durante o vídeo, você verá:
 
-Criação de flows personalizados com texto, imagens e nós de decisão
+- Criação de flows personalizados com texto, imagens e nós de decisão
 
-Interface intuitiva para organizar processos passo a passo
+- Interface intuitiva para organizar processos passo a passo
 
-Compartilhamento de flows com a comunidade
+- Compartilhamento de flows com a comunidade
 
-Visualização prática de como a plataforma pode ser aplicada no dia a dia de empresas ou times
+- Visualização prática de como a plataforma pode ser aplicada no dia a dia de empresas ou times
 
-Podem utilizar quaisquer recursos na produção do vídeo, mas certifiquem-se de destacar as funcionalidades da aplicação.
 
 
  Assista ao vídeo de demonstração:
