@@ -18,20 +18,21 @@ Coloque aqui o conjunto de slides.
 
 ## Vídeo
 
-O grupo também deverá gravar um vídeo de até cinco minutos apresentando a solução. O vídeo deve incluir uma demonstração da aplicação hospedada, mostrando seu funcionamento.
+O vídeo abaixo apresenta a solução desenvolvida, demonstrando as principais funcionalidades do KnowFlow.
+Durante o vídeo, você verá:
+
+Criação de flows personalizados com texto, imagens e nós de decisão
+
+Interface intuitiva para organizar processos passo a passo
+
+Compartilhamento de flows com a comunidade
+
+Visualização prática de como a plataforma pode ser aplicada no dia a dia de empresas ou times
 
 Podem utilizar quaisquer recursos na produção do vídeo, mas certifiquem-se de destacar as funcionalidades da aplicação.
 
-A seguir, estão as especificações técnicas que devem ser seguidas na criação do vídeo:
 
-> - tamanho do arquivo limitado a 
-Uploading Core.mp4…
-
-> - taxa de FPS limitada a 30 quadros por segundo
-> - resolução HD (720p) ou Full HD (1080p)
-> - formato mp4.
-
-
+ Assista ao vídeo de demonstração:
 https://github.com/user-attachments/assets/603d1cdd-791c-4782-afdd-8863f7b3231a
 
 
