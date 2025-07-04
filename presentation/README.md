@@ -7,7 +7,7 @@
 
 Coloque aqui o conjunto de slides.
 
-- [KnowFlow-Slides-Sprint-1.pdf](https://github.com/user-attachments/files/19693825/KnowFlow-Slides.pdf)
+- [KnowFlow-Slides-Sprint-1.pdf]([https://github.com/user-attachments/files/19693825/KnowFlow-Slides.pdf](https://github.com/user-attachments/files/21058206/KnowFlow-Slides-Sprint-1.pdf))
 - [KnowFlow-Slides-Sprint-2.pdf](https://github.com/user-attachments/files/19697941/KnowFlow-Slides-Sprint-2.pdf)
 - [KnowFlow-Slides-Sprint-3.pdf](https://github.com/user-attachments/files/20114180/KnowFlow-Slides-Sprint-3.pdf)
 - [KnowFlow-Slides-Sprint-4.pdf](https://github.com/user-attachments/files/20620477/KnowFlow-Slides-Sprint-4.pdf)
