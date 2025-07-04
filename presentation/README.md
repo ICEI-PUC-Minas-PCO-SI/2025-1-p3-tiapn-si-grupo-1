@@ -33,7 +33,11 @@ Podem utilizar quaisquer recursos na produção do vídeo, mas certifiquem-se de
 
 
  Assista ao vídeo de demonstração:
-https://github.com/user-attachments/assets/603d1cdd-791c-4782-afdd-8863f7b3231a
+ 
+
+
+
+https://github.com/user-attachments/assets/c24afaa2-6823-4160-b457-a7ac20d11523
 
 
 
