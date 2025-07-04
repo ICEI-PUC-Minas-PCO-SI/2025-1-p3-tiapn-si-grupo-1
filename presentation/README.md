@@ -24,9 +24,15 @@ Podem utilizar quaisquer recursos na produção do vídeo, mas certifiquem-se de
 
 A seguir, estão as especificações técnicas que devem ser seguidas na criação do vídeo:
 
-> - tamanho do arquivo limitado a 90Mb
+> - tamanho do arquivo limitado a 
+Uploading Core.mp4…
+
 > - taxa de FPS limitada a 30 quadros por segundo
 > - resolução HD (720p) ou Full HD (1080p)
 > - formato mp4.
+
+
+https://github.com/user-attachments/assets/603d1cdd-791c-4782-afdd-8863f7b3231a
+
 
 
