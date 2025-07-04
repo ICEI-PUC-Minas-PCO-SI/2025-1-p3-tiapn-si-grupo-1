@@ -39,6 +39,6 @@ Durante o vídeo, você verá:
 https://github.com/user-attachments/assets/c24afaa2-6823-4160-b457-a7ac20d11523
 
 
-**Assista o vídeo com uma qualidade maior:** [https://drive.google.com/file/d/1qxoV_pf74w9hDBk3ScedghmPrM-_cuqW/view?usp=sharing] (clique aqui)
+**Assista o vídeo com uma qualidade maior:** ([clique aqui](https://drive.google.com/file/d/1qxoV_pf74w9hDBk3ScedghmPrM-_cuqW/view?usp=sharing))
 
 
